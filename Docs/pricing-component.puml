@@ -1,0 +1,69 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Component Diagram for Pricing Service
+
+Container_Boundary(pricingService, "Pricing Service") {
+    ' Presentation Layer
+    Component(priceController, "PriceController", "Spring REST Controller", "Exposes REST API for price calculation and rule management")
+    Component(ruleController, "PricingRuleController", "Spring REST Controller", "CRUD operations for pricing rules (Store & Network managers)")
+    Component(healthController, "HealthController", "Spring Actuator", "Health check and metrics endpoints")
+    
+    ' Business Logic Layer
+    Component(priceEngine, "PriceCalculationEngine", "Service Component", "Core pricing logic: applies hierarchical rules (store overrides global), calculates promotions")
+    Component(promotionEngine, "PromotionEngine", "Service Component", "Handles promotion types: 3for2, BOGOF, free delivery")
+    Component(ruleValidator, "RuleValidator", "Service Component", "Validates pricing rules before persistence (date ranges, conflicts)")
+    
+    ' Data Access Layer
+    Component(pricingRepo, "PricingRuleRepository", "Spring Data JPA", "CRUD operations for pricing_rules table")
+    Component(warehouseAdapter, "WarehouseDBAdapter", "JDBC Adapter", "Read-only access to legacy Warehouse DB for item validation")
+    
+    ' External Dependencies
+    ComponentDb(pricingDB, "Pricing DB", "PostgreSQL", "Stores pricing rules with hierarchical structure")
+    ComponentDb_Ext(warehouseDB, "Warehouse DB", "MySQL (Legacy)", "Read-only: item catalog with base prices")
+}
+
+' External Consumers
+Container_Ext(apiGateway, "API Gateway", "Nginx/Kong", "Routes requests from Shopping System and Management SPA")
+
+' --- Relationships ---
+
+' API Gateway to Controllers
+Rel(apiGateway, priceController, "POST /api/pricing/calculate", "JSON/HTTPS")
+Rel(apiGateway, ruleController, "CRUD /api/pricing/rules", "JSON/HTTPS")
+Rel(apiGateway, healthController, "GET /actuator/health", "HTTPS")
+
+' Controllers to Business Logic
+Rel(priceController, priceEngine, "Uses", "Calculate final price with promotions")
+Rel(ruleController, ruleValidator, "Uses", "Validate rule before save")
+Rel(ruleController, pricingRepo, "Uses", "CRUD operations")
+
+' Business Logic Layer Interactions
+Rel(priceEngine, pricingRepo, "Uses", "Query rules by item_id and store_id")
+Rel(priceEngine, promotionEngine, "Uses", "Apply promotion calculations")
+Rel(priceEngine, warehouseAdapter, "Uses", "Validate item_id exists")
+
+' Data Access to Databases
+Rel(pricingRepo, pricingDB, "Reads/Writes", "JPA/Hibernate over JDBC")
+Rel(warehouseAdapter, warehouseDB, "Reads", "JDBC (Read-Only)")
+
+' Business Logic Details
+note right of priceEngine
+  **Price Calculation Algorithm:**
+  1. Fetch global rules for item_id
+  2. Fetch store-specific rules (if store_id provided)
+  3. Apply override logic (store > global priority)
+  4. Calculate promotion discounts
+  5. Return final price breakdown
+end note
+
+note right of promotionEngine
+  **Supported Promotions:**
+  - 3FOR2: Buy 3, pay for 2
+  - BOGOF: Buy One Get One Free
+  - FREE_DELIVERY: Waive delivery charges
+  - PERCENTAGE_OFF: X% discount
+end note
+
+SHOW_LEGEND()
+@enduml
