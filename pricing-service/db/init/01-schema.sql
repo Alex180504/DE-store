@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS pricing_rules (
     promotion promotion_type DEFAULT 'NONE',       -- Promotion type
     promotion_value DECIMAL(10,2),                 -- For PERCENTAGE_OFF or FIXED_DISCOUNT
     
-    -- Rule priority and validity
-    priority INT DEFAULT 0,                        -- Higher = more important (store > global)
+    -- Rule scope and validity
+    is_global BOOLEAN DEFAULT FALSE,               -- TRUE = Global (network-wide), FALSE = Store-specific
     valid_from TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     valid_to TIMESTAMP,                            -- NULL = no expiration
     
@@ -85,37 +85,37 @@ INSERT INTO stores (store_code, store_name, location) VALUES
 ('BIR-001', 'Birmingham Store', 'Birmingham, UK'),
 ('GLA-001', 'Glasgow Store', 'Glasgow, UK');
 
--- Sample global pricing rules (store_id = NULL means global)
+-- Sample global pricing rules (store_id = NULL, is_global = TRUE)
 -- Global rules with promotions
-INSERT INTO pricing_rules (item_id, store_id, price, promotion, promotion_value, priority, created_by) VALUES
+INSERT INTO pricing_rules (item_id, store_id, price, promotion, promotion_value, is_global, created_by) VALUES
 -- Power tools: Global pricing with occasional promotions
-(1, NULL, 79.99, 'PERCENTAGE_OFF', 10.00, 0, 'network_manager'),  -- Cordless Drill: 10% off
-(2, NULL, 12.99, 'NONE', NULL, 0, 'network_manager'),              -- Hammer
-(3, NULL, 22.99, 'NONE', NULL, 0, 'network_manager'),              -- Screwdriver Set
-(4, NULL, 129.99, 'NONE', NULL, 0, 'network_manager'),             -- Circular Saw
+(1, NULL, 79.99, 'PERCENTAGE_OFF', 10.00, TRUE, 'network_manager'),  -- Cordless Drill: 10% off
+(2, NULL, 12.99, 'NONE', NULL, TRUE, 'network_manager'),              -- Hammer
+(3, NULL, 22.99, 'NONE', NULL, TRUE, 'network_manager'),              -- Screwdriver Set
+(4, NULL, 129.99, 'NONE', NULL, TRUE, 'network_manager'),             -- Circular Saw
 
 -- Paint products: 3 for 2 promotion
-(9, NULL, 34.99, 'THREE_FOR_TWO', NULL, 0, 'network_manager'),     -- Emulsion Paint
-(10, NULL, 9.99, 'THREE_FOR_TWO', NULL, 0, 'network_manager'),     -- Paint Roller
-(11, NULL, 14.99, 'THREE_FOR_TWO', NULL, 0, 'network_manager'),    -- Paintbrush Set
+(9, NULL, 34.99, 'THREE_FOR_TWO', NULL, TRUE, 'network_manager'),     -- Emulsion Paint
+(10, NULL, 9.99, 'THREE_FOR_TWO', NULL, TRUE, 'network_manager'),     -- Paint Roller
+(11, NULL, 14.99, 'THREE_FOR_TWO', NULL, TRUE, 'network_manager'),    -- Paintbrush Set
 
 -- Building materials: Free delivery for bulk orders
-(15, NULL, 6.99, 'FREE_DELIVERY', NULL, 0, 'network_manager'),     -- Cement
-(16, NULL, 4.99, 'FREE_DELIVERY', NULL, 0, 'network_manager'),     -- Sand
+(15, NULL, 6.99, 'FREE_DELIVERY', NULL, TRUE, 'network_manager'),     -- Cement
+(16, NULL, 4.99, 'FREE_DELIVERY', NULL, TRUE, 'network_manager'),     -- Sand
 
 -- Garden equipment
-(27, NULL, 139.99, 'FIXED_DISCOUNT', 20.00, 0, 'network_manager'); -- Lawn Mower: £20 off
+(27, NULL, 139.99, 'FIXED_DISCOUNT', 20.00, TRUE, 'network_manager'); -- Lawn Mower: £20 off
 
--- Store-specific pricing overrides (higher priority)
+-- Store-specific pricing overrides (overrides global pricing)
 -- London store: Premium pricing
-INSERT INTO pricing_rules (item_id, store_id, price, promotion, promotion_value, priority, created_by) VALUES
-(1, 2, 84.99, 'NONE', NULL, 10, 'store_manager_lon'),              -- Cordless Drill: higher price in London
-(27, 2, 159.99, 'NONE', NULL, 10, 'store_manager_lon');            -- Lawn Mower: higher price
+INSERT INTO pricing_rules (item_id, store_id, price, promotion, promotion_value, is_global, created_by) VALUES
+(1, 2, 84.99, 'NONE', NULL, FALSE, 'store_manager_lon'),              -- Cordless Drill: higher price in London
+(27, 2, 159.99, 'NONE', NULL, FALSE, 'store_manager_lon');            -- Lawn Mower: higher price
 
 -- Manchester store: Special BOGOF promotion
-INSERT INTO pricing_rules (item_id, store_id, price, promotion, promotion_value, priority, created_by) VALUES
-(2, 3, 12.99, 'BOGOF', NULL, 10, 'store_manager_man'),             -- Hammer: BOGOF
-(5, 3, 8.99, 'BOGOF', NULL, 10, 'store_manager_man');              -- Tape Measure: BOGOF
+INSERT INTO pricing_rules (item_id, store_id, price, promotion, promotion_value, is_global, created_by) VALUES
+(2, 3, 12.99, 'BOGOF', NULL, FALSE, 'store_manager_man'),             -- Hammer: BOGOF
+(5, 3, 8.99, 'BOGOF', NULL, FALSE, 'store_manager_man');              -- Tape Measure: BOGOF
 
 -- View for active pricing rules
 CREATE OR REPLACE VIEW active_pricing_rules AS
@@ -128,7 +128,7 @@ SELECT
     pr.price,
     pr.promotion,
     pr.promotion_value,
-    pr.priority,
+    pr.is_global,
     pr.valid_from,
     pr.valid_to,
     pr.created_by
@@ -137,7 +137,7 @@ LEFT JOIN stores s ON pr.store_id = s.store_id
 WHERE pr.is_active = TRUE
   AND pr.valid_from <= CURRENT_TIMESTAMP
   AND (pr.valid_to IS NULL OR pr.valid_to > CURRENT_TIMESTAMP)
-ORDER BY pr.item_id, pr.priority DESC;
+ORDER BY pr.item_id, pr.is_global DESC, pr.store_id NULLS FIRST;
 
 -- View for pricing conflicts (multiple active rules for same item/store)
 CREATE OR REPLACE VIEW pricing_conflicts AS
@@ -153,7 +153,7 @@ GROUP BY item_id, store_id
 HAVING COUNT(*) > 1;
 
 -- Comments for documentation
-COMMENT ON TABLE pricing_rules IS 'Hierarchical pricing rules supporting global (store_id=NULL) and store-specific (store_id NOT NULL) pricing';
-COMMENT ON COLUMN pricing_rules.priority IS 'Higher priority rules override lower priority. Store-level rules typically have priority 10, global rules priority 0';
+COMMENT ON TABLE pricing_rules IS 'Hierarchical pricing rules supporting global (is_global=TRUE, store_id=NULL) and store-specific (is_global=FALSE, store_id NOT NULL) pricing';
+COMMENT ON COLUMN pricing_rules.is_global IS 'TRUE = Global network-wide pricing, FALSE = Store-specific pricing (overrides global)';
 COMMENT ON COLUMN pricing_rules.promotion IS 'Type of promotion applied: NONE, THREE_FOR_TWO, BOGOF, FREE_DELIVERY, PERCENTAGE_OFF, FIXED_DISCOUNT';
 COMMENT ON COLUMN pricing_rules.promotion_value IS 'Value for PERCENTAGE_OFF (e.g., 10.00 for 10%) or FIXED_DISCOUNT (e.g., 5.00 for £5 off)';
