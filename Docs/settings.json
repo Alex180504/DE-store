@@ -1,0 +1,4 @@
+"plantuml.jarArgs": [
+  "-DRELATIVE_INCLUDE=.",
+  "-I./c4-plantuml"
+]

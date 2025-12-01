@@ -1,0 +1,33 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title System Context Diagram for DE-Store
+
+' Personas
+Person(localMgr, "Local Manager", "Manages single store pricing and stock.")
+Person(netMgr, "Network Manager", "Manages global pricing and loyalty.")
+
+' The Core System
+System(deStore, "DE-Store System", "Distributed Microservices System for store management.")
+
+' External Systems (The Environment)
+System_Ext(shoppingSys, "Shopping System", "External POS/E-commerce terminals processing customer transactions.")
+System_Ext(warehouseDB, "Central Warehouse DB", "Legacy Read-Only Database for global stock.")
+System_Ext(accountingDB, "Central Accounting DB", "Legacy Read-Only Database for historical sales.")
+System_Ext(enablingSys, "Enabling Finance System", "External provider for 'Buy Now Pay Later'.")
+System_Ext(email, "Email System", "SMTP Server for manager alerts.")
+
+' Relationships - Human to System
+Rel(localMgr, deStore, "Configures Store Settings", "HTTPS")
+Rel(netMgr, deStore, "Configures Network Rules", "HTTPS")
+
+' Relationships - External Systems to DE-Store
+Rel(shoppingSys, deStore, "Queries Price/Loyalty & Requests Finance", "JSON/HTTPS")
+
+' Relationships - DE-Store to Legacy/External
+Rel(deStore, warehouseDB, "Syncs Inventory Data", "JDBC")
+Rel(deStore, accountingDB, "Reads Sales Data for Reports", "JDBC")
+Rel(deStore, enablingSys, "Proxies Finance Requests", "REST/SOAP")
+Rel(deStore, email, "Sends Low Stock Alerts", "SMTP")
+
+@enduml
