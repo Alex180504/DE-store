@@ -160,6 +160,89 @@
             color: white;
         }
 
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 3% auto;
+            padding: 0;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s;
+        }
+
+        .modal-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .close {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            transition: opacity 0.2s;
+        }
+
+        .close:hover,
+        .close:focus {
+            opacity: 0.7;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 0 0 8px 8px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -402,6 +485,81 @@
                     <h3>Price Calculation Result</h3>
                     <div class="price-breakdown" id="price-breakdown"></div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Rule Modal -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Pricing Rule</h2>
+                <span class="close" onclick="closeEditModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="edit-rule-form">
+                    <input type="hidden" id="edit-rule-id">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-item-id">Item ID *</label>
+                            <input type="number" id="edit-item-id" min="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-store-id">Store (leave empty for global)</label>
+                            <select id="edit-store-id">
+                                <option value="">Global Rule</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-price">Price (£) *</label>
+                            <input type="number" id="edit-price" step="0.01" min="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-is-global">
+                                <input type="checkbox" id="edit-is-global">
+                                Global Rule
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-promotion">Promotion Type *</label>
+                            <select id="edit-promotion" required>
+                                <option value="NONE">No Promotion</option>
+                                <option value="PERCENTAGE_OFF">Percentage Off</option>
+                                <option value="FIXED_DISCOUNT">Fixed Discount</option>
+                                <option value="THREE_FOR_TWO">3 for 2</option>
+                                <option value="BOGOF">Buy One Get One Free</option>
+                                <option value="FREE_DELIVERY">Free Delivery</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-promotion-value">Promotion Value</label>
+                            <input type="number" id="edit-promotion-value" step="0.01" min="0">
+                            <small>Required for Percentage Off and Fixed Discount</small>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="edit-valid-from">Valid From</label>
+                            <input type="datetime-local" id="edit-valid-from">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-valid-to">Valid To</label>
+                            <input type="datetime-local" id="edit-valid-to">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                <button type="submit" form="edit-rule-form" class="btn btn-primary">Update Rule</button>
             </div>
         </div>
     </div>

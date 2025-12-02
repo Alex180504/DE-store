@@ -17,6 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
 function setupEventListeners() {
     document.getElementById('create-rule-form').addEventListener('submit', handleCreateRule);
     document.getElementById('calculator-form').addEventListener('submit', handleCalculatePrice);
+    document.getElementById('edit-rule-form').addEventListener('submit', handleEditRule);
+    
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('edit-modal');
+        if (event.target === modal) {
+            closeEditModal();
+        }
+    };
 }
 
 // Tab switching
@@ -73,11 +82,17 @@ async function loadStores() {
 
 // Populate store dropdown selects
 function populateStoreDropdowns() {
-    const storeSelects = ['storeId', 'calcStoreId'];
+    const storeSelects = ['storeId', 'calcStoreId', 'edit-store-id'];
     
     storeSelects.forEach(selectId => {
         const select = document.getElementById(selectId);
-        select.innerHTML = '<option value="">Select Store</option>';
+        
+        // Different default text for edit modal
+        if (selectId === 'edit-store-id') {
+            select.innerHTML = '<option value="">Global Rule</option>';
+        } else {
+            select.innerHTML = '<option value="">Select Store</option>';
+        }
         
         stores.forEach(store => {
             const option = document.createElement('option');
@@ -159,7 +174,8 @@ function renderPricingRulesTable(rules) {
                         <td>${rule.validTo ? formatDateTime(rule.validTo) : 'No expiry'}</td>
                         <td>
                             <div class="action-buttons">
-                                <button class="btn btn-danger" onclick="deactivateRule(${rule.ruleId})">Deactivate</button>
+                                <button class="btn btn-primary" onclick="editRule(${rule.ruleId})">Edit</button>
+                                <button class="btn btn-danger" onclick="deleteRule(${rule.ruleId})">Delete</button>
                             </div>
                         </td>
                     </tr>
@@ -382,18 +398,78 @@ async function handleCalculatePrice(e) {
     }
 }
 
-// Deactivate a pricing rule
-async function deactivateRule(ruleId) {
-    if (!confirm(`Are you sure you want to deactivate rule ${ruleId}?`)) {
-        return;
-    }
-    
+// Edit a pricing rule
+async function editRule(ruleId) {
     const alertDiv = document.getElementById('rules-alert');
     alertDiv.innerHTML = '';
     
     try {
-        const response = await fetch(`${API_BASE}/rules/${ruleId}/deactivate`, {
-            method: 'POST'
+        // Fetch the rule details
+        const response = await fetch(`${API_BASE}/rules/${ruleId}`);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+        
+        const rule = await response.json();
+        
+        // Populate the edit modal
+        document.getElementById('edit-rule-id').value = rule.ruleId;
+        document.getElementById('edit-item-id').value = rule.itemId;
+        document.getElementById('edit-store-id').value = rule.storeId || '';
+        document.getElementById('edit-price').value = rule.price;
+        document.getElementById('edit-promotion').value = rule.promotion;
+        document.getElementById('edit-promotion-value').value = rule.promotionValue || '';
+        document.getElementById('edit-is-global').checked = rule.isGlobal;
+        
+        // Format dates for datetime-local input
+        if (rule.validFrom) {
+            document.getElementById('edit-valid-from').value = formatDateTimeForInput(rule.validFrom);
+        }
+        if (rule.validTo) {
+            document.getElementById('edit-valid-to').value = formatDateTimeForInput(rule.validTo);
+        }
+        
+        // Show the modal
+        document.getElementById('edit-modal').style.display = 'block';
+        
+    } catch (error) {
+        alertDiv.innerHTML = `<div class="alert alert-error">Failed to load rule: ${error.message}</div>`;
+        console.error('Error loading rule:', error);
+    }
+}
+
+// Close edit modal
+function closeEditModal() {
+    document.getElementById('edit-modal').style.display = 'none';
+    document.getElementById('edit-rule-form').reset();
+}
+
+// Handle edit form submission
+async function handleEditRule(event) {
+    event.preventDefault();
+    
+    const ruleId = document.getElementById('edit-rule-id').value;
+    const alertDiv = document.getElementById('rules-alert');
+    alertDiv.innerHTML = '';
+    
+    const formData = {
+        itemId: parseInt(document.getElementById('edit-item-id').value),
+        storeId: document.getElementById('edit-store-id').value ? parseInt(document.getElementById('edit-store-id').value) : null,
+        price: parseFloat(document.getElementById('edit-price').value),
+        promotion: document.getElementById('edit-promotion').value,
+        promotionValue: document.getElementById('edit-promotion-value').value ? parseFloat(document.getElementById('edit-promotion-value').value) : null,
+        isGlobal: document.getElementById('edit-is-global').checked,
+        validFrom: document.getElementById('edit-valid-from').value || null,
+        validTo: document.getElementById('edit-valid-to').value || null
+    };
+    
+    try {
+        const response = await fetch(`${API_BASE}/rules/${ruleId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
         });
         
         if (!response.ok) {
@@ -401,14 +477,59 @@ async function deactivateRule(ruleId) {
             throw new Error(error.message || `HTTP ${response.status}`);
         }
         
-        alertDiv.innerHTML = `<div class="alert alert-success">Rule ${ruleId} deactivated successfully!</div>`;
+        closeEditModal();
+        alertDiv.innerHTML = `<div class="alert alert-success">Rule ${ruleId} updated successfully!</div>`;
+        
+        // Reload rules
+        setTimeout(() => {
+            loadPricingRules();
+        }, 1500);
+        
+    } catch (error) {
+        alertDiv.innerHTML = `<div class="alert alert-error">Failed to update rule: ${error.message}</div>`;
+        console.error('Error updating rule:', error);
+    }
+}
+
+// Delete a pricing rule
+async function deleteRule(ruleId) {
+    if (!confirm(`Are you sure you want to permanently delete rule ${ruleId}? This action cannot be undone.`)) {
+        return;
+    }
+    
+    const alertDiv = document.getElementById('rules-alert');
+    alertDiv.innerHTML = '';
+    
+    try {
+        const response = await fetch(`${API_BASE}/rules/${ruleId}`, {
+            method: 'DELETE'
+        });
+        
+        if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message || `HTTP ${response.status}`);
+        }
+        
+        alertDiv.innerHTML = `<div class="alert alert-success">Rule ${ruleId} deleted successfully!</div>`;
         
         // Reload rules
         setTimeout(() => {
             loadPricingRules();
         }, 1500);
     } catch (error) {
-        alertDiv.innerHTML = `<div class="alert alert-error">Failed to deactivate rule: ${error.message}</div>`;
-        console.error('Error deactivating rule:', error);
+        alertDiv.innerHTML = `<div class="alert alert-error">Failed to delete rule: ${error.message}</div>`;
+        console.error('Error deleting rule:', error);
     }
+}
+
+// Format datetime for input field (YYYY-MM-DDTHH:MM)
+function formatDateTimeForInput(dateString) {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
 }

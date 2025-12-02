@@ -169,8 +169,14 @@ public class PricingRuleService {
         existing.setPrice(request.getPrice());
         existing.setPromotion(request.getPromotion());
         existing.setPromotionValue(request.getPromotionValue());
-        existing.setValidFrom(request.getValidFrom());
-        existing.setValidTo(request.getValidTo());
+        
+        // Only update validity dates if provided
+        if (request.getValidFrom() != null) {
+            existing.setValidFrom(request.getValidFrom());
+        }
+        if (request.getValidTo() != null) {
+            existing.setValidTo(request.getValidTo());
+        }
 
         // Update store if changed
         if (!Boolean.TRUE.equals(request.getIsGlobal()) && request.getStoreId() != null) {

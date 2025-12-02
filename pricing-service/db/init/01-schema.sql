@@ -15,16 +15,6 @@ CREATE TABLE IF NOT EXISTS stores (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Promotion types enumeration
-CREATE TYPE promotion_type AS ENUM (
-    'NONE',
-    'THREE_FOR_TWO',    -- Buy 3, pay for 2
-    'BOGOF',            -- Buy One Get One Free
-    'FREE_DELIVERY',    -- Waive delivery charges
-    'PERCENTAGE_OFF',   -- X% discount
-    'FIXED_DISCOUNT'    -- Fixed amount discount
-);
-
 -- Pricing rules table: Hierarchical pricing with global/store-level support
 CREATE TABLE IF NOT EXISTS pricing_rules (
     rule_id SERIAL PRIMARY KEY,
@@ -33,7 +23,7 @@ CREATE TABLE IF NOT EXISTS pricing_rules (
     
     -- Pricing information
     price DECIMAL(10,2) NOT NULL,                  -- Override price or base price
-    promotion promotion_type DEFAULT 'NONE',       -- Promotion type
+    promotion VARCHAR(50) DEFAULT 'NONE',          -- Promotion type (NONE, THREE_FOR_TWO, BOGOF, etc.)
     promotion_value DECIMAL(10,2),                 -- For PERCENTAGE_OFF or FIXED_DISCOUNT
     
     -- Rule scope and validity
