@@ -70,11 +70,11 @@ async function loadStores() {
         console.error('Failed to load stores:', error);
         // Fallback: Use hardcoded store data from DB init script
         stores = [
-            { storeId: 1, storeCode: 'LON001', storeName: 'London Central' },
-            { storeId: 2, storeCode: 'MAN001', storeName: 'Manchester Store' },
-            { storeId: 3, storeCode: 'BIR001', storeName: 'Birmingham Store' },
-            { storeId: 4, storeCode: 'LEE001', storeName: 'Leeds Store' },
-            { storeId: 5, storeCode: 'GLW001', storeName: 'Glasgow Store' }
+            { storeId: 1, storeCode: 'HQ-GLOBAL', storeName: 'Global Pricing (Network-wide)' },
+            { storeId: 2, storeCode: 'LON-001', storeName: 'London Central' },
+            { storeId: 3, storeCode: 'MAN-001', storeName: 'Manchester Store' },
+            { storeId: 4, storeCode: 'BIR-001', storeName: 'Birmingham Store' },
+            { storeId: 5, storeCode: 'GLA-001', storeName: 'Glasgow Store' }
         ];
         populateStoreDropdowns();
     }
