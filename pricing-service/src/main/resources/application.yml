@@ -5,6 +5,7 @@ spring:
   # Primary Datasource: Pricing Database (PostgreSQL)
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pricing}
+    jdbc-url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pricing}
     username: ${SPRING_DATASOURCE_USERNAME:pricing_user}
     password: ${SPRING_DATASOURCE_PASSWORD:pricing_pass}
     driver-class-name: org.postgresql.Driver
@@ -18,7 +19,7 @@ spring:
   # JPA/Hibernate Configuration
   jpa:
     hibernate:
-      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:validate}
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
     show-sql: ${SPRING_JPA_SHOW_SQL:false}
     properties:
       hibernate:
@@ -46,9 +47,6 @@ management:
   endpoint:
     health:
       show-details: always
-  health:
-    db:
-      enabled: true
 
 # Logging Configuration
 logging:
@@ -75,6 +73,8 @@ pricing:
     # Warehouse Database (MySQL - Read-Only)
     datasource:
       url: ${WAREHOUSE_DATASOURCE_URL:jdbc:mysql://localhost:3306/warehouse}
+      jdbc-url: ${WAREHOUSE_DATASOURCE_URL:jdbc:mysql://localhost:3306/warehouse}
       username: ${WAREHOUSE_DATASOURCE_USERNAME:warehouse_user}
       password: ${WAREHOUSE_DATASOURCE_PASSWORD:warehouse_pass}
       driver-class-name: com.mysql.cj.jdbc.Driver
+

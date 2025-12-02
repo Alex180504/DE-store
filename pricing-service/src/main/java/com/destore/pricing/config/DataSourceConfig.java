@@ -1,5 +1,9 @@
 package com.destore.pricing.config;
 
+import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +18,8 @@ import javax.sql.DataSource;
  * @brief Configuration for multiple database connections
  * 
  * Configures two datasources:
- * 1. Primary: Pricing Database (PostgreSQL) - Read/Write
- * 2. Secondary: Warehouse Database (MySQL) - Read-Only
+ * 1. Primary: Pricing Database (PostgreSQL) - Read/Write for JPA
+ * 2. Secondary: Warehouse Database (MySQL) - Read-Only for item validation
  * 
  * This allows the pricing service to validate items against the legacy
  * warehouse database while managing its own pricing rules.
@@ -27,18 +31,32 @@ import javax.sql.DataSource;
 public class DataSourceConfig {
 
     /**
+     * @brief DataSource properties for primary database
+     * 
+     * @return DataSource properties from spring.datasource.* configuration
+     */
+    @Primary
+    @Bean
+    @ConfigurationProperties("spring.datasource")
+    public DataSourceProperties dataSourceProperties() {
+        return new DataSourceProperties();
+    }
+
+    /**
      * @brief Primary datasource for Pricing Database (PostgreSQL)
      * 
-     * This is the main database for storing pricing rules, stores, and promotions.
-     * JPA/Hibernate uses this datasource by default.
+     * This is marked as @Primary to ensure JPA/Hibernate uses this datasource
+     * and not the warehouse datasource.
      * 
      * @return Configured PostgreSQL DataSource
      */
     @Primary
-    @Bean(name = "pricingDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource pricingDataSource() {
-        return DataSourceBuilder.create().build();
+    @Bean(name = "dataSource")
+    @ConfigurationProperties("spring.datasource.hikari")
+    public HikariDataSource dataSource(DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder()
+                .type(HikariDataSource.class)
+                .build();
     }
 
     /**
@@ -50,9 +68,19 @@ public class DataSourceConfig {
      * @return Configured MySQL DataSource (Read-Only)
      */
     @Bean(name = "warehouseDataSource")
-    @ConfigurationProperties(prefix = "pricing.warehouse.datasource")
-    public DataSource warehouseDataSource() {
-        return DataSourceBuilder.create().build();
+    public HikariDataSource warehouseDataSource(
+            @Value("${pricing.warehouse.datasource.url}") String url,
+            @Value("${pricing.warehouse.datasource.username}") String username,
+            @Value("${pricing.warehouse.datasource.password}") String password,
+            @Value("${pricing.warehouse.datasource.driver-class-name}") String driverClassName) {
+        
+        return DataSourceBuilder.create()
+                .url(url)
+                .username(username)
+                .password(password)
+                .driverClassName(driverClassName)
+                .type(HikariDataSource.class)
+                .build();
     }
 
     /**
@@ -65,7 +93,7 @@ public class DataSourceConfig {
      * @return Configured JdbcTemplate instance
      */
     @Bean(name = "warehouseJdbcTemplate")
-    public JdbcTemplate warehouseJdbcTemplate(DataSource warehouseDataSource) {
+    public JdbcTemplate warehouseJdbcTemplate(@Qualifier("warehouseDataSource") DataSource warehouseDataSource) {
         return new JdbcTemplate(warehouseDataSource);
     }
 }

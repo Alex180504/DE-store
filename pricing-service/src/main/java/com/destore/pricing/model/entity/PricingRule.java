@@ -40,7 +40,7 @@ public class PricingRule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rule_id")
-    private Long ruleId;
+    private Integer ruleId;
 
     /**
      * @brief Reference to item in warehouse database

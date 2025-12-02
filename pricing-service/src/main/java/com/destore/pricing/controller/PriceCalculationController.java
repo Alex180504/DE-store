@@ -93,7 +93,7 @@ public class PriceCalculationController {
         PriceCalculationResponse response = priceCalculationEngine.calculatePrice(request);
 
         log.info("Price calculation response: finalPrice={}, discount={}", 
-                 response.getFinalPrice(), response.getDiscountAmount());
+                 response.getFinalPrice(), response.getDiscount());
 
         return ResponseEntity.ok(response);
     }

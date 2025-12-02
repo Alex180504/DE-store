@@ -88,35 +88,30 @@ public class PriceCalculationEngine {
         BigDecimal discountAmount = promotionEngine.calculateDiscount(rule, unitPrice, quantity);
         BigDecimal finalPrice = subtotal.subtract(discountAmount);
 
-        // Step 4: Build response with detailed breakdown
+        // Step 4: Determine rule source
         boolean isStoreSpecific = rule.getStore() != null && !rule.getIsGlobal();
-        String notes = promotionEngine.getPromotionDescription(
-            rule.getPromotion(), 
-            rule.getPromotionValue(), 
-            quantity
-        );
+        String ruleSource = isStoreSpecific ? "STORE_SPECIFIC" : "GLOBAL";
 
-        if (isStoreSpecific) {
-            notes += " (store-specific pricing)";
-        } else {
-            notes += " (global pricing)";
-        }
+        // Step 5: Get item name from warehouse
+        String itemName = warehouseItemRepository.getItemName(itemId)
+                .orElse("Item #" + itemId);
 
-        log.info("Price calculated: itemId={}, finalPrice={}, discount={}, rule={}",
-                 itemId, finalPrice, discountAmount, rule.getRuleId());
+        log.info("Price calculated: itemId={}, finalPrice={}, discount={}, rule={}, source={}",
+                 itemId, finalPrice, discountAmount, rule.getRuleId(), ruleSource);
 
         return PriceCalculationResponse.builder()
                 .itemId(itemId)
+                .itemName(itemName)
                 .storeId(storeId)
                 .quantity(quantity)
                 .unitPrice(unitPrice)
                 .subtotal(subtotal)
-                .promotion(rule.getPromotion())
-                .discountAmount(discountAmount)
+                .promotionApplied(rule.getPromotion())
+                .promotionValue(rule.getPromotionValue())
+                .discount(discountAmount)
                 .finalPrice(finalPrice)
-                .usedStoreSpecificRule(isStoreSpecific)
+                .ruleSource(ruleSource)
                 .appliedRuleId(rule.getRuleId())
-                .calculationNotes(notes)
                 .build();
     }
 

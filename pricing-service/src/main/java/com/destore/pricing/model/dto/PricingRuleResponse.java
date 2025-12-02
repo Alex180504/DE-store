@@ -28,13 +28,13 @@ import java.time.LocalDateTime;
 public class PricingRuleResponse {
 
     @Schema(description = "Unique rule identifier", example = "1")
-    private Long ruleId;
+    private Integer ruleId;
 
     @Schema(description = "Item ID from warehouse", example = "1")
     private Integer itemId;
 
     @Schema(description = "Store ID (null = global rule)", example = "2")
-    private Long storeId;
+    private Integer storeId;
 
     @Schema(description = "Store code", example = "LON-001")
     private String storeCode;

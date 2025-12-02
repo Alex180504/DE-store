@@ -30,6 +30,9 @@ public class PriceCalculationResponse {
     @Schema(description = "Item ID", example = "1")
     private Integer itemId;
 
+    @Schema(description = "Item name from warehouse", example = "Cordless Drill")
+    private String itemName;
+
     @Schema(description = "Store ID used for calculation", example = "2")
     private Long storeId;
 
@@ -42,21 +45,21 @@ public class PriceCalculationResponse {
     @Schema(description = "Subtotal (unitPrice * quantity)", example = "239.97")
     private BigDecimal subtotal;
 
-    @Schema(description = "Promotion applied", example = "PERCENTAGE_OFF")
-    private PromotionType promotion;
+    @Schema(description = "Promotion type applied", example = "PERCENTAGE_OFF")
+    private PromotionType promotionApplied;
 
-    @Schema(description = "Promotion discount amount", example = "23.99")
-    private BigDecimal discountAmount;
+    @Schema(description = "Promotion value (percentage or fixed amount)", example = "10")
+    private BigDecimal promotionValue;
+
+    @Schema(description = "Discount amount calculated", example = "23.99")
+    private BigDecimal discount;
 
     @Schema(description = "Final price after promotions", example = "215.98")
     private BigDecimal finalPrice;
 
-    @Schema(description = "Whether a store-specific rule was used", example = "true")
-    private Boolean usedStoreSpecificRule;
+    @Schema(description = "Rule source: GLOBAL or STORE_SPECIFIC", example = "STORE_SPECIFIC")
+    private String ruleSource;
 
     @Schema(description = "Rule ID that was applied", example = "5")
-    private Long appliedRuleId;
-
-    @Schema(description = "Calculation details/notes", example = "10% discount applied")
-    private String calculationNotes;
+    private Integer appliedRuleId;
 }
