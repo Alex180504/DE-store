@@ -188,34 +188,32 @@ function switchTab(tabName) {
 // Load stores from API
 async function loadStores() {
     try {
-        const response = await authenticatedFetch(`${API_BASE}/rules`);
-        const rules = await response.json();
+        // Fetch stores from the dedicated store-service
+        const response = await authenticatedFetch('/api/stores?activeOnly=true');
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
         
-        // Extract unique stores from rules
-        const storeSet = new Map();
-        rules.forEach(rule => {
-            if (rule.storeId && rule.storeCode) {
-                storeSet.set(rule.storeId, {
-                    storeId: rule.storeId,
-                    storeCode: rule.storeCode,
-                    storeName: rule.storeName
-                });
-            }
-        });
+        const storesData = await response.json();
         
-        stores = Array.from(storeSet.values());
+        // Map store data to match expected format
+        stores = storesData.map(store => ({
+            storeId: store.storeId,
+            storeCode: store.storeCode,
+            storeName: store.storeName
+        }));
         
         // Populate store dropdowns
         populateStoreDropdowns();
     } catch (error) {
         console.error('Failed to load stores:', error);
-        // Fallback: Use hardcoded store data from DB init script
+        // Fallback: Use hardcoded store data from store-service init script
         stores = [
-            { storeId: 1, storeCode: 'HQ-GLOBAL', storeName: 'Global Pricing (Network-wide)' },
-            { storeId: 2, storeCode: 'LON-001', storeName: 'London Central' },
-            { storeId: 3, storeCode: 'MAN-001', storeName: 'Manchester Store' },
-            { storeId: 4, storeCode: 'BIR-001', storeName: 'Birmingham Store' },
-            { storeId: 5, storeCode: 'GLA-001', storeName: 'Glasgow Store' }
+            { storeId: 1, storeCode: 'LON-001', storeName: 'London Central' },
+            { storeId: 2, storeCode: 'MAN-001', storeName: 'Manchester Store' },
+            { storeId: 3, storeCode: 'BIR-001', storeName: 'Birmingham Store' },
+            { storeId: 4, storeCode: 'GLA-001', storeName: 'Glasgow Store' },
+            { storeId: 5, storeCode: 'EDI-001', storeName: 'Edinburgh Store' }
         ];
         populateStoreDropdowns();
     }

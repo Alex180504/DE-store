@@ -89,7 +89,7 @@ public class PriceCalculationEngine {
         BigDecimal finalPrice = subtotal.subtract(discountAmount);
 
         // Step 4: Determine rule source
-        boolean isStoreSpecific = rule.getStore() != null && !rule.getIsGlobal();
+        boolean isStoreSpecific = rule.getStoreId() != null && !rule.getIsGlobal();
         String ruleSource = isStoreSpecific ? "STORE_SPECIFIC" : "GLOBAL";
 
         // Step 5: Get item name from warehouse

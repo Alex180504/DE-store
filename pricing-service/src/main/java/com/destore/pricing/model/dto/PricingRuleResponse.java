@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
  * @brief DTO for returning pricing rule information
  * 
  * Used as response object when listing or retrieving pricing rules.
- * Includes store information when rule is store-specific.
+ * Store information should be fetched from store-service using storeId.
  * 
  * @author DE-Store Development Team
  * @version 1.0.0
@@ -33,14 +33,8 @@ public class PricingRuleResponse {
     @Schema(description = "Item ID from warehouse", example = "1")
     private Integer itemId;
 
-    @Schema(description = "Store ID (null = global rule)", example = "2")
+    @Schema(description = "Store ID (null = global rule, references store-service.stores.store_id)", example = "2")
     private Integer storeId;
-
-    @Schema(description = "Store code", example = "LON-001")
-    private String storeCode;
-
-    @Schema(description = "Store name", example = "London Central")
-    private String storeName;
 
     @Schema(description = "Item price", example = "79.99")
     private BigDecimal price;

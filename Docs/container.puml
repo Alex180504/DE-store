@@ -16,7 +16,8 @@ System_Boundary(c1, "DE-Store MSOA") {
 
     ' Domain Services
     Container(authSvc, "Auth Service", "Microservice", "Issues/Validates JWT, RBAC (Store vs Network roles)")
-    Container(priceSvc, "Pricing Service", "Microservice", "Calculates prices with hierarchical rules (Global + Store overrides)")
+    Container(storeSvc, "Store Service", "Microservice", "Manages store locations and metadata (CRUD for Network, read-only for Store managers)")
+    Container(priceSvc, "Pricing Service", "Microservice", "Calculates prices with hierarchical rules (Global + Store overrides, references Store Service)")
     Container(loyaltySvc, "Loyalty Service", "Microservice", "Network-wide loyalty points and promotional campaigns")
     Container(invSvc, "Inventory Service", "Microservice", "Syncs with Central Warehouse DB 1-2 times daily, generates low stock alerts")
     Container(finSvc, "Finance Adapter", "Microservice", "Proxy to Enabling Finance System with request validation")
@@ -24,7 +25,9 @@ System_Boundary(c1, "DE-Store MSOA") {
     Container(notifySvc, "Notification Service", "Microservice", "Event-driven email alerts (LowStock, etc.)")
 
     ' Data Stores (Per-Service Isolation)
-    ContainerDb(priceDB, "Pricing DB", "NoSQL/PostgreSQL", "Hierarchical pricing rules (Global + Store-specific)")
+    ContainerDb(authDB, "Auth DB", "PostgreSQL", "User credentials, roles, and authentication tokens")
+    ContainerDb(storeDB, "Store DB", "PostgreSQL", "Store locations: code, name, address, postcode, active status")
+    ContainerDb(priceDB, "Pricing DB", "PostgreSQL", "Hierarchical pricing rules (Global + Store-specific, store_id references only)")
     ContainerDb(loyaltyDB, "Loyalty DB", "PostgreSQL", "Customer profiles, points, network-wide offers")
 }
 
@@ -47,14 +50,19 @@ Rel(shoppingSys, apiGw, "Request Finance Approval", "REST/JSON over HTTPS")
 
 ' 3. API Gateway Routing
 Rel(apiGw, authSvc, "Validate JWT & Check Role", "REST/JSON over HTTPS")
+Rel(apiGw, storeSvc, "Manage Store Locations", "REST/JSON over HTTPS")
 Rel(apiGw, priceSvc, "Calculate Final Price", "REST/JSON over HTTPS")
 Rel(apiGw, loyaltySvc, "Apply Loyalty Discount", "REST/JSON over HTTPS")
 Rel(apiGw, finSvc, "Proxy Finance Request", "REST/JSON over HTTPS")
 Rel(apiGw, reportSvc, "Generate Reports", "REST/JSON over HTTPS")
 
 ' 4. Service Data Access
-Rel(priceSvc, priceDB, "Read/Write Pricing Rules", "MongoDB Wire Protocol / PostgreSQL Protocol")
+Rel(authSvc, authDB, "Read/Write User Credentials & Roles", "PostgreSQL Protocol (TCP/5432)")
+Rel(storeSvc, storeDB, "Read/Write Store Metadata", "PostgreSQL Protocol (TCP/5434)")
+Rel(priceSvc, priceDB, "Read/Write Pricing Rules (store_id references only)", "PostgreSQL Protocol (TCP/5432)")
+Rel(priceSvc, storeSvc, "Fetch Store Information", "REST/JSON over HTTP")
 Rel(loyaltySvc, loyaltyDB, "Read/Write Loyalty Data", "PostgreSQL Protocol (TCP/5432)")
+Rel(spa, storeSvc, "Query Store List for Dropdowns", "REST/JSON over HTTPS")
 
 ' 5. Legacy System Integration (Daily Batch Operations)
 Rel(invSvc, warehouseDB, "Daily Sync (1-2 times/day)", "JDBC over TCP")

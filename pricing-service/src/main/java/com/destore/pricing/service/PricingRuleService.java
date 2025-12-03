@@ -6,9 +6,7 @@ import com.destore.pricing.exception.PricingRuleNotFoundException;
 import com.destore.pricing.model.dto.PricingRuleRequest;
 import com.destore.pricing.model.dto.PricingRuleResponse;
 import com.destore.pricing.model.entity.PricingRule;
-import com.destore.pricing.model.entity.Store;
 import com.destore.pricing.repository.PricingRuleRepository;
-import com.destore.pricing.repository.StoreRepository;
 import com.destore.pricing.repository.WarehouseItemRepository;
 import com.destore.pricing.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +43,6 @@ import java.util.stream.Collectors;
 public class PricingRuleService {
 
     private final PricingRuleRepository pricingRuleRepository;
-    private final StoreRepository storeRepository;
     private final WarehouseItemRepository warehouseItemRepository;
 
     /**
@@ -77,6 +74,7 @@ public class PricingRuleService {
         // Build entity
         PricingRule rule = PricingRule.builder()
                 .itemId(request.getItemId())
+                .storeId(request.getStoreId()) // Store ID references store-service
                 .price(request.getPrice())
                 .promotion(request.getPromotion())
                 .promotionValue(request.getPromotionValue())
@@ -86,13 +84,6 @@ public class PricingRuleService {
                 .isActive(true)
                 .createdBy(request.getCreatedBy())
                 .build();
-
-        // Set store if store-specific
-        if (!Boolean.TRUE.equals(request.getIsGlobal()) && request.getStoreId() != null) {
-            Store store = storeRepository.findById(request.getStoreId())
-                    .orElseThrow(() -> new RuntimeException("Store not found: " + request.getStoreId()));
-            rule.setStore(store);
-        }
 
         PricingRule saved = pricingRuleRepository.save(rule);
         log.info("Pricing rule created: ruleId={}", saved.getRuleId());
@@ -181,6 +172,7 @@ public class PricingRuleService {
         existing.setPrice(request.getPrice());
         existing.setPromotion(request.getPromotion());
         existing.setPromotionValue(request.getPromotionValue());
+        existing.setStoreId(request.getStoreId()); // Store ID references store-service
         
         // Only update validity dates if provided
         if (request.getValidFrom() != null) {
@@ -188,15 +180,6 @@ public class PricingRuleService {
         }
         if (request.getValidTo() != null) {
             existing.setValidTo(request.getValidTo());
-        }
-
-        // Update store if changed
-        if (!Boolean.TRUE.equals(request.getIsGlobal()) && request.getStoreId() != null) {
-            Store store = storeRepository.findById(request.getStoreId())
-                    .orElseThrow(() -> new RuntimeException("Store not found: " + request.getStoreId()));
-            existing.setStore(store);
-        } else {
-            existing.setStore(null);
         }
 
         PricingRule updated = pricingRuleRepository.save(existing);
@@ -328,7 +311,7 @@ public class PricingRuleService {
             }
             
             // Store managers can only modify rules for their own store
-            Integer ruleStoreId = rule.getStore() != null ? rule.getStore().getStoreId() : null;
+            Integer ruleStoreId = rule.getStoreId();
             if (ruleStoreId == null || !ruleStoreId.equals(user.getStoreId())) {
                 throw new ForbiddenAccessException(
                     "modify pricing rule from another store",
@@ -351,9 +334,7 @@ public class PricingRuleService {
         return PricingRuleResponse.builder()
                 .ruleId(rule.getRuleId())
                 .itemId(rule.getItemId())
-                .storeId(rule.getStore() != null ? rule.getStore().getStoreId() : null)
-                .storeCode(rule.getStore() != null ? rule.getStore().getStoreCode() : null)
-                .storeName(rule.getStore() != null ? rule.getStore().getStoreName() : null)
+                .storeId(rule.getStoreId())
                 .price(rule.getPrice())
                 .promotion(rule.getPromotion())
                 .promotionValue(rule.getPromotionValue())

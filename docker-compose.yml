@@ -63,6 +63,27 @@ services:
       timeout: 5s
       retries: 5
 
+  # Store Database (PostgreSQL)
+  store-db:
+    image: postgres:15
+    container_name: de-store-store-db
+    environment:
+      POSTGRES_DB: stores
+      POSTGRES_USER: store_user
+      POSTGRES_PASSWORD: store_pass
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./store-service/db/init:/docker-entrypoint-initdb.d
+      - store-data:/var/lib/postgresql/data
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U store_user -d stores"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   # Pricing Service (Spring Boot)
   pricing-service:
     build:
@@ -127,6 +148,34 @@ services:
       - de-store-network
     restart: unless-stopped
 
+  # Store Service (Spring Boot)
+  store-service:
+    build:
+      context: ./store-service
+      dockerfile: Dockerfile
+    container_name: de-store-store-service
+    environment:
+      # Store DB Connection
+      SPRING_DATASOURCE_URL: jdbc:postgresql://store-db:5432/stores
+      SPRING_DATASOURCE_USERNAME: store_user
+      SPRING_DATASOURCE_PASSWORD: store_pass
+      # JWT Configuration (must match auth-service)
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "true"
+      # Application Settings
+      SERVER_PORT: 8083
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+    expose:
+      - "8083"
+    depends_on:
+      store-db:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
   # API Gateway (Nginx)
   api-gateway:
     build:
@@ -138,6 +187,7 @@ services:
     depends_on:
       - pricing-service
       - auth-service
+      - store-service
     networks:
       - de-store-network
     restart: unless-stopped
@@ -178,3 +228,5 @@ volumes:
     name: de-store-pricing-data
   auth-data:
     name: de-store-auth-data
+  store-data:
+    name: de-store-store-data

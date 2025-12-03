@@ -37,7 +37,7 @@ public interface PricingRuleRepository extends JpaRepository<PricingRule, Intege
      */
     @Query("SELECT pr FROM PricingRule pr " +
            "WHERE pr.itemId = :itemId " +
-           "AND (pr.store.storeId = :storeId OR (pr.isGlobal = true AND pr.store IS NULL)) " +
+           "AND (pr.storeId = :storeId OR (pr.isGlobal = true AND pr.storeId IS NULL)) " +
            "AND pr.isActive = true " +
            "AND pr.validFrom <= :now " +
            "AND (pr.validTo IS NULL OR pr.validTo > :now) " +
@@ -61,7 +61,7 @@ public interface PricingRuleRepository extends JpaRepository<PricingRule, Intege
     @Query("SELECT pr FROM PricingRule pr " +
            "WHERE pr.itemId = :itemId " +
            "AND pr.isGlobal = true " +
-           "AND pr.store IS NULL " +
+           "AND pr.storeId IS NULL " +
            "AND pr.isActive = true " +
            "AND pr.validFrom <= :now " +
            "AND (pr.validTo IS NULL OR pr.validTo > :now)")
@@ -82,14 +82,14 @@ public interface PricingRuleRepository extends JpaRepository<PricingRule, Intege
      * @param storeId The store ID
      * @return List of all store-specific rules
      */
-    @Query("SELECT pr FROM PricingRule pr WHERE pr.store.storeId = :storeId")
+    @Query("SELECT pr FROM PricingRule pr WHERE pr.storeId = :storeId")
     List<PricingRule> findByStoreId(@Param("storeId") Integer storeId);
 
     /**
      * @brief Find all global (network-wide) pricing rules
      * @return List of all global rules
      */
-    @Query("SELECT pr FROM PricingRule pr WHERE pr.isGlobal = true AND pr.store IS NULL")
+    @Query("SELECT pr FROM PricingRule pr WHERE pr.isGlobal = true AND pr.storeId IS NULL")
     List<PricingRule> findAllGlobalRules();
 
     /**
@@ -118,7 +118,7 @@ public interface PricingRuleRepository extends JpaRepository<PricingRule, Intege
      */
     @Query("SELECT CASE WHEN COUNT(pr) > 0 THEN true ELSE false END FROM PricingRule pr " +
            "WHERE pr.itemId = :itemId " +
-           "AND (pr.store.storeId = :storeId OR (pr.isGlobal = true AND pr.store IS NULL)) " +
+           "AND (pr.storeId = :storeId OR (pr.isGlobal = true AND pr.storeId IS NULL)) " +
            "AND pr.isActive = true " +
            "AND pr.validFrom <= :now " +
            "AND (pr.validTo IS NULL OR pr.validTo > :now)")
