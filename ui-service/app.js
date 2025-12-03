@@ -71,10 +71,15 @@ async function authenticatedFetch(url, options = {}) {
 
     const response = await fetch(url, { ...options, headers });
 
+
     if (response.status === 401 || response.status === 403) {
-        // Token expired or invalid - redirect to login
         logout();
         throw new Error('Session expired');
+    }
+
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: 'Request failed' }));
+        throw new Error(error.message || `HTTP ${response.status}`);
     }
 
     return response;
