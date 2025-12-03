@@ -48,6 +48,11 @@ management:
     health:
       show-details: always
 
+# JWT Configuration (must match auth-service)
+jwt:
+  secret: ${JWT_SECRET:DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction}
+  expiration: ${JWT_EXPIRATION:86400000}  # 24 hours in milliseconds
+
 # Logging Configuration
 logging:
   level:

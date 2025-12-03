@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS stores (
 
 -- Pricing rules table: Hierarchical pricing with global/store-level support
 CREATE TABLE IF NOT EXISTS pricing_rules (
-    rule_id BIGSERIAL PRIMARY KEY,
+    rule_id SERIAL PRIMARY KEY,
     item_id INT NOT NULL,                          -- Reference to warehouse.items.item_id
     store_id INT REFERENCES stores(store_id),      -- NULL = Global rule, NOT NULL = Store-specific
     
