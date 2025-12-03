@@ -22,7 +22,7 @@ import java.util.Optional;
  * @version 1.0.0
  */
 @Repository
-public interface PricingRuleRepository extends JpaRepository<PricingRule, Long> {
+public interface PricingRuleRepository extends JpaRepository<PricingRule, Integer> {
 
     /**
      * @brief Find all active pricing rules for a specific item and store
@@ -44,7 +44,7 @@ public interface PricingRuleRepository extends JpaRepository<PricingRule, Long> 
            "ORDER BY pr.isGlobal ASC, pr.createdAt DESC")
     List<PricingRule> findActiveRulesForItemAndStore(
             @Param("itemId") Integer itemId,
-            @Param("storeId") Long storeId,
+            @Param("storeId") Integer storeId,
             @Param("now") LocalDateTime now
     );
 
@@ -83,7 +83,7 @@ public interface PricingRuleRepository extends JpaRepository<PricingRule, Long> 
      * @return List of all store-specific rules
      */
     @Query("SELECT pr FROM PricingRule pr WHERE pr.store.storeId = :storeId")
-    List<PricingRule> findByStoreId(@Param("storeId") Long storeId);
+    List<PricingRule> findByStoreId(@Param("storeId") Integer storeId);
 
     /**
      * @brief Find all global (network-wide) pricing rules
@@ -124,7 +124,7 @@ public interface PricingRuleRepository extends JpaRepository<PricingRule, Long> 
            "AND (pr.validTo IS NULL OR pr.validTo > :now)")
     boolean existsActiveRuleForItemAndStore(
             @Param("itemId") Integer itemId,
-            @Param("storeId") Long storeId,
+            @Param("storeId") Integer storeId,
             @Param("now") LocalDateTime now
     );
 }

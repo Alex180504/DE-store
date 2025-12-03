@@ -152,7 +152,7 @@ public class PricingRuleController {
             content = @Content
         )
     })
-    public ResponseEntity<PricingRuleResponse> getRule(@PathVariable Long ruleId) {
+    public ResponseEntity<PricingRuleResponse> getRule(@PathVariable Integer ruleId) {
         log.info("Fetching pricing rule: ruleId={}", ruleId);
         PricingRuleResponse response = pricingRuleService.getRule(ruleId);
         return ResponseEntity.ok(response);
@@ -190,7 +190,7 @@ public class PricingRuleController {
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Rules retrieved successfully")
     })
-    public ResponseEntity<List<PricingRuleResponse>> getRulesByStore(@PathVariable Long storeId) {
+    public ResponseEntity<List<PricingRuleResponse>> getRulesByStore(@PathVariable Integer storeId) {
         log.info("Fetching pricing rules for store: storeId={}", storeId);
         List<PricingRuleResponse> rules = pricingRuleService.getRulesByStore(storeId);
         return ResponseEntity.ok(rules);
@@ -225,7 +225,7 @@ public class PricingRuleController {
         )
     })
     public ResponseEntity<PricingRuleResponse> updateRule(
-            @PathVariable Long ruleId,
+            @PathVariable Integer ruleId,
             @Valid @RequestBody PricingRuleRequest request) {
         
         log.info("Updating pricing rule: ruleId={}", ruleId);
@@ -251,7 +251,7 @@ public class PricingRuleController {
             content = @Content
         )
     })
-    public ResponseEntity<Void> deleteRule(@PathVariable Long ruleId) {
+    public ResponseEntity<Void> deleteRule(@PathVariable Integer ruleId) {
         log.info("Deleting pricing rule: ruleId={}", ruleId);
         pricingRuleService.deleteRule(ruleId);
         return ResponseEntity.noContent().build();
@@ -283,7 +283,7 @@ public class PricingRuleController {
             content = @Content
         )
     })
-    public ResponseEntity<PricingRuleResponse> deactivateRule(@PathVariable Long ruleId) {
+    public ResponseEntity<PricingRuleResponse> deactivateRule(@PathVariable Integer ruleId) {
         log.info("Deactivating pricing rule: ruleId={}", ruleId);
         PricingRuleResponse response = pricingRuleService.deactivateRule(ruleId);
         return ResponseEntity.ok(response);

@@ -118,7 +118,7 @@ public class PriceCalculationController {
     })
     public ResponseEntity<Boolean> checkPricingExists(
             @RequestParam Integer itemId,
-            @RequestParam(required = false) Long storeId) {
+            @RequestParam(required = false) Integer storeId) {
         
         boolean exists = priceCalculationEngine.hasPricingRule(itemId, storeId);
         return ResponseEntity.ok(exists);

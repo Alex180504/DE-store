@@ -79,7 +79,7 @@ public class PricingRuleCRUDIntegrationTest {
     public void testCreateStoreSpecificRule() {
         PricingRuleRequest request = PricingRuleRequest.builder()
                 .itemId(2)
-                .storeId(1L)
+                .storeId(1)
                 .price(new BigDecimal("24.99"))
                 .promotion(PromotionType.PERCENTAGE_OFF)
                 .promotionValue(new BigDecimal("10"))
@@ -97,7 +97,7 @@ public class PricingRuleCRUDIntegrationTest {
         
         PricingRuleResponse result = response.getBody();
         assertThat(result).isNotNull();
-        assertThat(result.getStoreId()).isEqualTo(1L);
+        assertThat(result.getStoreId()).isEqualTo(1);
         assertThat(result.getIsGlobal()).isFalse();
         assertThat(result.getPromotion()).isEqualTo(PromotionType.PERCENTAGE_OFF);
         assertThat(result.getPromotionValue()).isEqualByComparingTo(new BigDecimal("10"));
@@ -230,7 +230,7 @@ public class PricingRuleCRUDIntegrationTest {
                     .price(new BigDecimal("29.99").add(BigDecimal.valueOf(i)))
                     .promotion(PromotionType.NONE)
                     .isGlobal(i == 0) // First one global, others store-specific
-                    .storeId(i > 0 ? (long) i : null)
+                    .storeId(i > 0 ? i : null)
                     .createdBy("Test User")
                     .build();
 
@@ -261,7 +261,7 @@ public class PricingRuleCRUDIntegrationTest {
      */
     @Test
     public void testGetRulesByStore() {
-        Long storeId = 2L;
+        Integer storeId = 2;
 
         // Create rules for specific store
         for (int i = 0; i < 2; i++) {

@@ -34,7 +34,7 @@ public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "store_id")
-    private Long storeId;
+    private Integer storeId;
 
     /**
      * @brief Unique store code (e.g., 'LON-001', 'MAN-001')

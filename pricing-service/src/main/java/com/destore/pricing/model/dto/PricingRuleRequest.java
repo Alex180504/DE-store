@@ -34,7 +34,7 @@ public class PricingRuleRequest {
     private Integer itemId;
 
     @Schema(description = "Store ID for store-specific pricing (null = global)", example = "2")
-    private Long storeId;
+    private Integer storeId;
 
     @NotNull(message = "Price is required")
     @DecimalMin(value = "0.0", inclusive = false, message = "Price must be greater than 0")

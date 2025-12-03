@@ -32,7 +32,7 @@ public class PriceCalculationRequest {
     private Integer itemId;
 
     @Schema(description = "Store ID (null = use global pricing)", example = "2")
-    private Long storeId;
+    private Integer storeId;
 
     @NotNull(message = "Quantity is required")
     @Positive(message = "Quantity must be positive")

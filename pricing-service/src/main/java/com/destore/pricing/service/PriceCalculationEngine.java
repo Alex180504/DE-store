@@ -68,7 +68,7 @@ public class PriceCalculationEngine {
     @Transactional(readOnly = true)
     public PriceCalculationResponse calculatePrice(PriceCalculationRequest request) {
         Integer itemId = request.getItemId();
-        Long storeId = request.getStoreId();
+        Integer storeId = request.getStoreId();
         Integer quantity = request.getQuantity();
 
         log.info("Calculating price: itemId={}, storeId={}, quantity={}", itemId, storeId, quantity);
@@ -135,7 +135,7 @@ public class PriceCalculationEngine {
      * @return The applicable pricing rule
      * @throws PricingRuleNotFoundException if no rule found
      */
-    private PricingRule findApplicableRule(Integer itemId, Long storeId) {
+    private PricingRule findApplicableRule(Integer itemId, Integer storeId) {
         LocalDateTime now = LocalDateTime.now();
 
         if (storeId != null) {
@@ -171,7 +171,7 @@ public class PriceCalculationEngine {
      * @param storeId The store ID (can be null)
      * @return true if an active pricing rule exists
      */
-    public boolean hasPricingRule(Integer itemId, Long storeId) {
+    public boolean hasPricingRule(Integer itemId, Integer storeId) {
         LocalDateTime now = LocalDateTime.now();
         
         if (storeId != null) {

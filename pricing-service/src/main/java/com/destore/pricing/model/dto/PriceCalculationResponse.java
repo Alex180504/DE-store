@@ -34,7 +34,7 @@ public class PriceCalculationResponse {
     private String itemName;
 
     @Schema(description = "Store ID used for calculation", example = "2")
-    private Long storeId;
+    private Integer storeId;
 
     @Schema(description = "Quantity purchased", example = "3")
     private Integer quantity;

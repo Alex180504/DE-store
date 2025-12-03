@@ -16,7 +16,7 @@ import java.util.Optional;
  * @version 1.0.0
  */
 @Repository
-public interface StoreRepository extends JpaRepository<Store, Long> {
+public interface StoreRepository extends JpaRepository<Store, Integer> {
 
     /**
      * @brief Find a store by its unique store code

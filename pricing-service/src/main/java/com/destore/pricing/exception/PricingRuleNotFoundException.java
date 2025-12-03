@@ -17,7 +17,7 @@ public class PricingRuleNotFoundException extends RuntimeException {
      * @brief Construct exception with rule ID
      * @param ruleId The pricing rule ID that was not found
      */
-    public PricingRuleNotFoundException(Long ruleId) {
+    public PricingRuleNotFoundException(Integer ruleId) {
         super("Pricing rule not found: ruleId=" + ruleId);
     }
 
@@ -26,7 +26,7 @@ public class PricingRuleNotFoundException extends RuntimeException {
      * @param itemId The item ID
      * @param storeId The store ID (can be null for global)
      */
-    public PricingRuleNotFoundException(Integer itemId, Long storeId) {
+    public PricingRuleNotFoundException(Integer itemId, Integer storeId) {
         super(String.format("No pricing rule found for itemId=%d, storeId=%s", 
               itemId, storeId != null ? storeId.toString() : "global"));
     }

@@ -99,7 +99,7 @@ public class PricingRuleService {
      * @throws PricingRuleNotFoundException if rule not found
      */
     @Transactional(readOnly = true)
-    public PricingRuleResponse getRule(Long ruleId) {
+    public PricingRuleResponse getRule(Integer ruleId) {
         PricingRule rule = pricingRuleRepository.findById(ruleId)
                 .orElseThrow(() -> new PricingRuleNotFoundException(ruleId));
         return toResponse(rule);
@@ -145,7 +145,7 @@ public class PricingRuleService {
      * @return List of store-specific rules
      */
     @Transactional(readOnly = true)
-    public List<PricingRuleResponse> getRulesByStore(Long storeId) {
+    public List<PricingRuleResponse> getRulesByStore(Integer storeId) {
         return pricingRuleRepository.findByStoreId(storeId).stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
@@ -159,7 +159,7 @@ public class PricingRuleService {
      * @throws PricingRuleNotFoundException if rule not found
      */
     @Transactional
-    public PricingRuleResponse updateRule(Long ruleId, PricingRuleRequest request) {
+    public PricingRuleResponse updateRule(Integer ruleId, PricingRuleRequest request) {
         log.info("Updating pricing rule: ruleId={}", ruleId);
 
         PricingRule existing = pricingRuleRepository.findById(ruleId)
@@ -199,7 +199,7 @@ public class PricingRuleService {
      * @throws PricingRuleNotFoundException if rule not found
      */
     @Transactional
-    public void deleteRule(Long ruleId) {
+    public void deleteRule(Integer ruleId) {
         log.info("Deleting pricing rule: ruleId={}", ruleId);
 
         if (!pricingRuleRepository.existsById(ruleId)) {
@@ -217,7 +217,7 @@ public class PricingRuleService {
      * @throws PricingRuleNotFoundException if rule not found
      */
     @Transactional
-    public PricingRuleResponse deactivateRule(Long ruleId) {
+    public PricingRuleResponse deactivateRule(Integer ruleId) {
         log.info("Deactivating pricing rule: ruleId={}", ruleId);
 
         PricingRule rule = pricingRuleRepository.findById(ruleId)

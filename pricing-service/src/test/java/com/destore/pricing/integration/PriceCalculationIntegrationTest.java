@@ -43,7 +43,7 @@ public class PriceCalculationIntegrationTest {
     public void testBasicPriceCalculation_NoPromotion() {
         PriceCalculationRequest request = PriceCalculationRequest.builder()
                 .itemId(1)
-                .storeId(1L)
+                .storeId(1)
                 .quantity(2)
                 .build();
 
@@ -71,7 +71,7 @@ public class PriceCalculationIntegrationTest {
     public void testPriceCalculation_ThreeForTwo() {
         PriceCalculationRequest request = PriceCalculationRequest.builder()
                 .itemId(2) // Assuming item 2 has 3FOR2 promotion
-                .storeId(1L)
+                .storeId(1)
                 .quantity(6) // Should get 2 free items
                 .build();
 
@@ -100,7 +100,7 @@ public class PriceCalculationIntegrationTest {
     public void testPriceCalculation_BOGOF() {
         PriceCalculationRequest request = PriceCalculationRequest.builder()
                 .itemId(3) // Assuming item 3 has BOGOF
-                .storeId(1L)
+                .storeId(1)
                 .quantity(4) // Should get 2 free
                 .build();
 
@@ -129,7 +129,7 @@ public class PriceCalculationIntegrationTest {
     public void testPriceCalculation_PercentageOff() {
         PriceCalculationRequest request = PriceCalculationRequest.builder()
                 .itemId(4) // Assuming item 4 has 10% off
-                .storeId(1L)
+                .storeId(1)
                 .quantity(5)
                 .build();
 
@@ -161,7 +161,7 @@ public class PriceCalculationIntegrationTest {
     public void testPriceCalculation_FixedDiscount() {
         PriceCalculationRequest request = PriceCalculationRequest.builder()
                 .itemId(5) // Assuming item 5 has £5 off
-                .storeId(1L)
+                .storeId(1)
                 .quantity(3)
                 .build();
 
@@ -191,7 +191,7 @@ public class PriceCalculationIntegrationTest {
         // Get price for London store (store-specific rule)
         PriceCalculationRequest londonRequest = PriceCalculationRequest.builder()
                 .itemId(10) // Item with both global and London-specific rules
-                .storeId(1L) // London Central
+                .storeId(1) // London Central
                 .quantity(1)
                 .build();
 
@@ -204,7 +204,7 @@ public class PriceCalculationIntegrationTest {
         // Get price for different store (should use global rule)
         PriceCalculationRequest birminghamRequest = PriceCalculationRequest.builder()
                 .itemId(10)
-                .storeId(3L) // Birmingham Store
+                .storeId(3) // Birmingham Store
                 .quantity(1)
                 .build();
 
@@ -238,7 +238,7 @@ public class PriceCalculationIntegrationTest {
     public void testPriceCalculation_InvalidItemId() {
         PriceCalculationRequest request = PriceCalculationRequest.builder()
                 .itemId(9999) // Non-existent item
-                .storeId(1L)
+                .storeId(1)
                 .quantity(1)
                 .build();
 
@@ -258,7 +258,7 @@ public class PriceCalculationIntegrationTest {
     public void testPriceCalculation_InvalidQuantity() {
         PriceCalculationRequest request = PriceCalculationRequest.builder()
                 .itemId(1)
-                .storeId(1L)
+                .storeId(1)
                 .quantity(0) // Invalid quantity
                 .build();
 
@@ -278,7 +278,7 @@ public class PriceCalculationIntegrationTest {
     public void testPriceCalculation_Consistency() {
         PriceCalculationRequest request = PriceCalculationRequest.builder()
                 .itemId(1)
-                .storeId(1L)
+                .storeId(1)
                 .quantity(3)
                 .build();
 
@@ -316,7 +316,7 @@ public class PriceCalculationIntegrationTest {
     public void testPriceCalculation_LargeQuantity() {
         PriceCalculationRequest request = PriceCalculationRequest.builder()
                 .itemId(2)
-                .storeId(1L)
+                .storeId(1)
                 .quantity(100) // Large order
                 .build();
 
