@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS stores (
 
 -- Pricing rules table: Hierarchical pricing with global/store-level support
 CREATE TABLE IF NOT EXISTS pricing_rules (
-    rule_id SERIAL PRIMARY KEY,
+    rule_id BIGSERIAL PRIMARY KEY,
     item_id INT NOT NULL,                          -- Reference to warehouse.items.item_id
     store_id INT REFERENCES stores(store_id),      -- NULL = Global rule, NOT NULL = Store-specific
     
@@ -69,7 +69,7 @@ CREATE TRIGGER update_stores_updated_at BEFORE UPDATE
 
 -- Sample stores data
 INSERT INTO stores (store_code, store_name, location) VALUES
-('HQ-GLOBAL', 'Global Pricing (Network-wide)', 'Headquarters'),
+('HQ-000', 'Global Pricing (Network-wide)', 'Headquarters'),
 ('LON-001', 'London Central', 'London, UK'),
 ('MAN-001', 'Manchester Store', 'Manchester, UK'),
 ('BIR-001', 'Birmingham Store', 'Birmingham, UK'),
