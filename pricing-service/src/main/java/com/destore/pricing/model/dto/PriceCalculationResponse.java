@@ -61,5 +61,5 @@ public class PriceCalculationResponse {
     private String ruleSource;
 
     @Schema(description = "Rule ID that was applied", example = "5")
-    private Integer appliedRuleId;
+    private Long appliedRuleId;
 }

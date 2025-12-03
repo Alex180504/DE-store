@@ -6,7 +6,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Stores table: Network stores that can have specific pricing
 CREATE TABLE IF NOT EXISTS stores (
-    store_id SERIAL PRIMARY KEY,
+    store_id BIGSERIAL PRIMARY KEY,
     store_code VARCHAR(20) UNIQUE NOT NULL,
     store_name VARCHAR(255) NOT NULL,
     location VARCHAR(255),
@@ -17,9 +17,9 @@ CREATE TABLE IF NOT EXISTS stores (
 
 -- Pricing rules table: Hierarchical pricing with global/store-level support
 CREATE TABLE IF NOT EXISTS pricing_rules (
-    rule_id SERIAL PRIMARY KEY,
+    rule_id BIGSERIAL PRIMARY KEY,
     item_id INT NOT NULL,                          -- Reference to warehouse.items.item_id
-    store_id INT REFERENCES stores(store_id),      -- NULL = Global rule, NOT NULL = Store-specific
+    store_id BIGINT REFERENCES stores(store_id),   -- NULL = Global rule, NOT NULL = Store-specific
     
     -- Pricing information
     price DECIMAL(10,2) NOT NULL,                  -- Override price or base price

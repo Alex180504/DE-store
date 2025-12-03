@@ -200,7 +200,7 @@ public class PricingRuleCRUDIntegrationTest {
         );
 
         assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        Integer ruleId = createResponse.getBody().getRuleId();
+        Long ruleId = createResponse.getBody().getRuleId();
 
         // Now get it by ID
         ResponseEntity<PricingRuleResponse> getResponse = restTemplate.getForEntity(
@@ -261,7 +261,7 @@ public class PricingRuleCRUDIntegrationTest {
      */
     @Test
     public void testGetRulesByStore() {
-        Long storeId = 2L;
+        long storeId = 2L;
 
         // Create rules for specific store
         for (int i = 0; i < 2; i++) {
@@ -316,7 +316,7 @@ public class PricingRuleCRUDIntegrationTest {
                 PricingRuleResponse.class
         );
 
-        Integer ruleId = createResponse.getBody().getRuleId();
+        Long ruleId = createResponse.getBody().getRuleId();
 
         // Update the rule
         PricingRuleRequest updateRequest = PricingRuleRequest.builder()
@@ -366,7 +366,7 @@ public class PricingRuleCRUDIntegrationTest {
                 PricingRuleResponse.class
         );
 
-        Integer ruleId = createResponse.getBody().getRuleId();
+        Long ruleId = createResponse.getBody().getRuleId();
 
         // Deactivate it
         ResponseEntity<PricingRuleResponse> deactivateResponse = restTemplate.postForEntity(
@@ -414,7 +414,7 @@ public class PricingRuleCRUDIntegrationTest {
                 PricingRuleResponse.class
         );
 
-        Integer ruleId = createResponse.getBody().getRuleId();
+        Long ruleId = createResponse.getBody().getRuleId();
 
         // Delete it
         ResponseEntity<Void> deleteResponse = restTemplate.exchange(
