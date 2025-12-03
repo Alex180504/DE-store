@@ -1,0 +1,124 @@
+services:
+  # Legacy Warehouse Database (MySQL)
+  warehouse-db:
+    image: mysql:8.0
+    container_name: de-store-warehouse-db
+    environment:
+      MYSQL_ROOT_PASSWORD: warehouse_root_pass
+      MYSQL_DATABASE: warehouse
+      MYSQL_USER: warehouse_user
+      MYSQL_PASSWORD: warehouse_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./warehouse-db/init:/docker-entrypoint-initdb.d
+      - warehouse-data:/var/lib/mysql
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Pricing Database (PostgreSQL)
+  pricing-db:
+    image: postgres:15
+    container_name: de-store-pricing-db
+    environment:
+      POSTGRES_DB: pricing
+      POSTGRES_USER: pricing_user
+      POSTGRES_PASSWORD: pricing_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pricing-service/db/init:/docker-entrypoint-initdb.d
+      - pricing-data:/var/lib/postgresql/data
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pricing_user -d pricing"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Pricing Service (Spring Boot)
+  pricing-service:
+    build:
+      context: ./pricing-service
+      dockerfile: Dockerfile
+    container_name: de-store-pricing-service
+    environment:
+      # Pricing DB Connection
+      SPRING_DATASOURCE_URL: jdbc:postgresql://pricing-db:5432/pricing
+      SPRING_DATASOURCE_USERNAME: pricing_user
+      SPRING_DATASOURCE_PASSWORD: pricing_pass
+      # Warehouse DB Connection (Read-Only)
+      WAREHOUSE_DATASOURCE_URL: jdbc:mysql://warehouse-db:3306/warehouse
+      WAREHOUSE_DATASOURCE_USERNAME: warehouse_user
+      WAREHOUSE_DATASOURCE_PASSWORD: warehouse_pass
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "true"
+      # Application Settings
+      SERVER_PORT: 8080
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+    expose:
+      - "8080"
+    depends_on:
+      pricing-db:
+        condition: service_healthy
+      warehouse-db:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
+  # API Gateway (Nginx)
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: de-store-api-gateway
+    ports:
+      - "80:80"
+    depends_on:
+      - pricing-service
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # Management UI (Nginx + Static Files)
+  ui-service:
+    build:
+      context: ./ui-service
+      dockerfile: Dockerfile
+    container_name: de-store-ui-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+networks:
+  de-store-network:
+    driver: bridge
+    name: de-store-network
+
+volumes:
+  warehouse-data:
+    name: de-store-warehouse-data
+  pricing-data:
+    name: de-store-pricing-data

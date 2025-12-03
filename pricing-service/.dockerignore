@@ -1,0 +1,29 @@
+# Maven build artifacts
+target/
+*.jar
+*.war
+*.class
+
+# IDE
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+.coverage
+htmlcov/
+
+# Temporary
+*.tmp
+*.bak

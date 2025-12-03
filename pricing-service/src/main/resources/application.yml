@@ -1,0 +1,80 @@
+spring:
+  application:
+    name: pricing-service
+  
+  # Primary Datasource: Pricing Database (PostgreSQL)
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pricing}
+    jdbc-url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/pricing}
+    username: ${SPRING_DATASOURCE_USERNAME:pricing_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:pricing_pass}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+  
+  # JPA/Hibernate Configuration
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    show-sql: ${SPRING_JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        use_sql_comments: true
+    open-in-view: false
+
+# Server Configuration
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# Actuator Configuration (Health Checks)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.destore: ${LOGGING_LEVEL_COM_DESTORE:DEBUG}
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# OpenAPI/Swagger Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  show-actuator: true
+
+# Custom Application Properties
+pricing:
+  warehouse:
+    # Warehouse Database (MySQL - Read-Only)
+    datasource:
+      url: ${WAREHOUSE_DATASOURCE_URL:jdbc:mysql://localhost:3306/warehouse}
+      jdbc-url: ${WAREHOUSE_DATASOURCE_URL:jdbc:mysql://localhost:3306/warehouse}
+      username: ${WAREHOUSE_DATASOURCE_USERNAME:warehouse_user}
+      password: ${WAREHOUSE_DATASOURCE_PASSWORD:warehouse_pass}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
