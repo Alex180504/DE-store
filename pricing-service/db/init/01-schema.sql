@@ -69,7 +69,7 @@ CREATE TRIGGER update_stores_updated_at BEFORE UPDATE
 
 -- Sample stores data
 INSERT INTO stores (store_code, store_name, location) VALUES
-('HQ-GLOBAL', 'Global Pricing (Network-wide)', 'Headquarters'),
+('HQ-000', 'Global Pricing (Network-wide)', 'Headquarters'),
 ('LON-001', 'London Central', 'London, UK'),
 ('MAN-001', 'Manchester Store', 'Manchester, UK'),
 ('BIR-001', 'Birmingham Store', 'Birmingham, UK'),
