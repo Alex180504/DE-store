@@ -1,5 +1,6 @@
 package com.destore.pricing.controller;
 
+import com.destore.pricing.exception.ForbiddenAccessException;
 import com.destore.pricing.exception.ItemNotFoundException;
 import com.destore.pricing.exception.PricingRuleNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +50,17 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handlePricingRuleNotFound(PricingRuleNotFoundException ex) {
         log.error("Pricing rule not found: {}", ex.getMessage());
         return buildErrorResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * @brief Handle forbidden access exceptions
+     * @param ex The exception
+     * @return Error response with 403 status
+     */
+    @ExceptionHandler(ForbiddenAccessException.class)
+    public ResponseEntity<Map<String, Object>> handleForbiddenAccess(ForbiddenAccessException ex) {
+        log.warn("Forbidden access: {}", ex.getMessage());
+        return buildErrorResponse(ex.getMessage(), HttpStatus.FORBIDDEN);
     }
 
     /**

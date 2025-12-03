@@ -1,25 +1,15 @@
 -- Pricing Database Schema (PostgreSQL)
 -- Supports hierarchical pricing rules: Global + Store-level overrides
+-- NOTE: Store information is now managed by the store-service
 
 -- Extension for UUID support
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- Stores table: Network stores that can have specific pricing
-CREATE TABLE IF NOT EXISTS stores (
-    store_id SERIAL PRIMARY KEY,
-    store_code VARCHAR(20) UNIQUE NOT NULL,
-    store_name VARCHAR(255) NOT NULL,
-    location VARCHAR(255),
-    is_active BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
 -- Pricing rules table: Hierarchical pricing with global/store-level support
 CREATE TABLE IF NOT EXISTS pricing_rules (
-    rule_id BIGSERIAL PRIMARY KEY,
+    rule_id SERIAL PRIMARY KEY,
     item_id INT NOT NULL,                          -- Reference to warehouse.items.item_id
-    store_id INT REFERENCES stores(store_id),      -- NULL = Global rule, NOT NULL = Store-specific
+    store_id INT,                                  -- NULL = Global rule, NOT NULL = Store-specific (references store-service.stores.store_id)
     
     -- Pricing information
     price DECIMAL(10,2) NOT NULL,                  -- Override price or base price
@@ -64,17 +54,6 @@ $$ language 'plpgsql';
 CREATE TRIGGER update_pricing_rules_updated_at BEFORE UPDATE
     ON pricing_rules FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_stores_updated_at BEFORE UPDATE
-    ON stores FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
--- Sample stores data
-INSERT INTO stores (store_code, store_name, location) VALUES
-('HQ-000', 'Global Pricing (Network-wide)', 'Headquarters'),
-('LON-001', 'London Central', 'London, UK'),
-('MAN-001', 'Manchester Store', 'Manchester, UK'),
-('BIR-001', 'Birmingham Store', 'Birmingham, UK'),
-('GLA-001', 'Glasgow Store', 'Glasgow, UK');
-
 -- Sample global pricing rules (store_id = NULL, is_global = TRUE)
 -- Global rules with promotions
 INSERT INTO pricing_rules (item_id, store_id, price, promotion, promotion_value, is_global, created_by) VALUES
@@ -97,24 +76,23 @@ INSERT INTO pricing_rules (item_id, store_id, price, promotion, promotion_value,
 (27, NULL, 139.99, 'FIXED_DISCOUNT', 20.00, TRUE, 'network_manager'); -- Lawn Mower: £20 off
 
 -- Store-specific pricing overrides (overrides global pricing)
--- London store: Premium pricing
+-- London store (store_id = 1): Premium pricing
 INSERT INTO pricing_rules (item_id, store_id, price, promotion, promotion_value, is_global, created_by) VALUES
-(1, 2, 84.99, 'NONE', NULL, FALSE, 'store_manager_lon'),              -- Cordless Drill: higher price in London
-(27, 2, 159.99, 'NONE', NULL, FALSE, 'store_manager_lon');            -- Lawn Mower: higher price
+(1, 1, 84.99, 'NONE', NULL, FALSE, 'store_manager_lon'),              -- Cordless Drill: higher price in London
+(27, 1, 159.99, 'NONE', NULL, FALSE, 'store_manager_lon');            -- Lawn Mower: higher price
 
--- Manchester store: Special BOGOF promotion
+-- Manchester store (store_id = 2): Special BOGOF promotion
 INSERT INTO pricing_rules (item_id, store_id, price, promotion, promotion_value, is_global, created_by) VALUES
-(2, 3, 12.99, 'BOGOF', NULL, FALSE, 'store_manager_man'),             -- Hammer: BOGOF
-(5, 3, 8.99, 'BOGOF', NULL, FALSE, 'store_manager_man');              -- Tape Measure: BOGOF
+(2, 2, 12.99, 'BOGOF', NULL, FALSE, 'store_manager_man'),             -- Hammer: BOGOF
+(5, 2, 8.99, 'BOGOF', NULL, FALSE, 'store_manager_man');              -- Tape Measure: BOGOF
 
 -- View for active pricing rules
+-- NOTE: Store information (store_code, store_name) is retrieved from store-service
 CREATE OR REPLACE VIEW active_pricing_rules AS
 SELECT 
     pr.rule_id,
     pr.item_id,
     pr.store_id,
-    s.store_code,
-    s.store_name,
     pr.price,
     pr.promotion,
     pr.promotion_value,
@@ -123,7 +101,6 @@ SELECT
     pr.valid_to,
     pr.created_by
 FROM pricing_rules pr
-LEFT JOIN stores s ON pr.store_id = s.store_id
 WHERE pr.is_active = TRUE
   AND pr.valid_from <= CURRENT_TIMESTAMP
   AND (pr.valid_to IS NULL OR pr.valid_to > CURRENT_TIMESTAMP)

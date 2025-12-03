@@ -49,11 +49,11 @@ public class PricingRule {
     private Integer itemId;
 
     /**
-     * @brief Store for which this rule applies (null = global rule)
+     * @brief Store ID for which this rule applies (null = global rule)
+     * References store-service.stores.store_id
      */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id")
-    private Store store;
+    @Column(name = "store_id")
+    private Integer storeId;
 
     /**
      * @brief Price for this item (may override base price from warehouse)

@@ -1,13 +1,159 @@
 // DE-Store Pricing Management UI
 // API Gateway endpoint - use relative URL to avoid CORS
 const API_BASE = '/api/pricing';
+const AUTH_BASE = '/api/auth';
 
 // State
 let stores = [];
 let pricingRules = [];
+let authToken = null;
+let currentUser = null;
+
+// Check authentication on page load
+function checkAuth() {
+    authToken = localStorage.getItem('authToken');
+    const username = localStorage.getItem('username');
+    const fullName = localStorage.getItem('fullName');
+    const role = localStorage.getItem('role');
+    const storeId = localStorage.getItem('storeId');
+
+    if (!authToken || !username) {
+        // Redirect to login if not authenticated
+        window.location.href = 'login.html';
+        return false;
+    }
+
+    currentUser = { 
+        username, 
+        fullName, 
+        role, 
+        storeId: storeId ? parseInt(storeId) : null,
+        isNetworkManager: role === 'NETWORK_MANAGER',
+        isStoreManager: role === 'STORE_MANAGER'
+    };
+    
+    // Display user info in header
+    const userInfo = document.getElementById('userInfo');
+    if (userInfo) {
+        userInfo.innerHTML = `<strong>${fullName}</strong><br>${role}${storeId ? ` (Store ${storeId})` : ''}`;
+    }
+
+    // Apply role-based UI restrictions
+    applyRoleBasedUI();
+
+    return true;
+}
+
+// Logout function
+function logout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('username');
+    localStorage.removeItem('fullName');
+    localStorage.removeItem('role');
+    localStorage.removeItem('storeId');
+    window.location.href = 'login.html';
+}
+
+// Helper function to make authenticated API calls
+async function authenticatedFetch(url, options = {}) {
+    const token = localStorage.getItem('authToken');
+    
+    if (!token) {
+        window.location.href = 'login.html';
+        throw new Error('Not authenticated');
+    }
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+        ...options.headers
+    };
+
+    const response = await fetch(url, { ...options, headers });
+
+
+    if (response.status === 401 || response.status === 403) {
+        logout();
+        throw new Error('Session expired');
+    }
+
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: 'Request failed' }));
+        throw new Error(error.message || `HTTP ${response.status}`);
+    }
+
+    return response;
+}
+
+// Apply role-based UI restrictions
+function applyRoleBasedUI() {
+    if (!currentUser) return;
+
+    // Store managers cannot create global rules
+    if (currentUser.isStoreManager) {
+        // Hide global checkbox and related help text
+        const isGlobalCheckbox = document.getElementById('isGlobal');
+        const isGlobalGroup = isGlobalCheckbox?.closest('.form-group');
+        if (isGlobalGroup) {
+            isGlobalGroup.style.display = 'none';
+        }
+
+        // Always show store field for store managers
+        const storeIdGroup = document.getElementById('storeIdGroup');
+        if (storeIdGroup) {
+            storeIdGroup.style.display = 'block';
+        }
+
+        // Pre-select and lock store manager's store
+        const storeSelect = document.getElementById('storeId');
+        if (storeSelect && currentUser.storeId) {
+            storeSelect.value = currentUser.storeId;
+            storeSelect.disabled = true;
+            storeSelect.required = true;
+        }
+
+        // Add informational message to Create Rule tab
+        const createTab = document.getElementById('create-tab');
+        const createCard = createTab?.querySelector('.card');
+        if (createCard && !document.getElementById('store-manager-notice')) {
+            const notice = document.createElement('div');
+            notice.id = 'store-manager-notice';
+            notice.className = 'alert alert-info';
+            notice.innerHTML = `
+                <strong>ℹ️ Store Manager Permissions</strong><br>
+                As a store manager, you can only create and manage pricing rules for your assigned store (Store ${currentUser.storeId}).
+                You cannot modify global (network-wide) rules.
+            `;
+            createCard.insertBefore(notice, createCard.querySelector('form'));
+        }
+    }
+}
+
+// Check if user can edit/delete a specific rule
+function canModifyRule(rule) {
+    if (!currentUser) return false;
+
+    // Network managers can modify any rule
+    if (currentUser.isNetworkManager) {
+        return true;
+    }
+
+    // Store managers cannot modify global rules
+    if (currentUser.isStoreManager) {
+        if (rule.isGlobal) {
+            return false;
+        }
+        // Can only modify rules for their own store
+        return rule.storeId === currentUser.storeId;
+    }
+
+    return false;
+}
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
+    if (!checkAuth()) return; // Stop if not authenticated
+    
     loadStores();
     loadPricingRules();
     setupEventListeners();
@@ -47,34 +193,32 @@ function switchTab(tabName) {
 // Load stores from API
 async function loadStores() {
     try {
-        const response = await fetch(`${API_BASE}/rules`);
-        const rules = await response.json();
+        // Fetch stores from the dedicated store-service
+        const response = await authenticatedFetch('/api/stores?activeOnly=true');
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
         
-        // Extract unique stores from rules
-        const storeSet = new Map();
-        rules.forEach(rule => {
-            if (rule.storeId && rule.storeCode) {
-                storeSet.set(rule.storeId, {
-                    storeId: rule.storeId,
-                    storeCode: rule.storeCode,
-                    storeName: rule.storeName
-                });
-            }
-        });
+        const storesData = await response.json();
         
-        stores = Array.from(storeSet.values());
+        // Map store data to match expected format
+        stores = storesData.map(store => ({
+            storeId: store.storeId,
+            storeCode: store.storeCode,
+            storeName: store.storeName
+        }));
         
         // Populate store dropdowns
         populateStoreDropdowns();
     } catch (error) {
         console.error('Failed to load stores:', error);
-        // Fallback: Use hardcoded store data from DB init script
+        // Fallback: Use hardcoded store data from store-service init script
         stores = [
-            { storeId: 1, storeCode: 'HQ-GLOBAL', storeName: 'Global Pricing (Network-wide)' },
-            { storeId: 2, storeCode: 'LON-001', storeName: 'London Central' },
-            { storeId: 3, storeCode: 'MAN-001', storeName: 'Manchester Store' },
-            { storeId: 4, storeCode: 'BIR-001', storeName: 'Birmingham Store' },
-            { storeId: 5, storeCode: 'GLA-001', storeName: 'Glasgow Store' }
+            { storeId: 1, storeCode: 'LON-001', storeName: 'London Central' },
+            { storeId: 2, storeCode: 'MAN-001', storeName: 'Manchester Store' },
+            { storeId: 3, storeCode: 'BIR-001', storeName: 'Birmingham Store' },
+            { storeId: 4, storeCode: 'GLA-001', storeName: 'Glasgow Store' },
+            { storeId: 5, storeCode: 'EDI-001', storeName: 'Edinburgh Store' }
         ];
         populateStoreDropdowns();
     }
@@ -114,7 +258,7 @@ async function loadPricingRules() {
     alertDiv.innerHTML = '';
 
     try {
-        const response = await fetch(`${API_BASE}/rules`);
+        const response = await authenticatedFetch(`${API_BASE}/rules`);
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -156,14 +300,16 @@ function renderPricingRulesTable(rules) {
                 </tr>
             </thead>
             <tbody>
-                ${rules.map(rule => `
-                    <tr>
+                ${rules.map(rule => {
+                    const canModify = canModifyRule(rule);
+                    return `
+                    <tr ${!canModify ? 'style="opacity: 0.6;"' : ''}>
                         <td>${rule.ruleId}</td>
                         <td>${rule.itemId}</td>
                         <td>${rule.storeName || '-'}</td>
                         <td>
                             <span class="badge ${rule.isGlobal ? 'badge-info' : 'badge-warning'}">
-                                ${rule.isGlobal ? 'Global' : 'Store-Specific'}
+                                ${rule.isGlobal ? '🌐 Global' : '🏪 Store-Specific'}
                             </span>
                         </td>
                         <td>£${rule.price.toFixed(2)}</td>
@@ -173,13 +319,18 @@ function renderPricingRulesTable(rules) {
                         <td>${formatDateTime(rule.validFrom)}</td>
                         <td>${rule.validTo ? formatDateTime(rule.validTo) : 'No expiry'}</td>
                         <td>
+                            ${canModify ? `
                             <div class="action-buttons">
-                                <button class="btn btn-primary" onclick="editRule(${rule.ruleId})">Edit</button>
-                                <button class="btn btn-danger" onclick="deleteRule(${rule.ruleId})">Delete</button>
+                                <button class="btn btn-primary" onclick="editRule(${rule.ruleId})">✏️ Edit</button>
+                                <button class="btn btn-danger" onclick="deleteRule(${rule.ruleId})">🗑️ Delete</button>
                             </div>
+                            ` : `
+                            <span class="badge badge-secondary" title="You don't have permission to modify this rule">🔒 Read-only</span>
+                            `}
                         </td>
                     </tr>
-                `).join('')}
+                `;
+                }).join('')}
             </tbody>
         </table>
     `;
@@ -249,6 +400,11 @@ function togglePromotionValue() {
 
 // Toggle store field based on global checkbox
 function toggleStoreField() {
+    // Store managers cannot use this - their store is locked
+    if (currentUser?.isStoreManager) {
+        return;
+    }
+
     const isGlobal = document.getElementById('isGlobal').checked;
     const storeGroup = document.getElementById('storeIdGroup');
     const storeSelect = document.getElementById('storeId');
@@ -276,20 +432,17 @@ async function handleCreateRule(e) {
         promotion: document.getElementById('promotion').value,
         promotionValue: document.getElementById('promotionValue').value ? 
             parseFloat(document.getElementById('promotionValue').value) : null,
-        isGlobal: document.getElementById('isGlobal').checked,
+        isGlobal: currentUser?.isStoreManager ? false : document.getElementById('isGlobal').checked,
         storeId: document.getElementById('storeId').value ? 
             parseInt(document.getElementById('storeId').value) : null,
         validFrom: document.getElementById('validFrom').value || null,
         validTo: document.getElementById('validTo').value || null,
-        createdBy: document.getElementById('createdBy').value || 'UI User'
+        createdBy: document.getElementById('createdBy').value || currentUser?.fullName || 'UI User'
     };
     
     try {
-        const response = await fetch(`${API_BASE}/rules`, {
+        const response = await authenticatedFetch(`${API_BASE}/rules`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(formData)
         });
         
@@ -330,11 +483,8 @@ async function handleCalculatePrice(e) {
     };
     
     try {
-        const response = await fetch(`${API_BASE}/calculate`, {
+        const response = await authenticatedFetch(`${API_BASE}/calculate`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(requestData)
         });
         
@@ -405,12 +555,18 @@ async function editRule(ruleId) {
     
     try {
         // Fetch the rule details
-        const response = await fetch(`${API_BASE}/rules/${ruleId}`);
+        const response = await authenticatedFetch(`${API_BASE}/rules/${ruleId}`);
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}`);
         }
         
         const rule = await response.json();
+
+        // Check permission before allowing edit
+        if (!canModifyRule(rule)) {
+            alertDiv.innerHTML = `<div class="alert alert-error">⛔ You don't have permission to edit this rule.</div>`;
+            return;
+        }
         
         // Populate the edit modal
         document.getElementById('edit-rule-id').value = rule.ruleId;
@@ -420,6 +576,12 @@ async function editRule(ruleId) {
         document.getElementById('edit-promotion').value = rule.promotion;
         document.getElementById('edit-promotion-value').value = rule.promotionValue || '';
         document.getElementById('edit-is-global').checked = rule.isGlobal;
+
+        // Store managers cannot change scope or store
+        if (currentUser?.isStoreManager) {
+            document.getElementById('edit-is-global').disabled = true;
+            document.getElementById('edit-store-id').disabled = true;
+        }
         
         // Format dates for datetime-local input
         if (rule.validFrom) {
@@ -464,11 +626,8 @@ async function handleEditRule(event) {
     };
     
     try {
-        const response = await fetch(`${API_BASE}/rules/${ruleId}`, {
+        const response = await authenticatedFetch(`${API_BASE}/rules/${ruleId}`, {
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(formData)
         });
         
@@ -493,15 +652,33 @@ async function handleEditRule(event) {
 
 // Delete a pricing rule
 async function deleteRule(ruleId) {
+    // First check permission by fetching the rule
+    const alertDiv = document.getElementById('rules-alert');
+    alertDiv.innerHTML = '';
+
+    try {
+        const response = await authenticatedFetch(`${API_BASE}/rules/${ruleId}`);
+        if (!response.ok) {
+            throw new Error(`Failed to load rule ${ruleId}`);
+        }
+        const rule = await response.json();
+
+        // Check permission
+        if (!canModifyRule(rule)) {
+            alertDiv.innerHTML = `<div class="alert alert-error">⛔ You don't have permission to delete this rule.</div>`;
+            return;
+        }
+    } catch (error) {
+        alertDiv.innerHTML = `<div class="alert alert-error">Failed to verify permissions: ${error.message}</div>`;
+        return;
+    }
+
     if (!confirm(`Are you sure you want to permanently delete rule ${ruleId}? This action cannot be undone.`)) {
         return;
     }
     
-    const alertDiv = document.getElementById('rules-alert');
-    alertDiv.innerHTML = '';
-    
     try {
-        const response = await fetch(`${API_BASE}/rules/${ruleId}`, {
+        const response = await authenticatedFetch(`${API_BASE}/rules/${ruleId}`, {
             method: 'DELETE'
         });
         

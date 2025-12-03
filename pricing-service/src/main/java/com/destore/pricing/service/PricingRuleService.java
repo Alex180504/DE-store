@@ -1,16 +1,18 @@
 package com.destore.pricing.service;
 
+import com.destore.pricing.exception.ForbiddenAccessException;
 import com.destore.pricing.exception.ItemNotFoundException;
 import com.destore.pricing.exception.PricingRuleNotFoundException;
 import com.destore.pricing.model.dto.PricingRuleRequest;
 import com.destore.pricing.model.dto.PricingRuleResponse;
 import com.destore.pricing.model.entity.PricingRule;
-import com.destore.pricing.model.entity.Store;
 import com.destore.pricing.repository.PricingRuleRepository;
-import com.destore.pricing.repository.StoreRepository;
 import com.destore.pricing.repository.WarehouseItemRepository;
+import com.destore.pricing.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +43,6 @@ import java.util.stream.Collectors;
 public class PricingRuleService {
 
     private final PricingRuleRepository pricingRuleRepository;
-    private final StoreRepository storeRepository;
     private final WarehouseItemRepository warehouseItemRepository;
 
     /**
@@ -61,6 +62,10 @@ public class PricingRuleService {
         log.info("Creating pricing rule: itemId={}, storeId={}, isGlobal={}", 
                  request.getItemId(), request.getStoreId(), request.getIsGlobal());
 
+        // Authorization check
+        UserPrincipal currentUser = getCurrentUser();
+        validateCreatePermission(currentUser, request);
+
         // Validate item exists
         if (!warehouseItemRepository.existsById(request.getItemId())) {
             throw new ItemNotFoundException(request.getItemId());
@@ -69,6 +74,7 @@ public class PricingRuleService {
         // Build entity
         PricingRule rule = PricingRule.builder()
                 .itemId(request.getItemId())
+                .storeId(request.getStoreId()) // Store ID references store-service
                 .price(request.getPrice())
                 .promotion(request.getPromotion())
                 .promotionValue(request.getPromotionValue())
@@ -78,13 +84,6 @@ public class PricingRuleService {
                 .isActive(true)
                 .createdBy(request.getCreatedBy())
                 .build();
-
-        // Set store if store-specific
-        if (!Boolean.TRUE.equals(request.getIsGlobal()) && request.getStoreId() != null) {
-            Store store = storeRepository.findById(request.getStoreId())
-                    .orElseThrow(() -> new RuntimeException("Store not found: " + request.getStoreId()));
-            rule.setStore(store);
-        }
 
         PricingRule saved = pricingRuleRepository.save(rule);
         log.info("Pricing rule created: ruleId={}", saved.getRuleId());
@@ -165,10 +164,15 @@ public class PricingRuleService {
         PricingRule existing = pricingRuleRepository.findById(ruleId)
                 .orElseThrow(() -> new PricingRuleNotFoundException(ruleId));
 
+        // Authorization check
+        UserPrincipal currentUser = getCurrentUser();
+        validateModifyPermission(currentUser, existing);
+
         // Update fields
         existing.setPrice(request.getPrice());
         existing.setPromotion(request.getPromotion());
         existing.setPromotionValue(request.getPromotionValue());
+        existing.setStoreId(request.getStoreId()); // Store ID references store-service
         
         // Only update validity dates if provided
         if (request.getValidFrom() != null) {
@@ -176,15 +180,6 @@ public class PricingRuleService {
         }
         if (request.getValidTo() != null) {
             existing.setValidTo(request.getValidTo());
-        }
-
-        // Update store if changed
-        if (!Boolean.TRUE.equals(request.getIsGlobal()) && request.getStoreId() != null) {
-            Store store = storeRepository.findById(request.getStoreId())
-                    .orElseThrow(() -> new RuntimeException("Store not found: " + request.getStoreId()));
-            existing.setStore(store);
-        } else {
-            existing.setStore(null);
         }
 
         PricingRule updated = pricingRuleRepository.save(existing);
@@ -202,11 +197,14 @@ public class PricingRuleService {
     public void deleteRule(Integer ruleId) {
         log.info("Deleting pricing rule: ruleId={}", ruleId);
 
-        if (!pricingRuleRepository.existsById(ruleId)) {
-            throw new PricingRuleNotFoundException(ruleId);
-        }
+        PricingRule rule = pricingRuleRepository.findById(ruleId)
+                .orElseThrow(() -> new PricingRuleNotFoundException(ruleId));
 
-        pricingRuleRepository.deleteById(ruleId);
+        // Authorization check
+        UserPrincipal currentUser = getCurrentUser();
+        validateModifyPermission(currentUser, rule);
+
+        pricingRuleRepository.delete(rule);
         log.info("Pricing rule deleted: ruleId={}", ruleId);
     }
 
@@ -223,11 +221,108 @@ public class PricingRuleService {
         PricingRule rule = pricingRuleRepository.findById(ruleId)
                 .orElseThrow(() -> new PricingRuleNotFoundException(ruleId));
 
+        // Authorization check
+        UserPrincipal currentUser = getCurrentUser();
+        validateModifyPermission(currentUser, rule);
+
         rule.setIsActive(false);
         PricingRule updated = pricingRuleRepository.save(rule);
 
         log.info("Pricing rule deactivated: ruleId={}", ruleId);
         return toResponse(updated);
+    }
+
+    /**
+     * @brief Get current authenticated user
+     * @return UserPrincipal with user info and role
+     */
+    private UserPrincipal getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !(authentication.getPrincipal() instanceof UserPrincipal)) {
+            throw new ForbiddenAccessException("User not authenticated");
+        }
+        return (UserPrincipal) authentication.getPrincipal();
+    }
+
+    /**
+     * @brief Validate user has permission to create a pricing rule
+     * 
+     * Rules:
+     * - NETWORK_MANAGER: Can create global rules and any store-specific rules
+     * - STORE_MANAGER: Can only create rules for their assigned store (not global)
+     * 
+     * @param user Current authenticated user
+     * @param request Pricing rule creation request
+     * @throws ForbiddenAccessException if user lacks permission
+     */
+    private void validateCreatePermission(UserPrincipal user, PricingRuleRequest request) {
+        if (user.isNetworkManager()) {
+            // Network managers can create any rule
+            return;
+        }
+        
+        if (user.isStoreManager()) {
+            // Store managers cannot create global rules
+            if (Boolean.TRUE.equals(request.getIsGlobal())) {
+                throw new ForbiddenAccessException(
+                    "create global pricing rule",
+                    "Store managers can only create store-specific rules"
+                );
+            }
+            
+            // Store managers can only create rules for their own store
+            if (request.getStoreId() == null || !request.getStoreId().equals(user.getStoreId())) {
+                throw new ForbiddenAccessException(
+                    "create pricing rule for another store",
+                    String.format("Store managers can only create rules for their assigned store (ID: %d)", 
+                                  user.getStoreId())
+                );
+            }
+            return;
+        }
+        
+        throw new ForbiddenAccessException("Unknown role: " + user.getRole());
+    }
+
+    /**
+     * @brief Validate user has permission to modify/delete a pricing rule
+     * 
+     * Rules:
+     * - NETWORK_MANAGER: Can modify/delete any rule (global or store-specific)
+     * - STORE_MANAGER: Can only modify/delete rules for their assigned store (not global)
+     * 
+     * @param user Current authenticated user
+     * @param rule Existing pricing rule to modify
+     * @throws ForbiddenAccessException if user lacks permission
+     */
+    private void validateModifyPermission(UserPrincipal user, PricingRule rule) {
+        if (user.isNetworkManager()) {
+            // Network managers can modify any rule
+            return;
+        }
+        
+        if (user.isStoreManager()) {
+            // Store managers cannot modify global rules
+            if (Boolean.TRUE.equals(rule.getIsGlobal())) {
+                throw new ForbiddenAccessException(
+                    "modify global pricing rule",
+                    "Store managers cannot modify global rules set by network managers"
+                );
+            }
+            
+            // Store managers can only modify rules for their own store
+            Integer ruleStoreId = rule.getStoreId();
+            if (ruleStoreId == null || !ruleStoreId.equals(user.getStoreId())) {
+                throw new ForbiddenAccessException(
+                    "modify pricing rule from another store",
+                    String.format("Store managers can only modify rules for their assigned store (ID: %d)", 
+                                  user.getStoreId())
+                );
+            }
+            return;
+        }
+        
+        throw new ForbiddenAccessException("Unknown role: " + user.getRole());
     }
 
     /**
@@ -239,9 +334,7 @@ public class PricingRuleService {
         return PricingRuleResponse.builder()
                 .ruleId(rule.getRuleId())
                 .itemId(rule.getItemId())
-                .storeId(rule.getStore() != null ? rule.getStore().getStoreId() : null)
-                .storeCode(rule.getStore() != null ? rule.getStore().getStoreCode() : null)
-                .storeName(rule.getStore() != null ? rule.getStore().getStoreName() : null)
+                .storeId(rule.getStoreId())
                 .price(rule.getPrice())
                 .promotion(rule.getPromotion())
                 .promotionValue(rule.getPromotionValue())

@@ -12,6 +12,8 @@ RUN rm -rf /usr/share/nginx/html/*
 
 # Copy UI files
 COPY index.html /usr/share/nginx/html/
+COPY login.html /usr/share/nginx/html/
+COPY register.html /usr/share/nginx/html/
 COPY app.js /usr/share/nginx/html/
 
 # Copy custom Nginx configuration for SPA
