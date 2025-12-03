@@ -42,6 +42,27 @@ services:
       timeout: 5s
       retries: 5
 
+  # Authentication Database (PostgreSQL)
+  auth-db:
+    image: postgres:15
+    container_name: de-store-auth-db
+    environment:
+      POSTGRES_DB: auth
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./auth-service/db/init:/docker-entrypoint-initdb.d
+      - auth-data:/var/lib/postgresql/data
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U auth_user -d auth"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   # Pricing Service (Spring Boot)
   pricing-service:
     build:
@@ -63,12 +84,44 @@ services:
       # Application Settings
       SERVER_PORT: 8080
       LOGGING_LEVEL_COM_DESTORE: DEBUG
+      # JWT Configuration (must match auth-service)
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      JWT_EXPIRATION: "86400000"
     expose:
       - "8080"
     depends_on:
       pricing-db:
         condition: service_healthy
       warehouse-db:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
+  # Authentication Service (Spring Boot)
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: de-store-auth-service
+    environment:
+      # Auth DB Connection
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth-db:5432/auth
+      SPRING_DATASOURCE_USERNAME: auth_user
+      SPRING_DATASOURCE_PASSWORD: auth_pass
+      # JWT Configuration
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      JWT_EXPIRATION: 86400000
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "true"
+      # Application Settings
+      SERVER_PORT: 8081
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+    expose:
+      - "8081"
+    depends_on:
+      auth-db:
         condition: service_healthy
     networks:
       - de-store-network
@@ -84,6 +137,7 @@ services:
       - "80:80"
     depends_on:
       - pricing-service
+      - auth-service
     networks:
       - de-store-network
     restart: unless-stopped
@@ -122,3 +176,5 @@ volumes:
     name: de-store-warehouse-data
   pricing-data:
     name: de-store-pricing-data
+  auth-data:
+    name: de-store-auth-data
