@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -147,7 +148,7 @@ public class PriceCalculationIntegrationTest {
         // Discount should be (subtotal * percentage / 100)
         BigDecimal expectedDiscount = result.getSubtotal()
                 .multiply(result.getPromotionValue())
-                .divide(new BigDecimal("100"), 2, BigDecimal.ROUND_HALF_UP);
+                .divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP); 
         
         assertThat(result.getDiscount()).isEqualByComparingTo(expectedDiscount);
     }
