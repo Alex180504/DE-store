@@ -129,6 +129,8 @@ public class AuthService {
             throw new IllegalArgumentException("Store managers must have a store ID");
         }
 
+        //TODO: Call store-service to verify store exists
+
         // Hash password
         String hashedPassword = passwordEncoder.encode(registerRequest.getPassword());
 
