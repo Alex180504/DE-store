@@ -18,7 +18,28 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Service for sending stock alert emails
+ * @file EmailService.java
+ * @brief Service for composing and sending stock alert emails
+ * 
+ * This service handles all email communication for the inventory monitoring system.
+ * It formats stock alerts into professional HTML emails and sends them to
+ * network managers via SMTP.
+ * 
+ * Features:
+ * - HTML email formatting with color-coded severity levels
+ * - Grouped alerts by status (Out of Stock, Critical, Low)
+ * - XSS protection with HTML escaping
+ * - Configurable sender address and subject prefix
+ * - Enable/disable toggle for testing
+ * 
+ * Email Structure:
+ * - Header with timestamp
+ * - Statistics summary
+ * - Tables grouped by severity (red/orange/yellow)
+ * - Footer with automated message disclaimer
+ * 
+ * @author DE-Store Development Team
+ * @version 1.0.0
  */
 @Service
 public class EmailService {
@@ -41,7 +62,20 @@ public class EmailService {
     }
 
     /**
-     * Send stock alert email to specified recipients
+     * @brief Send stock alert email to specified recipients
+     * 
+     * Composes and sends an HTML email containing stock alerts grouped by severity.
+     * Email includes color-coded tables and formatted timestamp.
+     * 
+     * Validation:
+     * - Checks if email sending is enabled (configurable via email.enabled)
+     * - Validates recipients list is not empty
+     * - Validates alerts list is not empty
+     * 
+     * @param recipients List of email addresses to send to (typically network managers)
+     * @param alerts List of stock alerts to include in email
+     * @throws MessagingException if email composition fails
+     * @throws MailException if SMTP sending fails
      */
     public void sendStockAlerts(List<String> recipients, List<StockAlert> alerts) {
         if (!emailEnabled) {
@@ -82,7 +116,20 @@ public class EmailService {
     }
 
     /**
-     * Build HTML email content with alerts grouped by status
+     * @brief Build HTML email content with alerts grouped by status
+     * 
+     * Creates a professional HTML email with:
+     * - Header with generation timestamp
+     * - Statistics summary
+     * - Color-coded sections by severity:
+     *   * Red background for OUT_OF_STOCK
+     *   * Orange background for CRITICAL
+     *   * Yellow background for LOW
+     * - Tables with item details (ID, name, category, stock)
+     * - Footer with disclaimer
+     * 
+     * @param alerts List of stock alerts to format
+     * @return HTML string ready for email body
      */
     private String buildHtmlEmail(List<StockAlert> alerts) {
         // Group alerts by status
@@ -135,7 +182,17 @@ public class EmailService {
     }
 
     /**
-     * Build HTML table for a list of alerts
+     * @brief Build HTML table for a list of alerts
+     * 
+     * Creates a formatted table with columns:
+     * - Item ID
+     * - Item Name (HTML escaped)
+     * - Category (HTML escaped)
+     * - Current Stock
+     * 
+     * @param alerts List of alerts to tabulate
+     * @param cssClass CSS class for row background color
+     * @return HTML table string
      */
     private String buildAlertTable(List<StockAlert> alerts, String cssClass) {
         StringBuilder table = new StringBuilder();
@@ -162,7 +219,17 @@ public class EmailService {
     }
 
     /**
-     * Simple HTML escaping to prevent XSS
+     * @brief Simple HTML escaping to prevent XSS
+     * 
+     * Escapes dangerous HTML characters to prevent injection attacks:
+     * - & becomes &amp;
+     * - < becomes &lt;
+     * - > becomes &gt;
+     * - " becomes &quot;
+     * - ' becomes &#x27;
+     * 
+     * @param text Text to escape (may be null)
+     * @return Escaped HTML-safe string
      */
     private String escapeHtml(String text) {
         if (text == null) return "";

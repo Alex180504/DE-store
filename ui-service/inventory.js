@@ -98,7 +98,6 @@ async function loadStatistics() {
         if (stats.thresholds) {
             document.getElementById('lowStock').value = stats.thresholds.lowStock;
             document.getElementById('criticalStock').value = stats.thresholds.criticalStock;
-            document.getElementById('outOfStock').value = stats.thresholds.outOfStock;
         }
     } catch (error) {
         console.error('Error loading statistics:', error);
@@ -188,7 +187,7 @@ function createAlertsTable(alerts, status) {
 }
 
 // Trigger manual stock check
-async function triggerManualCheck() {
+async function triggerManualCheck(event) {
     const btn = event.target;
     btn.disabled = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
@@ -221,7 +220,6 @@ async function updateThresholds(event) {
     
     const lowStock = parseInt(document.getElementById('lowStock').value);
     const criticalStock = parseInt(document.getElementById('criticalStock').value);
-    const outOfStock = parseInt(document.getElementById('outOfStock').value);
     
     // Validate
     if (criticalStock >= lowStock) {
@@ -232,7 +230,7 @@ async function updateThresholds(event) {
     try {
         const response = await authenticatedFetch(`${INVENTORY_API}/thresholds`, {
             method: 'PUT',
-            body: JSON.stringify({ lowStock, criticalStock, outOfStock })
+            body: JSON.stringify({ lowStock, criticalStock })
         });
         
         const result = await response.json();

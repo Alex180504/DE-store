@@ -12,8 +12,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * Security Configuration for Inventory Service
- * - Public endpoints: health check, actuator
- * - Protected endpoints: admin operations (requires NETWORK_MANAGER role)
+ * 
+ * Endpoint Access:
+ * - Public: /api/inventory/health (health check)
+ * - Public: /actuator/** (monitoring endpoints)
+ * - NETWORK_MANAGER only: /api/inventory/admin/** (all inventory management)
+ * 
+ * Security:
+ * - JWT-based authentication
+ * - Role-based authorization with @PreAuthorize annotations
+ * - Stateless session (no cookies)
+ * - All other endpoints denied by default
  */
 @Configuration
 @EnableWebSecurity
@@ -33,14 +42,15 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 // Public endpoints
-                .requestMatchers("/actuator/**").permitAll()
+                .requestMatchers("/actuator/health", "/actuator/health/**").permitAll()
                 .requestMatchers("/api/inventory/health").permitAll()
                 
                 // Admin endpoints - require NETWORK_MANAGER role
-                .requestMatchers("/api/inventory/admin/**").hasRole("NETWORK_MANAGER")
+                // Role-based access enforced via @PreAuthorize annotations
+                .requestMatchers("/api/inventory/admin/**").authenticated()
                 
-                // All other endpoints require authentication
-                .anyRequest().authenticated()
+                // Deny all other API requests
+                .anyRequest().denyAll()
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

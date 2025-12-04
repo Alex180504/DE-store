@@ -13,5 +13,4 @@ import lombok.NoArgsConstructor;
 public class ThresholdConfig {
     private Integer lowStock;
     private Integer criticalStock;
-    private Integer outOfStock;
 }

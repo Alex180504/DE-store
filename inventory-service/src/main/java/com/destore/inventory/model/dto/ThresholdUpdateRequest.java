@@ -6,6 +6,7 @@ import lombok.Data;
 
 /**
  * DTO for updating inventory thresholds
+ * Note: Out-of-stock threshold is always 0 (hardcoded)
  */
 @Data
 public class ThresholdUpdateRequest {
@@ -17,8 +18,4 @@ public class ThresholdUpdateRequest {
     @NotNull(message = "Critical stock threshold is required")
     @Min(value = 0, message = "Critical stock threshold must be at least 0")
     private Integer criticalStock;
-    
-    @NotNull(message = "Out of stock threshold is required")
-    @Min(value = 0, message = "Out of stock threshold must be 0")
-    private Integer outOfStock;
 }

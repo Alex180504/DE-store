@@ -16,7 +16,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Service for monitoring warehouse stock levels and sending alerts
+ * @file StockMonitoringService.java
+ * @brief Service for monitoring warehouse stock levels and sending alerts
+ * 
+ * This service is responsible for the core inventory monitoring functionality:
+ * - Scheduled stock level checks (default: every 6 hours)
+ * - Detection of low, critical, and out-of-stock items
+ * - Email notification to network managers
+ * - Manual trigger support for on-demand checks
+ * 
+ * The service reads from two databases:
+ * - Warehouse DB (MySQL): Item stock levels (read-only)
+ * - Auth DB (PostgreSQL): Network manager email addresses (read-only)
+ * 
+ * Thresholds are dynamically configured via InventoryConfigService,
+ * allowing runtime updates without service restart.
+ * 
+ * @author DE-Store Development Team
+ * @version 1.0.0
  */
 @Service
 public class StockMonitoringService {
@@ -40,8 +57,19 @@ public class StockMonitoringService {
     }
 
     /**
-     * Scheduled task to check stock levels and send alerts
-     * Runs according to cron expression in application.yml (default: every 6 hours)
+     * @brief Scheduled task to check stock levels and send alerts
+     * 
+     * This method runs automatically according to the cron expression configured
+     * in application.yml (default: every 6 hours at minute 0).
+     * 
+     * Workflow:
+     * 1. Query warehouse DB for items below low stock threshold
+     * 2. Classify items by severity (out-of-stock, critical, low)
+     * 3. Query auth DB for active network manager emails
+     * 4. Send HTML email with grouped alerts
+     * 5. Log results and completion
+     * 
+     * @throws Exception Catches all exceptions to prevent schedule disruption
      */
     @Scheduled(cron = "${inventory.schedule}")
     public void checkStockLevels() {
@@ -81,7 +109,17 @@ public class StockMonitoringService {
     }
 
     /**
-     * Gather all stock alerts by checking warehouse items
+     * @brief Gather all stock alerts by checking warehouse items
+     * 
+     * Queries the warehouse database for items below the configured low stock
+     * threshold and classifies them into severity levels.
+     * 
+     * Classification Logic:
+     * - OUT_OF_STOCK: stockQuantity == 0
+     * - CRITICAL: 0 < stockQuantity <= criticalThreshold
+     * - LOW: criticalThreshold < stockQuantity <= lowThreshold
+     * 
+     * @return List of StockAlert DTOs with item details and status
      */
     private List<StockAlert> gatherStockAlerts() {
         List<StockAlert> alerts = new ArrayList<>();
@@ -116,7 +154,14 @@ public class StockMonitoringService {
     }
 
     /**
-     * Get email addresses of all active network managers
+     * @brief Get email addresses of all active network managers
+     * 
+     * Queries the auth database for users with:
+     * - role = 'NETWORK_MANAGER'
+     * - isActive = true
+     * - email is not null/empty
+     * 
+     * @return List of email addresses to send alerts to
      */
     private List<String> getNetworkManagerEmails() {
         List<User> networkManagers = userRepository.findActiveNetworkManagers();
@@ -137,7 +182,12 @@ public class StockMonitoringService {
     }
 
     /**
-     * Manual trigger for stock check (can be called via REST endpoint)
+     * @brief Manual trigger for stock check (callable via REST endpoint)
+     * 
+     * Executes the same logic as the scheduled task but on-demand.
+     * Used by Network Managers through the admin UI for immediate checks.
+     * 
+     * @see checkStockLevels() for workflow details
      */
     public void triggerManualCheck() {
         log.info("Manual stock check triggered");
@@ -145,7 +195,16 @@ public class StockMonitoringService {
     }
 
     /**
-     * Get current stock alerts without sending emails
+     * @brief Get current stock alerts without sending emails
+     * 
+     * Retrieves the current state of stock alerts for display purposes.
+     * Does not trigger email notifications.
+     * 
+     * Used by:
+     * - Admin dashboard to display current alerts
+     * - REST API for querying alert status
+     * 
+     * @return List of current stock alerts
      */
     public List<StockAlert> getCurrentAlerts() {
         return gatherStockAlerts();
