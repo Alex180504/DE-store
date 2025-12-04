@@ -1,0 +1,84 @@
+spring:
+  application:
+    name: inventory-service
+  
+  # Primary datasource: Warehouse DB (MySQL - Read-Only)
+  datasource:
+    url: ${SPRING_DATASOURCE_PRIMARY_URL:jdbc:mysql://warehouse-db:3306/warehouse?useSSL=false&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_PRIMARY_USERNAME:warehouse_user}
+    password: ${SPRING_DATASOURCE_PRIMARY_PASSWORD:warehouse_pass}
+    driver-class-name: ${SPRING_DATASOURCE_PRIMARY_DRIVER:com.mysql.cj.jdbc.Driver}
+  
+  # Secondary datasource for Auth DB (PostgreSQL - Read emails)
+  auth-datasource:
+    url: ${SPRING_DATASOURCE_AUTH_URL:jdbc:postgresql://auth-db:5432/auth}
+    username: ${SPRING_DATASOURCE_AUTH_USERNAME:auth_user}
+    password: ${SPRING_DATASOURCE_AUTH_PASSWORD:auth_pass}
+    driver-class-name: ${SPRING_DATASOURCE_AUTH_DRIVER:org.postgresql.Driver}
+  
+  # JPA Configuration
+  jpa:
+    hibernate:
+      ddl-auto: none  # Read-only access, no schema changes
+    show-sql: ${SPRING_JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  
+  # Email Configuration
+  mail:
+    host: ${SPRING_MAIL_HOST:mailhog}
+    port: ${SPRING_MAIL_PORT:1025}
+    username: ${SPRING_MAIL_USERNAME:}
+    password: ${SPRING_MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+    default-encoding: UTF-8
+
+# Server Configuration
+server:
+  port: ${SERVER_PORT:8084}
+  shutdown: graceful
+
+# Application Configuration
+inventory:
+  thresholds:
+    low-stock: ${INVENTORY_THRESHOLDS_LOW_STOCK:50}
+    critical-stock: ${INVENTORY_THRESHOLDS_CRITICAL_STOCK:20}
+    out-of-stock: ${INVENTORY_THRESHOLDS_OUT_OF_STOCK:0}
+  
+  # Scheduler configuration (cron: every 6 hours at minute 0)
+  schedule: ${INVENTORY_SCHEDULE:0 0 */6 * * ?}
+
+# Email configuration
+email:
+  from: ${EMAIL_FROM:inventory@destore.com}
+  subject-prefix: ${EMAIL_SUBJECT_PREFIX:[DE-Store Alert]}
+  enabled: ${EMAIL_ENABLED:true}
+
+# JWT Configuration (must match auth-service)
+jwt:
+  secret: ${JWT_SECRET:DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction}
+  expiration: ${JWT_EXPIRATION:86400000}
+
+# Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+# Logging
+logging:
+  level:
+    com.destore.inventory: ${LOGGING_LEVEL_COM_DESTORE:INFO}
+    org.springframework.mail: INFO
+    org.hibernate.SQL: WARN
