@@ -57,7 +57,7 @@ inventory:
 
 # Email configuration
 email:
-  from: ${EMAIL_FROM:inventory@destore.com}
+  from: ${EMAIL_FROM:inventory@de-store.com}
   subject-prefix: ${EMAIL_SUBJECT_PREFIX:[DE-Store Alert]}
   enabled: ${EMAIL_ENABLED:true}
 
