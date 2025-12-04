@@ -50,11 +50,21 @@ public class WarehouseItem {
         return stockQuantity != null && stockQuantity == 0;
     }
 
-    public boolean isLowStock(int threshold) {
-        return stockQuantity != null && stockQuantity > 0 && stockQuantity <= threshold;
+    /**
+     * Returns true if stock is between criticalThreshold + 1 and lowThreshold (inclusive).
+     */
+    public boolean isLowStock(int criticalThreshold, int lowThreshold) {
+        return stockQuantity != null
+                && stockQuantity > criticalThreshold
+                && stockQuantity <= lowThreshold;
     }
 
-    public boolean isCriticalStock(int threshold) {
-        return stockQuantity != null && stockQuantity > 0 && stockQuantity <= threshold;
+    /**
+     * Returns true if stock is between 1 and criticalThreshold (inclusive).
+     */
+    public boolean isCriticalStock(int criticalThreshold) {
+        return stockQuantity != null
+                && stockQuantity > 0
+                && stockQuantity <= criticalThreshold;
     }
 }
