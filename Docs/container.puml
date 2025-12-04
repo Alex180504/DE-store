@@ -19,10 +19,9 @@ System_Boundary(c1, "DE-Store MSOA") {
     Container(storeSvc, "Store Service", "Microservice", "Manages store locations and metadata (CRUD for Network, read-only for Store managers)")
     Container(priceSvc, "Pricing Service", "Microservice", "Calculates prices with hierarchical rules (Global + Store overrides, references Store Service)")
     Container(loyaltySvc, "Loyalty Service", "Microservice", "Network-wide loyalty points and promotional campaigns")
-    Container(invSvc, "Inventory Service", "Microservice", "Syncs with Central Warehouse DB 1-2 times daily, generates low stock alerts")
+    Container(inventoryMonitor, "Inventory Monitoring Service", "Spring Boot 3.2", "Scheduled stock level checker (every 6hrs), detects low/critical/out-of-stock items, sends email alerts to Network Managers")
     Container(finSvc, "Finance Adapter", "Microservice", "Proxy to Enabling Finance System with request validation")
     Container(reportSvc, "Reporting Service", "Microservice", "Anti-corruption layer: reads Accounting DB, generates analytics")
-    Container(notifySvc, "Notification Service", "Microservice", "Event-driven email alerts (LowStock, etc.)")
 
     ' Data Stores (Per-Service Isolation)
     ContainerDb(authDB, "Auth DB", "PostgreSQL", "User credentials, roles, and authentication tokens")
@@ -65,19 +64,17 @@ Rel(loyaltySvc, loyaltyDB, "Read/Write Loyalty Data", "PostgreSQL Protocol (TCP/
 Rel(spa, storeSvc, "Query Store List for Dropdowns", "REST/JSON over HTTPS")
 
 ' 5. Legacy System Integration (Daily Batch Operations)
-Rel(invSvc, warehouseDB, "Daily Sync (1-2 times/day)", "JDBC over TCP")
+Rel(inventoryMonitor, warehouseDB, "Read Stock Levels (Read-Only)", "JDBC MySQL over TCP/3306")
+Rel(inventoryMonitor, authDB, "Read Network Manager Emails (Read-Only)", "JDBC PostgreSQL over TCP/5432")
+Rel(inventoryMonitor, email, "Send Stock Alert Emails", "SMTP/TLS (TCP/1025)")
 Rel(reportSvc, accountingDB, "Query Sales History", "JDBC over TCP")
 
 ' 6. External System Integration
 Rel(finSvc, enablingSys, "Forward Finance Request", "REST/JSON or SOAP/XML over HTTPS")
-Rel(notifySvc, email, "Send Alerts", "SMTP/TLS (TCP/587)")
 
-' 7. Event-Driven Messaging
-Rel(invSvc, msgBus, "Publish 'LowStockEvent'", "AMQP 0-9-1 / Kafka Protocol")
+' 7. Event-Driven Messaging (Removed - Inventory Service sends emails directly)
 Rel(priceSvc, msgBus, "Publish 'PriceChangedEvent'", "AMQP 0-9-1 / Kafka Protocol")
 Rel(loyaltySvc, msgBus, "Publish 'LoyaltyUpdatedEvent'", "AMQP 0-9-1 / Kafka Protocol")
-Rel(notifySvc, msgBus, "Subscribe to Events", "AMQP 0-9-1 / Kafka Protocol")
-Rel(reportSvc, msgBus, "Subscribe for Analytics", "AMQP 0-9-1 / Kafka Protocol")
 
 SHOW_LEGEND()
 @enduml

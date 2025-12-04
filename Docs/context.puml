@@ -25,9 +25,9 @@ Rel(netMgr, deStore, "Manages Store Network & Global Rules", "HTTPS")
 Rel(shoppingSys, deStore, "Queries Price/Loyalty & Requests Finance", "JSON/HTTPS")
 
 ' Relationships - DE-Store to Legacy/External
-Rel(deStore, warehouseDB, "Syncs Inventory Data", "JDBC")
+Rel(deStore, warehouseDB, "Monitors Stock Levels (Read-Only)", "JDBC")
 Rel(deStore, accountingDB, "Reads Sales Data for Reports", "JDBC")
 Rel(deStore, enablingSys, "Proxies Finance Requests", "REST/SOAP")
-Rel(deStore, email, "Sends Low Stock Alerts", "SMTP")
+Rel(deStore, email, "Sends Stock Alert Emails to Network Managers", "SMTP")
 
 @enduml
