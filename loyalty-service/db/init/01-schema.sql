@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS product_points_rules (
     deactivated_at TIMESTAMP,
     
     -- Constraints
-    CONSTRAINT valid_date_range CHECK (valid_from < valid_to OR valid_to IS NULL),
+    CONSTRAINT valid_product_points_date_range CHECK (valid_from < valid_to OR valid_to IS NULL),
     CONSTRAINT valid_points_config CHECK (points_per_unit > 0 OR points_per_gbp > 0)
 );
 
