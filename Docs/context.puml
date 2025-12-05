@@ -5,28 +5,30 @@ title System Context Diagram for DE-Store
 
 ' Personas
 Person(localMgr, "Local Manager", "Manages single store pricing, stock, and settings.")
-Person(netMgr, "Network Manager", "Manages global pricing, loyalty, and store network.")
+Person(netMgr, "Network Manager", "Manages global pricing, loyalty rules, and store network.")
+Person(customer, "Customer", "Shops at stores and earns/redeems loyalty points.")
 
 ' The Core System
-System(deStore, "DE-Store System", "Distributed Microservices System for multi-store management with hierarchical pricing and centralized store registry.")
+System(deStore, "DE-Store System", "Distributed Microservices System for multi-store management with hierarchical pricing, loyalty points, and centralized store registry.")
 
 ' External Systems (The Environment)
-System_Ext(shoppingSys, "Shopping System", "External POS/E-commerce terminals processing customer transactions.")
-System_Ext(warehouseDB, "Central Warehouse DB", "Legacy Read-Only Database for global stock.")
-System_Ext(accountingDB, "Central Accounting DB", "Legacy Read-Only Database for historical sales.")
+System_Ext(shoppingSys, "Shopping System", "External POS/E-commerce terminals processing customer transactions and basket pricing.")
+System_Ext(warehouseDB, "Central Warehouse DB", "Legacy Read-Only Database for global stock and product catalog.")
+System_Ext(accountingDB, "Central Accounting DB", "Legacy Read-Only Database for historical sales and customer transactions.")
 System_Ext(enablingSys, "Enabling Finance System", "External provider for 'Buy Now Pay Later'.")
 System_Ext(email, "Email System", "SMTP Server for manager alerts.")
 
 ' Relationships - Human to System
 Rel(localMgr, deStore, "Configures Store Settings & Pricing", "HTTPS")
-Rel(netMgr, deStore, "Manages Store Network & Global Rules", "HTTPS")
+Rel(netMgr, deStore, "Manages Store Network, Loyalty Rules & Offers", "HTTPS")
+Rel(customer, shoppingSys, "Makes Purchases & Uses Loyalty Points", "POS/Web")
 
 ' Relationships - External Systems to DE-Store
-Rel(shoppingSys, deStore, "Queries Price/Loyalty & Requests Finance", "JSON/HTTPS")
+Rel(shoppingSys, deStore, "Queries Price/Loyalty, Calculates Points & Basket Discounts", "JSON/HTTPS")
 
 ' Relationships - DE-Store to Legacy/External
-Rel(deStore, warehouseDB, "Monitors Stock Levels (Read-Only)", "JDBC")
-Rel(deStore, accountingDB, "Reads Sales Data for Reports", "JDBC")
+Rel(deStore, warehouseDB, "Syncs Inventory & Product Data", "JDBC")
+Rel(deStore, accountingDB, "Reads Sales Transactions for Points Calculation", "JDBC")
 Rel(deStore, enablingSys, "Proxies Finance Requests", "REST/SOAP")
 Rel(deStore, email, "Sends Stock Alert Emails to Network Managers", "SMTP")
 

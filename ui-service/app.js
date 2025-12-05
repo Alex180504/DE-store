@@ -97,6 +97,14 @@ async function authenticatedFetch(url, options = {}) {
 function applyRoleBasedUI() {
     if (!currentUser) return;
 
+    // Network managers have access to loyalty management
+    if (currentUser.isNetworkManager) {
+        const loyaltyTab = document.getElementById('loyaltyTab');
+        if (loyaltyTab) {
+            loyaltyTab.style.display = 'inline-block';
+        }
+    }
+
     // Store managers cannot create global rules
     if (currentUser.isStoreManager) {
         // Hide global checkbox and related help text
