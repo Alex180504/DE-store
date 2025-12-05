@@ -19,6 +19,9 @@ RUN mkdir -p /var/log/nginx
 # Expose port 80
 EXPOSE 80
 
+# Install wget for healthcheck
+RUN apk add --no-cache wget
+
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
     CMD wget --quiet --tries=1 --spider http://localhost/health || exit 1

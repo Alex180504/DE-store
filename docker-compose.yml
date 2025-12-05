@@ -216,6 +216,144 @@ services:
       timeout: 3s
       retries: 3
 
+  # MailHog (SMTP Server for Development)
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: de-store-mailhog
+    ports:
+      - "1025:1025"  # SMTP port
+      - "8025:8025"  # Web UI port
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
+  # Inventory Service (Spring Boot)
+  inventory-service:
+    build:
+      context: ./inventory-service
+      dockerfile: Dockerfile
+    container_name: de-store-inventory-service
+    environment:
+      # Primary Datasource - Warehouse DB (MySQL, Read-Only)
+      SPRING_DATASOURCE_PRIMARY_URL: jdbc:mysql://warehouse-db:3306/warehouse
+      SPRING_DATASOURCE_PRIMARY_USERNAME: warehouse_user
+      SPRING_DATASOURCE_PRIMARY_PASSWORD: warehouse_pass
+      SPRING_DATASOURCE_PRIMARY_DRIVER: com.mysql.cj.jdbc.Driver
+      # Secondary Datasource - Auth DB (PostgreSQL, Read-Only for emails)
+      SPRING_DATASOURCE_AUTH_URL: jdbc:postgresql://auth-db:5432/auth
+      SPRING_DATASOURCE_AUTH_USERNAME: auth_user
+      SPRING_DATASOURCE_AUTH_PASSWORD: auth_pass
+      SPRING_DATASOURCE_AUTH_DRIVER: org.postgresql.Driver
+      # Mail Configuration
+      SPRING_MAIL_HOST: mailhog
+      SPRING_MAIL_PORT: 1025
+      SPRING_MAIL_USERNAME: ""
+      SPRING_MAIL_PASSWORD: ""
+      EMAIL_FROM: inventory@de-store.com
+      EMAIL_SUBJECT_PREFIX: "[DE-Store Alert]"
+      EMAIL_ENABLED: "true"
+      # Inventory Thresholds
+      INVENTORY_THRESHOLDS_LOW_STOCK: 50
+      INVENTORY_THRESHOLDS_CRITICAL_STOCK: 20
+      INVENTORY_THRESHOLDS_OUT_OF_STOCK: 0
+      # Schedule (every 6 hours: 0 0 */6 * * ?)
+      INVENTORY_SCHEDULE: "0 0 */6 * * ?"
+      # JWT Configuration (must match auth-service)
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      JWT_EXPIRATION: "86400000"
+      # JPA Configuration
+      SPRING_JPA_SHOW_SQL: "true"
+      # Application Settings
+      SERVER_PORT: 8084
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+    ports:
+      - "8084:8084"
+    depends_on:
+      warehouse-db:
+        condition: service_healthy
+      auth-db:
+        condition: service_healthy
+      mailhog:
+        condition: service_started
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
+  # ============================================================
+  # TEST SERVICES (use --profile test to enable)
+  # Usage: docker-compose --profile test up test-all
+  # ============================================================
+  
+  test-auth:
+    profiles: ["test"]
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+      target: build
+    container_name: de-store-test-auth
+    command: mvn test
+    volumes:
+      - ./auth-service:/app
+      - maven-cache:/root/.m2
+    networks:
+      - de-store-network
+    depends_on:
+      auth-db:
+        condition: service_healthy
+
+  test-pricing:
+    profiles: ["test"]
+    build:
+      context: ./pricing-service
+      dockerfile: Dockerfile
+      target: build
+    container_name: de-store-test-pricing
+    command: mvn test
+    volumes:
+      - ./pricing-service:/app
+      - maven-cache:/root/.m2
+    networks:
+      - de-store-network
+    depends_on:
+      pricing-db:
+        condition: service_healthy
+
+  test-store:
+    profiles: ["test"]
+    build:
+      context: ./store-service
+      dockerfile: Dockerfile
+      target: build
+    container_name: de-store-test-store
+    command: mvn test
+    volumes:
+      - ./store-service:/app
+      - maven-cache:/root/.m2
+    networks:
+      - de-store-network
+    depends_on:
+      store-db:
+        condition: service_healthy
+
+  test-inventory:
+    profiles: ["test"]
+    build:
+      context: ./inventory-service
+      dockerfile: Dockerfile
+      target: build
+    container_name: de-store-test-inventory
+    command: mvn test
+    volumes:
+      - ./inventory-service:/app
+      - maven-cache:/root/.m2
+    networks:
+      - de-store-network
+    depends_on:
+      warehouse-db:
+        condition: service_healthy
+      auth-db:
+        condition: service_healthy
+
 networks:
   de-store-network:
     driver: bridge
@@ -230,3 +368,5 @@ volumes:
     name: de-store-auth-data
   store-data:
     name: de-store-store-data
+  maven-cache:
+    name: de-store-maven-cache

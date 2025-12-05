@@ -1,14 +1,21 @@
 package com.destore.pricing.integration;
 
+import com.destore.pricing.model.PricingRule;
 import com.destore.pricing.model.dto.PricingRuleRequest;
 import com.destore.pricing.model.dto.PricingRuleResponse;
 import com.destore.pricing.model.enums.PromotionType;
+import com.destore.pricing.repository.PricingRuleRepository;
+import com.destore.pricing.repository.WarehouseItemRepository;
+import com.destore.pricing.security.JwtUtil;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +24,12 @@ import org.springframework.test.context.ActiveProfiles;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 /**
  * @file PricingRuleCRUDIntegrationTest.java
@@ -41,6 +52,31 @@ public class PricingRuleCRUDIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @MockBean
+    private JwtUtil jwtUtil;
+
+    @MockBean
+    private WarehouseItemRepository warehouseItemRepository;
+
+    private String testToken = "test-token";
+
+    @BeforeEach
+    void setUp() {
+        when(jwtUtil.validateToken(testToken)).thenReturn(true);
+        when(jwtUtil.extractUsername(testToken)).thenReturn("testUser");
+        when(jwtUtil.extractRole(testToken)).thenReturn("NETWORK_MANAGER");
+        when(jwtUtil.extractStoreId(testToken)).thenReturn(null);
+
+        when(warehouseItemRepository.existsById(anyInt())).thenReturn(true);
+        when(warehouseItemRepository.getItemBasePrice(anyInt())).thenReturn(Optional.of(new BigDecimal("100.00")));
+    }
+
+    private HttpHeaders createHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + testToken);
+        return headers;
+    }
+
     /**
      * @brief Test creating a global pricing rule
      */
@@ -56,7 +92,7 @@ public class PricingRuleCRUDIntegrationTest {
 
         ResponseEntity<PricingRuleResponse> response = restTemplate.postForEntity(
                 "/api/pricing/rules",
-                request,
+                new HttpEntity<>(request, createHeaders()),
                 PricingRuleResponse.class
         );
 
@@ -89,7 +125,7 @@ public class PricingRuleCRUDIntegrationTest {
 
         ResponseEntity<PricingRuleResponse> response = restTemplate.postForEntity(
                 "/api/pricing/rules",
-                request,
+                new HttpEntity<>(request, createHeaders()),
                 PricingRuleResponse.class
         );
 
@@ -124,7 +160,7 @@ public class PricingRuleCRUDIntegrationTest {
 
         ResponseEntity<PricingRuleResponse> response = restTemplate.postForEntity(
                 "/api/pricing/rules",
-                request,
+                new HttpEntity<>(request, createHeaders()),
                 PricingRuleResponse.class
         );
 
@@ -144,7 +180,7 @@ public class PricingRuleCRUDIntegrationTest {
         ResponseEntity<List<PricingRuleResponse>> response = restTemplate.exchange(
                 "/api/pricing/rules",
                 HttpMethod.GET,
-                null,
+                new HttpEntity<>(createHeaders()),
                 new ParameterizedTypeReference<List<PricingRuleResponse>>() {}
         );
 
@@ -164,7 +200,7 @@ public class PricingRuleCRUDIntegrationTest {
         ResponseEntity<List<PricingRuleResponse>> response = restTemplate.exchange(
                 "/api/pricing/rules/active",
                 HttpMethod.GET,
-                null,
+                new HttpEntity<>(createHeaders()),
                 new ParameterizedTypeReference<List<PricingRuleResponse>>() {}
         );
 
@@ -195,7 +231,7 @@ public class PricingRuleCRUDIntegrationTest {
 
         ResponseEntity<PricingRuleResponse> createResponse = restTemplate.postForEntity(
                 "/api/pricing/rules",
-                createRequest,
+                new HttpEntity<>(createRequest, createHeaders()),
                 PricingRuleResponse.class
         );
 
@@ -203,8 +239,10 @@ public class PricingRuleCRUDIntegrationTest {
         Integer ruleId = createResponse.getBody().getRuleId();
 
         // Now get it by ID
-        ResponseEntity<PricingRuleResponse> getResponse = restTemplate.getForEntity(
+        ResponseEntity<PricingRuleResponse> getResponse = restTemplate.exchange(
                 "/api/pricing/rules/" + ruleId,
+                HttpMethod.GET,
+                new HttpEntity<>(createHeaders()),
                 PricingRuleResponse.class
         );
 
@@ -234,13 +272,13 @@ public class PricingRuleCRUDIntegrationTest {
                     .createdBy("Test User")
                     .build();
 
-            restTemplate.postForEntity("/api/pricing/rules", request, PricingRuleResponse.class);
+            restTemplate.postForEntity("/api/pricing/rules", new HttpEntity<>(request, createHeaders()), PricingRuleResponse.class);
         }
 
         ResponseEntity<List<PricingRuleResponse>> response = restTemplate.exchange(
                 "/api/pricing/rules/item/" + itemId,
                 HttpMethod.GET,
-                null,
+                new HttpEntity<>(createHeaders()),
                 new ParameterizedTypeReference<List<PricingRuleResponse>>() {}
         );
 
@@ -274,13 +312,13 @@ public class PricingRuleCRUDIntegrationTest {
                     .createdBy("Store Manager")
                     .build();
 
-            restTemplate.postForEntity("/api/pricing/rules", request, PricingRuleResponse.class);
+            restTemplate.postForEntity("/api/pricing/rules", new HttpEntity<>(request, createHeaders()), PricingRuleResponse.class);
         }
 
         ResponseEntity<List<PricingRuleResponse>> response = restTemplate.exchange(
                 "/api/pricing/rules/store/" + storeId,
                 HttpMethod.GET,
-                null,
+                new HttpEntity<>(createHeaders()),
                 new ParameterizedTypeReference<List<PricingRuleResponse>>() {}
         );
 
@@ -312,7 +350,7 @@ public class PricingRuleCRUDIntegrationTest {
 
         ResponseEntity<PricingRuleResponse> createResponse = restTemplate.postForEntity(
                 "/api/pricing/rules",
-                createRequest,
+                new HttpEntity<>(createRequest, createHeaders()),
                 PricingRuleResponse.class
         );
 
@@ -328,7 +366,7 @@ public class PricingRuleCRUDIntegrationTest {
                 .createdBy("Test User")
                 .build();
 
-        HttpEntity<PricingRuleRequest> httpEntity = new HttpEntity<>(updateRequest);
+        HttpEntity<PricingRuleRequest> httpEntity = new HttpEntity<>(updateRequest, createHeaders());
         
         ResponseEntity<PricingRuleResponse> updateResponse = restTemplate.exchange(
                 "/api/pricing/rules/" + ruleId,
@@ -362,7 +400,7 @@ public class PricingRuleCRUDIntegrationTest {
 
         ResponseEntity<PricingRuleResponse> createResponse = restTemplate.postForEntity(
                 "/api/pricing/rules",
-                createRequest,
+                new HttpEntity<>(createRequest, createHeaders()),
                 PricingRuleResponse.class
         );
 
@@ -371,7 +409,7 @@ public class PricingRuleCRUDIntegrationTest {
         // Deactivate it
         ResponseEntity<PricingRuleResponse> deactivateResponse = restTemplate.postForEntity(
                 "/api/pricing/rules/" + ruleId + "/deactivate",
-                null,
+                new HttpEntity<>(null, createHeaders()),
                 PricingRuleResponse.class
         );
 
@@ -385,7 +423,7 @@ public class PricingRuleCRUDIntegrationTest {
         ResponseEntity<List<PricingRuleResponse>> activeRulesResponse = restTemplate.exchange(
                 "/api/pricing/rules/active",
                 HttpMethod.GET,
-                null,
+                new HttpEntity<>(createHeaders()),
                 new ParameterizedTypeReference<List<PricingRuleResponse>>() {}
         );
 
@@ -410,7 +448,7 @@ public class PricingRuleCRUDIntegrationTest {
 
         ResponseEntity<PricingRuleResponse> createResponse = restTemplate.postForEntity(
                 "/api/pricing/rules",
-                createRequest,
+                new HttpEntity<>(createRequest, createHeaders()),
                 PricingRuleResponse.class
         );
 
@@ -420,15 +458,17 @@ public class PricingRuleCRUDIntegrationTest {
         ResponseEntity<Void> deleteResponse = restTemplate.exchange(
                 "/api/pricing/rules/" + ruleId,
                 HttpMethod.DELETE,
-                null,
+                new HttpEntity<>(createHeaders()),
                 Void.class
         );
 
         assertThat(deleteResponse.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
         // Verify it no longer exists
-        ResponseEntity<String> getResponse = restTemplate.getForEntity(
+        ResponseEntity<String> getResponse = restTemplate.exchange(
                 "/api/pricing/rules/" + ruleId,
+                HttpMethod.GET,
+                new HttpEntity<>(createHeaders()),
                 String.class
         );
 
@@ -448,7 +488,7 @@ public class PricingRuleCRUDIntegrationTest {
 
         ResponseEntity<String> response = restTemplate.postForEntity(
                 "/api/pricing/rules",
-                request,
+                new HttpEntity<>(request, createHeaders()),
                 String.class
         );
 
@@ -460,6 +500,9 @@ public class PricingRuleCRUDIntegrationTest {
      */
     @Test
     public void testCreateRule_ItemNotFound() {
+        // Override mock to return false for this specific item
+        when(warehouseItemRepository.existsById(9999)).thenReturn(false);
+
         PricingRuleRequest request = PricingRuleRequest.builder()
                 .itemId(9999) // Non-existent item
                 .price(new BigDecimal("29.99"))
@@ -470,7 +513,7 @@ public class PricingRuleCRUDIntegrationTest {
 
         ResponseEntity<String> response = restTemplate.postForEntity(
                 "/api/pricing/rules",
-                request,
+                new HttpEntity<>(request, createHeaders()),
                 String.class
         );
 

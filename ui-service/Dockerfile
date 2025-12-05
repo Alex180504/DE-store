@@ -14,13 +14,18 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY index.html /usr/share/nginx/html/
 COPY login.html /usr/share/nginx/html/
 COPY register.html /usr/share/nginx/html/
+COPY inventory.html /usr/share/nginx/html/
 COPY app.js /usr/share/nginx/html/
+COPY inventory.js /usr/share/nginx/html/
 
 # Copy custom Nginx configuration for SPA
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 3000
 EXPOSE 3000
+
+# Install wget for healthcheck
+RUN apk add --no-cache wget
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
