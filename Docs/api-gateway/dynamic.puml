@@ -1,0 +1,126 @@
+@startuml api-gateway-sequence
+
+skinparam defaultFontSize 16
+skinparam sequenceMessageAlign center
+skinparam ParticipantPadding 10
+skinparam BoxPadding 10
+
+title Sequence Diagram - API Gateway Request Flows with Rate Limiting and CORS
+
+actor "User" as user
+participant "Management UI" as ui
+participant "API Gateway\n(Nginx)" as gateway
+participant "Auth Service" as auth
+participant "Pricing Service" as pricing
+participant "Analytics Service" as analytics
+participant "Store Service" as store
+
+== Flow 1: Login (Public Endpoint) ==
+
+user -> ui: Enter credentials
+ui -> gateway: POST /api/auth/login\n{username, password}\nOrigin: localhost:3000
+activate gateway
+
+gateway -> gateway: Check rate limit\ngeneral_limit: 300r/m\nPass: request count OK
+
+gateway -> gateway: Handle CORS preflight\nif OPTIONS: return 204\nelse: add CORS headers
+
+gateway -> auth: proxy_pass http://auth_service\nHeaders:\n- Host\n- X-Real-IP\n- X-Forwarded-For\n- X-Forwarded-Proto
+activate auth
+auth --> gateway: 200 OK\n{token, username, role, storeId}
+deactivate auth
+
+gateway -> gateway: Add CORS headers\nAccess-Control-Allow-Origin: localhost:3000\nAccess-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS
+
+gateway --> ui: 200 OK + CORS headers\n{token, ...}
+deactivate gateway
+
+ui --> user: Display dashboard\nStore token in localStorage
+
+== Flow 2: Create Pricing Rule (Authenticated Endpoint) ==
+
+user -> ui: Create pricing rule
+ui -> gateway: POST /api/pricing/rules\nAuthorization: Bearer {token}\n{itemId, price, promotion}
+activate gateway
+
+gateway -> gateway: Check rate limit\npricing_limit: 100r/m\nPass: burst 20 allowed
+
+gateway -> gateway: Handle CORS\nAdd CORS headers for response
+
+note right of gateway
+**JWT Authentication (Placeholder):**
+Currently commented out in config:
+  # auth_request /auth/validate;
+  # auth_request_set $user_id $upstream_http_x_user_id;
+
+For now, JWT validated by backend services
+Future: Centralized validation at gateway
+end note
+
+gateway -> pricing: proxy_pass http://pricing_service\nHeaders:\n- Authorization (preserved)\n- Host\n- X-Real-IP\n- X-Forwarded-For
+activate pricing
+pricing --> gateway: 201 Created\n{ruleId, itemId, price, promotion}
+deactivate pricing
+
+gateway --> ui: 201 Created + CORS headers
+deactivate gateway
+
+ui --> user: Show success message
+
+== Flow 3: Rate Limit Exceeded ==
+
+user -> ui: Rapid API calls
+ui -> gateway: POST /api/pricing/calculate\n(101st request in 1 minute)
+activate gateway
+
+gateway -> gateway: Check rate limit\npricing_limit: 100r/m\nFail: exceed limit
+
+gateway --> ui: 429 Too Many Requests\n{error: 'Too Many Requests',\nmessage: 'Rate limit exceeded...'}
+deactivate gateway
+
+ui --> user: Display rate limit error
+
+== Flow 4: Analytics Query (Long Timeout) ==
+
+user -> ui: Request sales report
+ui -> gateway: GET /api/analytics/sales?period=month\nAuthorization: Bearer {token}
+activate gateway
+
+gateway -> gateway: Check rate limit\ngeneral_limit: 300r/m\nPass
+
+gateway -> gateway: Configure timeouts\nproxy_read_timeout: 120s\n(longer for analytics)
+
+gateway -> analytics: proxy_pass http://analytics_service\nLarger buffers: 16x8k
+activate analytics
+
+note right of analytics
+Analytics queries may take longer
+due to complex aggregations across
+multiple databases
+end note
+
+analytics --> gateway: 200 OK (after 45s)\n{large JSON response}
+deactivate analytics
+
+gateway --> ui: 200 OK + CORS headers
+deactivate gateway
+
+ui --> user: Render report
+
+== Flow 5: Backend Service Down ==
+
+user -> ui: Update store details
+ui -> gateway: PUT /api/stores/{id}\nAuthorization: Bearer {token}
+activate gateway
+
+gateway -> store: proxy_pass http://store_service\nTimeout: 30s connect
+activate store
+store --> gateway: Connection timeout\n(service unavailable)
+deactivate store
+
+gateway --> ui: 502 Bad Gateway\n{error: 'Server Error',\nmessage: 'An internal server error occurred'}
+deactivate gateway
+
+ui --> user: Display error message
+
+@enduml

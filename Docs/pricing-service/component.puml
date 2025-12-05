@@ -1,0 +1,76 @@
+@startuml pricing-service-component
+!include ../c4-plantuml/C4_Component.puml
+
+title Component Diagram - Pricing Service
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(pricing_service, "Pricing Service") {
+    
+    Component(price_calc_ctrl, "PriceCalculationController", "Spring REST Controller", "Handles price calculation requests from Shopping System. Calculates final prices with promotions and hierarchical rules.")
+    Component(pricing_rule_ctrl, "PricingRuleController", "Spring REST Controller", "Manages pricing rules CRUD operations. Used by Store Managers and Network Managers to configure prices.")
+    Component(global_exception, "GlobalExceptionHandler", "Spring ControllerAdvice", "Centralized exception handling for REST controllers. Returns standardized error responses.")
+    
+    Component(price_calc_engine, "PriceCalculationEngine", "Spring Service", "Core pricing calculation engine. Implements hierarchical rule logic where store-specific rules override global rules. Validates items, finds applicable rules, calculates discounts.")
+    Component(promotion_engine, "PromotionEngine", "Spring Service", "Calculates promotional discounts. Supports THREE_FOR_TWO, BOGOF, PERCENTAGE_OFF, FIXED_DISCOUNT, FREE_DELIVERY promotions with BigDecimal precision.")
+    Component(pricing_rule_svc, "PricingRuleService", "Spring Service", "Business logic for managing pricing rules. Validates item/store existence, enforces authorization rules, converts entities to DTOs.")
+    
+    Component(jwt_filter, "JwtAuthenticationFilter", "Spring Filter", "Validates JWT tokens from Authorization header. Extracts username and role claims, sets SecurityContext for authorization.")
+    Component(jwt_util, "JwtUtil", "Security Component", "JWT parsing and validation utility. Uses shared secret to verify token signatures.")
+    Component(security_config, "SecurityConfig", "Spring Security Configuration", "Configures security rules, CORS, JWT filter chain, and role-based access control (STORE_MANAGER/NETWORK_MANAGER).")
+    Component(user_principal, "UserPrincipal", "Security Model", "User authentication principal containing username, storeId, and role information from JWT claims.")
+    
+    Component(pricing_rule_repo, "PricingRuleRepository", "Spring Data JPA", "Repository for pricing_rules table. Includes hierarchical query for finding store-specific OR global rules ordered by precedence.")
+    Component(warehouse_repo, "WarehouseItemRepository", "Spring Data JPA", "Repository for warehouse.items table (MySQL). Read-only access for item validation and name lookup.")
+    
+    Component(pricing_rule_entity, "PricingRule", "JPA Entity", "Pricing rule domain model. Contains itemId, storeId, price, promotion, promotionValue, isGlobal, validity dates, and audit fields.")
+    Component(dto_request, "Request DTOs", "Data Models", "PriceCalculationRequest, PricingRuleRequest, BulkPriceCalculationRequest with validation annotations.")
+    Component(dto_response, "Response DTOs", "Data Models", "PriceCalculationResponse with detailed breakdown (unitPrice, subtotal, discount, finalPrice, ruleSource), PricingRuleResponse.")
+    Component(promotion_enum, "PromotionType", "Enum", "NONE, THREE_FOR_TWO, BOGOF, FREE_DELIVERY, PERCENTAGE_OFF, FIXED_DISCOUNT.")
+    
+    Component(datasource_config, "DataSourceConfig", "Spring Configuration", "Multi-datasource configuration: Primary (Pricing DB PostgreSQL R/W), Secondary (Warehouse DB MySQL R/O).")
+    Component(openapi_config, "OpenApiConfig", "Spring Configuration", "Swagger/OpenAPI 3 documentation configuration with API metadata.")
+}
+
+ContainerDb(pricing_db, "Pricing Database", "PostgreSQL 15", "Stores pricing_rules table with itemId, storeId, price, promotion, isGlobal, validity dates.")
+ContainerDb(warehouse_db, "Warehouse Database", "MySQL 8", "Legacy database containing items table with inventory data. Read-only access for validation.")
+
+Container(shopping_system, "Shopping System", "External System", "Calls price calculation during checkout to get final prices with promotions.")
+Container(management_ui, "Management UI", "HTML5/JavaScript", "Used by Store Managers and Network Managers to configure pricing rules and view active promotions.")
+
+Rel(shopping_system, price_calc_ctrl, "POST /api/pricing/calculate", "HTTPS/JSON")
+Rel(management_ui, pricing_rule_ctrl, "CRUD /api/pricing/rules", "HTTPS/JSON")
+
+Rel(price_calc_ctrl, price_calc_engine, "Calls calculatePrice()")
+Rel(pricing_rule_ctrl, pricing_rule_svc, "Calls CRUD methods")
+Rel(price_calc_ctrl, global_exception, "Throws exceptions to")
+Rel(pricing_rule_ctrl, global_exception, "Throws exceptions to")
+
+Rel(price_calc_engine, pricing_rule_repo, "Queries for applicable rules")
+Rel(price_calc_engine, warehouse_repo, "Validates item existence")
+Rel(price_calc_engine, promotion_engine, "Calculates discount")
+Rel(pricing_rule_svc, pricing_rule_repo, "CRUD operations")
+Rel(pricing_rule_svc, warehouse_repo, "Validates item exists")
+
+Rel(pricing_rule_repo, pricing_db, "Reads/writes pricing_rules", "JDBC")
+Rel(warehouse_repo, warehouse_db, "Reads items (R/O)", "JDBC")
+
+Rel(jwt_filter, jwt_util, "Validates token")
+Rel(jwt_filter, user_principal, "Creates authentication")
+Rel(security_config, jwt_filter, "Registers filter")
+Rel(pricing_rule_svc, user_principal, "Gets current user for authorization")
+
+Rel(price_calc_engine, pricing_rule_entity, "Uses domain model")
+Rel(pricing_rule_repo, pricing_rule_entity, "Maps to/from DB")
+Rel(price_calc_ctrl, dto_request, "Receives requests")
+Rel(price_calc_ctrl, dto_response, "Returns responses")
+Rel(pricing_rule_ctrl, dto_request, "Receives requests")
+Rel(pricing_rule_ctrl, dto_response, "Returns responses")
+Rel(promotion_engine, promotion_enum, "Uses promotion types")
+
+Rel(datasource_config, pricing_db, "Configures primary datasource")
+Rel(datasource_config, warehouse_db, "Configures secondary datasource")
+
+SHOW_LEGEND()
+
+@enduml

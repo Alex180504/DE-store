@@ -1,0 +1,217 @@
+@startuml store-service-sequence
+
+skinparam defaultFontSize 16
+skinparam sequenceMessageAlign center
+skinparam ParticipantPadding 10
+skinparam BoxPadding 10
+
+title Sequence Diagram - Store Service: Store Management with Authorization
+
+actor "Network Manager" as network
+actor "Store Manager" as storemgr
+participant "StoreController" as ctrl
+participant "StoreService" as svc
+participant "UserPrincipal" as principal
+participant "StoreRepository" as repo
+database "Store DB\n(PostgreSQL)" as db
+
+== Flow 1: Create Store (Network Manager Only) ==
+
+network -> ctrl: POST /api/stores\n{storeCode, storeName, address, postcode, isActive}
+activate ctrl
+
+ctrl -> ctrl: Validate request (@Valid)
+note right of ctrl
+Validation checks:
+- storeCode format: XXX-NNN
+- storeName not empty
+- address not empty
+- postcode not empty
+end note
+
+ctrl -> svc: createStore(request)
+activate svc
+
+svc -> svc: getCurrentUser()
+activate svc
+svc -> principal: Get authentication from SecurityContext
+principal --> svc: UserPrincipal{username, role, storeId}
+deactivate svc
+
+svc -> principal: isNetworkManager()
+principal --> svc: true
+
+svc -> repo: existsByStoreCode(storeCode)
+activate repo
+repo -> db: SELECT COUNT(*) FROM stores\nWHERE store_code = '{storeCode}'
+db --> repo: 0
+repo --> svc: false
+deactivate repo
+
+svc -> svc: Build Store entity\n- storeCode\n- storeName\n- address\n- postcode\n- isActive (default: true)\n- createdAt = now()\n- updatedAt = now()
+
+svc -> repo: save(store)
+activate repo
+repo -> db: INSERT INTO stores\n(store_code, store_name, address, postcode, is_active, created_at, updated_at)\nVALUES (...)
+db --> repo: Store{storeId: N}
+repo --> svc: Store entity
+deactivate repo
+
+svc -> svc: mapToResponse(store)
+svc --> ctrl: StoreResponse
+deactivate svc
+
+ctrl --> network: 201 Created\n{\n  "storeId": N,\n  "storeCode": "{storeCode}",\n  "storeName": "{storeName}",\n  "address": "{address}",\n  "postcode": "{postcode}",\n  "isActive": true,\n  "createdAt": "timestamp",\n  "updatedAt": "timestamp"\n}
+deactivate ctrl
+
+== Flow 2: Get All Stores (Any Authenticated User) ==
+
+storemgr -> ctrl: GET /api/stores?activeOnly=true
+activate ctrl
+
+ctrl -> svc: getActiveStores()
+activate svc
+
+svc -> repo: findByIsActive(true)
+activate repo
+repo -> db: SELECT * FROM stores\nWHERE is_active = true
+db --> repo: List<Store>
+repo --> svc: List<Store>
+deactivate repo
+
+svc -> svc: Stream.map(mapToResponse)
+svc --> ctrl: List<StoreResponse>
+deactivate svc
+
+ctrl --> storemgr: 200 OK\n[\n  {store1},\n  {store2},\n  ...\n]
+deactivate ctrl
+
+== Flow 3: Get Store By ID (Any Authenticated User) ==
+
+storemgr -> ctrl: GET /api/stores/{storeId}
+activate ctrl
+
+ctrl -> svc: getStoreById(storeId)
+activate svc
+
+svc -> repo: findById(storeId)
+activate repo
+repo -> db: SELECT * FROM stores\nWHERE store_id = {storeId}
+db --> repo: Optional<Store>
+repo --> svc: Optional<Store>
+deactivate repo
+
+svc -> svc: Check if present
+svc -> svc: mapToResponse(store)
+svc --> ctrl: StoreResponse
+deactivate svc
+
+ctrl --> storemgr: 200 OK\n{store details}
+deactivate ctrl
+
+== Flow 4: Update Store (Network Manager Only) ==
+
+network -> ctrl: PUT /api/stores/{storeId}\n{storeName, address, postcode, isActive}
+activate ctrl
+
+ctrl -> ctrl: Validate request
+ctrl -> svc: updateStore(storeId, request)
+activate svc
+
+svc -> svc: getCurrentUser()
+svc -> principal: isNetworkManager()
+principal --> svc: true
+
+svc -> repo: findById(storeId)
+activate repo
+repo -> db: SELECT * FROM stores WHERE store_id = {storeId}
+db --> repo: Optional<Store>
+repo --> svc: Optional<Store>
+deactivate repo
+
+svc -> svc: Update entity fields\n- storeName\n- address\n- postcode\n- isActive\n- updatedAt = now() (via @PreUpdate)
+
+svc -> repo: save(updatedStore)
+activate repo
+repo -> db: UPDATE stores SET\nstore_name = '{storeName}',\naddress = '{address}',\npostcode = '{postcode}',\nis_active = {isActive},\nupdated_at = CURRENT_TIMESTAMP\nWHERE store_id = {storeId}
+db --> repo: Updated Store
+repo --> svc: Store entity
+deactivate repo
+
+svc -> svc: mapToResponse(store)
+svc --> ctrl: StoreResponse
+deactivate svc
+
+ctrl --> network: 200 OK\n{updated store details}
+deactivate ctrl
+
+== Flow 5: Delete Store (Network Manager Only) ==
+
+network -> ctrl: DELETE /api/stores/{storeId}
+activate ctrl
+
+ctrl -> svc: deleteStore(storeId)
+activate svc
+
+svc -> svc: getCurrentUser()
+svc -> principal: isNetworkManager()
+principal --> svc: true
+
+svc -> repo: findById(storeId)
+repo --> svc: Optional<Store>
+
+svc -> repo: deleteById(storeId)
+activate repo
+repo -> db: DELETE FROM stores\nWHERE store_id = {storeId}
+db --> repo: Success
+repo --> svc: void
+deactivate repo
+
+svc --> ctrl: void
+deactivate svc
+
+ctrl --> network: 204 No Content
+deactivate ctrl
+
+== Error Path: Unauthorized Create Attempt (Store Manager) ==
+
+storemgr -> ctrl: POST /api/stores\n{store data}
+activate ctrl
+
+ctrl -> svc: createStore(request)
+activate svc
+
+svc -> svc: getCurrentUser()
+svc -> principal: isNetworkManager()
+principal --> svc: false
+
+svc --> svc: throw ForbiddenAccessException("Only network managers can create stores")
+svc --> ctrl: ForbiddenAccessException
+deactivate svc
+
+ctrl --> storemgr: 403 Forbidden\n{\n  "error": "Only network managers can create stores"\n}
+deactivate ctrl
+
+== Error Path: Store Not Found ==
+
+network -> ctrl: GET /api/stores/{storeId}
+activate ctrl
+
+ctrl -> svc: getStoreById(storeId)
+activate svc
+
+svc -> repo: findById(storeId)
+activate repo
+repo -> db: SELECT * FROM stores WHERE store_id = {storeId}
+db --> repo: Optional.empty()
+repo --> svc: Optional.empty()
+deactivate repo
+
+svc --> svc: throw ResourceNotFoundException("Store not found with ID: {storeId}")
+svc --> ctrl: ResourceNotFoundException
+deactivate svc
+
+ctrl --> network: 404 Not Found\n{\n  "error": "Store not found with ID: {storeId}"\n}
+deactivate ctrl
+
+@enduml

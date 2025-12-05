@@ -1,0 +1,83 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Component Diagram for Auth Service
+
+' External Actors
+Person(storeMgr, "Store Manager", "Authenticates to manage store pricing")
+Person(netMgr, "Network Manager", "Authenticates to manage network operations")
+
+' External Systems
+System_Ext(apiGw, "API Gateway", "Routes authentication requests")
+System_Ext(otherServices, "Other Microservices", "Pricing, Store, Loyalty, Analytics, Inventory services")
+
+Container_Boundary(authService, "Auth Service") {
+    ' API Layer
+    Component(authController, "Auth Controller", "Spring REST Controller", "Handles login, registration, user info endpoints")
+    
+    ' Business Logic Layer
+    Component(authService_comp, "Auth Service", "Spring Service", "Authenticates users, generates JWT tokens, manages user sessions")
+    Component(userDetailsService, "Custom User Details Service", "Spring UserDetailsService", "Loads user details for Spring Security authentication")
+    
+    ' Security Layer
+    Component(jwtUtil, "JWT Utility", "Spring Component", "Generates, validates, and parses JWT tokens with role/store claims")
+    Component(jwtFilter, "JWT Authentication Filter", "OncePerRequestFilter", "Intercepts HTTP requests, validates Bearer tokens, sets Security Context")
+    Component(securityConfig, "Security Configuration", "Spring Security Config", "Configures authentication, CORS, session management, filter chain")
+    Component(passwordEncoder, "Password Encoder", "BCryptPasswordEncoder", "Hashes and validates passwords using BCrypt")
+    
+    ' Data Access Layer
+    Component(userRepository, "User Repository", "Spring Data JPA", "CRUD operations on users table")
+    
+    ' Domain Models
+    Component(userEntity, "User Entity", "JPA Entity", "userId, username, passwordHash, fullName, role (STORE_MANAGER/NETWORK_MANAGER), storeId, isActive")
+    Component(dtoModels, "DTO Models", "Data Transfer Objects", "LoginRequest, LoginResponse, RegisterRequest, UserResponse")
+    
+    ' Database
+    ContainerDb(authDB, "Auth Database", "PostgreSQL 15:5433", "users table with credentials and roles")
+}
+
+' --- Relationships ---
+
+' External to API Layer
+Rel(storeMgr, apiGw, "POST /api/auth/login", "HTTPS")
+Rel(netMgr, apiGw, "POST /api/auth/login", "HTTPS")
+Rel(apiGw, jwtFilter, "All /api/auth/* requests", "HTTP:8081")
+Rel(otherServices, jwtFilter, "JWT validation (future)", "HTTP:8081")
+
+' Request Flow - Login
+Rel(jwtFilter, authController, "Passes unauthenticated login requests", "Spring MVC")
+Rel(authController, authService_comp, "login(LoginRequest)", "Method call")
+Rel(authService_comp, userRepository, "findByUsernameAndIsActiveTrue()", "JPA Query")
+Rel(userRepository, authDB, "SELECT * FROM users WHERE username=? AND is_active=true", "JDBC")
+Rel(userRepository, userEntity, "Maps to", "JPA")
+Rel(authService_comp, passwordEncoder, "matches(rawPassword, encodedPassword)", "BCrypt verify")
+Rel(authService_comp, jwtUtil, "generateToken(username, role, storeId)", "JWT creation")
+Rel(jwtUtil, authService_comp, "Returns signed JWT token", "")
+Rel(authService_comp, dtoModels, "Builds LoginResponse", "")
+Rel(authController, apiGw, "Returns LoginResponse with JWT", "JSON")
+
+' Request Flow - JWT Validation (Authenticated Requests)
+Rel(jwtFilter, jwtUtil, "extractUsername(token), validateToken()", "JWT parsing")
+Rel(jwtFilter, userDetailsService, "loadUserByUsername()", "User lookup")
+Rel(userDetailsService, userRepository, "findByUsername()", "JPA Query")
+Rel(jwtFilter, jwtFilter, "Sets SecurityContext with authenticated user", "Spring Security")
+Rel(jwtFilter, authController, "Forwards authenticated request", "Filter chain")
+
+' Request Flow - Get Current User
+Rel(authController, authService_comp, "getCurrentUser(username)", "Method call")
+Rel(authService_comp, dtoModels, "Builds UserResponse", "")
+
+' Request Flow - Registration
+Rel(authController, authService_comp, "register(RegisterRequest)", "Method call")
+Rel(authService_comp, passwordEncoder, "encode(rawPassword)", "BCrypt hash")
+Rel(authService_comp, userEntity, "Creates new User entity", "")
+Rel(authService_comp, userRepository, "save(user)", "JPA persist")
+Rel(userRepository, authDB, "INSERT INTO users", "JDBC")
+
+' Configuration
+Rel(securityConfig, jwtFilter, "Configures and registers", "Bean definition")
+Rel(securityConfig, passwordEncoder, "Provides BCrypt encoder", "Bean definition")
+Rel(securityConfig, userDetailsService, "Configures authentication provider", "")
+
+SHOW_LEGEND()
+@enduml

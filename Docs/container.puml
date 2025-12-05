@@ -5,73 +5,94 @@ title Container Diagram for DE-Store MSOA
 
 ' Actors
 Person(localMgr, "Store Manager", "Manages single-store pricing and stock")
-Person(netMgr, "Network Manager", "Manages network-wide pricing and loyalty")
-System_Ext(shoppingSys, "Shopping System", "External POS/E-commerce")
+Person(netMgr, "Network Manager", "Manages network-wide pricing, loyalty, and analytics")
 
 System_Boundary(c1, "DE-Store MSOA") {
-    ' Core Infra
-    Container(spa, "Management SPA", "React/Angular", "Dashboard for Local & Network Managers")
-    Container(apiGw, "API Gateway", "Nginx", "Routes requests, JWT validation, Rate limiting")
-    Container(mockSvc, "Shopping Mock Service", "Spring Boot", "Test harness for loyalty integration testing with edge cases")
+    ' Core Infrastructure
+    Container(spa, "Management UI", "HTML5/CSS3/JavaScript", "Static web dashboard for Local & Network Managers with role-based access")
+    Container(apiGw, "API Gateway", "Nginx", "Routes requests, CORS handling, Rate limiting (100-300 req/min)")
 
     ' Domain Services
-    Container(authSvc, "Auth Service", "Spring Boot + JWT", "Issues/Validates JWT, RBAC (Store vs Network roles)")
-    Container(storeSvc, "Store Service", "Spring Boot", "Manages store locations and metadata (CRUD for Network, read-only for Store managers)")
-    Container(priceSvc, "Pricing Service", "Spring Boot", "Calculates prices with hierarchical rules (Global + Store overrides)")
-    Container(loyaltySvc, "Loyalty Service", "Spring Boot", "Points calculation, redemption offers, basket pricing with SAGA pattern")
-    Container(invSvc, "Inventory Service", "Spring Boot", "Syncs with Central Warehouse DB, generates low stock alerts")
+    Container(authSvc, "Auth Service", "Spring Boot 3.2.0 + JWT", "Authentication, JWT token issuance/validation, RBAC (Store vs Network roles)")
+    Container(storeSvc, "Store Service", "Spring Boot 3.2.0", "Manages store locations and metadata (CRUD for Network, read-only for Store managers)")
+    Container(priceSvc, "Pricing Service", "Spring Boot 3.2.0", "Calculates prices with hierarchical rules (Global + Store overrides), product points configuration")
+    Container(loyaltySvc, "Loyalty Service", "Spring Boot 3.2.0", "Points calculation, redemption offers, basket pricing with SAGA pattern, scheduled points processing")
+    Container(invSvc, "Inventory Service", "Spring Boot 3.2.0", "Monitors warehouse stock, generates low/critical/out-of-stock email alerts every 6 hours")
+    Container(analyticsSvc, "Analytics Service", "Spring Boot 3.2.0", "Read-only multi-database reporting: revenue, transactions, products, stores (Network Manager only)")
+    Container(financeAdapter, "Finance Adapter", "Spring Boot 3.2.0", "Anti-corruption layer for Enabling Finance BNPL API integration")
 
-    ' Data Stores (Per-Service Isolation)
-    ContainerDb(authDB, "Auth DB", "PostgreSQL:5433", "User credentials, roles, JWT refresh tokens")
-    ContainerDb(storeDB, "Store DB", "PostgreSQL:5434", "Store locations: code, name, address, postcode, active status")
-    ContainerDb(priceDB, "Pricing DB", "PostgreSQL:5435", "Hierarchical pricing rules, product points rules, bonus offers")
-    ContainerDb(loyaltyDB, "Loyalty DB", "PostgreSQL:5436", "Customer balances, points transactions, redemption offers, usage tracking")
+    ' Data Stores (Per-Service Database Isolation)
+    ContainerDb(authDB, "Auth DB", "PostgreSQL 15:5433", "User credentials, roles (STORE_MANAGER/NETWORK_MANAGER), JWT refresh tokens")
+    ContainerDb(storeDB, "Store DB", "PostgreSQL 15:5434", "Store locations: store_id, store_code, store_name, address, postcode, active status")
+    ContainerDb(priceDB, "Pricing DB", "PostgreSQL 15:5432", "Hierarchical pricing rules, product points rules, bonus offers")
+    ContainerDb(loyaltyDB, "Loyalty DB", "PostgreSQL 15:5436", "Customer balances, points transactions, redemption offers, usage tracking")
 }
 
-' External Dependencies
-System_Ext(warehouseDB, "Central Warehouse DB", "Legacy PostgreSQL (Read-Only)")
-System_Ext(accountingDB, "Central Accounting DB", "PostgreSQL:5435 (Read-Only)")
-System_Ext(enablingSys, "Enabling Finance API", "External BNPL System")
-System_Ext(email, "Email System", "SMTP")
+' External Dependencies (Legacy Systems)
+System_Ext(warehouseDB, "Central Warehouse DB", "MySQL 8:3306 (Legacy, Read-Only)")
+System_Ext(accountingDB, "Central Accounting DB", "PostgreSQL 15:5435 (Legacy, Read-Only)")
+
+' External Dependencies (Externl systems)
+System_Ext(shoppingSys2, "Shopping System", "Spring Boot 3.2.0 - Test implementation")
+System_Ext(enablingMock, "Enabling Finance System", "Node.js:8095 - Test implementation")
+System_Ext(mailhog, "Email Server", "SMTP:1025, Web UI:8025")
 
 ' --- Interactions ---
 
-' 1. Manager Interactions
-Rel(localMgr, spa, "Configure Store Settings", "HTTPS/TLS 1.3")
-Rel(netMgr, spa, "Configure Global Pricing/Loyalty Rules", "HTTPS/TLS 1.3")
-Rel(spa, apiGw, "Management API Calls", "REST/JSON over HTTPS")
+' 1. Manager UI Interactions
+Rel(localMgr, spa, "Configure Store Pricing Rules", "HTTPS")
+Rel(netMgr, spa, "Configure Global Pricing/Loyalty/View Analytics", "HTTPS")
+Rel(spa, apiGw, "Management API Calls", "REST/JSON over HTTP")
 
 ' 2. Shopping System - Transaction Flow
-Rel(shoppingSys, apiGw, "Calculate Points for Transactions", "REST/JSON over HTTPS")
-Rel(shoppingSys, apiGw, "Get Customer Points Balance", "REST/JSON over HTTPS")
-Rel(shoppingSys, apiGw, "Price Basket with Redemption Offers (SAGA)", "REST/JSON over HTTPS")
-Rel(shoppingSys, apiGw, "Request Finance Approval", "REST/JSON over HTTPS")
+Rel(shoppingSys2, apiGw, "Calculate Points for Transactions", "REST/JSON over HTTP")
+Rel(shoppingSys2, apiGw, "Get Customer Points Balance", "REST/JSON over HTTP")
+Rel(shoppingSys2, apiGw, "Price Basket with Redemption Offers (SAGA)", "REST/JSON over HTTP")
+Rel(shoppingSys2, apiGw, "Calculate Final Price with Hierarchical Rules", "REST/JSON over HTTP")
 
-' 3. Test Harness
-Rel(mockSvc, loyaltySvc, "Test Points Calculation & Redemption", "REST/JSON over HTTP")
-Rel(mockSvc, loyaltySvc, "Test Edge Cases (Concurrency, Invalid Data)", "REST/JSON over HTTP")
+' 3. Test Harness (Development/Testing Only)
+Rel(shoppingSys2, apiGw, "Test Points Calculation & Redemption via API Gateway", "REST/JSON over HTTP")
+Rel(shoppingSys2, apiGw, "Test Edge Cases (Concurrency, Invalid Data)", "REST/JSON over HTTP")
 
 ' 4. API Gateway Routing
-Rel(apiGw, authSvc, "Validate JWT & Check Role", "REST/JSON over HTTP:8083")
-Rel(apiGw, storeSvc, "Manage Store Locations", "REST/JSON over HTTP:8082")
-Rel(apiGw, priceSvc, "Calculate Final Price", "REST/JSON over HTTP:8084")
-Rel(apiGw, loyaltySvc, "Points Calculation & Basket Pricing", "REST/JSON over HTTP:8085")
+Rel(apiGw, authSvc, "JWT Validation & Authentication", "REST/JSON over HTTP:8081")
+Rel(apiGw, storeSvc, "Store Management API", "REST/JSON over HTTP:8083")
+Rel(apiGw, priceSvc, "Price Calculation & Rules Management", "REST/JSON over HTTP:8080")
+Rel(apiGw, loyaltySvc, "Points & Basket Pricing API", "REST/JSON over HTTP:8085")
+Rel(apiGw, analyticsSvc, "Analytics & Reporting API (Network Manager only)", "REST/JSON over HTTP:8086")
+Rel(apiGw, invSvc, "Inventory Monitoring API", "REST/JSON over HTTP:8084")
+Rel(apiGw, financeAdapter, "Finance Approval Requests", "REST/JSON over HTTP:8091")
 
-' 5. Service Data Access
-Rel(authSvc, authDB, "Read/Write User Credentials & Roles", "PostgreSQL Protocol (TCP/5433)")
-Rel(storeSvc, storeDB, "Read/Write Store Metadata", "PostgreSQL Protocol (TCP/5434)")
-Rel(priceSvc, priceDB, "Read/Write Pricing Rules & Product Points", "PostgreSQL Protocol (TCP/5435)")
-Rel(priceSvc, storeSvc, "Fetch Store Information", "REST/JSON over HTTP")
-Rel(loyaltySvc, loyaltyDB, "Read/Write Points Balances & Redemptions", "PostgreSQL Protocol (TCP/5436)")
-Rel(loyaltySvc, accountingDB, "Read Transaction History for Points", "PostgreSQL Protocol (TCP/5435)")
-Rel(spa, storeSvc, "Query Store List for Dropdowns", "REST/JSON over HTTPS")
+' 5. Service Data Access (Primary Databases)
+Rel(authSvc, authDB, "Read/Write User Credentials & Roles", "JDBC/PostgreSQL:5433")
+Rel(storeSvc, storeDB, "Read/Write Store Metadata", "JDBC/PostgreSQL:5434")
+Rel(priceSvc, priceDB, "Read/Write Pricing Rules & Product Points", "JDBC/PostgreSQL:5432")
+Rel(loyaltySvc, loyaltyDB, "Read/Write Points Balances & Redemptions", "JDBC/PostgreSQL:5436")
 
-' 6. Legacy System Integration
-Rel(invSvc, warehouseDB, "Daily Sync (1-2 times/day)", "JDBC over TCP")
-Rel(loyaltySvc, accountingDB, "Query Customer Transactions for Points Calculation", "JDBC over TCP")
+' 6. Cross-Service Dependencies
+Rel(priceSvc, storeSvc, "Fetch Store Information for Rule Validation", "REST/JSON over HTTP:8083")
+Rel(priceSvc, warehouseDB, "Read Product Catalog (Read-Only)", "JDBC/MySQL:3306")
 
-' 7. Loyalty Service Internal Components
+' 7. Legacy System Integration (Read-Only Access)
+Rel(invSvc, warehouseDB, "Monitor Stock Levels (Read-Only)", "JDBC/MySQL:3306")
+Rel(invSvc, authDB, "Read Network Manager Emails (Read-Only)", "JDBC/PostgreSQL:5433")
+Rel(loyaltySvc, accountingDB, "Query Customer Transactions for Points Calculation (Read-Only)", "JDBC/PostgreSQL:5435")
+
+' 8. Analytics Multi-Database Read Pattern
+Rel(analyticsSvc, accountingDB, "Read Transaction & Financial Data (Read-Only)", "JDBC/PostgreSQL:5435")
+Rel(analyticsSvc, storeDB, "Read Store Metadata for Enrichment (Read-Only)", "JDBC/PostgreSQL:5434")
+Rel(analyticsSvc, warehouseDB, "Read Product Catalog for Enrichment (Read-Only)", "JDBC/MySQL:3306")
+
+' 9. Finance Integration
+Rel(financeAdapter, enablingMock, "BNPL Approval Requests", "REST/JSON over HTTP:8095")
+
+' 10. Email Notifications
+Rel(invSvc, mailhog, "Send Low Stock Alert Emails (Scheduled)", "SMTP:1025")
+
+' 11. Scheduled Background Processes
 Rel(loyaltySvc, loyaltySvc, "SAGA Orchestration:\n1. Validate offers\n2. Reserve points\n3. Calculate discounts\n4. Compensate on failure", "Internal")
+Rel(loyaltySvc, loyaltySvc, "Scheduled Points Calculation\n(Every 6 hours via @Scheduled)", "Internal Cron")
+Rel(invSvc, invSvc, "Scheduled Stock Monitoring\n(Every 6 hours via @Scheduled)", "Internal Cron")
 
 SHOW_LEGEND()
 @enduml

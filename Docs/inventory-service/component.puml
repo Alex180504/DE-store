@@ -1,0 +1,87 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Component Diagram for Inventory Service
+
+' External Actors
+Person(netMgr, "Network Manager", "Monitors stock levels and receives alerts")
+
+' External Systems
+System_Ext(apiGw, "API Gateway", "Routes inventory requests")
+System_Ext(mailServer, "Email Server", "SMTP server (MailHog in dev)")
+
+Container_Boundary(inventoryService, "Inventory Service") {
+    ' API Layer
+    Component(controller, "Inventory Admin Controller", "Spring REST Controller", "Admin endpoints: manual check, alerts, thresholds, stats (NETWORK_MANAGER only)")
+    
+    ' Business Logic Layer
+    Component(monitoringService, "Stock Monitoring Service", "Spring Service + @Scheduled", "Checks stock levels every 6 hours, detects low/critical/out-of-stock items, orchestrates alerts")
+    Component(emailService, "Email Service", "Spring Service", "Composes HTML emails with color-coded severity tables, sends via JavaMailSender")
+    Component(configService, "Inventory Config Service", "Spring Service", "Manages dynamic alert thresholds (low: 50, critical: 20, out-of-stock: 0)")
+    
+    ' Security Layer
+    Component(jwtFilter, "JWT Authentication Filter", "OncePerRequestFilter", "Validates JWT tokens, extracts role, sets SecurityContext")
+    Component(jwtProvider, "JWT Token Provider", "Spring Component", "Parses JWT, validates signature, extracts claims (username, role, storeId)")
+    Component(securityConfig, "Security Configuration", "Spring Security Config", "Configures authentication, role-based access, filter chain")
+    
+    ' Data Access Layer - Warehouse
+    Component(warehouseRepo, "Warehouse Item Repository", "Spring Data JPA", "Queries warehouse stock: findByStockQuantityLessThan(), findAll()")
+    Component(warehouseEntity, "Warehouse Item Entity", "JPA Entity @Table(warehouse)", "itemId, name, category, stockQuantity (MySQL)")
+    
+    ' Data Access Layer - Auth
+    Component(userRepo, "User Repository", "Spring Data JPA", "Queries auth DB: findByRoleAndIsActiveTrue('NETWORK_MANAGER')")
+    Component(userEntity, "User Entity", "JPA Entity @Table(users)", "userId, username, email, role, isActive (PostgreSQL)")
+    
+    ' Domain Models
+    Component(dtoModels, "DTO Models", "Data Transfer Objects", "StockAlert (itemId, name, stock, status), ThresholdConfig, ThresholdUpdateRequest")
+    
+    ' Configuration
+    Component(dataSourceConfig, "Multi-DataSource Config", "Spring Configuration", "Primary: Warehouse DB (MySQL), Secondary: Auth DB (PostgreSQL)")
+    
+    ' Databases
+    ContainerDb(warehouseDB, "Warehouse DB", "MySQL 8:3306", "items table (itemId, name, category, stockQuantity) - Read-Only")
+    ContainerDb(authDB, "Auth DB", "PostgreSQL 15:5433", "users table (userId, email, role, isActive) - Read-Only")
+}
+
+' --- Relationships ---
+
+' External to Service
+Rel(netMgr, apiGw, "POST /api/inventory/admin/trigger-check", "HTTPS")
+Rel(netMgr, apiGw, "GET /api/inventory/admin/alerts", "HTTPS")
+Rel(netMgr, apiGw, "PUT /api/inventory/admin/thresholds", "HTTPS")
+Rel(apiGw, jwtFilter, "All /api/inventory/* requests", "HTTP:8084")
+
+' Request Flow - Manual Check
+Rel(jwtFilter, jwtProvider, "validateToken(), extractRole()", "JWT validation")
+Rel(jwtFilter, controller, "Forward authenticated request", "Spring MVC")
+Rel(controller, monitoringService, "triggerManualCheck()", "Method call")
+
+' Scheduled Flow - Background Job
+Rel(monitoringService, monitoringService, "@Scheduled(cron) every 6 hours", "Spring Task Scheduler")
+Rel(monitoringService, configService, "getThresholds()", "Get low/critical/out thresholds")
+Rel(monitoringService, warehouseRepo, "findByStockQuantityLessThan(lowThreshold)", "JPA Query")
+Rel(warehouseRepo, warehouseDB, "SELECT * FROM items WHERE stock_quantity < ?", "JDBC/MySQL")
+Rel(warehouseRepo, warehouseEntity, "Maps to entity", "JPA")
+Rel(warehouseEntity, dtoModels, "Converts to StockAlert", "")
+Rel(monitoringService, userRepo, "findByRoleAndIsActiveTrue('NETWORK_MANAGER')", "JPA Query")
+Rel(userRepo, authDB, "SELECT email FROM users WHERE role=? AND is_active=true", "JDBC/PostgreSQL")
+Rel(userRepo, userEntity, "Maps to entity", "JPA")
+
+' Email Flow
+Rel(monitoringService, emailService, "sendStockAlerts(emails, alerts)", "Method call")
+Rel(emailService, mailServer, "Send HTML email via SMTP", "SMTP:1025")
+Rel(mailServer, netMgr, "Email: Stock Alerts with severity tables", "Email")
+
+' Configuration Flow
+Rel(controller, configService, "getThresholds(), updateThresholds()", "Threshold management")
+Rel(dataSourceConfig, warehouseRepo, "Configures Warehouse EntityManager", "Bean wiring")
+Rel(dataSourceConfig, userRepo, "Configures Auth EntityManager", "Bean wiring")
+Rel(dataSourceConfig, warehouseDB, "Primary datasource connection", "HikariCP")
+Rel(dataSourceConfig, authDB, "Secondary datasource connection", "HikariCP")
+
+' Security Configuration
+Rel(securityConfig, jwtFilter, "Registers in filter chain", "Bean definition")
+Rel(securityConfig, jwtProvider, "Configures JWT provider", "Bean definition")
+
+SHOW_LEGEND()
+@enduml

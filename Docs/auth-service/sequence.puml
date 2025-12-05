@@ -1,0 +1,120 @@
+@startuml
+
+skinparam defaultFontSize 16
+skinparam sequenceMessageAlign center
+skinparam ParticipantPadding 10
+skinparam BoxPadding 10
+
+title Auth Service - Login & JWT Validation Sequence Diagram
+
+actor "User\n(Manager)" as user
+participant "Web Browser" as browser
+participant "API Gateway\n(Nginx)" as apiGw
+box "Auth Service" #LightBlue
+    participant "JWT Filter" as jwtFilter
+    participant "Auth Controller" as controller
+    participant "Auth Service" as service
+    participant "JWT Util" as jwtUtil
+    participant "Password Encoder" as passwordEncoder
+    participant "User Repository" as repository
+end box
+database "Auth DB\n(PostgreSQL)" as authDB
+
+== Login Flow ==
+
+user -> browser: 1. Enters credentials (username, password)
+browser -> apiGw: 2. POST /api/auth/login\n{username, password}
+apiGw -> jwtFilter: 3. Forward request (HTTP:8081)
+
+note right of jwtFilter
+  Public endpoint - 
+  Skip JWT validation
+end note
+
+jwtFilter -> controller: 4. Pass through to controller
+controller -> service: 5. login(LoginRequest)
+service -> repository: 6. findByUsernameAndIsActiveTrue(username)
+repository -> authDB: 7. SELECT * FROM users\nWHERE username=? AND is_active=true
+authDB --> repository: 8. Return User entity
+repository --> service: 9. Return Optional<User>
+
+alt User not found
+    service --> controller: Throw UsernameNotFoundException
+    controller --> browser: 401 Unauthorized
+    browser --> user: Login failed
+else User found
+    service -> passwordEncoder: 10. matches(rawPassword, hashedPassword)
+    passwordEncoder --> service: 11. Return boolean
+    
+    alt Password incorrect
+        service --> controller: Throw BadCredentialsException
+        controller --> browser: 401 Unauthorized
+        browser --> user: Login failed
+    else Password correct
+        service -> jwtUtil: 12. generateToken(username, role, storeId)
+        
+        note right of jwtUtil
+          Creates JWT with:
+          - Subject: username
+          - Claims: role, storeId
+          - Expiration: 24 hours
+          - Signature: HMAC-SHA256
+        end note
+        
+        jwtUtil --> service: 13. Return signed JWT token
+        service --> controller: 14. Return LoginResponse\n{token, username, role, storeId}
+        controller --> apiGw: 15. 200 OK + LoginResponse (JSON)
+        apiGw --> browser: 16. Return JWT token
+        browser -> browser: 17. Store token in localStorage
+        browser --> user: 18. Login successful
+    end
+end
+
+|||
+
+== Authenticated Request Flow ==
+
+user -> browser: 19. Request authenticated page
+browser -> apiGw: 20. GET /api/auth/me\nAuthorization: Bearer <JWT>
+apiGw -> jwtFilter: 21. Forward with JWT (HTTP:8081)
+
+note right of jwtFilter
+  Protected endpoint -
+  Validate JWT token
+end note
+
+jwtFilter -> jwtUtil: 22. extractUsername(token)
+jwtUtil --> jwtFilter: 23. Return username
+jwtFilter -> jwtUtil: 24. validateToken(token, username)
+
+note right of jwtUtil
+  Validates:
+  - Token signature
+  - Expiration date
+  - Username match
+end note
+
+jwtUtil --> jwtFilter: 25. Return validation result
+
+alt Token invalid or expired
+    jwtFilter --> browser: 401 Unauthorized
+    browser --> user: Redirect to login
+else Token valid
+    note right of jwtFilter
+      Set SecurityContext with
+      authenticated user details
+    end note
+    
+    jwtFilter -> controller: 26. Forward authenticated request
+    controller -> service: 27. getCurrentUser(username)
+    service -> repository: 28. findByUsernameAndIsActiveTrue(username)
+    repository -> authDB: 29. SELECT * FROM users WHERE username=?
+    authDB --> repository: 30. Return User entity
+    repository --> service: 31. Return Optional<User>
+    service --> controller: 32. Return UserResponse\n{userId, username, fullName, role, storeId}
+    controller --> apiGw: 33. 200 OK + UserResponse (JSON)
+    apiGw --> browser: 34. Return user data
+    browser --> user: 35. Display user information
+end
+
+@enduml

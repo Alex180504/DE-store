@@ -1,0 +1,86 @@
+@startuml api-gateway-deployment
+!include ../c4-plantuml/C4_Deployment.puml
+
+title Deployment Diagram - API Gateway Routing Architecture
+
+LAYOUT_WITH_LEGEND()
+
+Deployment_Node(nginx_container, "API Gateway Container", "Docker") {
+    Container(nginx, "Nginx", "Nginx 1.25", "Reverse proxy and API gateway. Handles routing, CORS, rate limiting, security headers, and load balancing.")
+}
+
+Deployment_Node(service_containers, "Microservice Containers", "Docker Network") {
+    
+    Deployment_Node(auth_container, "Auth Service", "Docker:8081") {
+        Container(auth_svc, "Auth Service", "Spring Boot 3.2.0", "JWT authentication and user management")
+    }
+    
+    Deployment_Node(pricing_container, "Pricing Service", "Docker:8080") {
+        Container(pricing_svc, "Pricing Service", "Spring Boot 3.2.0", "Hierarchical pricing and promotions")
+    }
+    
+    Deployment_Node(store_container, "Store Service", "Docker:8083") {
+        Container(store_svc, "Store Service", "Spring Boot 3.2.0", "Store location management")
+    }
+    
+    Deployment_Node(loyalty_container, "Loyalty Service", "Docker:8085") {
+        Container(loyalty_svc, "Loyalty Service", "Spring Boot 3.2.0", "Points, offers, SAGA redemption")
+    }
+    
+    Deployment_Node(analytics_container, "Analytics Service", "Docker:8086") {
+        Container(analytics_svc, "Analytics Service", "Spring Boot 3.2.0", "Business intelligence and reporting")
+    }
+    
+    Deployment_Node(inventory_container, "Inventory Service", "Docker:8084") {
+        Container(inventory_svc, "Inventory Service", "Spring Boot 3.2.0", "Stock monitoring and alerts")
+    }
+    
+    Deployment_Node(finance_container, "Finance Adapter", "Docker:8091") {
+        Container(finance_svc, "Finance Adapter", "Spring Boot 3.2.0", "BNPL integration with Enabling")
+    }
+}
+
+Deployment_Node(client_devices, "Client Devices", "Browser/Mobile") {
+    Container(ui, "Management UI", "HTML5/JavaScript", "Admin interface on port 3000")
+    Container(browser, "Web Browser", "Browser", "External clients")
+}
+
+Rel(browser, nginx, "HTTP/HTTPS :80", "All API requests")
+Rel(ui, nginx, "HTTP/HTTPS :80", "API calls with CORS")
+
+Rel(nginx, auth_svc, "/api/auth/*\nRate: 300r/m\nPublic (no JWT)", "Proxy")
+Rel(nginx, pricing_svc, "/api/pricing/*\nRate: 100r/m\nJWT (placeholder)", "Proxy")
+Rel(nginx, store_svc, "/api/stores/*\nRate: 300r/m\nJWT via header", "Proxy")
+Rel(nginx, loyalty_svc, "/api/loyalty/*\nRate: 300r/m\nJWT via header", "Proxy")
+Rel(nginx, analytics_svc, "/api/analytics/*\nRate: 300r/m\nTimeout: 120s", "Proxy")
+Rel(nginx, inventory_svc, "/api/inventory/*\nRate: 300r/m\nJWT via header", "Proxy")
+Rel(nginx, finance_svc, "/api/finance/*\nRate: 300r/m\nJWT via header", "Proxy")
+
+note right of nginx
+**Rate Limiting Zones:**
+- pricing_limit: 100 req/min (burst 20)
+- general_limit: 300 req/min (burst 15)
+
+**CORS Configuration:**
+- Allowed origins: localhost:3000, ui-service:3000
+- Methods: GET, POST, PUT, DELETE, OPTIONS
+- Headers: Content-Type, Authorization, X-Requested-With
+- Preflight cache: 1728000s (20 days)
+
+**Security Headers:**
+- X-Frame-Options: SAMEORIGIN
+- X-Content-Type-Options: nosniff
+- X-XSS-Protection: 1; mode=block
+- Referrer-Policy: no-referrer-when-downgrade
+
+**Connection Pooling:**
+- HTTP/1.1 with keepalive 32 connections per upstream
+
+**Timeouts:**
+- Auth/Store/Loyalty/Pricing/Finance/Inventory: 60s
+- Analytics: 120s (complex queries)
+end note
+
+SHOW_LEGEND()
+
+@enduml

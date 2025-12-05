@@ -1,0 +1,81 @@
+@startuml analytics-service-component
+!include ../c4-plantuml/C4_Component.puml
+
+title Component Diagram - Analytics Service
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(analytics_service, "Analytics Service") {
+    
+    Component(revenue_ctrl, "RevenueAnalyticsController", "Spring REST Controller", "Revenue reporting endpoints: /summary, /summary/today, /summary/week, /summary/month. Provides daily breakdown and payment method analysis.")
+    Component(product_ctrl, "ProductAnalyticsController", "Spring REST Controller", "Product performance endpoints: top sellers, category performance. Configurable top-N products limit (1-100).")
+    Component(store_ctrl, "StoreAnalyticsController", "Spring REST Controller", "Store comparison and network analytics: /comparison, /performance/{storeId}. Ranks stores by revenue and calculates growth rates.")
+    Component(transaction_ctrl, "TransactionAnalyticsController", "Spring REST Controller", "Transaction analysis endpoints: summaries, trends, customer analytics.")
+    
+    Component(revenue_svc, "RevenueAnalyticsService", "Spring Service", "Revenue analytics business logic. Validates date ranges (max 365 days), aggregates data from accounting DB, generates comprehensive reports.")
+    Component(product_svc, "ProductAnalyticsService", "Spring Service", "Product performance analysis. Queries transaction_items table, joins with warehouse DB for product metadata.")
+    Component(store_svc, "StoreAnalyticsService", "Spring Service", "Store comparison and network analytics. Calculates growth rates, rankings, percentage of network revenue.")
+    Component(transaction_svc, "TransactionAnalyticsService", "Spring Service", "Transaction analysis and customer behavior. Aggregates transaction patterns and trends.")
+    
+    Component(revenue_repo, "RevenueAnalyticsRepository", "JdbcTemplate", "Executes revenue queries on accounting DB: daily revenue, payment method breakdown, revenue stats (SUM, COUNT, AVG, MIN, MAX).")
+    Component(product_repo, "ProductAnalyticsRepository", "JdbcTemplate", "Queries transaction_items joined with warehouse items: top products by revenue/quantity, category performance aggregations.")
+    Component(store_repo, "StoreAnalyticsRepository", "JdbcTemplate", "Multi-DB queries: accounting for transactions, store DB for metadata, calculates network totals and store rankings.")
+    Component(transaction_repo, "TransactionAnalyticsRepository", "JdbcTemplate", "Transaction summaries and customer analytics. Queries accounting DB with complex aggregations.")
+    
+    Component(jwt_filter, "JwtAuthenticationFilter", "Spring Filter (inline)", "Validates JWT tokens from Authorization header. Embedded in SecurityConfig class.")
+    Component(jwt_auth, "JwtAuthentication", "Authentication Model", "Custom Authentication implementation with username, claims, and authenticated flag.")
+    Component(security_config, "SecurityConfig", "Spring Security Configuration", "Stateless session, JWT filter chain. All analytics endpoints require authentication.")
+    
+    Component(datasource_config, "DataSourceConfig", "Spring Configuration", "Multi-datasource configuration: Accounting DB (primary, PostgreSQL), Store DB (PostgreSQL), Warehouse DB (MySQL). All read-only with HikariCP connection pooling.")
+    
+    Component(dto_revenue, "RevenueReportDTO", "DTO", "Revenue report with daily breakdown, payment methods, transaction stats (total, count, avg, min, max).")
+    Component(dto_product, "ProductPerformanceDTO", "DTO", "Top products and category performance with revenue, quantity sold, and rankings.")
+    Component(dto_store, "StoreComparisonDTO", "DTO", "Store metrics with rankings, growth rates, percentage of network, and network totals.")
+    Component(dto_transaction, "TransactionSummaryDTO", "DTO", "Transaction summaries and customer analytics.")
+}
+
+ContainerDb(accounting_db, "Accounting Database", "PostgreSQL 15", "Transactions and transaction_items tables. Primary data source for all analytics queries.")
+ContainerDb(store_db, "Store Database", "PostgreSQL 15", "Store metadata: store_id, store_code, store_name, location, region.")
+ContainerDb(warehouse_db, "Warehouse Database", "MySQL 8", "Product metadata: item_id, item_name, category, base_price.")
+
+Container(management_ui, "Management UI", "HTML5/JavaScript", "Network Managers and Store Managers view reports, dashboards, and KPIs.")
+
+Rel(management_ui, revenue_ctrl, "GET /api/analytics/revenue/*", "HTTPS/JSON")
+Rel(management_ui, product_ctrl, "GET /api/analytics/products/*", "HTTPS/JSON")
+Rel(management_ui, store_ctrl, "GET /api/analytics/stores/*", "HTTPS/JSON")
+Rel(management_ui, transaction_ctrl, "GET /api/analytics/transactions/*", "HTTPS/JSON")
+
+Rel(revenue_ctrl, revenue_svc, "Calls analytics methods")
+Rel(product_ctrl, product_svc, "Calls analytics methods")
+Rel(store_ctrl, store_svc, "Calls analytics methods")
+Rel(transaction_ctrl, transaction_svc, "Calls analytics methods")
+
+Rel(revenue_svc, revenue_repo, "Queries revenue data")
+Rel(product_svc, product_repo, "Queries product data")
+Rel(product_svc, revenue_repo, "Gets store names")
+Rel(store_svc, store_repo, "Queries store metrics")
+Rel(transaction_svc, transaction_repo, "Queries transaction data")
+
+Rel(revenue_repo, accounting_db, "SELECT from transactions\n(GROUP BY, SUM, COUNT)", "JDBC R/O")
+Rel(revenue_repo, store_db, "SELECT store_name\nFROM stores", "JDBC R/O")
+Rel(product_repo, accounting_db, "SELECT from transaction_items\nJOIN transactions", "JDBC R/O")
+Rel(product_repo, warehouse_db, "SELECT item_name, category\nFROM items", "JDBC R/O")
+Rel(store_repo, accounting_db, "SELECT revenue by store", "JDBC R/O")
+Rel(store_repo, store_db, "SELECT store metadata", "JDBC R/O")
+Rel(transaction_repo, accounting_db, "SELECT transaction patterns", "JDBC R/O")
+
+Rel(jwt_filter, jwt_auth, "Creates authentication")
+Rel(security_config, jwt_filter, "Configures inline filter")
+
+Rel(datasource_config, accounting_db, "Primary datasource\npool: 10 connections")
+Rel(datasource_config, store_db, "Secondary datasource\npool: 5 connections")
+Rel(datasource_config, warehouse_db, "Tertiary datasource\npool: 5 connections")
+
+Rel(revenue_ctrl, dto_revenue, "Returns reports")
+Rel(product_ctrl, dto_product, "Returns performance data")
+Rel(store_ctrl, dto_store, "Returns comparisons")
+Rel(transaction_ctrl, dto_transaction, "Returns summaries")
+
+SHOW_LEGEND()
+
+@enduml

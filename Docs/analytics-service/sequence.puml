@@ -1,0 +1,199 @@
+@startuml analytics-service-sequence
+
+skinparam defaultFontSize 16
+skinparam sequenceMessageAlign center
+skinparam ParticipantPadding 10
+skinparam BoxPadding 10
+
+title Sequence Diagram - Analytics Service: Multi-Database Revenue Reporting
+
+actor "Network Manager" as manager
+participant "Management UI" as ui
+participant "RevenueAnalyticsController" as ctrl
+participant "RevenueAnalyticsService" as svc
+participant "RevenueAnalyticsRepository" as repo
+database "Accounting DB\n(PostgreSQL)" as accounting_db
+database "Store DB\n(PostgreSQL)" as store_db
+
+== Flow 1: Generate Monthly Revenue Report ==
+
+manager -> ui: View monthly revenue for Store #1
+ui -> ctrl: GET /api/analytics/revenue/summary/month?storeId=1\nAuthorization: Bearer {token}
+activate ctrl
+
+ctrl -> ctrl: JWT validation\n(SecurityConfig filter)
+
+ctrl -> svc: generateRevenueReport(storeId=1, startDate, endDate)
+activate svc
+
+svc -> svc: validateDateRange(startDate, endDate)
+note right of svc
+Validation checks:
+- startDate <= endDate
+- startDate not in future
+- Date range <= 365 days
+end note
+
+svc -> repo: getStoreName(storeId=1)
+activate repo
+repo -> store_db: SELECT store_name FROM stores\nWHERE store_id = 1
+store_db --> repo: "London Central"
+repo --> svc: "London Central"
+deactivate repo
+
+svc -> repo: getRevenueStats(storeId=1, startDate, endDate)
+activate repo
+repo -> accounting_db: SELECT\n  SUM(total_amount) as total_revenue,\n  COUNT(*) as transaction_count,\n  AVG(total_amount) as avg_value,\n  MIN(total_amount) as min_value,\n  MAX(total_amount) as max_value\nFROM transactions\nWHERE store_id = 1\n  AND transaction_date >= startDate\n  AND transaction_date <= endDate\n  AND status = 'COMPLETED'
+accounting_db --> repo: {totalRevenue: X, count: N, avg: Y, min: Z1, max: Z2}
+repo --> svc: RevenueStats
+deactivate repo
+
+svc -> repo: getDailyRevenue(storeId=1, startDate, endDate)
+activate repo
+repo -> accounting_db: SELECT\n  transaction_date as date,\n  SUM(total_amount) as revenue,\n  COUNT(*) as transaction_count\nFROM transactions\nWHERE store_id = 1\n  AND transaction_date >= startDate\n  AND transaction_date <= endDate\n  AND status = 'COMPLETED'\nGROUP BY transaction_date\nORDER BY transaction_date
+accounting_db --> repo: [{date: day1, revenue: R1, count: C1}, ...]
+repo --> svc: List<DailyRevenue>
+deactivate repo
+
+svc -> repo: getPaymentMethodBreakdown(storeId=1, startDate, endDate)
+activate repo
+repo -> accounting_db: SELECT\n  payment_method,\n  SUM(total_amount) as revenue,\n  COUNT(*) as transaction_count,\n  ROUND(SUM(total_amount) * 100.0 / total, 2) as percentage\nFROM transactions\nWHERE store_id = 1\n  AND transaction_date >= startDate\n  AND transaction_date <= endDate\n  AND status = 'COMPLETED'\nGROUP BY payment_method
+accounting_db --> repo: [{method: "CARD", revenue: M1, count: C1, pct: P1}, ...]
+repo --> svc: List<PaymentMethodBreakdown>
+deactivate repo
+
+svc -> svc: Build RevenueReportDTO\n- storeId, storeName\n- startDate, endDate\n- totalRevenue, transactionCount\n- averageTransactionValue\n- minTransactionValue, maxTransactionValue\n- dailyBreakdown[]\n- paymentMethodBreakdown[]
+
+svc --> ctrl: RevenueReportDTO
+deactivate svc
+
+ctrl --> ui: 200 OK\n{revenue report JSON}
+deactivate ctrl
+
+ui -> ui: Render charts:\n- Revenue trend (daily)\n- Payment method pie chart\n- KPI cards (total, avg, count)
+
+ui --> manager: Display revenue dashboard
+
+== Flow 2: Store Comparison (Network Analytics) ==
+
+manager -> ui: View all stores comparison
+ui -> ctrl: GET /api/analytics/stores/comparison?startDate=...&endDate=...
+activate ctrl
+
+ctrl -> store_svc: generateStoreComparison(startDate, endDate)
+activate store_svc
+
+store_svc -> store_svc: validateDateRange()
+
+store_svc -> store_repo: getAllStoreMetrics(startDate, endDate)
+activate store_repo
+
+store_repo -> accounting_db: SELECT\n  t.store_id,\n  SUM(t.total_amount) as revenue,\n  COUNT(*) as transaction_count,\n  AVG(t.total_amount) as avg_value\nFROM transactions t\nWHERE transaction_date >= startDate\n  AND transaction_date <= endDate\n  AND status = 'COMPLETED'\nGROUP BY t.store_id
+accounting_db --> store_repo: [{storeId: 1, revenue: R1, count: C1, avg: A1}, ...]
+
+store_repo -> store_db: SELECT store_id, store_name, location, region\nFROM stores\nWHERE store_id IN (1, 2, 3, ...)
+store_db --> store_repo: [{storeId: 1, name: "London Central", ...}, ...]
+
+store_repo -> store_repo: Join data, calculate:\n- Rank by revenue\n- Percentage of network
+
+store_repo --> store_svc: List<StoreData>
+deactivate store_repo
+
+store_svc -> store_repo: getNetworkTotals(startDate, endDate)
+activate store_repo
+store_repo -> accounting_db: SELECT\n  SUM(total_amount) as total_revenue,\n  COUNT(*) as total_transactions,\n  COUNT(DISTINCT store_id) as store_count\nFROM transactions\nWHERE transaction_date >= startDate\n  AND transaction_date <= endDate\n  AND status = 'COMPLETED'
+accounting_db --> store_repo: {totalRevenue: X, totalTxns: Y, storeCount: Z}
+store_repo --> store_svc: NetworkTotals
+deactivate store_repo
+
+loop For each store
+    store_svc -> store_repo: calculateGrowthRate(storeId, startDate, endDate)
+    activate store_repo
+    note right of store_repo
+    Compare current period revenue
+    with previous period revenue:
+    growth_rate = ((current - previous) / previous) * 100
+    end note
+    store_repo -> accounting_db: SELECT SUM(total_amount)\nFROM transactions\nWHERE store_id = storeId\n  AND transaction_date\n    BETWEEN (previousStart, previousEnd)
+    accounting_db --> store_repo: previousRevenue
+    store_repo -> store_repo: Calculate: (current - previous) / previous * 100
+    store_repo --> store_svc: growthRate (%)
+    deactivate store_repo
+end
+
+store_svc -> store_svc: Build StoreComparisonDTO\n- List of stores with metrics\n- Rankings\n- Growth rates\n- Network totals\n- Average revenue per store
+
+store_svc --> ctrl: StoreComparisonDTO
+deactivate store_svc
+
+ctrl --> ui: 200 OK\n{store comparison JSON}
+deactivate ctrl
+
+ui -> ui: Render comparison table:\n- Store rankings\n- Revenue bars\n- Growth indicators\n- Network summary
+
+ui --> manager: Display store comparison
+
+== Flow 3: Product Performance (Multi-Database Join) ==
+
+manager -> ui: View top products for Store #1
+ui -> ctrl: GET /api/analytics/products/performance?storeId=1&limit=10
+activate ctrl
+
+ctrl -> product_svc: generateProductPerformance(storeId=1, startDate, endDate, limit=10)
+activate product_svc
+
+product_svc -> product_svc: validateDateRange()\nvalidate limit (1-100)
+
+product_svc -> product_repo: getTopProducts(storeId=1, startDate, endDate, limit=10)
+activate product_repo
+
+product_repo -> accounting_db: SELECT\n  ti.item_id,\n  SUM(ti.quantity) as total_quantity,\n  SUM(ti.price * ti.quantity) as total_revenue\nFROM transaction_items ti\nJOIN transactions t ON ti.transaction_id = t.transaction_id\nWHERE t.store_id = 1\n  AND t.transaction_date >= startDate\n  AND t.transaction_date <= endDate\n  AND t.status = 'COMPLETED'\nGROUP BY ti.item_id\nORDER BY total_revenue DESC\nLIMIT 10
+accounting_db --> product_repo: [{itemId: I1, qty: Q1, revenue: R1}, ...]
+
+product_repo -> warehouse_db: SELECT item_id, item_name, category\nFROM items\nWHERE item_id IN (I1, I2, I3, ...)
+warehouse_db --> product_repo: [{itemId: I1, name: "Product A", category: "Electronics"}, ...]
+
+product_repo -> product_repo: Join product data with sales data
+
+product_repo --> product_svc: List<TopProduct>
+deactivate product_repo
+
+product_svc -> product_repo: getCategoryPerformance(storeId=1, startDate, endDate)
+activate product_repo
+note right of product_repo
+Similar multi-database join:
+- Accounting DB for sales
+- Warehouse DB for categories
+- GROUP BY category
+end note
+product_repo --> product_svc: List<CategoryPerformance>
+deactivate product_repo
+
+product_svc --> ctrl: ProductPerformanceDTO
+deactivate product_svc
+
+ctrl --> ui: 200 OK\n{product performance JSON}
+deactivate ctrl
+
+ui --> manager: Display top products and category charts
+
+== Error Path: Invalid Date Range ==
+
+manager -> ui: Select invalid date range (366 days)
+ui -> ctrl: GET /api/analytics/revenue/summary?storeId=1&startDate=2024-01-01&endDate=2025-01-01
+activate ctrl
+
+ctrl -> svc: generateRevenueReport(...)
+activate svc
+
+svc -> svc: validateDateRange(startDate, endDate)\nDate range > 365 days
+
+svc --> ctrl: throw IllegalArgumentException("Date range cannot exceed 365 days")
+deactivate svc
+
+ctrl --> ui: 400 Bad Request\n{error: "Date range cannot exceed 365 days"}
+deactivate ctrl
+
+ui --> manager: Display error message
+
+@enduml
