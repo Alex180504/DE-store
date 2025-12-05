@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loyalty Management - DE-Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="header-left">
+                    <h1>🎁 Loyalty Management</h1>
+                    <p>Configure loyalty points rules and redemption offers</p>
+                </div>
+                <div class="header-right">
+                    <div id="userInfo" class="user-info"></div>
+                    <button onclick="logout()" class="logout-btn">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('rules')">Product Points Rules</button>
+                <button class="tab" onclick="showTab('bonuses')">Bonus Offers</button>
+                <button class="tab" onclick="showTab('redemptions')">Redemption Offers</button>
+                <button class="tab" onclick="showTab('customers')">Customer Points</button>
+                <button class="tab" onclick="location.href='index.html'">← Back to Main</button>
+            </div>
+
+            <!-- Product Points Rules Tab -->
+            <div id="rulesTab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Product Points Rules</h2>
+                        <button onclick="showAddRuleModal()" class="btn btn-primary">+ Add Rule</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="rulesTable" class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Rule ID</th>
+                                        <th>Store</th>
+                                        <th>Item ID</th>
+                                        <th>Points per Unit</th>
+                                        <th>Points per £</th>
+                                        <th>Valid From</th>
+                                        <th>Valid To</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rulesTableBody">
+                                    <tr><td colspan="9" class="loading">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bonus Offers Tab -->
+            <div id="bonusesTab" class="tab-content" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Bonus Offers</h2>
+                        <button onclick="showAddBonusModal()" class="btn btn-primary">+ Add Bonus</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="bonusesTable" class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Bonus ID</th>
+                                        <th>Store</th>
+                                        <th>Offer Name</th>
+                                        <th>Threshold (£)</th>
+                                        <th>Bonus Points</th>
+                                        <th>Valid From</th>
+                                        <th>Valid To</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bonusesTableBody">
+                                    <tr><td colspan="9" class="loading">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Redemption Offers Tab -->
+            <div id="redemptionsTab" class="tab-content" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Redemption Offers</h2>
+                        <button onclick="showAddRedemptionModal()" class="btn btn-primary">+ Add Redemption</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="redemptionsTable" class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Offer ID</th>
+                                        <th>Store</th>
+                                        <th>Item ID</th>
+                                        <th>Offer Name</th>
+                                        <th>Discount %</th>
+                                        <th>Points Cost</th>
+                                        <th>Max Per Customer</th>
+                                        <th>Total Usage</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="redemptionsTableBody">
+                                    <tr><td colspan="10" class="loading">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Points Tab -->
+            <div id="customersTab" class="tab-content" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Customer Points Lookup</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-section">
+                            <input type="number" id="customerIdSearch" placeholder="Enter Customer ID" class="input">
+                            <button onclick="searchCustomerPoints()" class="btn btn-primary">Search</button>
+                            <button onclick="calculateCustomerPoints()" class="btn btn-secondary">Recalculate Points</button>
+                        </div>
+                        <div id="customerPointsResult" class="customer-points-card" style="display: none;">
+                            <h3>Customer <span id="customerIdDisplay"></span></h3>
+                            <div class="points-grid">
+                                <div class="points-item">
+                                    <div class="points-label">Current Balance</div>
+                                    <div class="points-value" id="currentBalance">0</div>
+                                </div>
+                                <div class="points-item">
+                                    <div class="points-label">Lifetime Earned</div>
+                                    <div class="points-value" id="lifetimeEarned">0</div>
+                                </div>
+                                <div class="points-item">
+                                    <div class="points-label">Lifetime Redeemed</div>
+                                    <div class="points-value" id="lifetimeRedeemed">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+    <script src="loyalty.js"></script>
+</body>
+</html>
