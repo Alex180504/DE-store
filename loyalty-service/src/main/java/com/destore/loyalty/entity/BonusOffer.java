@@ -28,12 +28,12 @@ import java.time.LocalDateTime;
 public class BonusOffer {
 
     /**
-     * Unique identifier for the bonus offer.
+     * Unique identifier for the offer.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "offer_id")
-    private Integer bonusId;
+    private Integer offerId;
 
     /**
      * Store ID where this offer applies (NULL for global offers).
