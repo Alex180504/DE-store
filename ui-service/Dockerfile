@@ -14,11 +14,19 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY index.html /usr/share/nginx/html/
 COPY login.html /usr/share/nginx/html/
 COPY register.html /usr/share/nginx/html/
+COPY inventory.html /usr/share/nginx/html/
 COPY loyalty.html /usr/share/nginx/html/
 COPY analytics.html /usr/share/nginx/html/
+
+# Copy JavaScript files
 COPY app.js /usr/share/nginx/html/
+COPY navigation.js /usr/share/nginx/html/
+COPY inventory.js /usr/share/nginx/html/
 COPY loyalty.js /usr/share/nginx/html/
 COPY analytics.js /usr/share/nginx/html/
+
+# Copy CSS files
+COPY styles.css /usr/share/nginx/html/
 
 # Copy custom Nginx configuration for SPA
 COPY nginx.conf /etc/nginx/conf.d/default.conf
