@@ -36,7 +36,7 @@ public class ProductPointsRuleRequest {
     /**
      * Points per £1 spent.
      */
-    @DecimalMin(value = "0.00", message = "Points per GBP must be non-negative")
+    @DecimalMin(value = "0.01", message = "Points per GBP must be at least 0.01")
     private BigDecimal pointsPerPound;
 
     /**
