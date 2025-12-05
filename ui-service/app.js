@@ -97,11 +97,15 @@ async function authenticatedFetch(url, options = {}) {
 function applyRoleBasedUI() {
     if (!currentUser) return;
 
-    // Network managers have access to loyalty management
+    // Network managers have access to loyalty management and analytics
     if (currentUser.isNetworkManager) {
         const loyaltyTab = document.getElementById('loyaltyTab');
         if (loyaltyTab) {
             loyaltyTab.style.display = 'inline-block';
+        }
+        const analyticsTab = document.getElementById('analyticsTab');
+        if (analyticsTab) {
+            analyticsTab.style.display = 'inline-block';
         }
     }
 
