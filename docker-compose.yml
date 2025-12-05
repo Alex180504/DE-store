@@ -84,6 +84,27 @@ services:
       timeout: 5s
       retries: 5
 
+  # Accounting Database (PostgreSQL)
+  accounting-db:
+    image: postgres:15
+    container_name: de-store-accounting-db
+    environment:
+      POSTGRES_DB: accounting
+      POSTGRES_USER: accounting_user
+      POSTGRES_PASSWORD: accounting_pass
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./accounting-db/init:/docker-entrypoint-initdb.d
+      - accounting-data:/var/lib/postgresql/data
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U accounting_user -d accounting"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   # Pricing Service (Spring Boot)
   pricing-service:
     build:
@@ -368,5 +389,7 @@ volumes:
     name: de-store-auth-data
   store-data:
     name: de-store-store-data
+  accounting-data:
+    name: de-store-accounting-data
   maven-cache:
     name: de-store-maven-cache
