@@ -218,6 +218,42 @@ services:
       - de-store-network
     restart: unless-stopped
 
+  # Loyalty Service (Spring Boot)
+  loyalty-service:
+    build:
+      context: ./loyalty-service
+      dockerfile: Dockerfile
+    container_name: de-store-loyalty-service
+    environment:
+      # Loyalty DB Connection (Primary - Read/Write)
+      SPRING_DATASOURCE_LOYALTY_URL: jdbc:postgresql://loyalty-db:5432/loyalty
+      SPRING_DATASOURCE_LOYALTY_USERNAME: loyalty_user
+      SPRING_DATASOURCE_LOYALTY_PASSWORD: loyalty_pass
+      # Accounting DB Connection (Secondary - Read-Only)
+      SPRING_DATASOURCE_ACCOUNTING_URL: jdbc:postgresql://accounting-db:5432/accounting
+      SPRING_DATASOURCE_ACCOUNTING_USERNAME: accounting_user
+      SPRING_DATASOURCE_ACCOUNTING_PASSWORD: accounting_pass
+      # JWT Configuration (must match auth-service)
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "true"
+      # Application Settings
+      SERVER_PORT: 8085
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+      # Scheduler Configuration
+      LOYALTY_SCHEDULER_POINTS_CALCULATION_CRON: "0 0 */6 * * *"
+    expose:
+      - "8085"
+    depends_on:
+      loyalty-db:
+        condition: service_healthy
+      accounting-db:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
   # API Gateway (Nginx)
   api-gateway:
     build:
@@ -254,6 +290,27 @@ services:
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # Shopping Mock Service (for testing loyalty integration)
+  shopping-mock-service:
+    build:
+      context: ./shopping-mock-service
+      dockerfile: Dockerfile
+    container_name: de-store-shopping-mock
+    ports:
+      - "8090:8090"
+    environment:
+      LOYALTY_SERVICE_URL: http://loyalty-service:8080
+    depends_on:
+      - loyalty-service
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8090/actuator/health"]
       interval: 30s
       timeout: 3s
       retries: 3
