@@ -15,15 +15,18 @@ import java.util.List;
  * Repository for product performance analytics using accounting and warehouse databases.
  */
 @Repository
-@RequiredArgsConstructor
 @Slf4j
 public class ProductAnalyticsRepository {
 
-    @Qualifier("accountingJdbcTemplate")
     private final JdbcTemplate accountingJdbcTemplate;
-
-    @Qualifier("warehouseJdbcTemplate")
     private final JdbcTemplate warehouseJdbcTemplate;
+
+    public ProductAnalyticsRepository(
+            @Qualifier("accountingJdbcTemplate") JdbcTemplate accountingJdbcTemplate,
+            @Qualifier("warehouseJdbcTemplate") JdbcTemplate warehouseJdbcTemplate) {
+        this.accountingJdbcTemplate = accountingJdbcTemplate;
+        this.warehouseJdbcTemplate = warehouseJdbcTemplate;
+    }
 
     /**
      * Get top-selling products for a store within date range.
@@ -35,11 +38,11 @@ public class ProductAnalyticsRepository {
             SELECT 
                 ti.item_id,
                 SUM(ti.quantity) as total_quantity,
-                SUM(ti.subtotal) as total_revenue,
+                SUM(ti.line_total) as total_revenue,
                 AVG(ti.unit_price) as avg_price,
-                COUNT(DISTINCT t.id) as transaction_count
+                COUNT(DISTINCT t.transaction_id) as transaction_count
             FROM transaction_items ti
-            JOIN transactions t ON ti.transaction_id = t.id
+            JOIN transactions t ON ti.transaction_id = t.transaction_id
             WHERE t.store_id = ?
                 AND t.transaction_date >= ?
                 AND t.transaction_date <= ?
@@ -98,10 +101,10 @@ public class ProductAnalyticsRepository {
             SELECT 
                 ti.item_id,
                 SUM(ti.quantity) as total_quantity,
-                SUM(ti.subtotal) as total_revenue,
+                SUM(ti.line_total) as total_revenue,
                 AVG(ti.unit_price) as avg_price
             FROM transaction_items ti
-            JOIN transactions t ON ti.transaction_id = t.id
+            JOIN transactions t ON ti.transaction_id = t.transaction_id
             WHERE t.store_id = ?
                 AND t.transaction_date >= ?
                 AND t.transaction_date <= ?

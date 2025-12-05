@@ -1,6 +1,7 @@
 package com.destore.analytics.config;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
@@ -75,7 +76,7 @@ public class DataSourceConfig {
      * JdbcTemplate for store database queries.
      */
     @Bean(name = "storeJdbcTemplate")
-    public JdbcTemplate storeJdbcTemplate(DataSource storeDataSource) {
+    public JdbcTemplate storeJdbcTemplate(@Qualifier("storeDataSource") DataSource storeDataSource) {
         return new JdbcTemplate(storeDataSource);
     }
 
@@ -83,7 +84,7 @@ public class DataSourceConfig {
      * JdbcTemplate for warehouse database queries.
      */
     @Bean(name = "warehouseJdbcTemplate")
-    public JdbcTemplate warehouseJdbcTemplate(DataSource warehouseDataSource) {
+    public JdbcTemplate warehouseJdbcTemplate(@Qualifier("warehouseDataSource") DataSource warehouseDataSource) {
         return new JdbcTemplate(warehouseDataSource);
     }
 }

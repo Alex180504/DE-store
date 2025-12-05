@@ -18,15 +18,18 @@ import java.util.List;
  * Repository for revenue analytics queries using read-only accounting database.
  */
 @Repository
-@RequiredArgsConstructor
 @Slf4j
 public class RevenueAnalyticsRepository {
 
-    @Qualifier("accountingJdbcTemplate")
     private final JdbcTemplate accountingJdbcTemplate;
-
-    @Qualifier("storeJdbcTemplate")
     private final JdbcTemplate storeJdbcTemplate;
+
+    public RevenueAnalyticsRepository(
+            @Qualifier("accountingJdbcTemplate") JdbcTemplate accountingJdbcTemplate,
+            @Qualifier("storeJdbcTemplate") JdbcTemplate storeJdbcTemplate) {
+        this.accountingJdbcTemplate = accountingJdbcTemplate;
+        this.storeJdbcTemplate = storeJdbcTemplate;
+    }
 
     /**
      * Get revenue summary for a specific store and date range.
@@ -136,7 +139,7 @@ public class RevenueAnalyticsRepository {
      * Get store name from store database.
      */
     public String getStoreName(Long storeId) {
-        String sql = "SELECT name FROM stores WHERE id = ?";
+        String sql = "SELECT store_name FROM stores WHERE store_id = ?";
         try {
             return storeJdbcTemplate.queryForObject(sql, String.class, storeId);
         } catch (Exception e) {

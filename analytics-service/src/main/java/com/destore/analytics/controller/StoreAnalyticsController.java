@@ -1,6 +1,7 @@
 package com.destore.analytics.controller;
 
 import com.destore.analytics.dto.StoreComparisonDTO;
+import com.destore.analytics.repository.StoreAnalyticsRepository;
 import com.destore.analytics.service.StoreAnalyticsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * REST controller for store comparison and network analytics endpoints.
@@ -24,6 +26,15 @@ import java.time.LocalDate;
 public class StoreAnalyticsController {
 
     private final StoreAnalyticsService service;
+
+    @GetMapping("/list")
+    @Operation(summary = "Get all stores", 
+               description = "Get list of all active stores for dropdown selection")
+    public ResponseEntity<List<StoreAnalyticsRepository.StoreInfo>> getAllStores() {
+        log.info("GET /api/analytics/stores/list");
+        List<StoreAnalyticsRepository.StoreInfo> stores = service.getAllStores();
+        return ResponseEntity.ok(stores);
+    }
 
     @GetMapping("/comparison")
     @Operation(summary = "Get store comparison", 

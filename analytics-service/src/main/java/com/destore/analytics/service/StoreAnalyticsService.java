@@ -91,6 +91,14 @@ public class StoreAnalyticsService {
             .build();
     }
 
+    /**
+     * Get all stores for dropdown selection.
+     */
+    public List<StoreAnalyticsRepository.StoreInfo> getAllStores() {
+        log.debug("Fetching all active stores");
+        return repository.getAllStores();
+    }
+
     private void validateDateRange(LocalDate startDate, LocalDate endDate) {
         if (startDate.isAfter(endDate)) {
             throw new IllegalArgumentException("Start date must be before or equal to end date");

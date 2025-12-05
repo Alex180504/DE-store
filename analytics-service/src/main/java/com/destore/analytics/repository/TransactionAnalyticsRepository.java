@@ -15,12 +15,15 @@ import java.util.List;
  * Repository for transaction analytics queries.
  */
 @Repository
-@RequiredArgsConstructor
 @Slf4j
 public class TransactionAnalyticsRepository {
 
-    @Qualifier("accountingJdbcTemplate")
     private final JdbcTemplate accountingJdbcTemplate;
+
+    public TransactionAnalyticsRepository(
+            @Qualifier("accountingJdbcTemplate") JdbcTemplate accountingJdbcTemplate) {
+        this.accountingJdbcTemplate = accountingJdbcTemplate;
+    }
 
     /**
      * Get transaction status breakdown with counts and volumes.

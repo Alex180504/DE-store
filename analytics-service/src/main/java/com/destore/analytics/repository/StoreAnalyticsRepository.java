@@ -16,15 +16,18 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Repository for store comparison and network-wide analytics.
  */
 @Repository
-@RequiredArgsConstructor
 @Slf4j
 public class StoreAnalyticsRepository {
 
-    @Qualifier("accountingJdbcTemplate")
     private final JdbcTemplate accountingJdbcTemplate;
-
-    @Qualifier("storeJdbcTemplate")
     private final JdbcTemplate storeJdbcTemplate;
+
+    public StoreAnalyticsRepository(
+            @Qualifier("accountingJdbcTemplate") JdbcTemplate accountingJdbcTemplate,
+            @Qualifier("storeJdbcTemplate") JdbcTemplate storeJdbcTemplate) {
+        this.accountingJdbcTemplate = accountingJdbcTemplate;
+        this.storeJdbcTemplate = storeJdbcTemplate;
+    }
 
     /**
      * Get performance metrics for all stores in the network.
@@ -169,11 +172,11 @@ public class StoreAnalyticsRepository {
 
     private void enrichStoreDetails(StoreMetricsData data) {
         try {
-            String sql = "SELECT name, location, region FROM stores WHERE id = ?";
+            String sql = "SELECT store_name, address, postcode FROM stores WHERE store_id = ?";
             var storeInfo = storeJdbcTemplate.queryForMap(sql, data.storeId);
-            data.storeName = (String) storeInfo.get("name");
-            data.location = (String) storeInfo.get("location");
-            data.region = (String) storeInfo.get("region");
+            data.storeName = (String) storeInfo.get("store_name");
+            data.location = (String) storeInfo.get("address");
+            data.region = (String) storeInfo.get("postcode");
         } catch (Exception e) {
             log.warn("Could not find store details for ID: {}", data.storeId);
             data.storeName = "Unknown Store";
@@ -200,5 +203,34 @@ public class StoreAnalyticsRepository {
         public BigDecimal totalRevenue;
         public Long totalTransactions;
         public Integer storeCount;
+    }
+
+    /**
+     * Simple store information for dropdown lists.
+     */
+    public static class StoreInfo {
+        public Long id;
+        public String name;
+        public String location;
+    }
+
+    /**
+     * Get all stores for dropdown selection.
+     */
+    public List<StoreInfo> getAllStores() {
+        String sql = """
+            SELECT store_id, store_name, address
+            FROM stores
+            WHERE is_active = true
+            ORDER BY store_name
+            """;
+
+        return storeJdbcTemplate.query(sql, (rs, rowNum) -> {
+            StoreInfo store = new StoreInfo();
+            store.id = rs.getLong("store_id");
+            store.name = rs.getString("store_name");
+            store.location = rs.getString("address");
+            return store;
+        });
     }
 }

@@ -15,8 +15,10 @@ COPY index.html /usr/share/nginx/html/
 COPY login.html /usr/share/nginx/html/
 COPY register.html /usr/share/nginx/html/
 COPY loyalty.html /usr/share/nginx/html/
+COPY analytics.html /usr/share/nginx/html/
 COPY app.js /usr/share/nginx/html/
 COPY loyalty.js /usr/share/nginx/html/
+COPY analytics.js /usr/share/nginx/html/
 
 # Copy custom Nginx configuration for SPA
 COPY nginx.conf /etc/nginx/conf.d/default.conf
