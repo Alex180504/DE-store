@@ -19,24 +19,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @file PricingRuleController.java
- * @brief REST controller for pricing rule management
- * 
+ * REST controller for pricing rule management.
+ * <p>
  * This controller provides CRUD operations for pricing rules.
  * Used by Store Managers (store-specific rules) and Network Managers (global rules)
  * to configure pricing and promotions.
- * 
+ * </p>
+ * <p>
  * Endpoints:
- * - GET /api/pricing/rules - List all pricing rules
- * - GET /api/pricing/rules/{id} - Get specific rule
- * - GET /api/pricing/rules/item/{itemId} - Get rules for item
- * - GET /api/pricing/rules/store/{storeId} - Get rules for store
- * - GET /api/pricing/rules/active - Get all active rules
- * - POST /api/pricing/rules - Create new pricing rule
- * - PUT /api/pricing/rules/{id} - Update existing rule
- * - DELETE /api/pricing/rules/{id} - Delete rule
- * - POST /api/pricing/rules/{id}/deactivate - Soft delete (deactivate)
- * 
+ * <ul>
+ *   <li>GET /api/pricing/rules - List all pricing rules</li>
+ *   <li>GET /api/pricing/rules/{id} - Get specific rule</li>
+ *   <li>GET /api/pricing/rules/item/{itemId} - Get rules for item</li>
+ *   <li>GET /api/pricing/rules/store/{storeId} - Get rules for store</li>
+ *   <li>GET /api/pricing/rules/active - Get all active rules</li>
+ *   <li>POST /api/pricing/rules - Create new pricing rule</li>
+ *   <li>PUT /api/pricing/rules/{id} - Update existing rule</li>
+ *   <li>DELETE /api/pricing/rules/{id} - Delete rule</li>
+ *   <li>POST /api/pricing/rules/{id}/deactivate - Soft delete (deactivate)</li>
+ * </ul>
+ * </p>
+ *
  * @author DE-Store Development Team
  * @version 1.0.0
  */
@@ -50,19 +53,23 @@ public class PricingRuleController {
     private final PricingRuleService pricingRuleService;
 
     /**
-     * @brief Create a new pricing rule
-     * 
+     * Creates a new pricing rule.
+     * <p>
      * Network Managers can create global rules (is_global=true, store_id=null).
      * Store Managers can create store-specific rules (is_global=false, store_id set).
-     * 
+     * </p>
+     * <p>
      * Validation:
-     * - Item must exist in warehouse database
-     * - Store must exist (if store-specific)
-     * - Global rules cannot have store_id
-     * - Promotion value required for PERCENTAGE_OFF and FIXED_DISCOUNT
-     * 
-     * @param request Pricing rule creation request
-     * @return Created pricing rule
+     * <ul>
+     *   <li>Item must exist in warehouse database</li>
+     *   <li>Store must exist (if store-specific)</li>
+     *   <li>Global rules cannot have store_id</li>
+     *   <li>Promotion value required for PERCENTAGE_OFF and FIXED_DISCOUNT</li>
+     * </ul>
+     * </p>
+     *
+     * @param request the pricing rule creation request
+     * @return the created {@link PricingRuleResponse}
      */
     @PostMapping
     @Operation(
@@ -95,8 +102,9 @@ public class PricingRuleController {
     }
 
     /**
-     * @brief Get all pricing rules
-     * @return List of all pricing rules
+     * Gets all pricing rules.
+     *
+     * @return a list of all {@link PricingRuleResponse}
      */
     @GetMapping
     @Operation(
@@ -113,8 +121,9 @@ public class PricingRuleController {
     }
 
     /**
-     * @brief Get all active pricing rules
-     * @return List of currently active rules
+     * Gets all active pricing rules.
+     *
+     * @return a list of currently active {@link PricingRuleResponse}
      */
     @GetMapping("/active")
     @Operation(
@@ -131,9 +140,10 @@ public class PricingRuleController {
     }
 
     /**
-     * @brief Get a specific pricing rule by ID
-     * @param ruleId The rule ID
-     * @return Pricing rule details
+     * Gets a specific pricing rule by ID.
+     *
+     * @param ruleId the rule ID
+     * @return the {@link PricingRuleResponse} details
      */
     @GetMapping("/{ruleId}")
     @Operation(
@@ -159,9 +169,10 @@ public class PricingRuleController {
     }
 
     /**
-     * @brief Get all pricing rules for a specific item
-     * @param itemId The warehouse item ID
-     * @return List of rules for the item
+     * Gets all pricing rules for a specific item.
+     *
+     * @param itemId the warehouse item ID
+     * @return a list of {@link PricingRuleResponse} for the item
      */
     @GetMapping("/item/{itemId}")
     @Operation(
@@ -178,9 +189,10 @@ public class PricingRuleController {
     }
 
     /**
-     * @brief Get all pricing rules for a specific store
-     * @param storeId The store ID
-     * @return List of store-specific rules
+     * Gets all pricing rules for a specific store.
+     *
+     * @param storeId the store ID
+     * @return a list of store-specific {@link PricingRuleResponse}
      */
     @GetMapping("/store/{storeId}")
     @Operation(
@@ -197,10 +209,11 @@ public class PricingRuleController {
     }
 
     /**
-     * @brief Update an existing pricing rule
-     * @param ruleId The rule ID to update
-     * @param request Updated rule data
-     * @return Updated pricing rule
+     * Updates an existing pricing rule.
+     *
+     * @param ruleId the rule ID to update
+     * @param request the updated rule data
+     * @return the updated {@link PricingRuleResponse}
      */
     @PutMapping("/{ruleId}")
     @Operation(
@@ -234,9 +247,10 @@ public class PricingRuleController {
     }
 
     /**
-     * @brief Delete a pricing rule (hard delete)
-     * @param ruleId The rule ID to delete
-     * @return No content response
+     * Deletes a pricing rule (hard delete).
+     *
+     * @param ruleId the rule ID to delete
+     * @return a {@link ResponseEntity} with no content
      */
     @DeleteMapping("/{ruleId}")
     @Operation(
@@ -258,13 +272,14 @@ public class PricingRuleController {
     }
 
     /**
-     * @brief Deactivate a pricing rule (soft delete)
-     * 
+     * Deactivates a pricing rule (soft delete).
+     * <p>
      * Sets is_active=false instead of deleting the record.
      * Useful for maintaining audit trail.
-     * 
-     * @param ruleId The rule ID to deactivate
-     * @return Deactivated pricing rule
+     * </p>
+     *
+     * @param ruleId the rule ID to deactivate
+     * @return the deactivated {@link PricingRuleResponse}
      */
     @PostMapping("/{ruleId}/deactivate")
     @Operation(

@@ -21,19 +21,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @file PricingRuleService.java
- * @brief Service for managing pricing rules (CRUD operations)
- * 
+ * Service for managing pricing rules (CRUD operations).
+ * <p>
  * This service provides business logic for creating, reading, updating,
  * and deleting pricing rules. It enforces validation rules and converts
  * between entities and DTOs.
- * 
+ * </p>
+ * <p>
  * Responsibilities:
- * - Validate item exists in warehouse before creating rules
- * - Validate store exists before creating store-specific rules
- * - Convert between PricingRule entities and DTOs
- * - Manage rule lifecycle (create, update, delete)
- * 
+ * <ul>
+ *   <li>Validate item exists in warehouse before creating rules</li>
+ *   <li>Validate store exists before creating store-specific rules</li>
+ *   <li>Convert between PricingRule entities and DTOs</li>
+ *   <li>Manage rule lifecycle (create, update, delete)</li>
+ * </ul>
+ * </p>
+ *
  * @author DE-Store Development Team
  * @version 1.0.0
  */
@@ -46,15 +49,18 @@ public class PricingRuleService {
     private final WarehouseItemRepository warehouseItemRepository;
 
     /**
-     * @brief Create a new pricing rule
-     * 
+     * Creates a new pricing rule.
+     * <p>
      * Validation:
-     * 1. Verify item exists in warehouse database
-     * 2. If store-specific rule, verify store exists
-     * 3. Ensure global rules don't have store_id
-     * 
-     * @param request The pricing rule request
-     * @return Created pricing rule response
+     * <ol>
+     *   <li>Verify item exists in warehouse database</li>
+     *   <li>If store-specific rule, verify store exists</li>
+     *   <li>Ensure global rules don't have store_id</li>
+     * </ol>
+     * </p>
+     *
+     * @param request the pricing rule request
+     * @return the created {@link PricingRuleResponse}
      * @throws ItemNotFoundException if item doesn't exist
      */
     @Transactional
@@ -92,9 +98,10 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Get a pricing rule by ID
-     * @param ruleId The rule ID
-     * @return Pricing rule response
+     * Gets a pricing rule by ID.
+     *
+     * @param ruleId the rule ID
+     * @return the {@link PricingRuleResponse}
      * @throws PricingRuleNotFoundException if rule not found
      */
     @Transactional(readOnly = true)
@@ -105,8 +112,9 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Get all pricing rules
-     * @return List of all pricing rules
+     * Gets all pricing rules.
+     *
+     * @return a list of all {@link PricingRuleResponse}
      */
     @Transactional(readOnly = true)
     public List<PricingRuleResponse> getAllRules() {
@@ -116,8 +124,9 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Get all active pricing rules
-     * @return List of currently active rules
+     * Gets all active pricing rules.
+     *
+     * @return a list of currently active {@link PricingRuleResponse}
      */
     @Transactional(readOnly = true)
     public List<PricingRuleResponse> getActiveRules() {
@@ -127,9 +136,10 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Get pricing rules for a specific item
-     * @param itemId The item ID
-     * @return List of rules for the item
+     * Gets pricing rules for a specific item.
+     *
+     * @param itemId the item ID
+     * @return a list of {@link PricingRuleResponse} for the item
      */
     @Transactional(readOnly = true)
     public List<PricingRuleResponse> getRulesByItem(Integer itemId) {
@@ -139,9 +149,10 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Get pricing rules for a specific store
-     * @param storeId The store ID
-     * @return List of store-specific rules
+     * Gets pricing rules for a specific store.
+     *
+     * @param storeId the store ID
+     * @return a list of store-specific {@link PricingRuleResponse}
      */
     @Transactional(readOnly = true)
     public List<PricingRuleResponse> getRulesByStore(Integer storeId) {
@@ -151,10 +162,11 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Update an existing pricing rule
-     * @param ruleId The rule ID to update
-     * @param request The updated rule data
-     * @return Updated pricing rule response
+     * Updates an existing pricing rule.
+     *
+     * @param ruleId the rule ID to update
+     * @param request the updated rule data
+     * @return the updated {@link PricingRuleResponse}
      * @throws PricingRuleNotFoundException if rule not found
      */
     @Transactional
@@ -189,8 +201,9 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Delete a pricing rule
-     * @param ruleId The rule ID to delete
+     * Deletes a pricing rule.
+     *
+     * @param ruleId the rule ID to delete
      * @throws PricingRuleNotFoundException if rule not found
      */
     @Transactional
@@ -209,9 +222,10 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Soft delete a pricing rule (set isActive = false)
-     * @param ruleId The rule ID to deactivate
-     * @return Deactivated pricing rule response
+     * Soft deletes a pricing rule (set isActive = false).
+     *
+     * @param ruleId the rule ID to deactivate
+     * @return the deactivated {@link PricingRuleResponse}
      * @throws PricingRuleNotFoundException if rule not found
      */
     @Transactional
@@ -233,8 +247,9 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Get current authenticated user
-     * @return UserPrincipal with user info and role
+     * Gets the current authenticated user.
+     *
+     * @return the {@link UserPrincipal} with user info and role
      */
     private UserPrincipal getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -245,14 +260,17 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Validate user has permission to create a pricing rule
-     * 
+     * Validates that the user has permission to create a pricing rule.
+     * <p>
      * Rules:
-     * - NETWORK_MANAGER: Can create global rules and any store-specific rules
-     * - STORE_MANAGER: Can only create rules for their assigned store (not global)
-     * 
-     * @param user Current authenticated user
-     * @param request Pricing rule creation request
+     * <ul>
+     *   <li>NETWORK_MANAGER: Can create global rules and any store-specific rules</li>
+     *   <li>STORE_MANAGER: Can only create rules for their assigned store (not global)</li>
+     * </ul>
+     * </p>
+     *
+     * @param user the current authenticated user
+     * @param request the pricing rule creation request
      * @throws ForbiddenAccessException if user lacks permission
      */
     private void validateCreatePermission(UserPrincipal user, PricingRuleRequest request) {
@@ -285,14 +303,17 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Validate user has permission to modify/delete a pricing rule
-     * 
+     * Validates that the user has permission to modify/delete a pricing rule.
+     * <p>
      * Rules:
-     * - NETWORK_MANAGER: Can modify/delete any rule (global or store-specific)
-     * - STORE_MANAGER: Can only modify/delete rules for their assigned store (not global)
-     * 
-     * @param user Current authenticated user
-     * @param rule Existing pricing rule to modify
+     * <ul>
+     *   <li>NETWORK_MANAGER: Can modify/delete any rule (global or store-specific)</li>
+     *   <li>STORE_MANAGER: Can only modify/delete rules for their assigned store (not global)</li>
+     * </ul>
+     * </p>
+     *
+     * @param user the current authenticated user
+     * @param rule the existing pricing rule to modify
      * @throws ForbiddenAccessException if user lacks permission
      */
     private void validateModifyPermission(UserPrincipal user, PricingRule rule) {
@@ -326,9 +347,10 @@ public class PricingRuleService {
     }
 
     /**
-     * @brief Convert PricingRule entity to DTO
-     * @param rule The pricing rule entity
-     * @return Pricing rule response DTO
+     * Converts a PricingRule entity to a DTO.
+     *
+     * @param rule the pricing rule entity
+     * @return the {@link PricingRuleResponse} DTO
      */
     private PricingRuleResponse toResponse(PricingRule rule) {
         return PricingRuleResponse.builder()

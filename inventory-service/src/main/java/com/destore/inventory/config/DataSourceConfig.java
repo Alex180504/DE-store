@@ -18,8 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Multi-datasource configuration for Inventory Service
- * 
+ * Multi-datasource configuration for Inventory Service.
+ * <p>
  * Primary: Warehouse DB (MySQL - Read-Only)
  * Secondary: Auth DB (PostgreSQL - Read emails for network managers)
  */

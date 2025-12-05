@@ -7,27 +7,37 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
- * @file InventoryConfigService.java
- * @brief Service for managing inventory threshold configuration
- * 
+ * Service for managing inventory threshold configuration.
+ * <p>
  * This service provides runtime configuration management for stock alert thresholds.
  * Thresholds determine when items are flagged as low, critical, or out of stock.
- * 
- * Current Implementation:
- * - In-memory storage (volatile - resets on service restart)
- * - Initialized from environment variables
- * - Thread-safe updates with synchronized methods
- * - Network managers can update via admin API
- * 
- * Configuration Parameters:
- * - lowStockThreshold: Items below this trigger LOW alerts (default: 50)
- * - criticalStockThreshold: Items below this trigger CRITICAL alerts (default: 20)
- * - outOfStockThreshold: Items at this level trigger OUT_OF_STOCK alerts (default: 0)
- * 
- * @note Production TODO: Persist configuration to database table
- * @note Production TODO: Track configuration change history
- * @note Production TODO: Support per-category thresholds
- * 
+ * </p>
+ * <p>
+ * <strong>Current Implementation:</strong>
+ * <ul>
+ *   <li>In-memory storage (volatile - resets on service restart)</li>
+ *   <li>Initialized from environment variables</li>
+ *   <li>Thread-safe updates with synchronized methods</li>
+ *   <li>Network managers can update via admin API</li>
+ * </ul>
+ * </p>
+ * <p>
+ * <strong>Configuration Parameters:</strong>
+ * <ul>
+ *   <li>lowStockThreshold: Items below this trigger LOW alerts (default: 50)</li>
+ *   <li>criticalStockThreshold: Items below this trigger CRITICAL alerts (default: 20)</li>
+ *   <li>outOfStockThreshold: Items at this level trigger OUT_OF_STOCK alerts (default: 0)</li>
+ * </ul>
+ * </p>
+ * <p>
+ * <strong>Production TODOs:</strong>
+ * <ul>
+ *   <li>Persist configuration to database table</li>
+ *   <li>Track configuration change history</li>
+ *   <li>Support per-category thresholds</li>
+ * </ul>
+ * </p>
+ *
  * @author DE-Store Development Team
  * @version 1.0.0
  */
@@ -53,12 +63,13 @@ public class InventoryConfigService {
     private volatile boolean initialized = false;
 
     /**
-     * @brief Get current threshold configuration
-     * 
+     * Gets current threshold configuration.
+     * <p>
      * Returns threshold values as a DTO for API responses.
      * Initializes from environment variables on first call if needed.
      * Note: Out-of-stock is always 0 and not configurable.
-     * 
+     * </p>
+     *
      * @return ThresholdConfig DTO with current values
      */
     public ThresholdConfig getThresholds() {
@@ -67,20 +78,23 @@ public class InventoryConfigService {
     }
 
     /**
-     * @brief Update threshold configuration
-     * 
+     * Updates threshold configuration.
+     * <p>
      * Updates configurable thresholds atomically in memory.
      * Changes take effect immediately for the next stock check.
      * Out-of-stock threshold is always 0 and cannot be changed.
-     * 
-     * Thread Safety: Method is synchronized to prevent race conditions
+     * </p>
+     * <p>
+     * <strong>Thread Safety:</strong> Method is synchronized to prevent race conditions
      * during concurrent updates.
-     * 
-     * @param lowStock New low stock threshold
+     * </p>
+     * <p>
+     * <strong>Note:</strong> Changes are lost on service restart (in-memory only).
+     * Should be enhanced to persist to database in production.
+     * </p>
+     *
+     * @param lowStock      New low stock threshold
      * @param criticalStock New critical stock threshold
-     * 
-     * @note Changes are lost on service restart (in-memory only)
-     * @note Should be enhanced to persist to database in production
      */
     public synchronized void updateThresholds(int lowStock, int criticalStock) {
         log.info("Updating thresholds: low={}, critical={}", lowStock, criticalStock);
@@ -93,11 +107,12 @@ public class InventoryConfigService {
     }
 
     /**
-     * @brief Get low stock threshold
-     * 
+     * Gets low stock threshold.
+     * <p>
      * Returns the current threshold for triggering LOW stock alerts.
      * Items with stock quantity between critical and low thresholds
      * are flagged as low stock.
+     * </p>
      * 
      * @return Low stock threshold value
      */

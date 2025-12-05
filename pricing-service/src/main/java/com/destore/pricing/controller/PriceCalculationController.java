@@ -16,16 +16,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @file PriceCalculationController.java
- * @brief REST controller for price calculation operations
- * 
+ * REST controller for price calculation operations.
+ * <p>
  * This controller handles price calculation requests from the Shopping System.
  * It applies hierarchical pricing rules and promotional discounts to calculate
  * final prices.
- * 
+ * </p>
+ * <p>
  * Endpoints:
- * - POST /api/pricing/calculate - Calculate final price with promotions
- * 
+ * <ul>
+ *   <li>POST /api/pricing/calculate - Calculate final price with promotions</li>
+ * </ul>
+ * </p>
+ *
  * @author DE-Store Development Team
  * @version 1.0.0
  */
@@ -39,27 +42,34 @@ public class PriceCalculationController {
     private final PriceCalculationEngine priceCalculationEngine;
 
     /**
-     * @brief Calculate final price for an item with quantity and promotions
-     * 
+     * Calculates the final price for an item with quantity and promotions.
+     * <p>
      * This endpoint is called by the Shopping System during checkout to calculate
      * the final price including any applicable promotions. The calculation uses
      * hierarchical pricing where store-specific rules override global rules.
-     * 
+     * </p>
+     * <p>
      * Request body contains:
-     * - itemId: Warehouse item identifier
-     * - storeId: Store identifier (optional, null = use global pricing)
-     * - quantity: Number of items being purchased
-     * 
+     * <ul>
+     *   <li>itemId: Warehouse item identifier</li>
+     *   <li>storeId: Store identifier (optional, null = use global pricing)</li>
+     *   <li>quantity: Number of items being purchased</li>
+     * </ul>
+     * </p>
+     * <p>
      * Response contains detailed price breakdown:
-     * - unitPrice: Price per item
-     * - subtotal: unitPrice × quantity
-     * - discountAmount: Total promotional discount
-     * - finalPrice: subtotal - discountAmount
-     * - promotion: Type of promotion applied
-     * - usedStoreSpecificRule: Whether store-specific pricing was used
-     * 
-     * @param request Price calculation request
-     * @return Detailed price calculation response
+     * <ul>
+     *   <li>unitPrice: Price per item</li>
+     *   <li>subtotal: unitPrice × quantity</li>
+     *   <li>discountAmount: Total promotional discount</li>
+     *   <li>finalPrice: subtotal - discountAmount</li>
+     *   <li>promotion: Type of promotion applied</li>
+     *   <li>usedStoreSpecificRule: Whether store-specific pricing was used</li>
+     * </ul>
+     * </p>
+     *
+     * @param request the price calculation request containing item ID, store ID, and quantity
+     * @return a {@link ResponseEntity} containing the detailed {@link PriceCalculationResponse}
      */
     @PostMapping("/calculate")
     @Operation(

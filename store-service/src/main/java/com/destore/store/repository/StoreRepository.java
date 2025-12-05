@@ -8,18 +8,32 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @file StoreRepository.java
- * @brief Repository interface for Store entity
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * Repository interface for Store entity.
  */
 @Repository
 public interface StoreRepository extends JpaRepository<Store, Integer> {
 
+    /**
+     * Finds store by store code.
+     *
+     * @param storeCode Store code
+     * @return Optional containing store if found
+     */
     Optional<Store> findByStoreCode(String storeCode);
     
+    /**
+     * Finds stores by active status.
+     *
+     * @param isActive Active status
+     * @return List of stores
+     */
     List<Store> findByIsActive(Boolean isActive);
     
+    /**
+     * Checks if store exists by store code.
+     *
+     * @param storeCode Store code
+     * @return True if exists
+     */
     boolean existsByStoreCode(String storeCode);
 }

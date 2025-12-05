@@ -17,11 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @file StoreService.java
- * @brief Service layer for store management
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * Service layer for store management.
  */
 @Service
 public class StoreService {
@@ -38,7 +34,9 @@ public class StoreService {
     }
 
     /**
-     * Get all stores
+     * Gets all stores.
+     *
+     * @return List of all stores
      */
     public List<StoreResponse> getAllStores() {
         List<Store> stores = storeRepository.findAll();
@@ -48,7 +46,9 @@ public class StoreService {
     }
 
     /**
-     * Get active stores only
+     * Gets active stores only.
+     *
+     * @return List of active stores
      */
     public List<StoreResponse> getActiveStores() {
         List<Store> stores = storeRepository.findByIsActive(true);
@@ -58,7 +58,11 @@ public class StoreService {
     }
 
     /**
-     * Get store by ID
+     * Gets store by ID.
+     *
+     * @param storeId Store ID
+     * @return Store details
+     * @throws ResourceNotFoundException if store not found
      */
     public StoreResponse getStoreById(Integer storeId) {
         Store store = storeRepository.findById(storeId)
@@ -67,7 +71,11 @@ public class StoreService {
     }
 
     /**
-     * Get store by code
+     * Gets store by code.
+     *
+     * @param storeCode Store code
+     * @return Store details
+     * @throws ResourceNotFoundException if store not found
      */
     public StoreResponse getStoreByCode(String storeCode) {
         Store store = storeRepository.findByStoreCode(storeCode)
@@ -76,7 +84,12 @@ public class StoreService {
     }
 
     /**
-     * Create new store (Network Manager only)
+     * Creates new store (Network Manager only).
+     *
+     * @param request Store creation request
+     * @return Created store details
+     * @throws ForbiddenAccessException if user is not a network manager
+     * @throws IllegalArgumentException if store code already exists
      */
     @Transactional
     public StoreResponse createStore(StoreRequest request) {
@@ -105,7 +118,14 @@ public class StoreService {
     }
 
     /**
-     * Update store (Network Manager only)
+     * Updates store (Network Manager only).
+     *
+     * @param storeId Store ID
+     * @param request Store update request
+     * @return Updated store details
+     * @throws ForbiddenAccessException  if user is not a network manager
+     * @throws ResourceNotFoundException if store not found
+     * @throws IllegalArgumentException  if new store code already exists
      */
     @Transactional
     public StoreResponse updateStore(Integer storeId, StoreRequest request) {
@@ -138,7 +158,11 @@ public class StoreService {
     }
 
     /**
-     * Delete store (Network Manager only)
+     * Deletes store (Network Manager only).
+     *
+     * @param storeId Store ID
+     * @throws ForbiddenAccessException  if user is not a network manager
+     * @throws ResourceNotFoundException if store not found
      */
     @Transactional
     public void deleteStore(Integer storeId) {

@@ -15,17 +15,35 @@ import java.io.IOException;
 import java.util.Collections;
 
 /**
- * JWT Authentication Filter - validates JWT tokens on incoming requests
+ * JWT Authentication Filter - validates JWT tokens on incoming requests.
+ * <p>
+ * This filter intercepts every request to check for a valid JWT token in the Authorization header.
+ * If a valid token is found, it authenticates the user and sets the security context.
+ * </p>
  */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * Constructs a new JwtAuthenticationFilter with the specified token provider.
+     *
+     * @param jwtTokenProvider the provider to validate and extract information from JWT tokens
+     */
     public JwtAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    /**
+     * Filters incoming requests to validate JWT tokens.
+     *
+     * @param request     the HTTP request
+     * @param response    the HTTP response
+     * @param filterChain the filter chain
+     * @throws ServletException if a servlet error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -57,6 +75,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Extracts the JWT token from the request header.
+     *
+     * @param request the HTTP request
+     * @return the JWT token string, or null if not found
+     */
     private String extractJwtFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {

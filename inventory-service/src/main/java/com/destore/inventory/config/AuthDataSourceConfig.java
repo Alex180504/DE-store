@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Auth datasource configuration for reading network manager emails
+ * Auth datasource configuration for reading network manager emails.
  */
 @Configuration
 @EnableJpaRepositories(

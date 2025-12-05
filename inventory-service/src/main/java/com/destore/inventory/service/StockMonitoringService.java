@@ -16,22 +16,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @file StockMonitoringService.java
- * @brief Service for monitoring warehouse stock levels and sending alerts
- * 
+ * Service for monitoring warehouse stock levels and sending alerts.
+ * <p>
  * This service is responsible for the core inventory monitoring functionality:
- * - Scheduled stock level checks (default: every 6 hours)
- * - Detection of low, critical, and out-of-stock items
- * - Email notification to network managers
- * - Manual trigger support for on-demand checks
- * 
+ * <ul>
+ *   <li>Scheduled stock level checks (default: every 6 hours)</li>
+ *   <li>Detection of low, critical, and out-of-stock items</li>
+ *   <li>Email notification to network managers</li>
+ *   <li>Manual trigger support for on-demand checks</li>
+ * </ul>
+ * </p>
+ * <p>
  * The service reads from two databases:
- * - Warehouse DB (MySQL): Item stock levels (read-only)
- * - Auth DB (PostgreSQL): Network manager email addresses (read-only)
- * 
+ * <ul>
+ *   <li>Warehouse DB (MySQL): Item stock levels (read-only)</li>
+ *   <li>Auth DB (PostgreSQL): Network manager email addresses (read-only)</li>
+ * </ul>
+ * </p>
+ * <p>
  * Thresholds are dynamically configured via InventoryConfigService,
  * allowing runtime updates without service restart.
- * 
+ * </p>
+ *
  * @author DE-Store Development Team
  * @version 1.0.0
  */
@@ -45,6 +51,14 @@ public class StockMonitoringService {
     private final EmailService emailService;
     private final InventoryConfigService configService;
 
+    /**
+     * Constructs a new StockMonitoringService.
+     *
+     * @param warehouseItemRepository the repository for warehouse items
+     * @param userRepository          the repository for user data
+     * @param emailService            the service for sending emails
+     * @param configService           the service for inventory configuration
+     */
     public StockMonitoringService(
             WarehouseItemRepository warehouseItemRepository,
             UserRepository userRepository,
@@ -57,18 +71,22 @@ public class StockMonitoringService {
     }
 
     /**
-     * @brief Scheduled task to check stock levels and send alerts
-     * 
+     * Scheduled task to check stock levels and send alerts.
+     * <p>
      * This method runs automatically according to the cron expression configured
      * in application.yml (default: every 6 hours at minute 0).
-     * 
-     * Workflow:
-     * 1. Query warehouse DB for items below low stock threshold
-     * 2. Classify items by severity (out-of-stock, critical, low)
-     * 3. Query auth DB for active network manager emails
-     * 4. Send HTML email with grouped alerts
-     * 5. Log results and completion
-     * 
+     * </p>
+     * <p>
+     * <strong>Workflow:</strong>
+     * <ol>
+     *   <li>Query warehouse DB for items below low stock threshold</li>
+     *   <li>Classify items by severity (out-of-stock, critical, low)</li>
+     *   <li>Query auth DB for active network manager emails</li>
+     *   <li>Send HTML email with grouped alerts</li>
+     *   <li>Log results and completion</li>
+     * </ol>
+     * </p>
+     *
      * @throws Exception Catches all exceptions to prevent schedule disruption
      */
     @Scheduled(cron = "${inventory.schedule}")

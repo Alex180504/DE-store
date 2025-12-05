@@ -14,28 +14,36 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @file InventoryAdminController.java
- * @brief REST controller for inventory administration endpoints
- * 
+ * REST controller for inventory administration endpoints.
+ * <p>
  * This controller provides management APIs for Network Managers to:
- * - Trigger manual stock checks
- * - View current stock alerts
- * - Configure alert thresholds
- * - Monitor inventory statistics
- * 
- * Security:
- * All admin endpoints require JWT authentication with NETWORK_MANAGER role.
- * Role validation is enforced via @PreAuthorize annotations.
- * Health check endpoint is public (no authentication required).
- * 
- * Endpoints:
- * - GET  /api/inventory/health - Public health check
- * - POST /api/inventory/admin/trigger-check - Manual stock check with email
- * - GET  /api/inventory/admin/alerts - Current alerts (no email)
- * - GET  /api/inventory/admin/thresholds - Get threshold configuration
- * - PUT  /api/inventory/admin/thresholds - Update thresholds
- * - GET  /api/inventory/admin/stats - Statistics dashboard data
- * 
+ * <ul>
+ *   <li>Trigger manual stock checks</li>
+ *   <li>View current stock alerts</li>
+ *   <li>Configure alert thresholds</li>
+ *   <li>Monitor inventory statistics</li>
+ * </ul>
+ * </p>
+ * <p>
+ * <strong>Security:</strong>
+ * <ul>
+ *   <li>All admin endpoints require JWT authentication with NETWORK_MANAGER role.</li>
+ *   <li>Role validation is enforced via {@code @PreAuthorize} annotations.</li>
+ *   <li>Health check endpoint is public (no authentication required).</li>
+ * </ul>
+ * </p>
+ * <p>
+ * <strong>Endpoints:</strong>
+ * <ul>
+ *   <li>GET  /api/inventory/health - Public health check</li>
+ *   <li>POST /api/inventory/admin/trigger-check - Manual stock check with email</li>
+ *   <li>GET  /api/inventory/admin/alerts - Current alerts (no email)</li>
+ *   <li>GET  /api/inventory/admin/thresholds - Get threshold configuration</li>
+ *   <li>PUT  /api/inventory/admin/thresholds - Update thresholds</li>
+ *   <li>GET  /api/inventory/admin/stats - Statistics dashboard data</li>
+ * </ul>
+ * </p>
+ *
  * @author DE-Store Development Team
  * @version 1.0.0
  */
@@ -46,6 +54,12 @@ public class InventoryAdminController {
     private final StockMonitoringService stockMonitoringService;
     private final InventoryConfigService configService;
 
+    /**
+     * Constructs a new InventoryAdminController.
+     *
+     * @param stockMonitoringService the service for stock monitoring operations
+     * @param configService          the service for inventory configuration
+     */
     public InventoryAdminController(
             StockMonitoringService stockMonitoringService,
             InventoryConfigService configService) {
@@ -54,15 +68,17 @@ public class InventoryAdminController {
     }
 
     /**
-     * @brief Health check endpoint (public)
-     * 
+     * Health check endpoint (public).
+     * <p>
      * Simple health check to verify service is running.
      * No authentication required - accessible to all.
-     * 
-     * HTTP Method: GET
-     * Path: /api/inventory/health
-     * Authorization: None (public endpoint)
-     * 
+     * </p>
+     * <p>
+     * <strong>HTTP Method:</strong> GET<br>
+     * <strong>Path:</strong> /api/inventory/health<br>
+     * <strong>Authorization:</strong> None (public endpoint)
+     * </p>
+     *
      * @return JSON with status and service name
      */
     @GetMapping("/health")
@@ -74,18 +90,22 @@ public class InventoryAdminController {
     }
 
     /**
-     * @brief Manually trigger stock check and send emails
-     * 
+     * Manually triggers stock check and sends emails.
+     * <p>
      * Endpoint for Network Managers to trigger an immediate stock check
      * outside of the regular schedule. Useful for:
-     * - Testing alert system
-     * - Immediate checks after restocking
-     * - On-demand reports
-     * 
-     * HTTP Method: POST
-     * Path: /api/inventory/admin/trigger-check
-     * Authorization: JWT with NETWORK_MANAGER role required
-     * 
+     * <ul>
+     *   <li>Testing alert system</li>
+     *   <li>Immediate checks after restocking</li>
+     *   <li>On-demand reports</li>
+     * </ul>
+     * </p>
+     * <p>
+     * <strong>HTTP Method:</strong> POST<br>
+     * <strong>Path:</strong> /api/inventory/admin/trigger-check<br>
+     * <strong>Authorization:</strong> JWT with NETWORK_MANAGER role required
+     * </p>
+     *
      * @return JSON with status, message, and timestamp
      */
     @PostMapping("/admin/trigger-check")

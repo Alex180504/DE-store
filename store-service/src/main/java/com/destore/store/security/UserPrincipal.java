@@ -5,11 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @file UserPrincipal.java
- * @brief Represents authenticated user information
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * Represents authenticated user information.
  */
 @Data
 @NoArgsConstructor

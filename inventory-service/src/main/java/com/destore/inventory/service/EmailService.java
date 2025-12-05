@@ -18,26 +18,32 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * @file EmailService.java
- * @brief Service for composing and sending stock alert emails
- * 
+ * Service for composing and sending stock alert emails.
+ * <p>
  * This service handles all email communication for the inventory monitoring system.
  * It formats stock alerts into professional HTML emails and sends them to
  * network managers via SMTP.
- * 
- * Features:
- * - HTML email formatting with color-coded severity levels
- * - Grouped alerts by status (Out of Stock, Critical, Low)
- * - XSS protection with HTML escaping
- * - Configurable sender address and subject prefix
- * - Enable/disable toggle for testing
- * 
- * Email Structure:
- * - Header with timestamp
- * - Statistics summary
- * - Tables grouped by severity (red/orange/yellow)
- * - Footer with automated message disclaimer
- * 
+ * </p>
+ * <p>
+ * <strong>Features:</strong>
+ * <ul>
+ *   <li>HTML email formatting with color-coded severity levels</li>
+ *   <li>Grouped alerts by status (Out of Stock, Critical, Low)</li>
+ *   <li>XSS protection with HTML escaping</li>
+ *   <li>Configurable sender address and subject prefix</li>
+ *   <li>Enable/disable toggle for testing</li>
+ * </ul>
+ * </p>
+ * <p>
+ * <strong>Email Structure:</strong>
+ * <ul>
+ *   <li>Header with timestamp</li>
+ *   <li>Statistics summary</li>
+ *   <li>Tables grouped by severity (red/orange/yellow)</li>
+ *   <li>Footer with automated message disclaimer</li>
+ * </ul>
+ * </p>
+ *
  * @author DE-Store Development Team
  * @version 1.0.0
  */
@@ -57,23 +63,32 @@ public class EmailService {
     @Value("${email.enabled:true}")
     private boolean emailEnabled;
 
+    /**
+     * Constructs a new EmailService.
+     *
+     * @param mailSender the JavaMailSender to use for sending emails
+     */
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
 
     /**
-     * @brief Send stock alert email to specified recipients
-     * 
+     * Sends stock alert email to specified recipients.
+     * <p>
      * Composes and sends an HTML email containing stock alerts grouped by severity.
      * Email includes color-coded tables and formatted timestamp.
-     * 
-     * Validation:
-     * - Checks if email sending is enabled (configurable via email.enabled)
-     * - Validates recipients list is not empty
-     * - Validates alerts list is not empty
-     * 
+     * </p>
+     * <p>
+     * <strong>Validation:</strong>
+     * <ul>
+     *   <li>Checks if email sending is enabled (configurable via email.enabled)</li>
+     *   <li>Validates recipients list is not empty</li>
+     *   <li>Validates alerts list is not empty</li>
+     * </ul>
+     * </p>
+     *
      * @param recipients List of email addresses to send to (typically network managers)
-     * @param alerts List of stock alerts to include in email
+     * @param alerts     List of stock alerts to include in email
      * @throws MailException if SMTP sending fails
      */
     public void sendStockAlerts(List<String> recipients, List<StockAlert> alerts) {

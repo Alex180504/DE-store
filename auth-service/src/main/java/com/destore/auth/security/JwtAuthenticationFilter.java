@@ -14,13 +14,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 /**
- * @file JwtAuthenticationFilter.java
- * @brief JWT authentication filter for Spring Security
- * 
- * Intercepts requests to validate JWT tokens from Authorization header
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * JWT authentication filter for Spring Security.
+ * <p>
+ * Intercepts requests to validate JWT tokens from Authorization header.
  */
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -29,10 +25,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final CustomUserDetailsService userDetailsService;
 
     /**
-     * @brief Filter requests to validate JWT tokens
-     * @param request HTTP request
-     * @param response HTTP response
+     * Filters requests to validate JWT tokens.
+     *
+     * @param request     HTTP request
+     * @param response    HTTP response
      * @param filterChain Filter chain
+     * @throws ServletException If a servlet exception occurs
+     * @throws IOException      If an I/O exception occurs
      */
     @Override
     protected void doFilterInternal(HttpServletRequest request,

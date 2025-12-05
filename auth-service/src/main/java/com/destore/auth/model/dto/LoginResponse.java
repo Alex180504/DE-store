@@ -6,13 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @file LoginResponse.java
- * @brief DTO for successful login responses
- * 
- * Contains the JWT token and user information
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * DTO for successful login responses.
+ * <p>
+ * Contains the JWT token and user information.
  */
 @Data
 @NoArgsConstructor
@@ -21,27 +17,27 @@ import lombok.NoArgsConstructor;
 public class LoginResponse {
 
     /**
-     * @brief JWT authentication token
+     * JWT authentication token.
      */
     private String token;
 
     /**
-     * @brief Username of the authenticated user
+     * Username of the authenticated user.
      */
     private String username;
 
     /**
-     * @brief Full name of the user
+     * Full name of the user.
      */
     private String fullName;
 
     /**
-     * @brief User role (NETWORK_MANAGER or STORE_MANAGER)
+     * User role (NETWORK_MANAGER or STORE_MANAGER).
      */
     private String role;
 
     /**
-     * @brief Store ID (only for STORE_MANAGER, null for NETWORK_MANAGER)
+     * Store ID (only for STORE_MANAGER, null for NETWORK_MANAGER).
      */
     private Integer storeId;
 }

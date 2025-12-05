@@ -10,8 +10,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * Warehouse Item entity - Read-Only
- * Maps to items table in warehouse database
+ * Warehouse Item entity - Read-Only.
+ * <p>
+ * Maps to the {@code items} table in the warehouse database.
+ * Represents an inventory item with its details and current stock quantity.
+ * </p>
  */
 @Entity
 @Table(name = "items")
@@ -44,14 +47,23 @@ public class WarehouseItem {
     private LocalDateTime updatedAt;
 
     /**
-     * Stock status helpers
+     * Checks if the item is out of stock.
+     *
+     * @return true if stock quantity is 0 or less, false otherwise
      */
     public boolean isOutOfStock() {
         return stockQuantity != null && stockQuantity <= 0;
     }
 
     /**
-     * Returns true if stock is between criticalThreshold + 1 and lowThreshold (inclusive).
+     * Checks if the item is in low stock status.
+     * <p>
+     * Returns true if stock is greater than the critical threshold but less than or equal to the low threshold.
+     * </p>
+     *
+     * @param criticalThreshold the threshold for critical stock
+     * @param lowThreshold      the threshold for low stock
+     * @return true if item is low stock, false otherwise
      */
     public boolean isLowStock(int criticalThreshold, int lowThreshold) {
         return stockQuantity != null
@@ -60,7 +72,13 @@ public class WarehouseItem {
     }
 
     /**
-     * Returns true if stock is between 1 and criticalThreshold (inclusive).
+     * Checks if the item is in critical stock status.
+     * <p>
+     * Returns true if stock is greater than 0 but less than or equal to the critical threshold.
+     * </p>
+     *
+     * @param criticalThreshold the threshold for critical stock
+     * @return true if item is critical stock, false otherwise
      */
     public boolean isCriticalStock(int criticalThreshold) {
         return stockQuantity != null

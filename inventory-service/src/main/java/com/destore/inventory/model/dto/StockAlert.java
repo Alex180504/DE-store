@@ -6,7 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * DTO for stock alert information
+ * Data Transfer Object for stock alert information.
+ * <p>
+ * Contains details about an item that has triggered a stock alert,
+ * including its current stock level and status (LOW, CRITICAL, OUT_OF_STOCK).
+ * </p>
  */
 @Data
 @NoArgsConstructor

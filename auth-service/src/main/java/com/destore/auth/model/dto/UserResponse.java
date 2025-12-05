@@ -8,13 +8,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * @file UserResponse.java
- * @brief DTO for user information responses
- * 
- * Used for returning user details (excludes password hash for security)
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * DTO for user information responses.
+ * <p>
+ * Used for returning user details (excludes password hash for security).
  */
 @Data
 @NoArgsConstructor
@@ -23,37 +19,37 @@ import java.time.LocalDateTime;
 public class UserResponse {
 
     /**
-     * @brief User ID
+     * User ID.
      */
     private Integer userId;
 
     /**
-     * @brief Username
+     * Username.
      */
     private String username;
 
     /**
-     * @brief Full name of the user
+     * Full name of the user.
      */
     private String fullName;
 
     /**
-     * @brief User role (NETWORK_MANAGER or STORE_MANAGER)
+     * User role (NETWORK_MANAGER or STORE_MANAGER).
      */
     private String role;
 
     /**
-     * @brief Store ID (only for STORE_MANAGER, null for NETWORK_MANAGER)
+     * Store ID (only for STORE_MANAGER, null for NETWORK_MANAGER).
      */
     private Integer storeId;
 
     /**
-     * @brief Whether the user account is active
+     * Whether the user account is active.
      */
     private Boolean isActive;
 
     /**
-     * @brief Timestamp when the user was created
+     * Timestamp when the user was created.
      */
     private LocalDateTime createdAt;
 }

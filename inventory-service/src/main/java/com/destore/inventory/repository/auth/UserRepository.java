@@ -8,14 +8,19 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Repository for auth users - READ ONLY
- * Used to fetch network manager emails
+ * Repository for auth users - READ ONLY.
+ * <p>
+ * Provides access to User entities in the authentication database.
+ * Used primarily to fetch network manager emails.
+ * </p>
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
-     * Find all active network managers
+     * Finds all active users with the NETWORK_MANAGER role.
+     *
+     * @return a list of active network managers
      */
     @Query("SELECT u FROM User u WHERE u.role = 'NETWORK_MANAGER' AND u.isActive = true")
     List<User> findActiveNetworkManagers();

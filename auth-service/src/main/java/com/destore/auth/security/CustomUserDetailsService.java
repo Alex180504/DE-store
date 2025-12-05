@@ -14,13 +14,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * @file CustomUserDetailsService.java
- * @brief Custom UserDetailsService for Spring Security
- * 
- * Loads user details from the database for authentication
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * Custom UserDetailsService for Spring Security.
+ * <p>
+ * Loads user details from the database for authentication.
  */
 @Service
 @RequiredArgsConstructor
@@ -29,7 +25,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     /**
-     * @brief Load user by username for Spring Security
+     * Loads user by username for Spring Security.
+     *
      * @param username Username to load
      * @return UserDetails object
      * @throws UsernameNotFoundException if user not found or inactive
@@ -51,7 +48,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     /**
-     * @brief Get granted authorities for a user
+     * Gets granted authorities for a user.
+     *
      * @param user User entity
      * @return Collection of granted authorities
      */

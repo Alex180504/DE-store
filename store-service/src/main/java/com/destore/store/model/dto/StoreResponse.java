@@ -8,11 +8,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 /**
- * @file StoreResponse.java
- * @brief DTO for store responses
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * DTO for store responses.
  */
 @Data
 @Builder
@@ -20,12 +16,43 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class StoreResponse {
 
+    /**
+     * Store ID.
+     */
     private Integer storeId;
+
+    /**
+     * Store code.
+     */
     private String storeCode;
+
+    /**
+     * Store name.
+     */
     private String storeName;
+
+    /**
+     * Store address.
+     */
     private String address;
+
+    /**
+     * Store postcode.
+     */
     private String postcode;
+
+    /**
+     * Whether the store is active.
+     */
     private Boolean isActive;
+
+    /**
+     * Creation timestamp.
+     */
     private LocalDateTime createdAt;
+
+    /**
+     * Last update timestamp.
+     */
     private LocalDateTime updatedAt;
 }

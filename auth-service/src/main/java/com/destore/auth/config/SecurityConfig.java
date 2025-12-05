@@ -27,13 +27,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @file SecurityConfig.java
- * @brief Spring Security configuration
- * 
- * Configures authentication, authorization, and JWT filter
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * Spring Security configuration.
+ * <p>
+ * Configures authentication, authorization, and JWT filter.
  */
 @Configuration
 @EnableWebSecurity
@@ -45,7 +41,8 @@ public class SecurityConfig {
     private final CustomUserDetailsService userDetailsService;
 
     /**
-     * @brief Create JwtAuthenticationFilter bean
+     * Creates JwtAuthenticationFilter bean.
+     *
      * @return JwtAuthenticationFilter instance
      */
     @Bean
@@ -54,7 +51,8 @@ public class SecurityConfig {
     }
 
     /**
-     * @brief Configure password encoder (BCrypt)
+     * Configures password encoder (BCrypt).
+     *
      * @return BCryptPasswordEncoder bean
      */
     @Bean
@@ -63,7 +61,8 @@ public class SecurityConfig {
     }
 
     /**
-     * @brief Configure authentication provider
+     * Configures authentication provider.
+     *
      * @return DaoAuthenticationProvider bean
      */
     @Bean
@@ -75,9 +74,11 @@ public class SecurityConfig {
     }
 
     /**
-     * @brief Configure authentication manager
+     * Configures authentication manager.
+     *
      * @param config Authentication configuration
      * @return AuthenticationManager bean
+     * @throws Exception If an error occurs
      */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
@@ -85,7 +86,8 @@ public class SecurityConfig {
     }
 
     /**
-     * @brief Configure CORS policy
+     * Configures CORS policy.
+     *
      * @return CorsConfigurationSource bean
      */
     @Bean
@@ -102,10 +104,12 @@ public class SecurityConfig {
     }
 
     /**
-     * @brief Configure HTTP security filter chain
-     * @param http HttpSecurity configuration
+     * Configures HTTP security filter chain.
+     *
+     * @param http                    HttpSecurity configuration
      * @param jwtAuthenticationFilter JWT authentication filter
      * @return SecurityFilterChain bean
+     * @throws Exception If an error occurs
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {

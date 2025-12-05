@@ -6,8 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * User entity from Auth DB - Read-Only
- * Used to fetch network manager emails
+ * User entity from Auth DB - Read-Only.
+ * <p>
+ * Represents a user in the authentication database.
+ * Used primarily to fetch network manager emails for sending alerts.
+ * </p>
  */
 @Entity
 @Table(name = "users")
@@ -35,6 +38,11 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    /**
+     * Checks if the user has the NETWORK_MANAGER role.
+     *
+     * @return true if the user is a network manager, false otherwise
+     */
     public boolean isNetworkManager() {
         return "NETWORK_MANAGER".equals(role);
     }

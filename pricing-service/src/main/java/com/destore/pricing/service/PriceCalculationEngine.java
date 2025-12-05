@@ -17,21 +17,23 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @file PriceCalculationEngine.java
- * @brief Core pricing calculation engine with hierarchical rule support
- * 
+ * Core pricing calculation engine with hierarchical rule support.
+ * <p>
  * This engine implements the hierarchical pricing logic where store-specific
  * rules override global (network-wide) rules. The calculation process:
- * 
- * 1. Validate item exists in warehouse database
- * 2. Query for store-specific rule (if storeId provided)
- * 3. If no store rule found, fallback to global rule
- * 4. Apply promotion discounts using PromotionEngine
- * 5. Return detailed price breakdown
- * 
+ * <ol>
+ *   <li>Validate item exists in warehouse database</li>
+ *   <li>Query for store-specific rule (if storeId provided)</li>
+ *   <li>If no store rule found, fallback to global rule</li>
+ *   <li>Apply promotion discounts using PromotionEngine</li>
+ *   <li>Return detailed price breakdown</li>
+ * </ol>
+ * </p>
+ * <p>
  * The override logic ensures that Store Managers can set custom pricing
  * that takes precedence over Network Manager's global pricing.
- * 
+ * </p>
+ *
  * @author DE-Store Development Team
  * @version 1.0.0
  */
@@ -45,23 +47,29 @@ public class PriceCalculationEngine {
     private final PromotionEngine promotionEngine;
 
     /**
-     * @brief Calculate final price for an item with quantity and promotions
-     * 
+     * Calculates the final price for an item with quantity and promotions.
+     * <p>
      * Algorithm:
-     * 1. Validate item exists in warehouse
-     * 2. Find applicable pricing rule (store-specific or global)
-     * 3. Calculate subtotal = unitPrice * quantity
-     * 4. Calculate promotion discount
-     * 5. Calculate final price = subtotal - discount
-     * 6. Return detailed breakdown
-     * 
+     * <ol>
+     *   <li>Validate item exists in warehouse</li>
+     *   <li>Find applicable pricing rule (store-specific or global)</li>
+     *   <li>Calculate subtotal = unitPrice * quantity</li>
+     *   <li>Calculate promotion discount</li>
+     *   <li>Calculate final price = subtotal - discount</li>
+     *   <li>Return detailed breakdown</li>
+     * </ol>
+     * </p>
+     * <p>
      * Hierarchical Rule Logic:
-     * - If storeId is provided, search for store-specific rule first
-     * - If no store rule found, fallback to global rule
-     * - Store-specific rules (is_global=false) override global rules (is_global=true)
-     * 
-     * @param request The price calculation request (itemId, storeId, quantity)
-     * @return Detailed price calculation response
+     * <ul>
+     *   <li>If storeId is provided, search for store-specific rule first</li>
+     *   <li>If no store rule found, fallback to global rule</li>
+     *   <li>Store-specific rules (is_global=false) override global rules (is_global=true)</li>
+     * </ul>
+     * </p>
+     *
+     * @param request the price calculation request (itemId, storeId, quantity)
+     * @return the detailed {@link PriceCalculationResponse}
      * @throws ItemNotFoundException if item doesn't exist in warehouse
      * @throws PricingRuleNotFoundException if no pricing rule found
      */
@@ -116,23 +124,33 @@ public class PriceCalculationEngine {
     }
 
     /**
-     * @brief Find the applicable pricing rule using hierarchical logic
-     * 
+     * Finds the applicable pricing rule using hierarchical logic.
+     * <p>
      * Hierarchical Override Algorithm:
-     * 1. If storeId provided:
-     *    a. Query for active rules matching itemId AND storeId
-     *    b. Query for active global rules matching itemId
-     *    c. Prioritize store-specific rule over global rule
-     * 2. If no storeId provided:
-     *    a. Query only for global rules
-     * 3. If no rule found, throw exception
-     * 
+     * <ol>
+     *   <li>If storeId provided:
+     *     <ol type="a">
+     *       <li>Query for active rules matching itemId AND storeId</li>
+     *       <li>Query for active global rules matching itemId</li>
+     *       <li>Prioritize store-specific rule over global rule</li>
+     *     </ol>
+     *   </li>
+     *   <li>If no storeId provided:
+     *     <ol type="a">
+     *       <li>Query only for global rules</li>
+     *     </ol>
+     *   </li>
+     *   <li>If no rule found, throw exception</li>
+     * </ol>
+     * </p>
+     * <p>
      * The database query returns results ordered by is_global (false first),
      * so store-specific rules naturally appear before global rules.
-     * 
-     * @param itemId The warehouse item ID
-     * @param storeId The store ID (can be null for global pricing)
-     * @return The applicable pricing rule
+     * </p>
+     *
+     * @param itemId the warehouse item ID
+     * @param storeId the store ID (can be null for global pricing)
+     * @return the applicable {@link PricingRule}
      * @throws PricingRuleNotFoundException if no rule found
      */
     private PricingRule findApplicableRule(Integer itemId, Integer storeId) {
@@ -162,13 +180,14 @@ public class PriceCalculationEngine {
     }
 
     /**
-     * @brief Check if a pricing rule exists for an item/store combination
-     * 
+     * Checks if a pricing rule exists for an item/store combination.
+     * <p>
      * Utility method to verify if pricing is configured before attempting
      * to calculate prices.
-     * 
-     * @param itemId The warehouse item ID
-     * @param storeId The store ID (can be null)
+     * </p>
+     *
+     * @param itemId the warehouse item ID
+     * @param storeId the store ID (can be null)
      * @return true if an active pricing rule exists
      */
     public boolean hasPricingRule(Integer itemId, Integer storeId) {

@@ -6,11 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @file LoginRequest.java
- * @brief DTO for user login requests
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * DTO for user login requests.
  */
 @Data
 @NoArgsConstructor
@@ -18,13 +14,13 @@ import lombok.NoArgsConstructor;
 public class LoginRequest {
 
     /**
-     * @brief Username for authentication
+     * Username for authentication.
      */
     @NotBlank(message = "Username is required")
     private String username;
 
     /**
-     * @brief Password for authentication
+     * Password for authentication.
      */
     @NotBlank(message = "Password is required")
     private String password;

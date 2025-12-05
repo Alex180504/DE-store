@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @file AuthService.java
- * @brief Service class for authentication operations
- * 
- * Handles user login and JWT token generation
- * 
+ * Service class for authentication operations.
+ * <p>
+ * Handles user login and JWT token generation.
+ * </p>
+ *
  * @author DE-Store Development Team
  * @version 1.0.0
  */
@@ -35,9 +35,10 @@ public class AuthService {
     private final JwtUtil jwtUtil;
 
     /**
-     * @brief Authenticate user and generate JWT token
-     * @param loginRequest Login credentials
-     * @return LoginResponse with JWT token and user info
+     * Authenticates user and generates JWT token.
+     *
+     * @param loginRequest the login credentials
+     * @return the {@link LoginResponse} with JWT token and user info
      * @throws UsernameNotFoundException if user not found
      * @throws BadCredentialsException if password is incorrect
      */
@@ -76,9 +77,10 @@ public class AuthService {
     }
 
     /**
-     * @brief Get current user information
-     * @param username Username from JWT token
-     * @return UserResponse with user details
+     * Gets current user information.
+     *
+     * @param username the username from JWT token
+     * @return the {@link UserResponse} with user details
      * @throws UsernameNotFoundException if user not found
      */
     public UserResponse getCurrentUser(String username) {
@@ -97,9 +99,10 @@ public class AuthService {
     }
 
     /**
-     * @brief Register a new user
-     * @param registerRequest Registration details
-     * @return UserResponse with user details (no token - must login after registration)
+     * Registers a new user.
+     *
+     * @param registerRequest the registration details
+     * @return the {@link UserResponse} with user details (no token - must login after registration)
      * @throws IllegalArgumentException if username exists or validation fails
      */
     @Transactional

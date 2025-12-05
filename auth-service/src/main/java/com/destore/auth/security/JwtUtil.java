@@ -17,13 +17,9 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * @file JwtUtil.java
- * @brief Utility class for JWT token operations
- * 
- * Handles JWT token generation, validation, and claim extraction
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * Utility class for JWT token operations.
+ * <p>
+ * Handles JWT token generation, validation, and claim extraction.
  */
 @Component
 public class JwtUtil {
@@ -37,7 +33,8 @@ public class JwtUtil {
     private Long expiration;
 
     /**
-     * @brief Get the signing key for JWT operations
+     * Gets the signing key for JWT operations.
+     *
      * @return SecretKey for signing JWTs
      */
     private SecretKey getSigningKey() {
@@ -48,7 +45,8 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Extract username from JWT token
+     * Extracts username from JWT token.
+     *
      * @param token JWT token
      * @return Username
      */
@@ -57,7 +55,8 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Extract role from JWT token
+     * Extracts role from JWT token.
+     *
      * @param token JWT token
      * @return User role as string
      */
@@ -66,7 +65,8 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Extract store ID from JWT token
+     * Extracts store ID from JWT token.
+     *
      * @param token JWT token
      * @return Store ID (null for network managers)
      */
@@ -75,7 +75,8 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Extract expiration date from JWT token
+     * Extracts expiration date from JWT token.
+     *
      * @param token JWT token
      * @return Expiration date
      */
@@ -84,9 +85,11 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Extract a specific claim from JWT token
-     * @param token JWT token
+     * Extracts a specific claim from JWT token.
+     *
+     * @param token          JWT token
      * @param claimsResolver Function to extract the claim
+     * @param <T>            Type of the claim
      * @return Extracted claim
      */
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -95,7 +98,8 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Extract all claims from JWT token
+     * Extracts all claims from JWT token.
+     *
      * @param token JWT token
      * @return All claims
      */
@@ -108,7 +112,8 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Check if token is expired
+     * Checks if token is expired.
+     *
      * @param token JWT token
      * @return True if expired
      */
@@ -117,10 +122,11 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Generate JWT token for a user
+     * Generates JWT token for a user.
+     *
      * @param username Username
-     * @param role User role
-     * @param storeId Store ID (null for network managers)
+     * @param role     User role
+     * @param storeId  Store ID (null for network managers)
      * @return Generated JWT token
      */
     public String generateToken(String username, String role, Integer storeId) {
@@ -133,8 +139,9 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Create JWT token with claims
-     * @param claims Custom claims
+     * Creates JWT token with claims.
+     *
+     * @param claims  Custom claims
      * @param subject Token subject (username)
      * @return Created JWT token
      */
@@ -152,8 +159,9 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Validate JWT token
-     * @param token JWT token
+     * Validates JWT token.
+     *
+     * @param token    JWT token
      * @param username Username to validate against
      * @return True if valid
      */
@@ -163,7 +171,8 @@ public class JwtUtil {
     }
 
     /**
-     * @brief Validate JWT token (without username check)
+     * Validates JWT token (without username check).
+     *
      * @param token JWT token
      * @return True if valid and not expired
      */

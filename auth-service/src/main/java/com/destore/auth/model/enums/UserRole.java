@@ -1,14 +1,11 @@
 package com.destore.auth.model.enums;
 
 /**
- * @file UserRole.java
- * @brief Enum representing user roles in the DE-Store system
- * 
- * - NETWORK_MANAGER: Can manage global pricing rules across all stores
- * - STORE_MANAGER: Can manage pricing rules for their assigned store only
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * Enum representing user roles in the DE-Store system.
+ * <ul>
+ * <li>NETWORK_MANAGER: Can manage global pricing rules across all stores</li>
+ * <li>STORE_MANAGER: Can manage pricing rules for their assigned store only</li>
+ * </ul>
  */
 public enum UserRole {
     /**

@@ -16,11 +16,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 /**
- * @file SecurityConfig.java
- * @brief Security configuration for Store Service
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * Security configuration for Store Service.
  */
 @Configuration
 @EnableWebSecurity

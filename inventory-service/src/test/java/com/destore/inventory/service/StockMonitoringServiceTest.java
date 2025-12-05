@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 /**
- * Unit tests for StockMonitoringService
+ * Unit tests for StockMonitoringService.
  */
 @ExtendWith(MockitoExtension.class)
 class StockMonitoringServiceTest {

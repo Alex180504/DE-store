@@ -5,8 +5,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * DTO for updating inventory thresholds
- * Note: Out-of-stock threshold is always 0 (hardcoded)
+ * Data Transfer Object for updating inventory thresholds.
+ * <p>
+ * Used to receive new threshold values from the API.
+ * Note: Out-of-stock threshold is always 0 (hardcoded) and cannot be updated.
+ * </p>
  */
 @Data
 public class ThresholdUpdateRequest {

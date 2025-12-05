@@ -21,8 +21,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Integration tests for Inventory Admin Controller
- * Tests JWT authentication, role-based authorization, and endpoint functionality
+ * Integration tests for Inventory Admin Controller.
+ * <p>
+ * Tests JWT authentication, role-based authorization, and endpoint functionality.
+ * </p>
  */
 @SpringBootTest
 @AutoConfigureMockMvc

@@ -17,11 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * @file JwtAuthenticationFilter.java
- * @brief Filter to validate JWT tokens
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * Filter to validate JWT tokens.
  */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {

@@ -7,26 +7,24 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
- * @file UserRepository.java
- * @brief JPA Repository for User entity
- * 
- * Provides database access methods for user management
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * JPA Repository for User entity.
+ * <p>
+ * Provides database access methods for user management.
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     /**
-     * @brief Find user by username
+     * Finds user by username.
+     *
      * @param username The username to search for
      * @return Optional containing the user if found
      */
     Optional<User> findByUsername(String username);
 
     /**
-     * @brief Find active user by username
+     * Finds active user by username.
+     *
      * @param username The username to search for
      * @return Optional containing the user if found and active
      */

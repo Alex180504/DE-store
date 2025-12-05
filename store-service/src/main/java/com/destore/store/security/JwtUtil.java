@@ -12,11 +12,7 @@ import java.util.Date;
 import java.util.function.Function;
 
 /**
- * @file JwtUtil.java
- * @brief Utility class for JWT token validation
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * Utility class for JWT token validation.
  */
 @Component
 public class JwtUtil {

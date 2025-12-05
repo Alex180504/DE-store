@@ -12,11 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @file StoreController.java
- * @brief REST controller for store management
- * 
- * @author DE-Store Development Team
- * @version 1.0.0
+ * REST controller for store management.
  */
 @RestController
 @RequestMapping("/api/stores")
@@ -26,7 +22,10 @@ public class StoreController {
     private StoreService storeService;
 
     /**
-     * Get all stores
+     * Gets all stores.
+     *
+     * @param activeOnly If true, returns only active stores
+     * @return List of stores
      */
     @GetMapping
     public ResponseEntity<List<StoreResponse>> getAllStores(
@@ -38,7 +37,10 @@ public class StoreController {
     }
 
     /**
-     * Get store by ID
+     * Gets store by ID.
+     *
+     * @param storeId Store ID
+     * @return Store details
      */
     @GetMapping("/{storeId}")
     public ResponseEntity<StoreResponse> getStoreById(@PathVariable Integer storeId) {
@@ -47,7 +49,10 @@ public class StoreController {
     }
 
     /**
-     * Get store by code
+     * Gets store by code.
+     *
+     * @param storeCode Store code
+     * @return Store details
      */
     @GetMapping("/code/{storeCode}")
     public ResponseEntity<StoreResponse> getStoreByCode(@PathVariable String storeCode) {
@@ -56,7 +61,10 @@ public class StoreController {
     }
 
     /**
-     * Create new store (Network Manager only)
+     * Creates new store (Network Manager only).
+     *
+     * @param request Store creation request
+     * @return Created store details
      */
     @PostMapping
     public ResponseEntity<StoreResponse> createStore(@Valid @RequestBody StoreRequest request) {
@@ -65,7 +73,11 @@ public class StoreController {
     }
 
     /**
-     * Update store (Network Manager only)
+     * Updates store (Network Manager only).
+     *
+     * @param storeId Store ID
+     * @param request Store update request
+     * @return Updated store details
      */
     @PutMapping("/{storeId}")
     public ResponseEntity<StoreResponse> updateStore(
@@ -76,7 +88,10 @@ public class StoreController {
     }
 
     /**
-     * Delete store (Network Manager only)
+     * Deletes store (Network Manager only).
+     *
+     * @param storeId Store ID
+     * @return No content
      */
     @DeleteMapping("/{storeId}")
     public ResponseEntity<Void> deleteStore(@PathVariable Integer storeId) {
