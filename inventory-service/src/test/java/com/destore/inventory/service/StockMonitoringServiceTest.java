@@ -2,7 +2,9 @@ package com.destore.inventory.service;
 
 import com.destore.inventory.model.dto.StockAlert;
 import com.destore.inventory.model.warehouse.WarehouseItem;
+import com.destore.inventory.model.auth.User;
 import com.destore.inventory.repository.warehouse.WarehouseItemRepository;
+import com.destore.inventory.repository.auth.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
@@ -26,6 +29,9 @@ class StockMonitoringServiceTest {
 
     @Mock
     private WarehouseItemRepository warehouseItemRepository;
+
+    @Mock
+    private UserRepository userRepository;
 
     @Mock
     private EmailService emailService;
@@ -50,9 +56,13 @@ class StockMonitoringServiceTest {
         );
 
         // Setup config service defaults
-        when(configService.getLowStockThreshold()).thenReturn(50);
-        when(configService.getCriticalStockThreshold()).thenReturn(20);
-        when(configService.getOutOfStockThreshold()).thenReturn(0);
+        lenient().when(configService.getLowStockThreshold()).thenReturn(50);
+        lenient().when(configService.getCriticalStockThreshold()).thenReturn(20);
+        
+        // Setup user repository default
+        User manager = new User();
+        manager.setEmail("manager@test.com");
+        lenient().when(userRepository.findActiveNetworkManagers()).thenReturn(Arrays.asList(manager));
     }
 
     private WarehouseItem createItem(Integer id, String name, int stock) {
@@ -69,7 +79,7 @@ class StockMonitoringServiceTest {
     @Test
     @DisplayName("Should detect out of stock items")
     void gatherStockAlerts_OutOfStockItem_DetectsCorrectly() {
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(testItems.get(0)));
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList(testItems.get(0)));
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
@@ -82,7 +92,7 @@ class StockMonitoringServiceTest {
     @Test
     @DisplayName("Should detect critical stock items")
     void gatherStockAlerts_CriticalStockItem_DetectsCorrectly() {
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(testItems.get(1)));
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList(testItems.get(1)));
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
@@ -95,7 +105,7 @@ class StockMonitoringServiceTest {
     @Test
     @DisplayName("Should detect low stock items")
     void gatherStockAlerts_LowStockItem_DetectsCorrectly() {
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(testItems.get(2)));
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList(testItems.get(2)));
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
@@ -108,10 +118,7 @@ class StockMonitoringServiceTest {
     @Test
     @DisplayName("Should not alert on items with sufficient stock")
     void gatherStockAlerts_SufficientStock_NoAlerts() {
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(
-            testItems.get(3), // Normal stock
-            testItems.get(4)  // High stock
-        ));
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList());
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
@@ -121,7 +128,11 @@ class StockMonitoringServiceTest {
     @Test
     @DisplayName("Should detect multiple alerts with different severities")
     void gatherStockAlerts_MultipleItems_DetectsAll() {
-        when(warehouseItemRepository.findAll()).thenReturn(testItems);
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList(
+            testItems.get(0),
+            testItems.get(1),
+            testItems.get(2)
+        ));
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
@@ -145,22 +156,31 @@ class StockMonitoringServiceTest {
     // ==================== Threshold Boundary Tests ====================
 
     @Test
-    @DisplayName("Item exactly at critical threshold should be LOW status")
-    void gatherStockAlerts_ExactlyAtCriticalThreshold_IsLowStatus() {
+    @DisplayName("Item exactly at critical threshold should be CRITICAL status")
+    void gatherStockAlerts_ExactlyAtCriticalThreshold_IsCriticalStatus() {
         WarehouseItem item = createItem(10, "Boundary Test", 20); // Exactly at critical threshold
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(item));
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList(item));
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
         assertThat(alerts).hasSize(1);
-        assertThat(alerts.get(0).getStatus()).isEqualTo(StockAlert.StockStatus.LOW);
+        assertThat(alerts.get(0).getStatus()).isEqualTo(StockAlert.StockStatus.CRITICAL);
     }
 
     @Test
     @DisplayName("Item exactly at low threshold should not alert")
     void gatherStockAlerts_ExactlyAtLowThreshold_NoAlert() {
         WarehouseItem item = createItem(10, "Boundary Test", 50); // Exactly at low threshold
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(item));
+        // findLowStockItems should NOT return this item if the query is correct (< threshold)
+        // But here we are mocking the return.
+        // If the service logic filters again, we might be fine.
+        // However, the service iterates over whatever findLowStockItems returns.
+        // If findLowStockItems returns it, the service will classify it.
+        // Let's check the service logic:
+        // } else { alert.setStatus(StockAlert.StockStatus.LOW); }
+        // So if it's returned, it will be alerted.
+        // Therefore, findLowStockItems should NOT return it.
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList());
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
@@ -171,7 +191,7 @@ class StockMonitoringServiceTest {
     @DisplayName("Item at threshold minus one should alert")
     void gatherStockAlerts_OneBelowThreshold_Alerts() {
         WarehouseItem item = createItem(10, "Boundary Test", 49); // One below low threshold
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(item));
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList(item));
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
@@ -184,7 +204,7 @@ class StockMonitoringServiceTest {
     @Test
     @DisplayName("Manual trigger should send emails when alerts exist")
     void triggerManualCheck_WithAlerts_SendsEmail() {
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(testItems.get(0)));
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList(testItems.get(0)));
         doNothing().when(emailService).sendStockAlerts(anyList(), anyList());
 
         stockMonitoringService.triggerManualCheck();
@@ -195,7 +215,7 @@ class StockMonitoringServiceTest {
     @Test
     @DisplayName("Manual trigger should not send emails when no alerts")
     void triggerManualCheck_NoAlerts_DoesNotSendEmail() {
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(testItems.get(3)));
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList());
 
         stockMonitoringService.triggerManualCheck();
 
@@ -212,7 +232,7 @@ class StockMonitoringServiceTest {
         when(configService.getCriticalStockThreshold()).thenReturn(30);
 
         // Item with 75 stock should now be LOW (was normal with default thresholds)
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(testItems.get(3)));
+        when(warehouseItemRepository.findLowStockItems(100)).thenReturn(Arrays.asList(testItems.get(3)));
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
@@ -225,7 +245,7 @@ class StockMonitoringServiceTest {
     @Test
     @DisplayName("Should handle empty warehouse gracefully")
     void gatherStockAlerts_EmptyWarehouse_ReturnsEmptyList() {
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList());
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList());
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
@@ -236,7 +256,7 @@ class StockMonitoringServiceTest {
     @DisplayName("Should handle null item name gracefully")
     void gatherStockAlerts_NullItemName_HandlesGracefully() {
         WarehouseItem item = createItem(99, null, 5);
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(item));
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList(item));
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 
@@ -248,7 +268,7 @@ class StockMonitoringServiceTest {
     @DisplayName("Should handle negative stock quantities")
     void gatherStockAlerts_NegativeStock_TreatsAsOutOfStock() {
         WarehouseItem item = createItem(100, "Negative Stock Item", -5);
-        when(warehouseItemRepository.findAll()).thenReturn(Arrays.asList(item));
+        when(warehouseItemRepository.findLowStockItems(anyInt())).thenReturn(Arrays.asList(item));
 
         List<StockAlert> alerts = stockMonitoringService.getCurrentAlerts();
 

@@ -29,6 +29,9 @@ COPY --from=build /app/target/*.jar app.jar
 # Expose port
 EXPOSE 8084
 
+# Install wget for healthcheck
+RUN apk add --no-cache wget
+
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
     CMD wget --quiet --tries=1 --spider http://localhost:8084/actuator/health || exit 1

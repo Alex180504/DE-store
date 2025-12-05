@@ -47,7 +47,7 @@ public class WarehouseItem {
      * Stock status helpers
      */
     public boolean isOutOfStock() {
-        return stockQuantity != null && stockQuantity == 0;
+        return stockQuantity != null && stockQuantity <= 0;
     }
 
     /**

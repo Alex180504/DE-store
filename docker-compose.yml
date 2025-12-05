@@ -279,6 +279,81 @@ services:
       - de-store-network
     restart: unless-stopped
 
+  # ============================================================
+  # TEST SERVICES (use --profile test to enable)
+  # Usage: docker-compose --profile test up test-all
+  # ============================================================
+  
+  test-auth:
+    profiles: ["test"]
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+      target: build
+    container_name: de-store-test-auth
+    command: mvn test
+    volumes:
+      - ./auth-service:/app
+      - maven-cache:/root/.m2
+    networks:
+      - de-store-network
+    depends_on:
+      auth-db:
+        condition: service_healthy
+
+  test-pricing:
+    profiles: ["test"]
+    build:
+      context: ./pricing-service
+      dockerfile: Dockerfile
+      target: build
+    container_name: de-store-test-pricing
+    command: mvn test
+    volumes:
+      - ./pricing-service:/app
+      - maven-cache:/root/.m2
+    networks:
+      - de-store-network
+    depends_on:
+      pricing-db:
+        condition: service_healthy
+
+  test-store:
+    profiles: ["test"]
+    build:
+      context: ./store-service
+      dockerfile: Dockerfile
+      target: build
+    container_name: de-store-test-store
+    command: mvn test
+    volumes:
+      - ./store-service:/app
+      - maven-cache:/root/.m2
+    networks:
+      - de-store-network
+    depends_on:
+      store-db:
+        condition: service_healthy
+
+  test-inventory:
+    profiles: ["test"]
+    build:
+      context: ./inventory-service
+      dockerfile: Dockerfile
+      target: build
+    container_name: de-store-test-inventory
+    command: mvn test
+    volumes:
+      - ./inventory-service:/app
+      - maven-cache:/root/.m2
+    networks:
+      - de-store-network
+    depends_on:
+      warehouse-db:
+        condition: service_healthy
+      auth-db:
+        condition: service_healthy
+
 networks:
   de-store-network:
     driver: bridge
@@ -293,3 +368,5 @@ volumes:
     name: de-store-auth-data
   store-data:
     name: de-store-store-data
+  maven-cache:
+    name: de-store-maven-cache

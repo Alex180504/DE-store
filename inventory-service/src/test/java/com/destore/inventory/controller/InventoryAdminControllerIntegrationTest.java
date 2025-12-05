@@ -9,11 +9,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -32,13 +35,21 @@ class InventoryAdminControllerIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private String networkManagerToken = "Bearer test-network-manager-token";
-    private String storeManagerToken = "Bearer test-store-manager-token";
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
+
+    private String networkManagerToken = "test-network-manager-token";
+    private String storeManagerToken = "test-store-manager-token";
 
     @BeforeEach
     void setUp() {
-        // Tokens are hardcoded for integration tests
-        // In real tests, you would use @WithMockUser or custom security context
+        // Mock valid network manager token
+        when(jwtTokenProvider.getUsernameFromToken(networkManagerToken)).thenReturn("networkManager");
+        when(jwtTokenProvider.getRoleFromToken(networkManagerToken)).thenReturn("NETWORK_MANAGER");
+
+        // Mock valid store manager token
+        when(jwtTokenProvider.getUsernameFromToken(storeManagerToken)).thenReturn("storeManager");
+        when(jwtTokenProvider.getRoleFromToken(storeManagerToken)).thenReturn("STORE_MANAGER");
     }
 
     // ==================== Health Endpoint Tests ====================

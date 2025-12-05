@@ -74,7 +74,6 @@ public class EmailService {
      * 
      * @param recipients List of email addresses to send to (typically network managers)
      * @param alerts List of stock alerts to include in email
-     * @throws MessagingException if email composition fails
      * @throws MailException if SMTP sending fails
      */
     public void sendStockAlerts(List<String> recipients, List<StockAlert> alerts) {

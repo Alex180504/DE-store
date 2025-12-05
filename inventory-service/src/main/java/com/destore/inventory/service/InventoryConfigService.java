@@ -50,7 +50,7 @@ public class InventoryConfigService {
     private volatile int lowStockThreshold;
     private volatile int criticalStockThreshold;
     private volatile int outOfStockThreshold;
-    private boolean initialized = false;
+    private volatile boolean initialized = false;
 
     /**
      * @brief Get current threshold configuration
