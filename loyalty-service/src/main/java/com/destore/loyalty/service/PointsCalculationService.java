@@ -193,7 +193,7 @@ public class PointsCalculationService {
                         .transactionType(PointsTransaction.TransactionType.BONUS)
                         .pointsAmount(BigDecimal.valueOf(bonus.getBonusPoints()))
                         .sourceTransactionId(transaction.getTransactionId())
-                        .bonusId(bonus.getBonusId())
+                        .bonusId(bonus.getOfferId())
                         .description("Bonus: " + bonus.getOfferName())
                         .build();
                 transactionRepository.save(bonusTx);

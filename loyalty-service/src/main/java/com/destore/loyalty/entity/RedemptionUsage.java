@@ -45,7 +45,7 @@ public class RedemptionUsage {
      * Reference to redemption offer.
      */
     @Column(name = "redemption_offer_id", nullable = false)
-    private Integer redemptionId;
+    private Integer redemptionOfferId;
 
     /**
      * Number of times customer has used this offer.

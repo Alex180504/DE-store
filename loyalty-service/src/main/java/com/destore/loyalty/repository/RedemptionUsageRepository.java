@@ -23,10 +23,10 @@ public interface RedemptionUsageRepository extends JpaRepository<RedemptionUsage
      * Finds usage record for a specific customer and offer combination.
      *
      * @param customerId Customer ID
-     * @param redemptionId Redemption offer ID
+     * @param redemptionOfferId Redemption offer ID
      * @return Optional containing usage record if found
      */
-    Optional<RedemptionUsage> findByCustomerIdAndRedemptionId(Integer customerId, Integer redemptionId);
+    Optional<RedemptionUsage> findByCustomerIdAndRedemptionOfferId(Integer customerId, Integer redemptionOfferId);
 
     /**
      * Finds all redemption usage records for a customer.
@@ -39,16 +39,16 @@ public interface RedemptionUsageRepository extends JpaRepository<RedemptionUsage
     /**
      * Finds all usage records for a specific offer.
      *
-     * @param redemptionId Redemption offer ID
+     * @param redemptionOfferId Redemption offer ID
      * @return List of usage records
      */
-    List<RedemptionUsage> findByRedemptionId(Integer redemptionId);
+    List<RedemptionUsage> findByRedemptionOfferId(Integer redemptionOfferId);
 
     /**
      * Counts total unique customers who have used an offer.
      *
-     * @param redemptionId Redemption offer ID
+     * @param redemptionOfferId Redemption offer ID
      * @return Count of unique customers
      */
-    long countByRedemptionId(Integer redemptionId);
+    long countByRedemptionOfferId(Integer redemptionOfferId);
 }

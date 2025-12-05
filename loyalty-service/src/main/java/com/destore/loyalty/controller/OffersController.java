@@ -88,7 +88,7 @@ public class OffersController {
                     RedemptionOfferDTO dto = mapToDTO(offer);
                     
                     // Check customer usage
-                    usageRepository.findByCustomerIdAndRedemptionId(customerId, offer.getRedemptionId())
+                    usageRepository.findByCustomerIdAndRedemptionOfferId(customerId, offer.getRedemptionId())
                             .ifPresent(usage -> {
                                 boolean canUse = usage.canUse(offer.getMaxUsesPerCustomer());
                                 dto.setAvailable(dto.getAvailable() && canUse);

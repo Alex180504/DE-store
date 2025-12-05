@@ -2,7 +2,7 @@
 const LOYALTY_API_BASE = '/api/loyalty';
 
 // Tab switching
-function showTab(tabName) {
+function showTab(tabName, event) {
     // Hide all tabs
     document.querySelectorAll('.tab-content').forEach(tab => {
         tab.style.display = 'none';
@@ -24,7 +24,9 @@ function showTab(tabName) {
     const tabElement = document.getElementById(tabMap[tabName]);
     if (tabElement) {
         tabElement.style.display = 'block';
-        event.target.classList.add('active');
+        if (event && event.target) {
+            event.target.classList.add('active');
+        }
     }
     
     // Load data for the tab

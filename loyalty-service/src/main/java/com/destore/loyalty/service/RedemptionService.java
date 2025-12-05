@@ -102,7 +102,6 @@ public class RedemptionService {
 
         // Calculate total points cost
         BigDecimal totalPointsCost = BigDecimal.ZERO;
-        List<RedemptionOffer> offers = new ArrayList<>();
 
         for (Integer offerId : request.getSelectedOfferIds()) {
             RedemptionOffer offer = offerRepository.findById(offerId)
@@ -119,7 +118,7 @@ public class RedemptionService {
 
             // Check customer-specific usage limits
             Optional<RedemptionUsage> usage = usageRepository
-                    .findByCustomerIdAndRedemptionId(request.getCustomerId(), offerId);
+                    .findByCustomerIdAndRedemptionOfferId(request.getCustomerId(), offerId);
             
             if (usage.isPresent() && !usage.get().canUse(offer.getMaxUsesPerCustomer())) {
                 throw new IllegalArgumentException(
@@ -127,7 +126,6 @@ public class RedemptionService {
             }
 
             totalPointsCost = totalPointsCost.add(offer.getPointsCost());
-            offers.add(offer);
         }
 
         // Validate sufficient balance
@@ -264,10 +262,10 @@ public class RedemptionService {
 
             // Update customer-specific usage
             RedemptionUsage usage = usageRepository
-                    .findByCustomerIdAndRedemptionId(request.getCustomerId(), offerId)
+                    .findByCustomerIdAndRedemptionOfferId(request.getCustomerId(), offerId)
                     .orElseGet(() -> RedemptionUsage.builder()
                             .customerId(request.getCustomerId())
-                            .redemptionId(offerId)
+                            .redemptionOfferId(offerId)
                             .usageCount(0)
                             .build());
 
