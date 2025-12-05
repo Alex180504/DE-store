@@ -54,6 +54,10 @@ public class RevenueAnalyticsService {
             .build();
     }
 
+    /** 
+     * @param startDate
+     * @param endDate
+     */
     private void validateDateRange(LocalDate startDate, LocalDate endDate) {
         if (startDate.isAfter(endDate)) {
             throw new IllegalArgumentException("Start date must be before or equal to end date");

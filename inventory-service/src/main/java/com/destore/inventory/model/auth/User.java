@@ -35,6 +35,9 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive;
 
+    /** 
+     * @return boolean
+     */
     public boolean isNetworkManager() {
         return "NETWORK_MANAGER".equals(role);
     }

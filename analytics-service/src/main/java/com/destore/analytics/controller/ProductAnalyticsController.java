@@ -25,6 +25,10 @@ public class ProductAnalyticsController {
 
     private final ProductAnalyticsService service;
 
+    /** 
+     * @param getProductPerformance(
+     * @return ResponseEntity<ProductPerformanceDTO>
+     */
     @GetMapping("/performance")
     @Operation(summary = "Get product performance", 
                description = "Generate product performance report including top sellers and category analysis")
@@ -48,6 +52,10 @@ public class ProductAnalyticsController {
         return ResponseEntity.ok(performance);
     }
 
+    /** 
+     * @param getWeekProductPerformance(
+     * @return ResponseEntity<ProductPerformanceDTO>
+     */
     @GetMapping("/performance/week")
     @Operation(summary = "Get current week's product performance")
     public ResponseEntity<ProductPerformanceDTO> getWeekProductPerformance(
@@ -65,6 +73,10 @@ public class ProductAnalyticsController {
         return ResponseEntity.ok(performance);
     }
 
+    /** 
+     * @param getMonthProductPerformance(
+     * @return ResponseEntity<ProductPerformanceDTO>
+     */
     @GetMapping("/performance/month")
     @Operation(summary = "Get current month's product performance")
     public ResponseEntity<ProductPerformanceDTO> getMonthProductPerformance(

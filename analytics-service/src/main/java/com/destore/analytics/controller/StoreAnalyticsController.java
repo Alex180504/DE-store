@@ -27,6 +27,9 @@ public class StoreAnalyticsController {
 
     private final StoreAnalyticsService service;
 
+    /** 
+     * @return ResponseEntity<List<StoreInfo>>
+     */
     @GetMapping("/list")
     @Operation(summary = "Get all stores", 
                description = "Get list of all active stores for dropdown selection")
@@ -36,6 +39,10 @@ public class StoreAnalyticsController {
         return ResponseEntity.ok(stores);
     }
 
+    /** 
+     * @param getStoreComparison(
+     * @return ResponseEntity<StoreComparisonDTO>
+     */
     @GetMapping("/comparison")
     @Operation(summary = "Get store comparison", 
                description = "Compare performance across all stores in the network with rankings and growth rates")
@@ -52,6 +59,9 @@ public class StoreAnalyticsController {
         return ResponseEntity.ok(comparison);
     }
 
+    /** 
+     * @return ResponseEntity<StoreComparisonDTO>
+     */
     @GetMapping("/comparison/week")
     @Operation(summary = "Get current week's store comparison")
     public ResponseEntity<StoreComparisonDTO> getWeekStoreComparison() {
@@ -63,6 +73,9 @@ public class StoreAnalyticsController {
         return ResponseEntity.ok(comparison);
     }
 
+    /** 
+     * @return ResponseEntity<StoreComparisonDTO>
+     */
     @GetMapping("/comparison/month")
     @Operation(summary = "Get current month's store comparison")
     public ResponseEntity<StoreComparisonDTO> getMonthStoreComparison() {
@@ -74,6 +87,10 @@ public class StoreAnalyticsController {
         return ResponseEntity.ok(comparison);
     }
 
+    /** 
+     * @param getStorePerformance(
+     * @return ResponseEntity<StoreMetrics>
+     */
     @GetMapping("/{storeId}/performance")
     @Operation(summary = "Get individual store performance", 
                description = "Get detailed performance metrics for a specific store")

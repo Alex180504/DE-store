@@ -32,6 +32,9 @@ import java.util.Map;
 )
 public class DataSourceConfig {
 
+    /** 
+     * @return DataSourceProperties
+     */
     @Primary
     @Bean
     @ConfigurationProperties("spring.datasource")
@@ -39,6 +42,9 @@ public class DataSourceConfig {
         return new DataSourceProperties();
     }
 
+    /** 
+     * @return DataSource
+     */
     @Primary
     @Bean
     public DataSource warehouseDataSource() {
@@ -47,6 +53,10 @@ public class DataSourceConfig {
                 .build();
     }
 
+    /** 
+     * @param warehouseEntityManagerFactory(
+     * @return LocalContainerEntityManagerFactoryBean
+     */
     @Primary
     @Bean
     public LocalContainerEntityManagerFactoryBean warehouseEntityManagerFactory(
@@ -65,6 +75,10 @@ public class DataSourceConfig {
                 .build();
     }
 
+    /** 
+     * @param warehouseTransactionManager(
+     * @return PlatformTransactionManager
+     */
     @Primary
     @Bean
     public PlatformTransactionManager warehouseTransactionManager(

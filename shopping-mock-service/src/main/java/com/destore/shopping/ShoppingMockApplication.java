@@ -19,6 +19,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 @SpringBootApplication
 public class ShoppingMockApplication {
 
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         SpringApplication.run(ShoppingMockApplication.class, args);
     }

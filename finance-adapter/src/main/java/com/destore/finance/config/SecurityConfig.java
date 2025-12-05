@@ -29,6 +29,11 @@ public class SecurityConfig {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
+    /** 
+     * @param http
+     * @return SecurityFilterChain
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -44,6 +49,9 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /** 
+     * @return OncePerRequestFilter
+     */
     @Bean
     public OncePerRequestFilter jwtAuthenticationFilter() {
         return new OncePerRequestFilter() {

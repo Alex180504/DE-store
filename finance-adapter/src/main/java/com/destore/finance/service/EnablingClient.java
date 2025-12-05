@@ -19,6 +19,10 @@ public class EnablingClient {
                 .build();
     }
     
+    /** 
+     * @param request
+     * @return FinanceResponse
+     */
     public FinanceResponse requestApproval(FinanceRequest request) {
         log.info("Sending finance request to Enabling for customer {}: £{}", 
                 request.getCustomerId(), request.getAmount());

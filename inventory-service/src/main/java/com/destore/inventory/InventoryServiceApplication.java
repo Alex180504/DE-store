@@ -25,6 +25,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class InventoryServiceApplication {
 
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
         SpringApplication.run(InventoryServiceApplication.class, args);
     }

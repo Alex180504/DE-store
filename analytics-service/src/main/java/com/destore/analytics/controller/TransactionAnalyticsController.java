@@ -25,6 +25,10 @@ public class TransactionAnalyticsController {
 
     private final TransactionAnalyticsService service;
 
+    /** 
+     * @param getTransactionSummary(
+     * @return ResponseEntity<TransactionSummaryDTO>
+     */
     @GetMapping("/summary")
     @Operation(summary = "Get transaction summary", 
                description = "Generate comprehensive transaction summary including status breakdown and hourly distribution")
@@ -45,6 +49,10 @@ public class TransactionAnalyticsController {
         return ResponseEntity.ok(summary);
     }
 
+    /** 
+     * @param getTodayTransactions(
+     * @return ResponseEntity<TransactionSummaryDTO>
+     */
     @GetMapping("/summary/today")
     @Operation(summary = "Get today's transaction summary")
     public ResponseEntity<TransactionSummaryDTO> getTodayTransactions(
@@ -58,6 +66,10 @@ public class TransactionAnalyticsController {
         return ResponseEntity.ok(summary);
     }
 
+    /** 
+     * @param getWeekTransactions(
+     * @return ResponseEntity<TransactionSummaryDTO>
+     */
     @GetMapping("/summary/week")
     @Operation(summary = "Get current week's transaction summary")
     public ResponseEntity<TransactionSummaryDTO> getWeekTransactions(

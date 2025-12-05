@@ -170,6 +170,9 @@ public class StoreAnalyticsRepository {
             startDate, endDate);
     }
 
+    /** 
+     * @param data
+     */
     private void enrichStoreDetails(StoreMetricsData data) {
         try {
             String sql = "SELECT store_name, address, postcode FROM stores WHERE store_id = ?";

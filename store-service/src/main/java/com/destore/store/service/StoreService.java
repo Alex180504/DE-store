@@ -29,6 +29,9 @@ public class StoreService {
     @Autowired
     private StoreRepository storeRepository;
 
+    /** 
+     * @return UserPrincipal
+     */
     private UserPrincipal getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserPrincipal) {
@@ -155,6 +158,10 @@ public class StoreService {
         storeRepository.delete(store);
     }
 
+    /** 
+     * @param store
+     * @return StoreResponse
+     */
     private StoreResponse mapToResponse(Store store) {
         return StoreResponse.builder()
                 .storeId(store.getStoreId())

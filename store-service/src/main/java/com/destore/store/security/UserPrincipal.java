@@ -19,10 +19,16 @@ public class UserPrincipal {
     private String role;
     private Integer storeId;
 
+    /** 
+     * @return boolean
+     */
     public boolean isNetworkManager() {
         return "NETWORK_MANAGER".equals(role);
     }
 
+    /** 
+     * @return boolean
+     */
     public boolean isStoreManager() {
         return "STORE_MANAGER".equals(role);
     }

@@ -27,12 +27,18 @@ import java.util.Map;
 )
 public class AuthDataSourceConfig {
 
+    /** 
+     * @return DataSourceProperties
+     */
     @Bean
     @ConfigurationProperties("spring.auth-datasource")
     public DataSourceProperties authDataSourceProperties() {
         return new DataSourceProperties();
     }
 
+    /** 
+     * @return DataSource
+     */
     @Bean
     public DataSource authDataSource() {
         return authDataSourceProperties()
@@ -40,6 +46,10 @@ public class AuthDataSourceConfig {
                 .build();
     }
 
+    /** 
+     * @param authEntityManagerFactory(
+     * @return LocalContainerEntityManagerFactoryBean
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean authEntityManagerFactory(
             EntityManagerFactoryBuilder builder,
@@ -57,12 +67,20 @@ public class AuthDataSourceConfig {
                 .build();
     }
 
+    /** 
+     * @param authTransactionManager(
+     * @return PlatformTransactionManager
+     */
     @Bean
     public PlatformTransactionManager authTransactionManager(
             @Qualifier("authEntityManagerFactory") LocalContainerEntityManagerFactoryBean authEntityManagerFactory) {
         return new JpaTransactionManager(authEntityManagerFactory.getObject());
     }
 
+    /** 
+     * @param dataSource
+     * @return JdbcTemplate
+     */
     @Bean
     public JdbcTemplate authJdbcTemplate(@Qualifier("authDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);

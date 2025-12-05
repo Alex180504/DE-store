@@ -25,6 +25,10 @@ public class RevenueAnalyticsController {
 
     private final RevenueAnalyticsService service;
 
+    /** 
+     * @param getRevenueSummary(
+     * @return ResponseEntity<RevenueReportDTO>
+     */
     @GetMapping("/summary")
     @Operation(summary = "Get revenue summary", 
                description = "Generate comprehensive revenue report for a store including daily breakdown and payment method analysis")
@@ -45,6 +49,10 @@ public class RevenueAnalyticsController {
         return ResponseEntity.ok(report);
     }
 
+    /** 
+     * @param getTodayRevenue(
+     * @return ResponseEntity<RevenueReportDTO>
+     */
     @GetMapping("/summary/today")
     @Operation(summary = "Get today's revenue summary")
     public ResponseEntity<RevenueReportDTO> getTodayRevenue(
@@ -58,6 +66,10 @@ public class RevenueAnalyticsController {
         return ResponseEntity.ok(report);
     }
 
+    /** 
+     * @param getWeekRevenue(
+     * @return ResponseEntity<RevenueReportDTO>
+     */
     @GetMapping("/summary/week")
     @Operation(summary = "Get current week's revenue summary")
     public ResponseEntity<RevenueReportDTO> getWeekRevenue(
@@ -72,6 +84,10 @@ public class RevenueAnalyticsController {
         return ResponseEntity.ok(report);
     }
 
+    /** 
+     * @param getMonthRevenue(
+     * @return ResponseEntity<RevenueReportDTO>
+     */
     @GetMapping("/summary/month")
     @Operation(summary = "Get current month's revenue summary")
     public ResponseEntity<RevenueReportDTO> getMonthRevenue(

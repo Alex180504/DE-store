@@ -65,6 +65,12 @@ class StockMonitoringServiceTest {
         lenient().when(userRepository.findActiveNetworkManagers()).thenReturn(Arrays.asList(manager));
     }
 
+    /** 
+     * @param id
+     * @param name
+     * @param stock
+     * @return WarehouseItem
+     */
     private WarehouseItem createItem(Integer id, String name, int stock) {
         return WarehouseItem.builder()
             .itemId(id)

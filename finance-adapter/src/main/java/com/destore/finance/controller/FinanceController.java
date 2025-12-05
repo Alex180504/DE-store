@@ -20,6 +20,10 @@ public class FinanceController {
     
     private final EnablingClient enablingClient;
     
+    /** 
+     * @param request
+     * @return ResponseEntity<FinanceResponse>
+     */
     @PostMapping("/request")
     @Operation(summary = "Request finance approval", 
                description = "Submit finance request to Enabling BNPL system")
@@ -31,6 +35,9 @@ public class FinanceController {
         return ResponseEntity.ok(response);
     }
     
+    /** 
+     * @return ResponseEntity<String>
+     */
     @GetMapping("/health")
     public ResponseEntity<String> health() {
         return ResponseEntity.ok("Finance Adapter is UP");
