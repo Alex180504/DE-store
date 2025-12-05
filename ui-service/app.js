@@ -38,6 +38,14 @@ function checkAuth() {
         userInfo.innerHTML = `<strong>${fullName}</strong><br>${role}${storeId ? ` (Store ${storeId})` : ''}`;
     }
 
+    // Show inventory button for Network Managers
+    if (currentUser.isNetworkManager) {
+        const inventoryBtn = document.getElementById('inventoryBtn');
+        if (inventoryBtn) {
+            inventoryBtn.style.display = 'inline-block';
+        }
+    }
+
     // Apply role-based UI restrictions
     applyRoleBasedUI();
 

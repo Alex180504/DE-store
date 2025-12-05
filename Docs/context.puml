@@ -30,6 +30,6 @@ Rel(shoppingSys, deStore, "Queries Price/Loyalty, Calculates Points & Basket Dis
 Rel(deStore, warehouseDB, "Syncs Inventory & Product Data", "JDBC")
 Rel(deStore, accountingDB, "Reads Sales Transactions for Points Calculation", "JDBC")
 Rel(deStore, enablingSys, "Proxies Finance Requests", "REST/SOAP")
-Rel(deStore, email, "Sends Low Stock Alerts", "SMTP")
+Rel(deStore, email, "Sends Stock Alert Emails to Network Managers", "SMTP")
 
 @enduml
