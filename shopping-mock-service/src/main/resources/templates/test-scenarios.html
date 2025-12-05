@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DE-Store Loyalty Test Harness</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: #667eea;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card h3 {
+            color: #667eea;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .info-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .info-card .label {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .scenarios {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .scenarios h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        .scenario-group {
+            margin-bottom: 30px;
+        }
+
+        .scenario-group h3 {
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+
+        .scenario-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .scenario-btn {
+            padding: 15px 20px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .scenario-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .scenario-btn .icon {
+            font-size: 18px;
+            margin-right: 8px;
+        }
+
+        .scenario-btn .desc {
+            display: block;
+            font-size: 11px;
+            font-weight: normal;
+            margin-top: 5px;
+            opacity: 0.8;
+        }
+
+        .output {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .output h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .terminal {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .terminal.loading::after {
+            content: '█';
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .offers-list {
+            margin-top: 20px;
+        }
+
+        .offer-item {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .offer-item h4 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .offer-item p {
+            color: #666;
+            font-size: 13px;
+            margin: 3px 0;
+        }
+
+        .offer-item .discount {
+            font-weight: bold;
+            color: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧪 DE-Store Loyalty Test Harness</h1>
+            <p>Test scenarios for loyalty system integration testing</p>
+        </header>
+
+        <div class="info-cards">
+            <div class="info-card">
+                <h3>Customer ID</h3>
+                <div class="value" th:text="${customerId}">1</div>
+                <div class="label">Test Customer</div>
+            </div>
+            <div class="info-card">
+                <h3>Points Balance</h3>
+                <div class="value" th:text="${customerPoints != null ? customerPoints.currentBalance : 0}">0</div>
+                <div class="label">Available Points</div>
+            </div>
+            <div class="info-card">
+                <h3>Lifetime Earned</h3>
+                <div class="value" th:text="${customerPoints != null ? customerPoints.lifetimeEarned : 0}">0</div>
+                <div class="label">Total Points Earned</div>
+            </div>
+            <div class="info-card">
+                <h3>Active Offers</h3>
+                <div class="value" th:text="${offers != null ? offers.size() : 0}">0</div>
+                <div class="label">Available Redemptions</div>
+            </div>
+        </div>
+
+        <div class="scenarios">
+            <h2>📋 Test Scenarios</h2>
+            
+            <div class="scenario-group">
+                <h3>🔄 Points Calculation</h3>
+                <div class="scenario-buttons">
+                    <button class="scenario-btn" onclick="runCalculatePoints()">
+                        <span class="icon">➕</span>Calculate Points
+                        <span class="desc">Trigger points calculation for customer</span>
+                    </button>
+                    <button class="scenario-btn" onclick="refreshPage()">
+                        <span class="icon">🔄</span>Refresh Balance
+                        <span class="desc">Reload customer points and offers</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="scenario-group" th:if="${offers != null && !offers.isEmpty()}">
+                <h3>🎁 Available Offers</h3>
+                <div class="offers-list">
+                    <div class="offer-item" th:each="offer : ${offers}">
+                        <h4 th:text="${offer.name}">Offer Name</h4>
+                        <p><span class="discount" th:text="${offer.discountPercentage + '%'}">10%</span> discount for <span th:text="${offer.pointsCost}">100</span> points</p>
+                        <p>Valid until: <span th:text="${#temporals.format(offer.endDate, 'dd MMM yyyy HH:mm')}">31 Dec 2025</span></p>
+                        <p th:if="${offer.maxUsesPerCustomer != null}">Max uses per customer: <span th:text="${offer.maxUsesPerCustomer}">3</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="output">
+            <h2>📊 Test Output</h2>
+            <div id="terminal" class="terminal">
+Ready for testing. Click a scenario button to begin.
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        const customerId = /*[[${customerId}]]*/ 1;
+
+        function log(message) {
+            const terminal = document.getElementById('terminal');
+            const timestamp = new Date().toLocaleTimeString();
+            terminal.textContent += `\n[${timestamp}] ${message}`;
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function clearLog() {
+            document.getElementById('terminal').textContent = '';
+        }
+
+        async function runCalculatePoints() {
+            clearLog();
+            log(`🔄 Triggering points calculation for customer ${customerId}...`);
+            
+            try {
+                const response = await fetch(`/test/calculate-points?customerId=${customerId}`, {
+                    method: 'POST'
+                });
+                const result = await response.text();
+                log(`\n${result}`);
+            } catch (error) {
+                log(`\n❌ Error: ${error.message}`);
+            }
+        }
+
+        function refreshPage() {
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>
