@@ -1,4 +1,4 @@
-package com.destore.loyalty.config;
+package com.destore.finance.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -22,16 +22,6 @@ import javax.crypto.SecretKey;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-/**
- * Security configuration for loyalty service.
- * <p>
- * Validates JWT tokens from auth-service to protect endpoints.
- * Allows public access to health checks for Docker.
- * </p>
- *
- * @author DE-Store Team
- * @version 1.0.0
- */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -39,13 +29,6 @@ public class SecurityConfig {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    /**
-     * Configures HTTP security for the application.
-     *
-     * @param http HttpSecurity configuration
-     * @return SecurityFilterChain
-     * @throws Exception if configuration fails
-     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -54,17 +37,13 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/actuator/health", "/actuator/health/**").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated())
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    /**
-     * Creates JWT authentication filter.
-     *
-     * @return JWT filter
-     */
     @Bean
     public OncePerRequestFilter jwtAuthenticationFilter() {
         return new OncePerRequestFilter() {
@@ -89,7 +68,6 @@ public class SecurityConfig {
 
                         String username = claims.getSubject();
                         
-                        // Set authentication in context
                         JwtAuthentication authentication = new JwtAuthentication(username, claims);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -105,9 +83,6 @@ public class SecurityConfig {
         };
     }
 
-    /**
-     * Simple authentication object for JWT.
-     */
     private static class JwtAuthentication implements org.springframework.security.core.Authentication {
         private final String username;
         private final Claims claims;

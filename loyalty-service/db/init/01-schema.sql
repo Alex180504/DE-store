@@ -163,6 +163,30 @@ CREATE INDEX idx_customer_balance_customer ON customer_points_balance(customer_i
 CREATE INDEX idx_customer_balance_last_calc ON customer_points_balance(last_calculated_at);
 
 /**
+ * Customer Contact Info table: Contact details for finance requests
+ * <p>
+ * Stores customer contact information needed for finance approval requests.
+ * Updated when customer makes their first finance request.
+ * </p>
+ */
+CREATE TABLE IF NOT EXISTS customer_contact_info (
+    contact_id SERIAL PRIMARY KEY,
+    customer_id INT UNIQUE NOT NULL,  -- References accounting.customers.customer_id
+    
+    -- Contact details
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    email VARCHAR(255),
+    
+    -- Metadata
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_customer_contact_customer ON customer_contact_info(customer_id);
+
+/**
  * Points Transactions table: Audit trail of all points earned/redeemed
  * <p>
  * Complete history of every points transaction.

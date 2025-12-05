@@ -30,6 +30,9 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secret;
 
+    // Hardcoded token for shopping system service-to-service communication
+    private static final String SHOPPING_SYSTEM_TOKEN = "shopping-system-service-token-2025";
+
     /**
      * @brief Get the signing key for JWT operations
      * @return SecretKey for validating JWTs
@@ -47,6 +50,10 @@ public class JwtUtil {
      * @return Username
      */
     public String extractUsername(String token) {
+        // Handle hardcoded shopping system token
+        if (SHOPPING_SYSTEM_TOKEN.equals(token)) {
+            return "shopping-system";
+        }
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -56,6 +63,10 @@ public class JwtUtil {
      * @return User role (NETWORK_MANAGER or STORE_MANAGER)
      */
     public String extractRole(String token) {
+        // Handle hardcoded shopping system token
+        if (SHOPPING_SYSTEM_TOKEN.equals(token)) {
+            return "SYSTEM";
+        }
         return extractClaim(token, claims -> claims.get("role", String.class));
     }
 
@@ -65,6 +76,10 @@ public class JwtUtil {
      * @return Store ID (null for network managers)
      */
     public Integer extractStoreId(String token) {
+        // Handle hardcoded shopping system token (can access all stores)
+        if (SHOPPING_SYSTEM_TOKEN.equals(token)) {
+            return null;
+        }
         return extractClaim(token, claims -> claims.get("storeId", Integer.class));
     }
 
@@ -117,6 +132,12 @@ public class JwtUtil {
      * @return true if valid, false otherwise
      */
     public Boolean validateToken(String token) {
+        // Hardcoded shopping system token is always valid
+        if (SHOPPING_SYSTEM_TOKEN.equals(token)) {
+            logger.info("Shopping system service token validated");
+            return true;
+        }
+        
         try {
             return !isTokenExpired(token);
         } catch (Exception e) {

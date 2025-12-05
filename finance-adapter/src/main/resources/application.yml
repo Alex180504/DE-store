@@ -1,0 +1,18 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: finance-adapter
+
+enabling:
+  api:
+    url: http://enabling-mock:8095
+
+logging:
+  level:
+    com.destore: DEBUG
+
+jwt:
+  secret: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+

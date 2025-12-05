@@ -32,8 +32,12 @@ public class LoyaltyServiceClient {
     private final WebClient webClient;
 
     public LoyaltyServiceClient(WebClient.Builder webClientBuilder,
-                                @Value("${loyalty.service.url}") String loyaltyServiceUrl) {
-        this.webClient = webClientBuilder.baseUrl(loyaltyServiceUrl).build();
+                                @Value("${loyalty.service.url}") String loyaltyServiceUrl,
+                                @Value("${shopping.system.token}") String serviceToken) {
+        this.webClient = webClientBuilder
+                .baseUrl(loyaltyServiceUrl)
+                .defaultHeader("Authorization", "Bearer " + serviceToken)
+                .build();
     }
 
     /**
