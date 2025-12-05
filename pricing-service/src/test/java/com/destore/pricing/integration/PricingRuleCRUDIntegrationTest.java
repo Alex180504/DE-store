@@ -1,6 +1,6 @@
 package com.destore.pricing.integration;
 
-import com.destore.pricing.model.PricingRule;
+import com.destore.pricing.model.entity.PricingRule;
 import com.destore.pricing.model.dto.PricingRuleRequest;
 import com.destore.pricing.model.dto.PricingRuleResponse;
 import com.destore.pricing.model.enums.PromotionType;

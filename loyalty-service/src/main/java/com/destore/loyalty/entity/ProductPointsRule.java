@@ -50,8 +50,8 @@ public class ProductPointsRule {
      * Mutually exclusive with pointsPerPound.
      * </p>
      */
-    @Column(name = "points_per_unit", precision = 10, scale = 2)
-    private BigDecimal pointsPerUnit;
+    @Column(name = "points_per_unit")
+    private Integer pointsPerUnit;
 
     /**
      * Points awarded per £1 spent on this product.
@@ -86,6 +86,16 @@ public class ProductPointsRule {
     private Boolean isActive = true;
 
     /**
+     * Indicates if this rule was explicitly deleted by a user.
+     * <p>
+     * When true, the rule is hidden from the UI but preserved for historical calculations.
+     * </p>
+     */
+    @Builder.Default
+    @Column(name = "is_deleted", nullable = false)
+    private Boolean isDeleted = false;
+
+    /**
      * Record creation timestamp.
      */
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -96,6 +106,12 @@ public class ProductPointsRule {
      */
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    /**
+     * Deactivation timestamp.
+     */
+    @Column(name = "deactivated_at")
+    private LocalDateTime deactivatedAt;
 
     /**
      * Sets creation timestamp before persisting new entity.
@@ -139,7 +155,7 @@ public class ProductPointsRule {
      */
     public BigDecimal calculatePoints(BigDecimal quantity, BigDecimal totalPrice) {
         if (pointsPerUnit != null) {
-            return pointsPerUnit.multiply(quantity).setScale(2, RoundingMode.DOWN);
+            return BigDecimal.valueOf(pointsPerUnit).multiply(quantity).setScale(2, RoundingMode.DOWN);
         } else if (pointsPerPound != null) {
             return pointsPerPound.multiply(totalPrice).setScale(2, RoundingMode.DOWN);
         }

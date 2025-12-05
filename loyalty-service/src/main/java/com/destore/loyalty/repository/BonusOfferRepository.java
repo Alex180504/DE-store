@@ -29,6 +29,15 @@ public interface BonusOfferRepository extends JpaRepository<BonusOffer, Integer>
     List<BonusOffer> findByIsActiveTrue();
 
     /**
+     * Finds all active bonus offers at the given time.
+     *
+     * @param now Current timestamp for validating offer validity period
+     * @return List of currently active and valid bonus offers
+     */
+    @Query("SELECT b FROM BonusOffer b WHERE b.isActive = true AND b.validFrom <= :now AND (b.validTo IS NULL OR b.validTo > :now)")
+    List<BonusOffer> findActiveOffers(@Param("now") LocalDateTime now);
+
+    /**
      * Finds bonus offers valid at a specific timestamp and store.
      * <p>
      * Returns global offers and store-specific offers, ordered by specificity.

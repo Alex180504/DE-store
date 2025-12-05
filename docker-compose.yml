@@ -150,8 +150,8 @@ services:
       # JWT Configuration (must match auth-service)
       JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
       JWT_EXPIRATION: "86400000"
-    expose:
-      - "8080"
+    ports:
+      - "8080:8080"
     depends_on:
       pricing-db:
         condition: service_healthy
@@ -315,6 +315,46 @@ services:
       timeout: 3s
       retries: 3
 
+  # Enabling Finance Mock (Node.js)
+  enabling-mock:
+    build:
+      context: ./enabling-mock
+      dockerfile: Dockerfile
+    container_name: de-store-enabling-mock
+    ports:
+      - "8095:8095"
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8095/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # Finance Adapter (Spring Boot)
+  finance-adapter:
+    build:
+      context: ./finance-adapter
+      dockerfile: Dockerfile
+    container_name: de-store-finance-adapter
+    ports:
+      - "8091:8091"
+    environment:
+      ENABLING_API_URL: http://enabling-mock:8095
+      SERVER_PORT: 8091
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+    depends_on:
+      - enabling-mock
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8091/api/finance/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
 networks:
   de-store-network:
     driver: bridge
@@ -333,3 +373,4 @@ volumes:
     name: de-store-accounting-data
   loyalty-data:
     name: de-store-loyalty-data
+

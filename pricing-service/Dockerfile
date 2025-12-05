@@ -16,6 +16,9 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
+# Install wget for healthcheck
+RUN apk add --no-cache wget
+
 # Create non-root user for security
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring
@@ -25,9 +28,6 @@ COPY --from=build /app/target/*.jar app.jar
 
 # Expose application port
 EXPOSE 8080
-
-# Install wget for healthcheck
-	RUN apk add --no-cache wget
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \

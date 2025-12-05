@@ -23,16 +23,19 @@ import java.util.List;
 public interface ProductPointsRuleRepository extends JpaRepository<ProductPointsRule, Integer> {
 
     /**
-     * Finds all active product points rules.
+     * Finds all product points rules that are not deleted.
+     * Includes both active and inactive rules for UI display.
      *
-     * @return List of active rules
+     * @return List of non-deleted rules
      */
-    List<ProductPointsRule> findByIsActiveTrue();
+    List<ProductPointsRule> findByIsDeletedFalse();
 
     /**
      * Finds product points rules valid at a specific timestamp.
      * <p>
      * Used for historical points calculation from past transactions.
+     * Does NOT filter by isActive to allow calculation of points earned
+     * under rules that are now deactivated/archived.
      * </p>
      *
      * @param itemId Product/item ID
@@ -40,7 +43,6 @@ public interface ProductPointsRuleRepository extends JpaRepository<ProductPoints
      * @return List of applicable rules
      */
     @Query("SELECT r FROM ProductPointsRule r WHERE r.itemId = :itemId " +
-           "AND r.isActive = true " +
            "AND r.validFrom <= :timestamp " +
            "AND (r.validTo IS NULL OR r.validTo > :timestamp)")
     List<ProductPointsRule> findApplicableRules(@Param("itemId") Integer itemId,
