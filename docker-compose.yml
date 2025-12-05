@@ -254,6 +254,43 @@ services:
       - de-store-network
     restart: unless-stopped
 
+  # Analytics Service (Spring Boot - Read-Only Multi-Database)
+  analytics-service:
+    build:
+      context: ./analytics-service
+      dockerfile: Dockerfile
+    container_name: de-store-analytics-service
+    environment:
+      # Accounting DB Connection (Primary - Read-Only)
+      SPRING_DATASOURCE_ACCOUNTING_URL: jdbc:postgresql://accounting-db:5432/accounting
+      SPRING_DATASOURCE_ACCOUNTING_USERNAME: accounting_user
+      SPRING_DATASOURCE_ACCOUNTING_PASSWORD: accounting_pass
+      # Store DB Connection (Read-Only)
+      SPRING_DATASOURCE_STORE_URL: jdbc:postgresql://store-db:5432/stores
+      SPRING_DATASOURCE_STORE_USERNAME: store_user
+      SPRING_DATASOURCE_STORE_PASSWORD: store_pass
+      # Warehouse DB Connection (Read-Only)
+      SPRING_DATASOURCE_WAREHOUSE_URL: jdbc:mysql://warehouse-db:3306/warehouse
+      SPRING_DATASOURCE_WAREHOUSE_USERNAME: warehouse_user
+      SPRING_DATASOURCE_WAREHOUSE_PASSWORD: warehouse_pass
+      # JWT Configuration (must match auth-service)
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      # Application Settings
+      SERVER_PORT: 8086
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+    expose:
+      - "8086"
+    depends_on:
+      accounting-db:
+        condition: service_healthy
+      store-db:
+        condition: service_healthy
+      warehouse-db:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
   # API Gateway (Nginx)
   api-gateway:
     build:
