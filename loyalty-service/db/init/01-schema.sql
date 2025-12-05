@@ -17,27 +17,23 @@ CREATE TABLE IF NOT EXISTS product_points_rules (
     item_id INT NOT NULL,  -- References warehouse.items.item_id
     
     -- Points configuration
-    points_per_unit INT NOT NULL CHECK (points_per_unit >= 0),
+    points_per_unit INT CHECK (points_per_unit >= 0),
     points_per_gbp DECIMAL(10,2) CHECK (points_per_gbp >= 0),  -- Alternative: points per £1 spent
-    
-    -- Rule metadata
-    rule_name VARCHAR(100) NOT NULL,
-    description TEXT,
     
     -- Validity period
     valid_from TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     valid_to TIMESTAMP,  -- NULL = no expiration
     is_active BOOLEAN DEFAULT TRUE,
+    is_deleted BOOLEAN DEFAULT FALSE NOT NULL,
     
     -- Audit fields
-    created_by VARCHAR(100) NOT NULL,  -- Username of network manager
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     deactivated_at TIMESTAMP,
     
     -- Constraints
     CONSTRAINT valid_product_points_date_range CHECK (valid_from < valid_to OR valid_to IS NULL),
-    CONSTRAINT valid_points_config CHECK (points_per_unit > 0 OR points_per_gbp > 0)
+    CONSTRAINT valid_points_config CHECK ((points_per_unit IS NOT NULL AND points_per_unit > 0) OR (points_per_gbp IS NOT NULL AND points_per_gbp > 0))
 );
 
 CREATE INDEX idx_product_points_item ON product_points_rules(item_id);
@@ -94,7 +90,7 @@ CREATE INDEX idx_bonus_offers_validity ON bonus_offers(valid_from, valid_to);
  */
 CREATE TABLE IF NOT EXISTS redemption_offers (
     redemption_id SERIAL PRIMARY KEY,
-    item_id INT NOT NULL,  -- References warehouse.items.item_id
+    item_id INT,  -- References warehouse.items.item_id (NULL for category-wide offers)
     
     -- Discount configuration
     offer_name VARCHAR(100) NOT NULL,
