@@ -21,7 +21,7 @@ import java.util.Optional;
  * @version 1.0.0
  */
 @Repository
-public interface RedemptionOfferRepository extends JpaRepository<RedemptionOffer, Long> {
+public interface RedemptionOfferRepository extends JpaRepository<RedemptionOffer, Integer> {
 
     /**
      * Finds all active redemption offers.
@@ -43,21 +43,18 @@ public interface RedemptionOfferRepository extends JpaRepository<RedemptionOffer
     List<RedemptionOffer> findActiveAvailableOffers(@Param("now") LocalDateTime now);
 
     /**
-     * Finds redemption offers applicable to a specific item and store.
+     * Finds redemption offers applicable to a specific item.
      *
      * @param itemId Item ID (null matches global offers)
-     * @param storeId Store ID (null matches global offers)
      * @param now Current timestamp
      * @return List of applicable offers
      */
     @Query("SELECT r FROM RedemptionOffer r WHERE r.isActive = true " +
            "AND (r.itemId IS NULL OR r.itemId = :itemId) " +
-           "AND (r.storeId IS NULL OR r.storeId = :storeId) " +
            "AND r.validFrom <= :now " +
            "AND (r.validTo IS NULL OR r.validTo > :now) " +
            "AND (r.maxTotalUses IS NULL OR r.currentTotalUses < r.maxTotalUses)")
-    List<RedemptionOffer> findApplicableOffers(@Param("itemId") Long itemId,
-                                                @Param("storeId") Long storeId,
+    List<RedemptionOffer> findApplicableOffers(@Param("itemId") Integer itemId,
                                                 @Param("now") LocalDateTime now);
 
     /**
@@ -70,5 +67,5 @@ public interface RedemptionOfferRepository extends JpaRepository<RedemptionOffer
      * @return Optional containing the locked offer
      */
     @Query("SELECT r FROM RedemptionOffer r WHERE r.redemptionId = :redemptionId")
-    Optional<RedemptionOffer> findByIdForUpdate(@Param("redemptionId") Long redemptionId);
+    Optional<RedemptionOffer> findByIdForUpdate(@Param("redemptionId") Integer redemptionId);
 }

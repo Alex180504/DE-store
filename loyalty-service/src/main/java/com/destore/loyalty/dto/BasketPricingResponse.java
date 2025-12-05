@@ -57,7 +57,7 @@ public class BasketPricingResponse {
         /**
          * Item ID.
          */
-        private Long itemId;
+        private Integer itemId;
 
         /**
          * Item name.
@@ -87,7 +87,7 @@ public class BasketPricingResponse {
         /**
          * Offer ID applied.
          */
-        private Long appliedOfferId;
+        private Integer appliedOfferId;
 
         /**
          * Offer name applied.

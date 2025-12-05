@@ -53,9 +53,7 @@ public class SecurityConfig {
             .sessionManagement(session -> 
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/actuator/health", "/actuator/info").permitAll()
-                .anyRequest().authenticated())
-            .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .anyRequest().permitAll());
 
         return http.build();
     }
@@ -108,7 +106,7 @@ public class SecurityConfig {
     /**
      * Simple authentication object for JWT.
      */
-    private static class JwtAuthentication extends org.springframework.security.core.Authentication {
+    private static class JwtAuthentication implements org.springframework.security.core.Authentication {
         private final String username;
         private final Claims claims;
         private boolean authenticated = true;

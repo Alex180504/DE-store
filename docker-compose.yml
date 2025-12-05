@@ -226,9 +226,9 @@ services:
     container_name: de-store-loyalty-service
     environment:
       # Loyalty DB Connection (Primary - Read/Write)
-      SPRING_DATASOURCE_LOYALTY_URL: jdbc:postgresql://loyalty-db:5432/loyalty
-      SPRING_DATASOURCE_LOYALTY_USERNAME: loyalty_user
-      SPRING_DATASOURCE_LOYALTY_PASSWORD: loyalty_pass
+      SPRING_DATASOURCE_URL: jdbc:postgresql://loyalty-db:5432/loyalty
+      SPRING_DATASOURCE_USERNAME: loyalty_user
+      SPRING_DATASOURCE_PASSWORD: loyalty_pass
       # Accounting DB Connection (Secondary - Read-Only)
       SPRING_DATASOURCE_ACCOUNTING_URL: jdbc:postgresql://accounting-db:5432/accounting
       SPRING_DATASOURCE_ACCOUNTING_USERNAME: accounting_user
@@ -303,7 +303,7 @@ services:
     ports:
       - "8090:8090"
     environment:
-      LOYALTY_SERVICE_URL: http://loyalty-service:8080
+      LOYALTY_SERVICE_URL: http://loyalty-service:8085
     depends_on:
       - loyalty-service
     networks:

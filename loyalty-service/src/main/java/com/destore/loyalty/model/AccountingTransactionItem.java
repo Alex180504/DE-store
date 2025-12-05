@@ -19,7 +19,7 @@ public class AccountingTransactionItem {
     /**
      * Item ID from transaction_items table.
      */
-    private Long itemId;
+    private Integer itemId;
 
     /**
      * Transaction ID (foreign key).
@@ -29,7 +29,7 @@ public class AccountingTransactionItem {
     /**
      * Product ID from warehouse.
      */
-    private Long productId;
+    private Integer productId;
 
     /**
      * Quantity purchased.

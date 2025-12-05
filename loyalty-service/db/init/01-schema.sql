@@ -179,9 +179,9 @@ CREATE TABLE IF NOT EXISTS points_transactions (
     transaction_type VARCHAR(20) NOT NULL CHECK (transaction_type IN ('EARNED', 'REDEEMED', 'BONUS', 'ADJUSTMENT', 'EXPIRED', 'REVERSED')),
     points_amount INT NOT NULL,  -- Positive for earned, negative for redeemed
     
-    -- Balance tracking
-    balance_before INT NOT NULL,
-    balance_after INT NOT NULL,
+    -- Balance tracking (nullable for incremental transactions)
+    balance_before INT,
+    balance_after INT,
     
     -- Source tracking
     accounting_transaction_id INT,  -- For EARNED: references accounting.transactions.transaction_id
@@ -198,7 +198,10 @@ CREATE TABLE IF NOT EXISTS points_transactions (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
     -- Constraints
-    CONSTRAINT valid_points_balance CHECK (balance_after = balance_before + points_amount),
+    CONSTRAINT valid_points_balance CHECK (
+        (balance_before IS NULL AND balance_after IS NULL) OR
+        (balance_after = balance_before + points_amount)
+    ),
     CONSTRAINT valid_earned_reference CHECK (
         (transaction_type = 'EARNED' AND accounting_transaction_id IS NOT NULL) OR
         (transaction_type != 'EARNED')
@@ -231,6 +234,10 @@ CREATE TABLE IF NOT EXISTS redemption_usage (
     usage_count INT NOT NULL DEFAULT 1,
     first_used_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     last_used_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+    -- Audit fields
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
     -- Constraint for uniqueness
     CONSTRAINT unique_redemption_customer UNIQUE (redemption_offer_id, customer_id)

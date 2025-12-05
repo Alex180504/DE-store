@@ -49,21 +49,19 @@ public class OffersController {
     }
 
     /**
-     * Gets offers applicable to a specific item and store.
+     * Gets applicable redemption offers for a specific item.
      *
      * @param itemId Item ID
-     * @param storeId Store ID
      * @return List of applicable offers
      */
     @GetMapping("/applicable")
     public ResponseEntity<List<RedemptionOfferDTO>> getApplicableOffers(
-            @RequestParam Long itemId,
-            @RequestParam Long storeId) {
+            @RequestParam Integer itemId) {
         
-        log.info("Fetching offers for item {} at store {}", itemId, storeId);
+        log.info("Fetching offers for item {}", itemId);
 
         LocalDateTime now = LocalDateTime.now();
-        List<RedemptionOffer> offers = offerRepository.findApplicableOffers(itemId, storeId, now);
+        List<RedemptionOffer> offers = offerRepository.findApplicableOffers(itemId, now);
 
         List<RedemptionOfferDTO> dtos = offers.stream()
                 .map(this::mapToDTO)
@@ -79,7 +77,7 @@ public class OffersController {
      * @return List of offers with customer usage info
      */
     @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<RedemptionOfferDTO>> getCustomerOffers(@PathVariable Long customerId) {
+    public ResponseEntity<List<RedemptionOfferDTO>> getCustomerOffers(@PathVariable Integer customerId) {
         log.info("Fetching offers for customer {}", customerId);
 
         LocalDateTime now = LocalDateTime.now();
@@ -112,7 +110,6 @@ public class OffersController {
     private RedemptionOfferDTO mapToDTO(RedemptionOffer offer) {
         return RedemptionOfferDTO.builder()
                 .redemptionId(offer.getRedemptionId())
-                .storeId(offer.getStoreId())
                 .itemId(offer.getItemId())
                 .offerName(offer.getOfferName())
                 .description(offer.getDescription())

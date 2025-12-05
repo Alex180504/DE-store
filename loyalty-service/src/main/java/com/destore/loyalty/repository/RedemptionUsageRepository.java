@@ -17,7 +17,7 @@ import java.util.Optional;
  * @version 1.0.0
  */
 @Repository
-public interface RedemptionUsageRepository extends JpaRepository<RedemptionUsage, Long> {
+public interface RedemptionUsageRepository extends JpaRepository<RedemptionUsage, Integer> {
 
     /**
      * Finds usage record for a specific customer and offer combination.
@@ -26,7 +26,7 @@ public interface RedemptionUsageRepository extends JpaRepository<RedemptionUsage
      * @param redemptionId Redemption offer ID
      * @return Optional containing usage record if found
      */
-    Optional<RedemptionUsage> findByCustomerIdAndRedemptionId(Long customerId, Long redemptionId);
+    Optional<RedemptionUsage> findByCustomerIdAndRedemptionId(Integer customerId, Integer redemptionId);
 
     /**
      * Finds all redemption usage records for a customer.
@@ -34,7 +34,7 @@ public interface RedemptionUsageRepository extends JpaRepository<RedemptionUsage
      * @param customerId Customer ID
      * @return List of usage records
      */
-    List<RedemptionUsage> findByCustomerId(Long customerId);
+    List<RedemptionUsage> findByCustomerId(Integer customerId);
 
     /**
      * Finds all usage records for a specific offer.
@@ -42,7 +42,7 @@ public interface RedemptionUsageRepository extends JpaRepository<RedemptionUsage
      * @param redemptionId Redemption offer ID
      * @return List of usage records
      */
-    List<RedemptionUsage> findByRedemptionId(Long redemptionId);
+    List<RedemptionUsage> findByRedemptionId(Integer redemptionId);
 
     /**
      * Counts total unique customers who have used an offer.
@@ -50,5 +50,5 @@ public interface RedemptionUsageRepository extends JpaRepository<RedemptionUsage
      * @param redemptionId Redemption offer ID
      * @return Count of unique customers
      */
-    long countByRedemptionId(Long redemptionId);
+    long countByRedemptionId(Integer redemptionId);
 }

@@ -23,17 +23,17 @@ public class RedemptionOfferDTO {
     /**
      * Offer ID.
      */
-    private Long redemptionId;
+    private Integer redemptionId;
 
     /**
      * Store ID (null for global).
      */
-    private Long storeId;
+    private Integer storeId;
 
     /**
      * Item ID (null for category-wide).
      */
-    private Long itemId;
+    private Integer itemId;
 
     /**
      * Offer name.

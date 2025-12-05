@@ -35,19 +35,13 @@ public class ProductPointsRule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rule_id")
-    private Long ruleId;
-
-    /**
-     * Store ID where this rule applies (NULL for global rules).
-     */
-    @Column(name = "store_id")
-    private Long storeId;
+    private Integer ruleId;
 
     /**
      * Product/item ID from warehouse catalog.
      */
     @Column(name = "item_id", nullable = false)
-    private Long itemId;
+    private Integer itemId;
 
     /**
      * Fixed points awarded per unit purchased.
@@ -66,7 +60,7 @@ public class ProductPointsRule {
      * Mutually exclusive with pointsPerUnit.
      * </p>
      */
-    @Column(name = "points_per_pound", precision = 10, scale = 2)
+    @Column(name = "points_per_gbp", precision = 10, scale = 2)
     private BigDecimal pointsPerPound;
 
     /**
@@ -118,16 +112,6 @@ public class ProductPointsRule {
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
-    }
-
-    /**
-     * Checks if this rule is applicable to a specific store.
-     *
-     * @param targetStoreId The store ID to check
-     * @return true if rule applies to the store (global or matching store ID)
-     */
-    public boolean appliesToStore(Long targetStoreId) {
-        return storeId == null || storeId.equals(targetStoreId);
     }
 
     /**

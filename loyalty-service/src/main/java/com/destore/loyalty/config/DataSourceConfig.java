@@ -43,7 +43,7 @@ public class DataSourceConfig {
      */
     @Primary
     @Bean(name = "loyaltyDataSourceProperties")
-    @ConfigurationProperties("spring.datasource.loyalty")
+    @ConfigurationProperties("spring.datasource")
     public DataSourceProperties loyaltyDataSourceProperties() {
         return new DataSourceProperties();
     }
@@ -75,7 +75,7 @@ public class DataSourceConfig {
             @Qualifier("loyaltyDataSource") DataSource dataSource) {
         
         Map<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto", "validate");
+        properties.put("hibernate.hbm2ddl.auto", "none");
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         
         return builder
@@ -120,5 +120,17 @@ public class DataSourceConfig {
     public DataSource accountingDataSource(
             @Qualifier("accountingDataSourceProperties") DataSourceProperties properties) {
         return properties.initializeDataSourceBuilder().build();
+    }
+    
+    /**
+     * JdbcTemplate bean for accounting database queries.
+     *
+     * @param accountingDataSource Accounting datasource
+     * @return JdbcTemplate configured for accounting database
+     */
+    @Bean(name = "accountingJdbcTemplate")
+    public org.springframework.jdbc.core.JdbcTemplate accountingJdbcTemplate(
+            @Qualifier("accountingDataSource") DataSource accountingDataSource) {
+        return new org.springframework.jdbc.core.JdbcTemplate(accountingDataSource);
     }
 }

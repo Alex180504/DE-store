@@ -32,14 +32,14 @@ public class BonusOffer {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bonus_id")
-    private Long bonusId;
+    @Column(name = "offer_id")
+    private Integer bonusId;
 
     /**
      * Store ID where this offer applies (NULL for global offers).
      */
     @Column(name = "store_id")
-    private Long storeId;
+    private Integer storeId;
 
     /**
      * Name of the bonus offer.
@@ -50,14 +50,14 @@ public class BonusOffer {
     /**
      * Spending threshold required to trigger the bonus (in GBP).
      */
-    @Column(name = "threshold_amount", nullable = false, precision = 10, scale = 2)
+    @Column(name = "minimum_spend", nullable = false, precision = 10, scale = 2)
     private BigDecimal thresholdAmount;
 
     /**
      * Bonus points awarded when threshold is reached.
      */
-    @Column(name = "bonus_points", nullable = false, precision = 10, scale = 2)
-    private BigDecimal bonusPoints;
+    @Column(name = "bonus_points", nullable = false)
+    private Integer bonusPoints;
 
     /**
      * Start date of offer validity (inclusive).
@@ -113,7 +113,7 @@ public class BonusOffer {
      * @param targetStoreId The store ID to check
      * @return true if offer applies to the store (global or matching store ID)
      */
-    public boolean appliesToStore(Long targetStoreId) {
+    public boolean appliesToStore(Integer targetStoreId) {
         return storeId == null || storeId.equals(targetStoreId);
     }
 

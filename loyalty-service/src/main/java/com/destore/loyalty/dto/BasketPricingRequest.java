@@ -21,12 +21,12 @@ public class BasketPricingRequest {
     /**
      * Customer ID.
      */
-    private Long customerId;
+    private Integer customerId;
 
     /**
      * Store ID.
      */
-    private Long storeId;
+    private Integer storeId;
 
     /**
      * Basket reference for idempotency.
@@ -41,7 +41,7 @@ public class BasketPricingRequest {
     /**
      * Selected redemption offer IDs.
      */
-    private List<Long> selectedOfferIds;
+    private List<Integer> selectedOfferIds;
 
     /**
      * DTO for individual basket item.
@@ -54,7 +54,7 @@ public class BasketPricingRequest {
         /**
          * Item ID from warehouse.
          */
-        private Long itemId;
+        private Integer itemId;
 
         /**
          * Item name.

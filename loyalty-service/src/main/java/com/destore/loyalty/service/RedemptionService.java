@@ -104,7 +104,7 @@ public class RedemptionService {
         BigDecimal totalPointsCost = BigDecimal.ZERO;
         List<RedemptionOffer> offers = new ArrayList<>();
 
-        for (Long offerId : request.getSelectedOfferIds()) {
+        for (Integer offerId : request.getSelectedOfferIds()) {
             RedemptionOffer offer = offerRepository.findById(offerId)
                     .orElseThrow(() -> new IllegalArgumentException("Offer not found: " + offerId));
 
@@ -165,16 +165,15 @@ public class RedemptionService {
         for (BasketPricingRequest.BasketItemRequest item : request.getItems()) {
             BigDecimal originalPrice = item.getUnitPrice();
             BigDecimal discountedPrice = originalPrice;
-            Long appliedOfferId = null;
+            Integer appliedOfferId = null;
             String appliedOfferName = null;
             BigDecimal itemDiscount = BigDecimal.ZERO;
 
             // Find applicable offer for this item
-            for (Long offerId : request.getSelectedOfferIds()) {
+            for (Integer offerId : request.getSelectedOfferIds()) {
                 RedemptionOffer offer = offerRepository.findById(offerId).orElse(null);
                 
-                if (offer != null && offer.appliesToStoreAndItem(
-                        request.getStoreId(), item.getItemId())) {
+                if (offer != null && offer.appliesToItem(item.getItemId())) {
                     
                     // Apply discount
                     BigDecimal discountPercent = offer.getDiscountPercentage()
@@ -229,7 +228,7 @@ public class RedemptionService {
     private void recordRedemptionTransactions(
             BasketPricingRequest request, BasketPricingResponse response) {
 
-        for (Long offerId : request.getSelectedOfferIds()) {
+        for (Integer offerId : request.getSelectedOfferIds()) {
             RedemptionOffer offer = offerRepository.findById(offerId).orElse(null);
             if (offer == null) continue;
 
@@ -238,7 +237,6 @@ public class RedemptionService {
                     .transactionType(PointsTransaction.TransactionType.REDEEMED)
                     .pointsAmount(offer.getPointsCost().negate()) // Negative for deduction
                     .redemptionId(offerId)
-                    .storeId(request.getStoreId())
                     .description("Redeemed: " + offer.getOfferName())
                     .basketReference(request.getBasketReference())
                     .build();
@@ -256,7 +254,7 @@ public class RedemptionService {
      * @param request Basket pricing request
      */
     private void updateOfferUsage(BasketPricingRequest request) {
-        for (Long offerId : request.getSelectedOfferIds()) {
+        for (Integer offerId : request.getSelectedOfferIds()) {
             // Update total usage count (with optimistic locking)
             RedemptionOffer offer = offerRepository.findById(offerId).orElse(null);
             if (offer != null) {
@@ -301,7 +299,7 @@ public class RedemptionService {
         }
 
         PointsTransaction firstRedemption = redemptions.get(0);
-        Long customerId = firstRedemption.getCustomerId();
+        Integer customerId = firstRedemption.getCustomerId();
 
         // Calculate total points to refund
         BigDecimal totalRefund = redemptions.stream()

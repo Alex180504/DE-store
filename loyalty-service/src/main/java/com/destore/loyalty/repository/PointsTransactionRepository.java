@@ -27,7 +27,7 @@ public interface PointsTransactionRepository extends JpaRepository<PointsTransac
      * @param customerId Customer ID
      * @return List of transactions ordered by creation date descending
      */
-    List<PointsTransaction> findByCustomerIdOrderByCreatedAtDesc(Long customerId);
+    List<PointsTransaction> findByCustomerIdOrderByCreatedAtDesc(Integer customerId);
 
     /**
      * Finds transactions for a customer within a date range.
@@ -38,7 +38,7 @@ public interface PointsTransactionRepository extends JpaRepository<PointsTransac
      * @return List of transactions in the date range
      */
     List<PointsTransaction> findByCustomerIdAndCreatedAtBetweenOrderByCreatedAtDesc(
-            Long customerId, LocalDateTime startDate, LocalDateTime endDate);
+            Integer customerId, LocalDateTime startDate, LocalDateTime endDate);
 
     /**
      * Finds transactions by type for a customer.
@@ -48,7 +48,7 @@ public interface PointsTransactionRepository extends JpaRepository<PointsTransac
      * @return List of matching transactions
      */
     List<PointsTransaction> findByCustomerIdAndTransactionType(
-            Long customerId, PointsTransaction.TransactionType transactionType);
+            Integer customerId, PointsTransaction.TransactionType transactionType);
 
     /**
      * Finds transactions associated with a specific basket reference.
@@ -70,7 +70,7 @@ public interface PointsTransactionRepository extends JpaRepository<PointsTransac
     @Query("SELECT COALESCE(SUM(pt.pointsAmount), 0) FROM PointsTransaction pt " +
            "WHERE pt.customerId = :customerId " +
            "AND pt.transactionType IN ('EARNED', 'BONUS', 'ADJUSTMENT')")
-    Long calculateTotalEarned(@Param("customerId") Long customerId);
+    Integer calculateTotalEarned(@Param("customerId") Integer customerId);
 
     /**
      * Calculates total points redeemed by a customer.
@@ -81,5 +81,5 @@ public interface PointsTransactionRepository extends JpaRepository<PointsTransac
     @Query("SELECT COALESCE(SUM(ABS(pt.pointsAmount)), 0) FROM PointsTransaction pt " +
            "WHERE pt.customerId = :customerId " +
            "AND pt.transactionType = 'REDEEMED'")
-    Long calculateTotalRedeemed(@Param("customerId") Long customerId);
+    Integer calculateTotalRedeemed(@Param("customerId") Integer customerId);
 }

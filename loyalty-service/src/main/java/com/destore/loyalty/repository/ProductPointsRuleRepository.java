@@ -20,7 +20,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @Repository
-public interface ProductPointsRuleRepository extends JpaRepository<ProductPointsRule, Long> {
+public interface ProductPointsRuleRepository extends JpaRepository<ProductPointsRule, Integer> {
 
     /**
      * Finds all active product points rules.
@@ -36,18 +36,14 @@ public interface ProductPointsRuleRepository extends JpaRepository<ProductPoints
      * </p>
      *
      * @param itemId Product/item ID
-     * @param storeId Store ID (null for global rules)
      * @param timestamp Transaction timestamp
-     * @return List of applicable rules (global rules included)
+     * @return List of applicable rules
      */
     @Query("SELECT r FROM ProductPointsRule r WHERE r.itemId = :itemId " +
-           "AND (r.storeId IS NULL OR r.storeId = :storeId) " +
            "AND r.isActive = true " +
            "AND r.validFrom <= :timestamp " +
-           "AND (r.validTo IS NULL OR r.validTo > :timestamp) " +
-           "ORDER BY r.storeId DESC NULLS LAST")
-    List<ProductPointsRule> findApplicableRules(@Param("itemId") Long itemId,
-                                                 @Param("storeId") Long storeId,
+           "AND (r.validTo IS NULL OR r.validTo > :timestamp)")
+    List<ProductPointsRule> findApplicableRules(@Param("itemId") Integer itemId,
                                                  @Param("timestamp") LocalDateTime timestamp);
 
     /**
@@ -56,13 +52,5 @@ public interface ProductPointsRuleRepository extends JpaRepository<ProductPoints
      * @param itemId Product/item ID
      * @return List of all rules for the item
      */
-    List<ProductPointsRule> findByItemId(Long itemId);
-
-    /**
-     * Finds active rules for a specific store.
-     *
-     * @param storeId Store ID
-     * @return List of store-specific active rules
-     */
-    List<ProductPointsRule> findByStoreIdAndIsActiveTrue(Long storeId);
+    List<ProductPointsRule> findByItemId(Integer itemId);
 }

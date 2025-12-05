@@ -31,7 +31,7 @@ public class PointsController {
      * @return Customer points DTO
      */
     @GetMapping("/balance/{customerId}")
-    public ResponseEntity<CustomerPointsDTO> getCustomerPoints(@PathVariable Long customerId) {
+    public ResponseEntity<CustomerPointsDTO> getCustomerPoints(@PathVariable Integer customerId) {
         log.info("Fetching points balance for customer {}", customerId);
 
         return balanceRepository.findByCustomerId(customerId)
@@ -51,7 +51,7 @@ public class PointsController {
      * @return Updated customer points
      */
     @PostMapping("/calculate/{customerId}")
-    public ResponseEntity<CustomerPointsDTO> calculatePoints(@PathVariable Long customerId) {
+    public ResponseEntity<CustomerPointsDTO> calculatePoints(@PathVariable Integer customerId) {
         log.info("Manual points calculation requested for customer {}", customerId);
 
         CustomerPointsBalance balance = calculationService.recalculateCustomerPoints(customerId);

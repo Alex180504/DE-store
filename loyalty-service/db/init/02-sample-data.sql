@@ -19,13 +19,13 @@ INSERT INTO product_points_rules (item_id, points_per_unit, points_per_gbp, rule
 (8, 2, NULL, 'Pliers Set Points', 'Earn 2 points per pliers set purchased', '2024-01-01 00:00:00', TRUE, 'network_manager'),
 
 -- Paint products: Points per £1 spent (better for variable pricing)
-(9, NULL, 0.5, 'Paint Points', 'Earn 0.5 points per £1 spent on paint', '2024-01-01 00:00:00', TRUE, 'network_manager'),
+(9, 0, 0.5, 'Paint Points', 'Earn 0.5 points per £1 spent on paint', '2024-01-01 00:00:00', TRUE, 'network_manager'),
 (10, 1, NULL, 'Paint Roller Points', 'Earn 1 point per paint roller set', '2024-01-01 00:00:00', TRUE, 'network_manager'),
 (11, 1, NULL, 'Paintbrush Set Points', 'Earn 1 point per paintbrush set', '2024-01-01 00:00:00', TRUE, 'network_manager'),
 
 -- Building materials: Low points (bulk items)
-(15, NULL, 0.2, 'Cement Points', 'Earn 0.2 points per £1 spent on cement', '2024-01-01 00:00:00', TRUE, 'network_manager'),
-(16, NULL, 0.2, 'Sand Points', 'Earn 0.2 points per £1 spent on sand', '2024-01-01 00:00:00', TRUE, 'network_manager'),
+(15, 0, 0.2, 'Cement Points', 'Earn 0.2 points per £1 spent on cement', '2024-01-01 00:00:00', TRUE, 'network_manager'),
+(16, 0, 0.2, 'Sand Points', 'Earn 0.2 points per £1 spent on sand', '2024-01-01 00:00:00', TRUE, 'network_manager'),
 (19, 1, NULL, 'Timber Points', 'Earn 1 point per timber piece', '2024-01-01 00:00:00', TRUE, 'network_manager'),
 (20, 3, NULL, 'Plywood Points', 'Earn 3 points per plywood sheet', '2024-01-01 00:00:00', TRUE, 'network_manager'),
 

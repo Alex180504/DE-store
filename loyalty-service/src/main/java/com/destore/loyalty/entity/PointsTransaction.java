@@ -33,13 +33,13 @@ public class PointsTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id")
-    private Long transactionId;
+    private Integer transactionId;
 
     /**
      * Customer ID from accounting database.
      */
     @Column(name = "customer_id", nullable = false)
-    private Long customerId;
+    private Integer customerId;
 
     /**
      * Type of points transaction.
@@ -55,28 +55,34 @@ public class PointsTransaction {
     private BigDecimal pointsAmount;
 
     /**
+     * Customer's balance before this transaction.
+     */
+    @Column(name = "balance_before", nullable = false, precision = 10, scale = 2)
+    private BigDecimal balanceBefore;
+
+    /**
+     * Customer's balance after this transaction.
+     */
+    @Column(name = "balance_after", nullable = false, precision = 10, scale = 2)
+    private BigDecimal balanceAfter;
+
+    /**
      * Reference to source transaction in accounting database.
      */
-    @Column(name = "source_transaction_id")
+    @Column(name = "accounting_transaction_id")
     private Long sourceTransactionId;
 
     /**
      * Reference to redemption offer if applicable.
      */
-    @Column(name = "redemption_id")
-    private Long redemptionId;
+    @Column(name = "redemption_offer_id")
+    private Integer redemptionId;
 
     /**
      * Reference to bonus offer if applicable.
      */
-    @Column(name = "bonus_id")
-    private Long bonusId;
-
-    /**
-     * Store ID where transaction occurred.
-     */
-    @Column(name = "store_id")
-    private Long storeId;
+    @Column(name = "bonus_offer_id")
+    private Integer bonusId;
 
     /**
      * Description or notes about the transaction.

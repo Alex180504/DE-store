@@ -34,19 +34,13 @@ public class RedemptionOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "redemption_id")
-    private Long redemptionId;
-
-    /**
-     * Store ID where this offer applies (NULL for global offers).
-     */
-    @Column(name = "store_id")
-    private Long storeId;
+    private Integer redemptionId;
 
     /**
      * Product/item ID from warehouse catalog (NULL for category-wide offers).
      */
     @Column(name = "item_id")
-    private Long itemId;
+    private Integer itemId;
 
     /**
      * Name of the redemption offer.
@@ -123,11 +117,10 @@ public class RedemptionOffer {
     private LocalDateTime updatedAt;
 
     /**
-     * Optimistic locking version.
+     * Deactivation timestamp.
      */
-    @Version
-    @Column(name = "version", nullable = false)
-    private Integer version;
+    @Column(name = "deactivated_at")
+    private LocalDateTime deactivatedAt;
 
     /**
      * Sets creation timestamp before persisting new entity.
@@ -147,16 +140,13 @@ public class RedemptionOffer {
     }
 
     /**
-     * Checks if this offer is applicable to a specific store and item.
+     * Checks if this offer is applicable to a specific item.
      *
-     * @param targetStoreId The store ID to check
      * @param targetItemId The item ID to check
-     * @return true if offer applies to the store and item
+     * @return true if offer applies to the item
      */
-    public boolean appliesToStoreAndItem(Long targetStoreId, Long targetItemId) {
-        boolean storeMatches = storeId == null || storeId.equals(targetStoreId);
-        boolean itemMatches = itemId == null || itemId.equals(targetItemId);
-        return storeMatches && itemMatches;
+    public boolean appliesToItem(Integer targetItemId) {
+        return itemId == null || itemId.equals(targetItemId);
     }
 
     /**

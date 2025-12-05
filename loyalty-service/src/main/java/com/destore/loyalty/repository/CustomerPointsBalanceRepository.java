@@ -21,7 +21,7 @@ import java.util.Optional;
  * @version 1.0.0
  */
 @Repository
-public interface CustomerPointsBalanceRepository extends JpaRepository<CustomerPointsBalance, Long> {
+public interface CustomerPointsBalanceRepository extends JpaRepository<CustomerPointsBalance, Integer> {
 
     /**
      * Finds customer points balance by customer ID.
@@ -29,7 +29,7 @@ public interface CustomerPointsBalanceRepository extends JpaRepository<CustomerP
      * @param customerId Customer ID
      * @return Optional containing balance if found
      */
-    Optional<CustomerPointsBalance> findByCustomerId(Long customerId);
+    Optional<CustomerPointsBalance> findByCustomerId(Integer customerId);
 
     /**
      * Finds customer points balance with pessimistic write lock.
@@ -43,7 +43,7 @@ public interface CustomerPointsBalanceRepository extends JpaRepository<CustomerP
      */
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT cpb FROM CustomerPointsBalance cpb WHERE cpb.customerId = :customerId")
-    Optional<CustomerPointsBalance> findByCustomerIdForUpdate(@Param("customerId") Long customerId);
+    Optional<CustomerPointsBalance> findByCustomerIdForUpdate(@Param("customerId") Integer customerId);
 
     /**
      * Checks if a customer balance record exists.
@@ -51,5 +51,5 @@ public interface CustomerPointsBalanceRepository extends JpaRepository<CustomerP
      * @param customerId Customer ID
      * @return true if balance exists
      */
-    boolean existsByCustomerId(Long customerId);
+    boolean existsByCustomerId(Integer customerId);
 }

@@ -19,7 +19,7 @@ import java.util.List;
  * @version 1.0.0
  */
 @Repository
-public interface BonusOfferRepository extends JpaRepository<BonusOffer, Long> {
+public interface BonusOfferRepository extends JpaRepository<BonusOffer, Integer> {
 
     /**
      * Finds all active bonus offers.
@@ -44,7 +44,7 @@ public interface BonusOfferRepository extends JpaRepository<BonusOffer, Long> {
            "AND b.validFrom <= :timestamp " +
            "AND (b.validTo IS NULL OR b.validTo > :timestamp) " +
            "ORDER BY b.thresholdAmount DESC")
-    List<BonusOffer> findApplicableBonuses(@Param("storeId") Long storeId,
+    List<BonusOffer> findApplicableBonuses(@Param("storeId") Integer storeId,
                                            @Param("timestamp") LocalDateTime timestamp);
 
     /**
@@ -53,5 +53,5 @@ public interface BonusOfferRepository extends JpaRepository<BonusOffer, Long> {
      * @param storeId Store ID
      * @return List of store-specific active bonus offers
      */
-    List<BonusOffer> findByStoreIdAndIsActiveTrue(Long storeId);
+    List<BonusOffer> findByStoreIdAndIsActiveTrue(Integer storeId);
 }

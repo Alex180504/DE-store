@@ -1,6 +1,8 @@
 package com.destore.loyalty.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,6 +17,8 @@ import java.time.LocalDateTime;
  * @version 1.0.0
  */
 @Data
+@Getter
+@Setter
 public class AccountingTransaction {
 
     /**
@@ -25,12 +29,12 @@ public class AccountingTransaction {
     /**
      * Customer ID.
      */
-    private Long customerId;
+    private Integer customerId;
 
     /**
      * Store ID.
      */
-    private Long storeId;
+    private Integer storeId;
 
     /**
      * Transaction timestamp.

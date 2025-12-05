@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CustomerPointsDTO {
     
-    private Integer customerId;
-    private Integer currentBalance;
-    private Integer lifetimeEarned;
-    private Integer lifetimeRedeemed;
+    public Integer customerId;
+    public Integer currentBalance;
+    public Integer lifetimeEarned;
+    public Integer lifetimeRedeemed;
 }

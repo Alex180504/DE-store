@@ -39,8 +39,8 @@ public class PointsCalculationService {
     private final BonusOfferRepository bonusRepository;
     private final PointsTransactionRepository transactionRepository;
 
-    @Qualifier("accountingDataSource")
-    private final DataSource accountingDataSource;
+    @Qualifier("accountingJdbcTemplate")
+    private final JdbcTemplate accountingJdbcTemplate;
 
     /**
      * Scheduled task to calculate points for all customers.
@@ -80,7 +80,7 @@ public class PointsCalculationService {
      * @return Updated customer points balance
      */
     @Transactional
-    public CustomerPointsBalance calculatePointsForCustomer(Long customerId) {
+    public CustomerPointsBalance calculatePointsForCustomer(Integer customerId) {
         log.info("Calculating points for customer {}", customerId);
         
         // Get or create customer balance
@@ -126,7 +126,6 @@ public class PointsCalculationService {
                     .transactionType(PointsTransaction.TransactionType.EARNED)
                     .pointsAmount(transactionPoints)
                     .sourceTransactionId(transaction.getTransactionId())
-                    .storeId(transaction.getStoreId())
                     .description("Points earned from purchase")
                     .build();
             transactionRepository.save(pointsTx);
@@ -161,7 +160,6 @@ public class PointsCalculationService {
         for (AccountingTransactionItem item : items) {
             List<ProductPointsRule> applicableRules = ruleRepository.findApplicableRules(
                     item.getProductId(),
-                    transaction.getStoreId(),
                     transaction.getTransactionDate()
             );
             
@@ -187,16 +185,15 @@ public class PointsCalculationService {
         
         for (BonusOffer bonus : applicableBonuses) {
             if (bonus.qualifiesForBonus(transaction.getTotalAmount())) {
-                totalPoints = totalPoints.add(bonus.getBonusPoints());
+                totalPoints = totalPoints.add(BigDecimal.valueOf(bonus.getBonusPoints()));
                 
                 // Record bonus transaction
                 PointsTransaction bonusTx = PointsTransaction.builder()
                         .customerId(transaction.getCustomerId())
                         .transactionType(PointsTransaction.TransactionType.BONUS)
-                        .pointsAmount(bonus.getBonusPoints())
+                        .pointsAmount(BigDecimal.valueOf(bonus.getBonusPoints()))
                         .sourceTransactionId(transaction.getTransactionId())
                         .bonusId(bonus.getBonusId())
-                        .storeId(transaction.getStoreId())
                         .description("Bonus: " + bonus.getOfferName())
                         .build();
                 transactionRepository.save(bonusTx);
@@ -220,9 +217,7 @@ public class PointsCalculationService {
      * @return List of transactions
      */
     private List<AccountingTransaction> getAccountingTransactions(
-            Long customerId, LocalDateTime startDate, LocalDateTime endDate) {
-        
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(accountingDataSource);
+            Integer customerId, LocalDateTime startDate, LocalDateTime endDate) {
         
         String sql = "SELECT transaction_id, customer_id, store_id, transaction_date, total_amount, status " +
                      "FROM transactions " +
@@ -232,12 +227,12 @@ public class PointsCalculationService {
                      "AND status = 'COMPLETED' " +
                      "ORDER BY transaction_date ASC";
         
-        return jdbcTemplate.query(sql, 
+        return accountingJdbcTemplate.query(sql, 
             (rs, rowNum) -> {
                 AccountingTransaction tx = new AccountingTransaction();
                 tx.setTransactionId(rs.getLong("transaction_id"));
-                tx.setCustomerId(rs.getLong("customer_id"));
-                tx.setStoreId(rs.getLong("store_id"));
+                tx.setCustomerId(rs.getInt("customer_id"));
+                tx.setStoreId(rs.getInt("store_id"));
                 tx.setTransactionDate(rs.getTimestamp("transaction_date").toLocalDateTime());
                 tx.setTotalAmount(rs.getBigDecimal("total_amount"));
                 tx.setStatus(rs.getString("status"));
@@ -254,21 +249,19 @@ public class PointsCalculationService {
      * @return List of transaction items
      */
     private List<AccountingTransactionItem> getTransactionItems(Long transactionId) {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(accountingDataSource);
-        
-        String sql = "SELECT item_id, transaction_id, product_id, quantity, unit_price, total_price " +
+        String sql = "SELECT transaction_item_id, transaction_id, item_id, quantity, unit_price, line_total " +
                      "FROM transaction_items " +
                      "WHERE transaction_id = ?";
         
-        return jdbcTemplate.query(sql,
+        return accountingJdbcTemplate.query(sql,
             (rs, rowNum) -> {
                 AccountingTransactionItem item = new AccountingTransactionItem();
-                item.setItemId(rs.getLong("item_id"));
+                item.setItemId(rs.getInt("transaction_item_id"));
                 item.setTransactionId(rs.getLong("transaction_id"));
-                item.setProductId(rs.getLong("product_id"));
+                item.setProductId(rs.getInt("item_id"));
                 item.setQuantity(rs.getInt("quantity"));
                 item.setUnitPrice(rs.getBigDecimal("unit_price"));
-                item.setTotalPrice(rs.getBigDecimal("total_price"));
+                item.setTotalPrice(rs.getBigDecimal("line_total"));
                 return item;
             },
             transactionId
@@ -284,7 +277,7 @@ public class PointsCalculationService {
      * @param customerId Customer ID
      * @return Updated balance
      */
-    public CustomerPointsBalance recalculateCustomerPoints(Long customerId) {
+    public CustomerPointsBalance recalculateCustomerPoints(Integer customerId) {
         log.info("Manual recalculation triggered for customer {}", customerId);
         return calculatePointsForCustomer(customerId);
     }

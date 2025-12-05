@@ -1,5 +1,7 @@
 package com.destore.shopping.service;
 
+import com.destore.shopping.model.BasketPricingRequest;
+import com.destore.shopping.model.BasketPricingResponse;
 import com.destore.shopping.model.CustomerPointsDTO;
 import com.destore.shopping.model.RedemptionOfferDTO;
 import org.slf4j.Logger;
@@ -68,6 +70,44 @@ public class LoyaltyServiceClient {
                 .doOnSuccess(points -> log.info("Customer {} has {} points", customerId, points.getCurrentBalance()))
                 .doOnError(error -> log.error("Error fetching customer points: {}", error.getMessage()))
                 .onErrorReturn(new CustomerPointsDTO(customerId, 0, 0, 0))
+                .block();
+    }
+
+    /**
+     * Trigger manual points calculation for a customer
+     *
+     * @param customerId the customer ID
+     */
+    public void calculateCustomerPoints(Integer customerId) {
+        log.info("Triggering points calculation for customer {}", customerId);
+        
+        webClient.post()
+                .uri("/api/loyalty/points/calculate/{customerId}", customerId)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .doOnSuccess(result -> log.info("Points calculation completed for customer {}", customerId))
+                .doOnError(error -> log.error("Error calculating points: {}", error.getMessage()))
+                .block();
+    }
+
+    /**
+     * Price a basket with redemption offers
+     *
+     * @param request the basket pricing request
+     * @return basket pricing response with discounts
+     */
+    public BasketPricingResponse priceBasket(BasketPricingRequest request) {
+        log.info("Pricing basket for customer {} with {} items", 
+                request.customerId, request.items != null ? request.items.size() : 0);
+        
+        return webClient.post()
+                .uri("/api/loyalty/basket/price")
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(BasketPricingResponse.class)
+                .doOnSuccess(response -> log.info("Basket priced: {} points deducted, reference: {}", 
+                        response.totalPointsDeducted, response.basketReference))
+                .doOnError(error -> log.error("Error pricing basket: {}", error.getMessage()))
                 .block();
     }
 }

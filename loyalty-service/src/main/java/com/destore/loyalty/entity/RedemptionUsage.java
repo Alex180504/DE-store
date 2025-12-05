@@ -33,19 +33,19 @@ public class RedemptionUsage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usage_id")
-    private Long usageId;
+    private Integer usageId;
 
     /**
      * Customer ID from accounting database.
      */
     @Column(name = "customer_id", nullable = false)
-    private Long customerId;
+    private Integer customerId;
 
     /**
      * Reference to redemption offer.
      */
-    @Column(name = "redemption_id", nullable = false)
-    private Long redemptionId;
+    @Column(name = "redemption_offer_id", nullable = false)
+    private Integer redemptionId;
 
     /**
      * Number of times customer has used this offer.

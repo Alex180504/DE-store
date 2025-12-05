@@ -22,7 +22,7 @@ public class CustomerPointsDTO {
     /**
      * Customer ID.
      */
-    private Long customerId;
+    private Integer customerId;
 
     /**
      * Current available points balance.

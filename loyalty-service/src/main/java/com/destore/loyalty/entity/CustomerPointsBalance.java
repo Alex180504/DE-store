@@ -34,13 +34,13 @@ public class CustomerPointsBalance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "balance_id")
-    private Long balanceId;
+    private Integer balanceId;
 
     /**
      * Customer ID from accounting database.
      */
     @Column(name = "customer_id", nullable = false, unique = true)
-    private Long customerId;
+    private Integer customerId;
 
     /**
      * Current available loyalty points balance.
