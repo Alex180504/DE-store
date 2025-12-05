@@ -1,0 +1,82 @@
+\doxysection{com.\+destore.\+loyalty.\+service.\+Redemption\+Service Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1service_1_1_redemption_service}{}\label{classcom_1_1destore_1_1loyalty_1_1service_1_1_redemption_service}\index{com.destore.loyalty.service.RedemptionService@{com.destore.loyalty.service.RedemptionService}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_basket_pricing_response}{Basket\+Pricing\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1service_1_1_redemption_service_af933e498df27e7f4f81ad9eecfa24b61}{price\+Basket\+With\+Redemption}} (\mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_basket_pricing_request}{Basket\+Pricing\+Request}} request)
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1service_1_1_redemption_service_a9a254b59a8379f89226e239d4ef6118e}{compensate\+Basket\+Redemption}} (String basket\+Reference)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service for handling loyalty points redemption. 
+
+Implements SAGA pattern for basket checkout with points redemption\+:
+\begin{DoxyEnumerate}
+\item Validate customer has sufficient points
+\item Reserve points (pessimistic lock)
+\item Calculate discounted prices
+\item Commit transaction
+\item Compensate on failure (refund points) 
+\end{DoxyEnumerate}
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1service_1_1_redemption_service_a9a254b59a8379f89226e239d4ef6118e}\index{com.destore.loyalty.service.RedemptionService@{com.destore.loyalty.service.RedemptionService}!compensateBasketRedemption@{compensateBasketRedemption}}
+\index{compensateBasketRedemption@{compensateBasketRedemption}!com.destore.loyalty.service.RedemptionService@{com.destore.loyalty.service.RedemptionService}}
+\doxysubsubsection{\texorpdfstring{compensateBasketRedemption()}{compensateBasketRedemption()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1service_1_1_redemption_service_a9a254b59a8379f89226e239d4ef6118e} 
+void com.\+destore.\+loyalty.\+service.\+Redemption\+Service.\+compensate\+Basket\+Redemption (\begin{DoxyParamCaption}\item[{String}]{basket\+Reference}{}\end{DoxyParamCaption})}
+
+SAGA Compensation\+: Refunds points for a failed basket transaction. 
+
+Called manually if basket processing fails after points were reserved. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em basket\+Reference} & Basket reference to compensate \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1service_1_1_redemption_service_af933e498df27e7f4f81ad9eecfa24b61}\index{com.destore.loyalty.service.RedemptionService@{com.destore.loyalty.service.RedemptionService}!priceBasketWithRedemption@{priceBasketWithRedemption}}
+\index{priceBasketWithRedemption@{priceBasketWithRedemption}!com.destore.loyalty.service.RedemptionService@{com.destore.loyalty.service.RedemptionService}}
+\doxysubsubsection{\texorpdfstring{priceBasketWithRedemption()}{priceBasketWithRedemption()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1service_1_1_redemption_service_af933e498df27e7f4f81ad9eecfa24b61} 
+\mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_basket_pricing_response}{Basket\+Pricing\+Response}} com.\+destore.\+loyalty.\+service.\+Redemption\+Service.\+price\+Basket\+With\+Redemption (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_basket_pricing_request}{Basket\+Pricing\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Prices a basket with loyalty point redemption. 
+
+SAGA pattern implementation\+:
+\begin{DoxyItemize}
+\item Validates customer balance and offer availability
+\item Reserves points with pessimistic locking
+\item Calculates discounted prices
+\item Records transactions for audit trail
+\item Handles compensation on failure 
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & Basket pricing request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pricing response with discounted prices 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Illegal\+Argument\+Exception} & if validation fails \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/service/Redemption\+Service.\+java\end{DoxyCompactItemize}

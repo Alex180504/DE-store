@@ -1,0 +1,71 @@
+\doxysection{com.\+destore.\+loyalty.\+entity.\+Redemption\+Usage Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage}{}\label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage}\index{com.destore.loyalty.entity.RedemptionUsage@{com.destore.loyalty.entity.RedemptionUsage}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a38201af18f8c4b4ff7a311ac1cdeb114}{increment\+Usage}} ()
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a8125492221b24f87086f54b4b05a05b8}{can\+Use}} (Integer max\+Uses\+Per\+Customer)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a10f8efc618413376607b243ae6f42a7b}{on\+Create}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a8971106a44e01de6a15df6f98b382d22}{on\+Update}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Entity tracking customer usage of redemption offers. 
+
+Enforces per-\/customer usage limits for redemption offers. Used to prevent customers from exceeding max\+\_\+uses\+\_\+per\+\_\+customer constraints. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a8125492221b24f87086f54b4b05a05b8}\index{com.destore.loyalty.entity.RedemptionUsage@{com.destore.loyalty.entity.RedemptionUsage}!canUse@{canUse}}
+\index{canUse@{canUse}!com.destore.loyalty.entity.RedemptionUsage@{com.destore.loyalty.entity.RedemptionUsage}}
+\doxysubsubsection{\texorpdfstring{canUse()}{canUse()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a8125492221b24f87086f54b4b05a05b8} 
+boolean com.\+destore.\+loyalty.\+entity.\+Redemption\+Usage.\+can\+Use (\begin{DoxyParamCaption}\item[{Integer}]{max\+Uses\+Per\+Customer}{}\end{DoxyParamCaption})}
+
+Checks if customer has reached usage limit for an offer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em max\+Uses\+Per\+Customer} & Maximum allowed uses (null for unlimited) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if customer can still use the offer 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a38201af18f8c4b4ff7a311ac1cdeb114}\index{com.destore.loyalty.entity.RedemptionUsage@{com.destore.loyalty.entity.RedemptionUsage}!incrementUsage@{incrementUsage}}
+\index{incrementUsage@{incrementUsage}!com.destore.loyalty.entity.RedemptionUsage@{com.destore.loyalty.entity.RedemptionUsage}}
+\doxysubsubsection{\texorpdfstring{incrementUsage()}{incrementUsage()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a38201af18f8c4b4ff7a311ac1cdeb114} 
+void com.\+destore.\+loyalty.\+entity.\+Redemption\+Usage.\+increment\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Increments usage count and updates timestamps. \Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a10f8efc618413376607b243ae6f42a7b}\index{com.destore.loyalty.entity.RedemptionUsage@{com.destore.loyalty.entity.RedemptionUsage}!onCreate@{onCreate}}
+\index{onCreate@{onCreate}!com.destore.loyalty.entity.RedemptionUsage@{com.destore.loyalty.entity.RedemptionUsage}}
+\doxysubsubsection{\texorpdfstring{onCreate()}{onCreate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a10f8efc618413376607b243ae6f42a7b} 
+void com.\+destore.\+loyalty.\+entity.\+Redemption\+Usage.\+on\+Create (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Sets creation timestamp before persisting new entity. \Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a8971106a44e01de6a15df6f98b382d22}\index{com.destore.loyalty.entity.RedemptionUsage@{com.destore.loyalty.entity.RedemptionUsage}!onUpdate@{onUpdate}}
+\index{onUpdate@{onUpdate}!com.destore.loyalty.entity.RedemptionUsage@{com.destore.loyalty.entity.RedemptionUsage}}
+\doxysubsubsection{\texorpdfstring{onUpdate()}{onUpdate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage_a8971106a44e01de6a15df6f98b382d22} 
+void com.\+destore.\+loyalty.\+entity.\+Redemption\+Usage.\+on\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Updates modification timestamp before updating entity. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/entity/Redemption\+Usage.\+java\end{DoxyCompactItemize}

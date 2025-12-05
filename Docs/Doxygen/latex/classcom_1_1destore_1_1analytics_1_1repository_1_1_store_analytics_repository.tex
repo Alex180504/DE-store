@@ -1,0 +1,68 @@
+\doxysection{com.\+destore.\+analytics.\+repository.\+Store\+Analytics\+Repository Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository}{}\label{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository}\index{com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries Network\+Totals}
+\item 
+class {\bfseries Store\+Info}
+\item 
+class {\bfseries Store\+Metrics\+Data}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a24a9ea860b9c44691e6c849ae60fc830}\label{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a24a9ea860b9c44691e6c849ae60fc830} 
+{\bfseries Store\+Analytics\+Repository} ( @Qualifier("{}accounting\+Jdbc\+Template"{}) Jdbc\+Template accounting\+Jdbc\+Template, @Qualifier("{}store\+Jdbc\+Template"{}) Jdbc\+Template store\+Jdbc\+Template)
+\item 
+List$<$ Store\+Metrics\+Data $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a527d173599b82de5560cfd2b0a426f8f}{get\+All\+Store\+Metrics}} (Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+Store\+Metrics\+Data \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a37ef8f1c177fb8c3dd4296fea1090c83}{get\+Store\+Metrics}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+Big\+Decimal \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a1411d160f29d2f2f13d4959efb5f661b}{calculate\+Growth\+Rate}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+Network\+Totals \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_ab06e19750dc8af688a028184b5fab93d}{get\+Network\+Totals}} (Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+List$<$ Store\+Info $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a6505246c4b00c3f54f960c5ce23ce363}{get\+All\+Stores}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Repository for store comparison and network-\/wide analytics. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a1411d160f29d2f2f13d4959efb5f661b}\index{com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}!calculateGrowthRate@{calculateGrowthRate}}
+\index{calculateGrowthRate@{calculateGrowthRate}!com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{calculateGrowthRate()}{calculateGrowthRate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a1411d160f29d2f2f13d4959efb5f661b} 
+Big\+Decimal com.\+destore.\+analytics.\+repository.\+Store\+Analytics\+Repository.\+calculate\+Growth\+Rate (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Calculate growth rate for a store compared to previous period. \Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a527d173599b82de5560cfd2b0a426f8f}\index{com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}!getAllStoreMetrics@{getAllStoreMetrics}}
+\index{getAllStoreMetrics@{getAllStoreMetrics}!com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getAllStoreMetrics()}{getAllStoreMetrics()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a527d173599b82de5560cfd2b0a426f8f} 
+List$<$ Store\+Metrics\+Data $>$ com.\+destore.\+analytics.\+repository.\+Store\+Analytics\+Repository.\+get\+All\+Store\+Metrics (\begin{DoxyParamCaption}\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get performance metrics for all stores in the network. \Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a6505246c4b00c3f54f960c5ce23ce363}\index{com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}!getAllStores@{getAllStores}}
+\index{getAllStores@{getAllStores}!com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getAllStores()}{getAllStores()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a6505246c4b00c3f54f960c5ce23ce363} 
+List$<$ Store\+Info $>$ com.\+destore.\+analytics.\+repository.\+Store\+Analytics\+Repository.\+get\+All\+Stores (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get all stores for dropdown selection. \Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_ab06e19750dc8af688a028184b5fab93d}\index{com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}!getNetworkTotals@{getNetworkTotals}}
+\index{getNetworkTotals@{getNetworkTotals}!com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getNetworkTotals()}{getNetworkTotals()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_ab06e19750dc8af688a028184b5fab93d} 
+Network\+Totals com.\+destore.\+analytics.\+repository.\+Store\+Analytics\+Repository.\+get\+Network\+Totals (\begin{DoxyParamCaption}\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get network-\/wide totals. \Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a37ef8f1c177fb8c3dd4296fea1090c83}\index{com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}!getStoreMetrics@{getStoreMetrics}}
+\index{getStoreMetrics@{getStoreMetrics}!com.destore.analytics.repository.StoreAnalyticsRepository@{com.destore.analytics.repository.StoreAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getStoreMetrics()}{getStoreMetrics()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_store_analytics_repository_a37ef8f1c177fb8c3dd4296fea1090c83} 
+Store\+Metrics\+Data com.\+destore.\+analytics.\+repository.\+Store\+Analytics\+Repository.\+get\+Store\+Metrics (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get performance metrics for a specific store. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/repository/Store\+Analytics\+Repository.\+java\end{DoxyCompactItemize}

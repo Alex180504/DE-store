@@ -1,0 +1,40 @@
+\doxysection{com.\+destore.\+analytics.\+repository.\+Transaction\+Analytics\+Repository Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_transaction_analytics_repository}{}\label{classcom_1_1destore_1_1analytics_1_1repository_1_1_transaction_analytics_repository}\index{com.destore.analytics.repository.TransactionAnalyticsRepository@{com.destore.analytics.repository.TransactionAnalyticsRepository}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries Transaction\+Status\+Breakdown}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_transaction_analytics_repository_adc0a73d8258e344a569c949a6287e170}\label{classcom_1_1destore_1_1analytics_1_1repository_1_1_transaction_analytics_repository_adc0a73d8258e344a569c949a6287e170} 
+{\bfseries Transaction\+Analytics\+Repository} ( @Qualifier("{}accounting\+Jdbc\+Template"{}) Jdbc\+Template accounting\+Jdbc\+Template)
+\item 
+Transaction\+Status\+Breakdown \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_transaction_analytics_repository_acb36caebbf55f00a5a733d34514f4cae}{get\+Status\+Breakdown}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+List$<$ Transaction\+Summary\+DTO.\+Hourly\+Distribution $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_transaction_analytics_repository_a115d5ff65f9cfc6081ae863f4158b24f}{get\+Hourly\+Distribution}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Repository for transaction analytics queries. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_transaction_analytics_repository_a115d5ff65f9cfc6081ae863f4158b24f}\index{com.destore.analytics.repository.TransactionAnalyticsRepository@{com.destore.analytics.repository.TransactionAnalyticsRepository}!getHourlyDistribution@{getHourlyDistribution}}
+\index{getHourlyDistribution@{getHourlyDistribution}!com.destore.analytics.repository.TransactionAnalyticsRepository@{com.destore.analytics.repository.TransactionAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getHourlyDistribution()}{getHourlyDistribution()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_transaction_analytics_repository_a115d5ff65f9cfc6081ae863f4158b24f} 
+List$<$ Transaction\+Summary\+DTO.\+Hourly\+Distribution $>$ com.\+destore.\+analytics.\+repository.\+Transaction\+Analytics\+Repository.\+get\+Hourly\+Distribution (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get hourly transaction distribution for the date range. \Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_transaction_analytics_repository_acb36caebbf55f00a5a733d34514f4cae}\index{com.destore.analytics.repository.TransactionAnalyticsRepository@{com.destore.analytics.repository.TransactionAnalyticsRepository}!getStatusBreakdown@{getStatusBreakdown}}
+\index{getStatusBreakdown@{getStatusBreakdown}!com.destore.analytics.repository.TransactionAnalyticsRepository@{com.destore.analytics.repository.TransactionAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getStatusBreakdown()}{getStatusBreakdown()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_transaction_analytics_repository_acb36caebbf55f00a5a733d34514f4cae} 
+Transaction\+Status\+Breakdown com.\+destore.\+analytics.\+repository.\+Transaction\+Analytics\+Repository.\+get\+Status\+Breakdown (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get transaction status breakdown with counts and volumes. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/repository/Transaction\+Analytics\+Repository.\+java\end{DoxyCompactItemize}

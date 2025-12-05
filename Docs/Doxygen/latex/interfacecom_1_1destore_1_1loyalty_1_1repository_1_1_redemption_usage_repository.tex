@@ -1,0 +1,106 @@
+\doxysection{com.\+destore.\+loyalty.\+repository.\+Redemption\+Usage\+Repository Interface Reference}
+\hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository}{}\label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository}\index{com.destore.loyalty.repository.RedemptionUsageRepository@{com.destore.loyalty.repository.RedemptionUsageRepository}}
+Inheritance diagram for com.\+destore.\+loyalty.\+repository.\+Redemption\+Usage\+Repository\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Optional$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage}{Redemption\+Usage}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_abdd2a8e3bd6cefee18a935c7731ca85a}{find\+By\+Customer\+Id\+And\+Redemption\+Offer\+Id}} (Integer customer\+Id, Integer redemption\+Offer\+Id)
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage}{Redemption\+Usage}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_ad890e766dd4dfe7fd393de3dceae9323}{find\+By\+Customer\+Id}} (Integer customer\+Id)
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage}{Redemption\+Usage}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_a44b2e12cb169cd7ce36cdcb695202881}{find\+By\+Redemption\+Offer\+Id}} (Integer redemption\+Offer\+Id)
+\item 
+long \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_a6ea1905fe34d97eb04d9e9251a3ae0fe}{count\+By\+Redemption\+Offer\+Id}} (Integer redemption\+Offer\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Repository interface for \doxylink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage}{Redemption\+Usage} entity operations. 
+
+Provides data access methods for tracking customer usage of redemption offers. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_a6ea1905fe34d97eb04d9e9251a3ae0fe}\index{com.destore.loyalty.repository.RedemptionUsageRepository@{com.destore.loyalty.repository.RedemptionUsageRepository}!countByRedemptionOfferId@{countByRedemptionOfferId}}
+\index{countByRedemptionOfferId@{countByRedemptionOfferId}!com.destore.loyalty.repository.RedemptionUsageRepository@{com.destore.loyalty.repository.RedemptionUsageRepository}}
+\doxysubsubsection{\texorpdfstring{countByRedemptionOfferId()}{countByRedemptionOfferId()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_a6ea1905fe34d97eb04d9e9251a3ae0fe} 
+long com.\+destore.\+loyalty.\+repository.\+Redemption\+Usage\+Repository.\+count\+By\+Redemption\+Offer\+Id (\begin{DoxyParamCaption}\item[{Integer}]{redemption\+Offer\+Id}{}\end{DoxyParamCaption})}
+
+Counts total unique customers who have used an offer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em redemption\+Offer\+Id} & Redemption offer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Count of unique customers 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_ad890e766dd4dfe7fd393de3dceae9323}\index{com.destore.loyalty.repository.RedemptionUsageRepository@{com.destore.loyalty.repository.RedemptionUsageRepository}!findByCustomerId@{findByCustomerId}}
+\index{findByCustomerId@{findByCustomerId}!com.destore.loyalty.repository.RedemptionUsageRepository@{com.destore.loyalty.repository.RedemptionUsageRepository}}
+\doxysubsubsection{\texorpdfstring{findByCustomerId()}{findByCustomerId()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_ad890e766dd4dfe7fd393de3dceae9323} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage}{Redemption\+Usage}} $>$ com.\+destore.\+loyalty.\+repository.\+Redemption\+Usage\+Repository.\+find\+By\+Customer\+Id (\begin{DoxyParamCaption}\item[{Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Finds all redemption usage records for a customer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of usage records 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_abdd2a8e3bd6cefee18a935c7731ca85a}\index{com.destore.loyalty.repository.RedemptionUsageRepository@{com.destore.loyalty.repository.RedemptionUsageRepository}!findByCustomerIdAndRedemptionOfferId@{findByCustomerIdAndRedemptionOfferId}}
+\index{findByCustomerIdAndRedemptionOfferId@{findByCustomerIdAndRedemptionOfferId}!com.destore.loyalty.repository.RedemptionUsageRepository@{com.destore.loyalty.repository.RedemptionUsageRepository}}
+\doxysubsubsection{\texorpdfstring{findByCustomerIdAndRedemptionOfferId()}{findByCustomerIdAndRedemptionOfferId()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_abdd2a8e3bd6cefee18a935c7731ca85a} 
+Optional$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage}{Redemption\+Usage}} $>$ com.\+destore.\+loyalty.\+repository.\+Redemption\+Usage\+Repository.\+find\+By\+Customer\+Id\+And\+Redemption\+Offer\+Id (\begin{DoxyParamCaption}\item[{Integer}]{customer\+Id}{, }\item[{Integer}]{redemption\+Offer\+Id}{}\end{DoxyParamCaption})}
+
+Finds usage record for a specific customer and offer combination.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+{\em redemption\+Offer\+Id} & Redemption offer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Optional containing usage record if found 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_a44b2e12cb169cd7ce36cdcb695202881}\index{com.destore.loyalty.repository.RedemptionUsageRepository@{com.destore.loyalty.repository.RedemptionUsageRepository}!findByRedemptionOfferId@{findByRedemptionOfferId}}
+\index{findByRedemptionOfferId@{findByRedemptionOfferId}!com.destore.loyalty.repository.RedemptionUsageRepository@{com.destore.loyalty.repository.RedemptionUsageRepository}}
+\doxysubsubsection{\texorpdfstring{findByRedemptionOfferId()}{findByRedemptionOfferId()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_redemption_usage_repository_a44b2e12cb169cd7ce36cdcb695202881} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage}{Redemption\+Usage}} $>$ com.\+destore.\+loyalty.\+repository.\+Redemption\+Usage\+Repository.\+find\+By\+Redemption\+Offer\+Id (\begin{DoxyParamCaption}\item[{Integer}]{redemption\+Offer\+Id}{}\end{DoxyParamCaption})}
+
+Finds all usage records for a specific offer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em redemption\+Offer\+Id} & Redemption offer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of usage records 
+\end{DoxyReturn}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/repository/Redemption\+Usage\+Repository.\+java\end{DoxyCompactItemize}

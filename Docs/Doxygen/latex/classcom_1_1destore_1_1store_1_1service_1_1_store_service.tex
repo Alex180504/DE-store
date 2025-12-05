@@ -1,0 +1,69 @@
+\doxysection{com.\+destore.\+store.\+service.\+Store\+Service Class Reference}
+\hypertarget{classcom_1_1destore_1_1store_1_1service_1_1_store_service}{}\label{classcom_1_1destore_1_1store_1_1service_1_1_store_service}\index{com.destore.store.service.StoreService@{com.destore.store.service.StoreService}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a4d610b0c3858ca1ad0b2da8819d9ed80}{get\+All\+Stores}} ()
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a2e88bfc4ca704f38d8e44316b0b1d2c7}{get\+Active\+Stores}} ()
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1service_1_1_store_service_aedb43830f30fafd4c221f4e6854c5acb}{get\+Store\+By\+Id}} (Integer store\+Id)
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a3009c711d39a45d3812219327b327749}{get\+Store\+By\+Code}} (String store\+Code)
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1service_1_1_store_service_af56bf10bae97f4e161ae9137cf32405b}{create\+Store}} (\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_request}{Store\+Request}} request)
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a5019cbb090daebcc7b431061cf0af9a4}{update\+Store}} (Integer store\+Id, \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_request}{Store\+Request}} request)
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1service_1_1_store_service_adaa6b2eb5135b28053a26c752b3e042c}{delete\+Store}} (Integer store\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1store_1_1service_1_1_store_service_af56bf10bae97f4e161ae9137cf32405b}\index{com.destore.store.service.StoreService@{com.destore.store.service.StoreService}!createStore@{createStore}}
+\index{createStore@{createStore}!com.destore.store.service.StoreService@{com.destore.store.service.StoreService}}
+\doxysubsubsection{\texorpdfstring{createStore()}{createStore()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1service_1_1_store_service_af56bf10bae97f4e161ae9137cf32405b} 
+\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} com.\+destore.\+store.\+service.\+Store\+Service.\+create\+Store (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_request}{Store\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Create new store (Network Manager only) \Hypertarget{classcom_1_1destore_1_1store_1_1service_1_1_store_service_adaa6b2eb5135b28053a26c752b3e042c}\index{com.destore.store.service.StoreService@{com.destore.store.service.StoreService}!deleteStore@{deleteStore}}
+\index{deleteStore@{deleteStore}!com.destore.store.service.StoreService@{com.destore.store.service.StoreService}}
+\doxysubsubsection{\texorpdfstring{deleteStore()}{deleteStore()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1service_1_1_store_service_adaa6b2eb5135b28053a26c752b3e042c} 
+void com.\+destore.\+store.\+service.\+Store\+Service.\+delete\+Store (\begin{DoxyParamCaption}\item[{Integer}]{store\+Id}{}\end{DoxyParamCaption})}
+
+Delete store (Network Manager only) \Hypertarget{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a2e88bfc4ca704f38d8e44316b0b1d2c7}\index{com.destore.store.service.StoreService@{com.destore.store.service.StoreService}!getActiveStores@{getActiveStores}}
+\index{getActiveStores@{getActiveStores}!com.destore.store.service.StoreService@{com.destore.store.service.StoreService}}
+\doxysubsubsection{\texorpdfstring{getActiveStores()}{getActiveStores()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a2e88bfc4ca704f38d8e44316b0b1d2c7} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ com.\+destore.\+store.\+service.\+Store\+Service.\+get\+Active\+Stores (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get active stores only \Hypertarget{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a4d610b0c3858ca1ad0b2da8819d9ed80}\index{com.destore.store.service.StoreService@{com.destore.store.service.StoreService}!getAllStores@{getAllStores}}
+\index{getAllStores@{getAllStores}!com.destore.store.service.StoreService@{com.destore.store.service.StoreService}}
+\doxysubsubsection{\texorpdfstring{getAllStores()}{getAllStores()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a4d610b0c3858ca1ad0b2da8819d9ed80} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ com.\+destore.\+store.\+service.\+Store\+Service.\+get\+All\+Stores (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get all stores \Hypertarget{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a3009c711d39a45d3812219327b327749}\index{com.destore.store.service.StoreService@{com.destore.store.service.StoreService}!getStoreByCode@{getStoreByCode}}
+\index{getStoreByCode@{getStoreByCode}!com.destore.store.service.StoreService@{com.destore.store.service.StoreService}}
+\doxysubsubsection{\texorpdfstring{getStoreByCode()}{getStoreByCode()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a3009c711d39a45d3812219327b327749} 
+\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} com.\+destore.\+store.\+service.\+Store\+Service.\+get\+Store\+By\+Code (\begin{DoxyParamCaption}\item[{String}]{store\+Code}{}\end{DoxyParamCaption})}
+
+Get store by code \Hypertarget{classcom_1_1destore_1_1store_1_1service_1_1_store_service_aedb43830f30fafd4c221f4e6854c5acb}\index{com.destore.store.service.StoreService@{com.destore.store.service.StoreService}!getStoreById@{getStoreById}}
+\index{getStoreById@{getStoreById}!com.destore.store.service.StoreService@{com.destore.store.service.StoreService}}
+\doxysubsubsection{\texorpdfstring{getStoreById()}{getStoreById()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1service_1_1_store_service_aedb43830f30fafd4c221f4e6854c5acb} 
+\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} com.\+destore.\+store.\+service.\+Store\+Service.\+get\+Store\+By\+Id (\begin{DoxyParamCaption}\item[{Integer}]{store\+Id}{}\end{DoxyParamCaption})}
+
+Get store by ID \Hypertarget{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a5019cbb090daebcc7b431061cf0af9a4}\index{com.destore.store.service.StoreService@{com.destore.store.service.StoreService}!updateStore@{updateStore}}
+\index{updateStore@{updateStore}!com.destore.store.service.StoreService@{com.destore.store.service.StoreService}}
+\doxysubsubsection{\texorpdfstring{updateStore()}{updateStore()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1service_1_1_store_service_a5019cbb090daebcc7b431061cf0af9a4} 
+\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} com.\+destore.\+store.\+service.\+Store\+Service.\+update\+Store (\begin{DoxyParamCaption}\item[{Integer}]{store\+Id}{, }\item[{\mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_request}{Store\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Update store (Network Manager only) 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+store-\/service/src/main/java/com/destore/store/service/\mbox{\hyperlink{_store_service_8java}{Store\+Service.\+java}}\end{DoxyCompactItemize}

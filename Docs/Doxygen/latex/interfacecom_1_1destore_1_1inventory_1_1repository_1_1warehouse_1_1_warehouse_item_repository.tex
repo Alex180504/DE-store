@@ -1,0 +1,54 @@
+\doxysection{com.\+destore.\+inventory.\+repository.\+warehouse.\+Warehouse\+Item\+Repository Interface Reference}
+\hypertarget{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository}{}\label{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository}\index{com.destore.inventory.repository.warehouse.WarehouseItemRepository@{com.destore.inventory.repository.warehouse.WarehouseItemRepository}}
+Inheritance diagram for com.\+destore.\+inventory.\+repository.\+warehouse.\+Warehouse\+Item\+Repository\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item}{Warehouse\+Item}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_a1fa6ac9c097821a32dc5569ac229dd49}{find\+Low\+Stock\+Items}} (@Param("{}threshold"{}) int threshold)
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item}{Warehouse\+Item}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_ab7e6eed09f90dab986add5404d3db636}{find\+Out\+Of\+Stock\+Items}} ()
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item}{Warehouse\+Item}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_a9e85ea062392b713e5ae3f799168fcc0}{find\+Low\+Stock\+By\+Category}} (@Param("{}category"{}) String category, @Param("{}threshold"{}) int threshold)
+\item 
+List$<$ String $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_a0b13a248105c33e75d0554c2c2c2a776}{find\+All\+Categories}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Repository for warehouse items -\/ READ ONLY 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_a0b13a248105c33e75d0554c2c2c2a776}\index{com.destore.inventory.repository.warehouse.WarehouseItemRepository@{com.destore.inventory.repository.warehouse.WarehouseItemRepository}!findAllCategories@{findAllCategories}}
+\index{findAllCategories@{findAllCategories}!com.destore.inventory.repository.warehouse.WarehouseItemRepository@{com.destore.inventory.repository.warehouse.WarehouseItemRepository}}
+\doxysubsubsection{\texorpdfstring{findAllCategories()}{findAllCategories()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_a0b13a248105c33e75d0554c2c2c2a776} 
+List$<$ String $>$ com.\+destore.\+inventory.\+repository.\+warehouse.\+Warehouse\+Item\+Repository.\+find\+All\+Categories (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get all categories \Hypertarget{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_a9e85ea062392b713e5ae3f799168fcc0}\index{com.destore.inventory.repository.warehouse.WarehouseItemRepository@{com.destore.inventory.repository.warehouse.WarehouseItemRepository}!findLowStockByCategory@{findLowStockByCategory}}
+\index{findLowStockByCategory@{findLowStockByCategory}!com.destore.inventory.repository.warehouse.WarehouseItemRepository@{com.destore.inventory.repository.warehouse.WarehouseItemRepository}}
+\doxysubsubsection{\texorpdfstring{findLowStockByCategory()}{findLowStockByCategory()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_a9e85ea062392b713e5ae3f799168fcc0} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item}{Warehouse\+Item}} $>$ com.\+destore.\+inventory.\+repository.\+warehouse.\+Warehouse\+Item\+Repository.\+find\+Low\+Stock\+By\+Category (\begin{DoxyParamCaption}\item[{@Param("{}category"{}) String}]{category}{, }\item[{@Param("{}threshold"{}) int}]{threshold}{}\end{DoxyParamCaption})}
+
+Find items by category with low stock \Hypertarget{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_a1fa6ac9c097821a32dc5569ac229dd49}\index{com.destore.inventory.repository.warehouse.WarehouseItemRepository@{com.destore.inventory.repository.warehouse.WarehouseItemRepository}!findLowStockItems@{findLowStockItems}}
+\index{findLowStockItems@{findLowStockItems}!com.destore.inventory.repository.warehouse.WarehouseItemRepository@{com.destore.inventory.repository.warehouse.WarehouseItemRepository}}
+\doxysubsubsection{\texorpdfstring{findLowStockItems()}{findLowStockItems()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_a1fa6ac9c097821a32dc5569ac229dd49} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item}{Warehouse\+Item}} $>$ com.\+destore.\+inventory.\+repository.\+warehouse.\+Warehouse\+Item\+Repository.\+find\+Low\+Stock\+Items (\begin{DoxyParamCaption}\item[{@Param("{}threshold"{}) int}]{threshold}{}\end{DoxyParamCaption})}
+
+Find all items with stock below threshold \Hypertarget{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_ab7e6eed09f90dab986add5404d3db636}\index{com.destore.inventory.repository.warehouse.WarehouseItemRepository@{com.destore.inventory.repository.warehouse.WarehouseItemRepository}!findOutOfStockItems@{findOutOfStockItems}}
+\index{findOutOfStockItems@{findOutOfStockItems}!com.destore.inventory.repository.warehouse.WarehouseItemRepository@{com.destore.inventory.repository.warehouse.WarehouseItemRepository}}
+\doxysubsubsection{\texorpdfstring{findOutOfStockItems()}{findOutOfStockItems()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository_ab7e6eed09f90dab986add5404d3db636} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item}{Warehouse\+Item}} $>$ com.\+destore.\+inventory.\+repository.\+warehouse.\+Warehouse\+Item\+Repository.\+find\+Out\+Of\+Stock\+Items (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Find all out-\/of-\/stock items 
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inventory-\/service/src/main/java/com/destore/inventory/repository/warehouse/Warehouse\+Item\+Repository.\+java\end{DoxyCompactItemize}

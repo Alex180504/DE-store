@@ -1,0 +1,40 @@
+\doxysection{com.\+destore.\+inventory.\+model.\+warehouse.\+Warehouse\+Item Class Reference}
+\hypertarget{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item}{}\label{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item}\index{com.destore.inventory.model.warehouse.WarehouseItem@{com.destore.inventory.model.warehouse.WarehouseItem}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item_af3d63074cbf643ac16a7f5276c2b2c43}{is\+Out\+Of\+Stock}} ()
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item_ac76e70946c5f5523cddb2ad1109e7ae5}{is\+Low\+Stock}} (int critical\+Threshold, int low\+Threshold)
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item_affcb72769c88ff8b31723eee018703da}{is\+Critical\+Stock}} (int critical\+Threshold)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Warehouse Item entity -\/ Read-\/\+Only Maps to items table in warehouse database 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item_affcb72769c88ff8b31723eee018703da}\index{com.destore.inventory.model.warehouse.WarehouseItem@{com.destore.inventory.model.warehouse.WarehouseItem}!isCriticalStock@{isCriticalStock}}
+\index{isCriticalStock@{isCriticalStock}!com.destore.inventory.model.warehouse.WarehouseItem@{com.destore.inventory.model.warehouse.WarehouseItem}}
+\doxysubsubsection{\texorpdfstring{isCriticalStock()}{isCriticalStock()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item_affcb72769c88ff8b31723eee018703da} 
+boolean com.\+destore.\+inventory.\+model.\+warehouse.\+Warehouse\+Item.\+is\+Critical\+Stock (\begin{DoxyParamCaption}\item[{int}]{critical\+Threshold}{}\end{DoxyParamCaption})}
+
+Returns true if stock is between 1 and critical\+Threshold (inclusive). \Hypertarget{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item_ac76e70946c5f5523cddb2ad1109e7ae5}\index{com.destore.inventory.model.warehouse.WarehouseItem@{com.destore.inventory.model.warehouse.WarehouseItem}!isLowStock@{isLowStock}}
+\index{isLowStock@{isLowStock}!com.destore.inventory.model.warehouse.WarehouseItem@{com.destore.inventory.model.warehouse.WarehouseItem}}
+\doxysubsubsection{\texorpdfstring{isLowStock()}{isLowStock()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item_ac76e70946c5f5523cddb2ad1109e7ae5} 
+boolean com.\+destore.\+inventory.\+model.\+warehouse.\+Warehouse\+Item.\+is\+Low\+Stock (\begin{DoxyParamCaption}\item[{int}]{critical\+Threshold}{, }\item[{int}]{low\+Threshold}{}\end{DoxyParamCaption})}
+
+Returns true if stock is between critical\+Threshold + 1 and low\+Threshold (inclusive). \Hypertarget{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item_af3d63074cbf643ac16a7f5276c2b2c43}\index{com.destore.inventory.model.warehouse.WarehouseItem@{com.destore.inventory.model.warehouse.WarehouseItem}!isOutOfStock@{isOutOfStock}}
+\index{isOutOfStock@{isOutOfStock}!com.destore.inventory.model.warehouse.WarehouseItem@{com.destore.inventory.model.warehouse.WarehouseItem}}
+\doxysubsubsection{\texorpdfstring{isOutOfStock()}{isOutOfStock()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1model_1_1warehouse_1_1_warehouse_item_af3d63074cbf643ac16a7f5276c2b2c43} 
+boolean com.\+destore.\+inventory.\+model.\+warehouse.\+Warehouse\+Item.\+is\+Out\+Of\+Stock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Stock status helpers 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inventory-\/service/src/main/java/com/destore/inventory/model/warehouse/Warehouse\+Item.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,76 @@
+\doxysection{com.\+destore.\+loyalty.\+service.\+Points\+Calculation\+Service Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service}{}\label{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service}\index{com.destore.loyalty.service.PointsCalculationService@{com.destore.loyalty.service.PointsCalculationService}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service_acc8ede9b961230ead6ce44193d9a0af2}{scheduled\+Points\+Calculation}} ()
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance}{Customer\+Points\+Balance}} \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service_a7268162e683ff4e66dcf62bc22ea1414}{calculate\+Points\+For\+Customer}} (Integer customer\+Id)
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance}{Customer\+Points\+Balance}} \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service_a302dc080acf2868d59e48f5ff797a158}{recalculate\+Customer\+Points}} (Integer customer\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service for calculating and updating customer loyalty points. 
+
+Handles scheduled batch updates and on-\/demand calculations by analyzing customer purchases from the accounting database and applying active loyalty rules at the time of each transaction. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service_a7268162e683ff4e66dcf62bc22ea1414}\index{com.destore.loyalty.service.PointsCalculationService@{com.destore.loyalty.service.PointsCalculationService}!calculatePointsForCustomer@{calculatePointsForCustomer}}
+\index{calculatePointsForCustomer@{calculatePointsForCustomer}!com.destore.loyalty.service.PointsCalculationService@{com.destore.loyalty.service.PointsCalculationService}}
+\doxysubsubsection{\texorpdfstring{calculatePointsForCustomer()}{calculatePointsForCustomer()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service_a7268162e683ff4e66dcf62bc22ea1414} 
+\mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance}{Customer\+Points\+Balance}} com.\+destore.\+loyalty.\+service.\+Points\+Calculation\+Service.\+calculate\+Points\+For\+Customer (\begin{DoxyParamCaption}\item[{Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Calculates points for a specific customer. 
+
+Queries accounting database for transactions since last calculation, applies product points rules and bonus offers valid at transaction time, and updates customer balance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID to calculate points for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated customer points balance 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service_a302dc080acf2868d59e48f5ff797a158}\index{com.destore.loyalty.service.PointsCalculationService@{com.destore.loyalty.service.PointsCalculationService}!recalculateCustomerPoints@{recalculateCustomerPoints}}
+\index{recalculateCustomerPoints@{recalculateCustomerPoints}!com.destore.loyalty.service.PointsCalculationService@{com.destore.loyalty.service.PointsCalculationService}}
+\doxysubsubsection{\texorpdfstring{recalculateCustomerPoints()}{recalculateCustomerPoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service_a302dc080acf2868d59e48f5ff797a158} 
+\mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance}{Customer\+Points\+Balance}} com.\+destore.\+loyalty.\+service.\+Points\+Calculation\+Service.\+recalculate\+Customer\+Points (\begin{DoxyParamCaption}\item[{Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Manually triggers points calculation for a customer. 
+
+Useful for testing or immediate recalculation after rule changes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated balance 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service_acc8ede9b961230ead6ce44193d9a0af2}\index{com.destore.loyalty.service.PointsCalculationService@{com.destore.loyalty.service.PointsCalculationService}!scheduledPointsCalculation@{scheduledPointsCalculation}}
+\index{scheduledPointsCalculation@{scheduledPointsCalculation}!com.destore.loyalty.service.PointsCalculationService@{com.destore.loyalty.service.PointsCalculationService}}
+\doxysubsubsection{\texorpdfstring{scheduledPointsCalculation()}{scheduledPointsCalculation()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1service_1_1_points_calculation_service_acc8ede9b961230ead6ce44193d9a0af2} 
+void com.\+destore.\+loyalty.\+service.\+Points\+Calculation\+Service.\+scheduled\+Points\+Calculation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Scheduled task to calculate points for all customers. 
+
+Runs every 6 hours as configured in application.\+properties. Processes transactions since last calculation timestamp. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/service/Points\+Calculation\+Service.\+java\end{DoxyCompactItemize}

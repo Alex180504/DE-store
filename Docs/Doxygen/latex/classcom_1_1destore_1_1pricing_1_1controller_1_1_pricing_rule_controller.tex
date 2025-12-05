@@ -1,0 +1,197 @@
+\doxysection{com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller}{}\label{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller}\index{com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_acd7bf90089250f299d4985d1a67ff7f5}{create\+Rule}} (@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_request}{Pricing\+Rule\+Request}} request)
+\begin{DoxyCompactList}\small\item\em Create a new pricing rule. \end{DoxyCompactList}\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a2bd573b6f7cbca069c3903606abf5baa}{get\+All\+Rules}} ()
+\begin{DoxyCompactList}\small\item\em Get all pricing rules. \end{DoxyCompactList}\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a90faddcc243b31a40bfc6c896d255e00}{get\+Active\+Rules}} ()
+\begin{DoxyCompactList}\small\item\em Get all active pricing rules. \end{DoxyCompactList}\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_ae542ef004faf5f198d76ede353688bbd}{get\+Rule}} (@Path\+Variable Integer rule\+Id)
+\begin{DoxyCompactList}\small\item\em Get a specific pricing rule by ID. \end{DoxyCompactList}\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_afbfe5f5b0fa89770a84d9777c2d412c0}{get\+Rules\+By\+Item}} (@Path\+Variable Integer item\+Id)
+\begin{DoxyCompactList}\small\item\em Get all pricing rules for a specific item. \end{DoxyCompactList}\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a18ae83b086a4b4273a7fae000babd78b}{get\+Rules\+By\+Store}} (@Path\+Variable Integer store\+Id)
+\begin{DoxyCompactList}\small\item\em Get all pricing rules for a specific store. \end{DoxyCompactList}\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_ac26a378361376c01f21e4993c25317dc}{update\+Rule}} ( @Path\+Variable Integer rule\+Id, @Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_request}{Pricing\+Rule\+Request}} request)
+\begin{DoxyCompactList}\small\item\em Update an existing pricing rule. \end{DoxyCompactList}\item 
+Response\+Entity$<$ Void $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_ad441b47d58408e142ffc88896b182e82}{delete\+Rule}} (@Path\+Variable Integer rule\+Id)
+\begin{DoxyCompactList}\small\item\em Delete a pricing rule (hard delete) \end{DoxyCompactList}\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a537291e5ea42aa2a6e261af86f9a23c9}{deactivate\+Rule}} (@Path\+Variable Integer rule\+Id)
+\begin{DoxyCompactList}\small\item\em Deactivate a pricing rule (soft delete) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_acd7bf90089250f299d4985d1a67ff7f5}\index{com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}!createRule@{createRule}}
+\index{createRule@{createRule}!com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}}
+\doxysubsubsection{\texorpdfstring{createRule()}{createRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_acd7bf90089250f299d4985d1a67ff7f5} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller.\+create\+Rule (\begin{DoxyParamCaption}\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_request}{Pricing\+Rule\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+
+
+Create a new pricing rule. 
+
+Network Managers can create global rules (is\+\_\+global=true, store\+\_\+id=null). Store Managers can create store-\/specific rules (is\+\_\+global=false, store\+\_\+id set).
+
+Validation\+:
+\begin{DoxyItemize}
+\item Item must exist in warehouse database
+\item Store must exist (if store-\/specific)
+\item Global rules cannot have store\+\_\+id
+\item Promotion value required for PERCENTAGE\+\_\+\+OFF and FIXED\+\_\+\+DISCOUNT
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & Pricing rule creation request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Created pricing rule 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a537291e5ea42aa2a6e261af86f9a23c9}\index{com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}!deactivateRule@{deactivateRule}}
+\index{deactivateRule@{deactivateRule}!com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}}
+\doxysubsubsection{\texorpdfstring{deactivateRule()}{deactivateRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a537291e5ea42aa2a6e261af86f9a23c9} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller.\+deactivate\+Rule (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{rule\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Deactivate a pricing rule (soft delete) 
+
+Sets is\+\_\+active=false instead of deleting the record. Useful for maintaining audit trail.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rule\+Id} & The rule ID to deactivate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Deactivated pricing rule 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_ad441b47d58408e142ffc88896b182e82}\index{com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}!deleteRule@{deleteRule}}
+\index{deleteRule@{deleteRule}!com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}}
+\doxysubsubsection{\texorpdfstring{deleteRule()}{deleteRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_ad441b47d58408e142ffc88896b182e82} 
+Response\+Entity$<$ Void $>$ com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller.\+delete\+Rule (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{rule\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Delete a pricing rule (hard delete) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rule\+Id} & The rule ID to delete \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+No content response 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a90faddcc243b31a40bfc6c896d255e00}\index{com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}!getActiveRules@{getActiveRules}}
+\index{getActiveRules@{getActiveRules}!com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}}
+\doxysubsubsection{\texorpdfstring{getActiveRules()}{getActiveRules()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a90faddcc243b31a40bfc6c896d255e00} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ $>$ com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller.\+get\+Active\+Rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get all active pricing rules. 
+
+\begin{DoxyReturn}{Returns}
+List of currently active rules 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a2bd573b6f7cbca069c3903606abf5baa}\index{com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}!getAllRules@{getAllRules}}
+\index{getAllRules@{getAllRules}!com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}}
+\doxysubsubsection{\texorpdfstring{getAllRules()}{getAllRules()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a2bd573b6f7cbca069c3903606abf5baa} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ $>$ com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller.\+get\+All\+Rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get all pricing rules. 
+
+\begin{DoxyReturn}{Returns}
+List of all pricing rules 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_ae542ef004faf5f198d76ede353688bbd}\index{com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}!getRule@{getRule}}
+\index{getRule@{getRule}!com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}}
+\doxysubsubsection{\texorpdfstring{getRule()}{getRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_ae542ef004faf5f198d76ede353688bbd} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller.\+get\+Rule (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{rule\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Get a specific pricing rule by ID. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rule\+Id} & The rule ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pricing rule details 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_afbfe5f5b0fa89770a84d9777c2d412c0}\index{com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}!getRulesByItem@{getRulesByItem}}
+\index{getRulesByItem@{getRulesByItem}!com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}}
+\doxysubsubsection{\texorpdfstring{getRulesByItem()}{getRulesByItem()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_afbfe5f5b0fa89770a84d9777c2d412c0} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ $>$ com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller.\+get\+Rules\+By\+Item (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{item\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Get all pricing rules for a specific item. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The warehouse item ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of rules for the item 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a18ae83b086a4b4273a7fae000babd78b}\index{com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}!getRulesByStore@{getRulesByStore}}
+\index{getRulesByStore@{getRulesByStore}!com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}}
+\doxysubsubsection{\texorpdfstring{getRulesByStore()}{getRulesByStore()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_a18ae83b086a4b4273a7fae000babd78b} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ $>$ com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller.\+get\+Rules\+By\+Store (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{store\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Get all pricing rules for a specific store. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em store\+Id} & The store ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of store-\/specific rules 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_ac26a378361376c01f21e4993c25317dc}\index{com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}!updateRule@{updateRule}}
+\index{updateRule@{updateRule}!com.destore.pricing.controller.PricingRuleController@{com.destore.pricing.controller.PricingRuleController}}
+\doxysubsubsection{\texorpdfstring{updateRule()}{updateRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller_ac26a378361376c01f21e4993c25317dc} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller.\+update\+Rule (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{rule\+Id}{, }\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_request}{Pricing\+Rule\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+
+
+Update an existing pricing rule. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rule\+Id} & The rule ID to update \\
+\hline
+{\em request} & Updated rule data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated pricing rule 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pricing-\/service/src/main/java/com/destore/pricing/controller/\mbox{\hyperlink{_pricing_rule_controller_8java}{Pricing\+Rule\+Controller.\+java}}\end{DoxyCompactItemize}

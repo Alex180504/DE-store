@@ -1,0 +1,80 @@
+\doxysection{com.\+destore.\+analytics.\+controller.\+Revenue\+Analytics\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller}{}\label{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller}\index{com.destore.analytics.controller.RevenueAnalyticsController@{com.destore.analytics.controller.RevenueAnalyticsController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_revenue_report_d_t_o}{Revenue\+Report\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_ac54ed65dcf1744e42b9d0f3ff71ba32e}{get\+Revenue\+Summary}} ( @Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long store\+Id, @Parameter(description="{}Start date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date start\+Date, @Parameter(description="{}End date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date end\+Date)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_revenue_report_d_t_o}{Revenue\+Report\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_afd1fcef32ce6ca5a31d264187fdc4d54}{get\+Today\+Revenue}} ( @Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long store\+Id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_revenue_report_d_t_o}{Revenue\+Report\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_a953b1834ce29ffb2ce1f67a2fd14d3c2}{get\+Week\+Revenue}} ( @Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long store\+Id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_revenue_report_d_t_o}{Revenue\+Report\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_ade87227b70ddaf53c49c1cde13741356}{get\+Month\+Revenue}} ( @Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long store\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for revenue analytics endpoints. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_ade87227b70ddaf53c49c1cde13741356}\index{com.destore.analytics.controller.RevenueAnalyticsController@{com.destore.analytics.controller.RevenueAnalyticsController}!getMonthRevenue@{getMonthRevenue}}
+\index{getMonthRevenue@{getMonthRevenue}!com.destore.analytics.controller.RevenueAnalyticsController@{com.destore.analytics.controller.RevenueAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getMonthRevenue()}{getMonthRevenue()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_ade87227b70ddaf53c49c1cde13741356} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_revenue_report_d_t_o}{Revenue\+Report\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Revenue\+Analytics\+Controller.\+get\+Month\+Revenue (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long}]{store\+Id}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Month\+Revenue(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Revenue\+Report\+DTO$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_ac54ed65dcf1744e42b9d0f3ff71ba32e}\index{com.destore.analytics.controller.RevenueAnalyticsController@{com.destore.analytics.controller.RevenueAnalyticsController}!getRevenueSummary@{getRevenueSummary}}
+\index{getRevenueSummary@{getRevenueSummary}!com.destore.analytics.controller.RevenueAnalyticsController@{com.destore.analytics.controller.RevenueAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getRevenueSummary()}{getRevenueSummary()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_ac54ed65dcf1744e42b9d0f3ff71ba32e} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_revenue_report_d_t_o}{Revenue\+Report\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Revenue\+Analytics\+Controller.\+get\+Revenue\+Summary (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long}]{store\+Id}{, }\item[{@Parameter(description="{}Start date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date}]{start\+Date}{, }\item[{@Parameter(description="{}End date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Revenue\+Summary(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Revenue\+Report\+DTO$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_afd1fcef32ce6ca5a31d264187fdc4d54}\index{com.destore.analytics.controller.RevenueAnalyticsController@{com.destore.analytics.controller.RevenueAnalyticsController}!getTodayRevenue@{getTodayRevenue}}
+\index{getTodayRevenue@{getTodayRevenue}!com.destore.analytics.controller.RevenueAnalyticsController@{com.destore.analytics.controller.RevenueAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getTodayRevenue()}{getTodayRevenue()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_afd1fcef32ce6ca5a31d264187fdc4d54} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_revenue_report_d_t_o}{Revenue\+Report\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Revenue\+Analytics\+Controller.\+get\+Today\+Revenue (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long}]{store\+Id}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Today\+Revenue(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Revenue\+Report\+DTO$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_a953b1834ce29ffb2ce1f67a2fd14d3c2}\index{com.destore.analytics.controller.RevenueAnalyticsController@{com.destore.analytics.controller.RevenueAnalyticsController}!getWeekRevenue@{getWeekRevenue}}
+\index{getWeekRevenue@{getWeekRevenue}!com.destore.analytics.controller.RevenueAnalyticsController@{com.destore.analytics.controller.RevenueAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getWeekRevenue()}{getWeekRevenue()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_revenue_analytics_controller_a953b1834ce29ffb2ce1f67a2fd14d3c2} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_revenue_report_d_t_o}{Revenue\+Report\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Revenue\+Analytics\+Controller.\+get\+Week\+Revenue (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long}]{store\+Id}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Week\+Revenue(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Revenue\+Report\+DTO$>$ 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/controller/Revenue\+Analytics\+Controller.\+java\end{DoxyCompactItemize}

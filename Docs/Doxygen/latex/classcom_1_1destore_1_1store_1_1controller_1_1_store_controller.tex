@@ -1,0 +1,61 @@
+\doxysection{com.\+destore.\+store.\+controller.\+Store\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller}{}\label{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller}\index{com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a3b26c7d4cfa1b4d7b3247c4e589a1834}{get\+All\+Stores}} ( @Request\+Param(required=false) Boolean active\+Only)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_aec0bc8a5b1d2608b49d2f681ca2a2fcd}{get\+Store\+By\+Id}} (@Path\+Variable Integer store\+Id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a8c5ae9de0ae649992bcefcbc1a8333c8}{get\+Store\+By\+Code}} (@Path\+Variable String store\+Code)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a0a11be50e96a1ecf70b9a9dd4b938770}{create\+Store}} (@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_request}{Store\+Request}} request)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a045c1342a2192eec98eba75dca75a823}{update\+Store}} ( @Path\+Variable Integer store\+Id, @Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_request}{Store\+Request}} request)
+\item 
+Response\+Entity$<$ Void $>$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a15ef84caa27d575996b370e756c485df}{delete\+Store}} (@Path\+Variable Integer store\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a0a11be50e96a1ecf70b9a9dd4b938770}\index{com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}!createStore@{createStore}}
+\index{createStore@{createStore}!com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}}
+\doxysubsubsection{\texorpdfstring{createStore()}{createStore()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a0a11be50e96a1ecf70b9a9dd4b938770} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ com.\+destore.\+store.\+controller.\+Store\+Controller.\+create\+Store (\begin{DoxyParamCaption}\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_request}{Store\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Create new store (Network Manager only) \Hypertarget{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a15ef84caa27d575996b370e756c485df}\index{com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}!deleteStore@{deleteStore}}
+\index{deleteStore@{deleteStore}!com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}}
+\doxysubsubsection{\texorpdfstring{deleteStore()}{deleteStore()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a15ef84caa27d575996b370e756c485df} 
+Response\+Entity$<$ Void $>$ com.\+destore.\+store.\+controller.\+Store\+Controller.\+delete\+Store (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{store\+Id}{}\end{DoxyParamCaption})}
+
+Delete store (Network Manager only) \Hypertarget{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a3b26c7d4cfa1b4d7b3247c4e589a1834}\index{com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}!getAllStores@{getAllStores}}
+\index{getAllStores@{getAllStores}!com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}}
+\doxysubsubsection{\texorpdfstring{getAllStores()}{getAllStores()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a3b26c7d4cfa1b4d7b3247c4e589a1834} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ $>$ com.\+destore.\+store.\+controller.\+Store\+Controller.\+get\+All\+Stores (\begin{DoxyParamCaption}\item[{@Request\+Param(required=false) Boolean}]{active\+Only}{}\end{DoxyParamCaption})}
+
+Get all stores \Hypertarget{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a8c5ae9de0ae649992bcefcbc1a8333c8}\index{com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}!getStoreByCode@{getStoreByCode}}
+\index{getStoreByCode@{getStoreByCode}!com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}}
+\doxysubsubsection{\texorpdfstring{getStoreByCode()}{getStoreByCode()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a8c5ae9de0ae649992bcefcbc1a8333c8} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ com.\+destore.\+store.\+controller.\+Store\+Controller.\+get\+Store\+By\+Code (\begin{DoxyParamCaption}\item[{@Path\+Variable String}]{store\+Code}{}\end{DoxyParamCaption})}
+
+Get store by code \Hypertarget{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_aec0bc8a5b1d2608b49d2f681ca2a2fcd}\index{com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}!getStoreById@{getStoreById}}
+\index{getStoreById@{getStoreById}!com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}}
+\doxysubsubsection{\texorpdfstring{getStoreById()}{getStoreById()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_aec0bc8a5b1d2608b49d2f681ca2a2fcd} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ com.\+destore.\+store.\+controller.\+Store\+Controller.\+get\+Store\+By\+Id (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{store\+Id}{}\end{DoxyParamCaption})}
+
+Get store by ID \Hypertarget{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a045c1342a2192eec98eba75dca75a823}\index{com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}!updateStore@{updateStore}}
+\index{updateStore@{updateStore}!com.destore.store.controller.StoreController@{com.destore.store.controller.StoreController}}
+\doxysubsubsection{\texorpdfstring{updateStore()}{updateStore()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1store_1_1controller_1_1_store_controller_a045c1342a2192eec98eba75dca75a823} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_response}{Store\+Response}} $>$ com.\+destore.\+store.\+controller.\+Store\+Controller.\+update\+Store (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{store\+Id}{, }\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1store_1_1model_1_1dto_1_1_store_request}{Store\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Update store (Network Manager only) 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+store-\/service/src/main/java/com/destore/store/controller/\mbox{\hyperlink{_store_controller_8java}{Store\+Controller.\+java}}\end{DoxyCompactItemize}

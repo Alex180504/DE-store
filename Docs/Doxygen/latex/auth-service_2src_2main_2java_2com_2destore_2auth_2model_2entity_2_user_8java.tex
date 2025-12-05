@@ -1,0 +1,40 @@
+\doxysection{auth-\/service/src/main/java/com/destore/auth/model/entity/\+User.java File Reference}
+\hypertarget{auth-service_2src_2main_2java_2com_2destore_2auth_2model_2entity_2_user_8java}{}\label{auth-service_2src_2main_2java_2com_2destore_2auth_2model_2entity_2_user_8java}\index{auth-\/service/src/main/java/com/destore/auth/model/entity/User.java@{auth-\/service/src/main/java/com/destore/auth/model/entity/User.java}}
+
+
+JPA Entity representing a user in the auth service.  
+
+
+{\ttfamily import com.\+destore.\+auth.\+model.\+enums.\+User\+Role;}\newline
+{\ttfamily import jakarta.\+persistence.\texorpdfstring{$\ast$}{*};}\newline
+{\ttfamily import lombok.\+All\+Args\+Constructor;}\newline
+{\ttfamily import lombok.\+Builder;}\newline
+{\ttfamily import lombok.\+Data;}\newline
+{\ttfamily import lombok.\+No\+Args\+Constructor;}\newline
+{\ttfamily import org.\+hibernate.\+annotations.\+Creation\+Timestamp;}\newline
+{\ttfamily import org.\+hibernate.\+annotations.\+Update\+Timestamp;}\newline
+{\ttfamily import java.\+time.\+Local\+Date\+Time;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1entity_1_1_user}{com.\+destore.\+auth.\+model.\+entity.\+User}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+JPA Entity representing a user in the auth service. 
+
+Users can have one of two roles\+:
+\begin{DoxyItemize}
+\item NETWORK\+\_\+\+MANAGER\+: Manages global pricing rules (store\+\_\+id is null)
+\item STORE\+\_\+\+MANAGER\+: Manages pricing rules for a specific store (store\+\_\+id is set)
+\end{DoxyItemize}
+
+Password storage uses BCrypt which automatically handles salt generation and storage within the hash itself.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

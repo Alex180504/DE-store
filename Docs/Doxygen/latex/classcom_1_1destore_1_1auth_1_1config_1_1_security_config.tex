@@ -1,0 +1,115 @@
+\doxysection{com.\+destore.\+auth.\+config.\+Security\+Config Class Reference}
+\hypertarget{classcom_1_1destore_1_1auth_1_1config_1_1_security_config}{}\label{classcom_1_1destore_1_1auth_1_1config_1_1_security_config}\index{com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1security_1_1_jwt_authentication_filter}{Jwt\+Authentication\+Filter}} \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a14a2f27887cdf10137341fcf2c4c0a63}{jwt\+Authentication\+Filter}} ()
+\begin{DoxyCompactList}\small\item\em Create \doxylink{classcom_1_1destore_1_1auth_1_1security_1_1_jwt_authentication_filter}{Jwt\+Authentication\+Filter} bean. \end{DoxyCompactList}\item 
+Password\+Encoder \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a40c9f121813598768ae1b91493a92c00}{password\+Encoder}} ()
+\begin{DoxyCompactList}\small\item\em Configure password encoder (BCrypt) \end{DoxyCompactList}\item 
+Authentication\+Provider \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a31873daa9a933d3a52b0802c98d6d582}{authentication\+Provider}} ()
+\begin{DoxyCompactList}\small\item\em Configure authentication provider. \end{DoxyCompactList}\item 
+Authentication\+Manager \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a5c54acafd1e0d283d6442d600174efa7}{authentication\+Manager}} (Authentication\+Configuration config)  throws Exception 
+\begin{DoxyCompactList}\small\item\em Configure authentication manager. \end{DoxyCompactList}\item 
+Cors\+Configuration\+Source \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_af8a896f43af5877ab3888db2e9807bb8}{cors\+Configuration\+Source}} ()
+\begin{DoxyCompactList}\small\item\em Configure CORS policy. \end{DoxyCompactList}\item 
+Security\+Filter\+Chain \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a07080aa0fad1998bb1ad28125cab77ff}{security\+Filter\+Chain}} (Http\+Security http, \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1security_1_1_jwt_authentication_filter}{Jwt\+Authentication\+Filter}} \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a14a2f27887cdf10137341fcf2c4c0a63}{jwt\+Authentication\+Filter}})  throws Exception 
+\begin{DoxyCompactList}\small\item\em Configure HTTP security filter chain. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a5c54acafd1e0d283d6442d600174efa7}\index{com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}!authenticationManager@{authenticationManager}}
+\index{authenticationManager@{authenticationManager}!com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{authenticationManager()}{authenticationManager()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a5c54acafd1e0d283d6442d600174efa7} 
+Authentication\+Manager com.\+destore.\+auth.\+config.\+Security\+Config.\+authentication\+Manager (\begin{DoxyParamCaption}\item[{Authentication\+Configuration}]{config}{}\end{DoxyParamCaption}) throws Exception}
+
+
+
+Configure authentication manager. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & Authentication configuration \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Authentication\+Manager bean 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a31873daa9a933d3a52b0802c98d6d582}\index{com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}!authenticationProvider@{authenticationProvider}}
+\index{authenticationProvider@{authenticationProvider}!com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{authenticationProvider()}{authenticationProvider()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a31873daa9a933d3a52b0802c98d6d582} 
+Authentication\+Provider com.\+destore.\+auth.\+config.\+Security\+Config.\+authentication\+Provider (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Configure authentication provider. 
+
+\begin{DoxyReturn}{Returns}
+Dao\+Authentication\+Provider bean 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_af8a896f43af5877ab3888db2e9807bb8}\index{com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}!corsConfigurationSource@{corsConfigurationSource}}
+\index{corsConfigurationSource@{corsConfigurationSource}!com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{corsConfigurationSource()}{corsConfigurationSource()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_af8a896f43af5877ab3888db2e9807bb8} 
+Cors\+Configuration\+Source com.\+destore.\+auth.\+config.\+Security\+Config.\+cors\+Configuration\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Configure CORS policy. 
+
+\begin{DoxyReturn}{Returns}
+Cors\+Configuration\+Source bean 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a14a2f27887cdf10137341fcf2c4c0a63}\index{com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}!jwtAuthenticationFilter@{jwtAuthenticationFilter}}
+\index{jwtAuthenticationFilter@{jwtAuthenticationFilter}!com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{jwtAuthenticationFilter()}{jwtAuthenticationFilter()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a14a2f27887cdf10137341fcf2c4c0a63} 
+\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1security_1_1_jwt_authentication_filter}{Jwt\+Authentication\+Filter}} com.\+destore.\+auth.\+config.\+Security\+Config.\+jwt\+Authentication\+Filter (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Create \doxylink{classcom_1_1destore_1_1auth_1_1security_1_1_jwt_authentication_filter}{Jwt\+Authentication\+Filter} bean. 
+
+\begin{DoxyReturn}{Returns}
+\doxylink{classcom_1_1destore_1_1auth_1_1security_1_1_jwt_authentication_filter}{Jwt\+Authentication\+Filter} instance 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a40c9f121813598768ae1b91493a92c00}\index{com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}!passwordEncoder@{passwordEncoder}}
+\index{passwordEncoder@{passwordEncoder}!com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{passwordEncoder()}{passwordEncoder()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a40c9f121813598768ae1b91493a92c00} 
+Password\+Encoder com.\+destore.\+auth.\+config.\+Security\+Config.\+password\+Encoder (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Configure password encoder (BCrypt) 
+
+\begin{DoxyReturn}{Returns}
+BCrypt\+Password\+Encoder bean 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a07080aa0fad1998bb1ad28125cab77ff}\index{com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}!securityFilterChain@{securityFilterChain}}
+\index{securityFilterChain@{securityFilterChain}!com.destore.auth.config.SecurityConfig@{com.destore.auth.config.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{securityFilterChain()}{securityFilterChain()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1config_1_1_security_config_a07080aa0fad1998bb1ad28125cab77ff} 
+Security\+Filter\+Chain com.\+destore.\+auth.\+config.\+Security\+Config.\+security\+Filter\+Chain (\begin{DoxyParamCaption}\item[{Http\+Security}]{http}{, }\item[{\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1security_1_1_jwt_authentication_filter}{Jwt\+Authentication\+Filter}}}]{jwt\+Authentication\+Filter}{}\end{DoxyParamCaption}) throws Exception}
+
+
+
+Configure HTTP security filter chain. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em http} & Http\+Security configuration \\
+\hline
+{\em jwt\+Authentication\+Filter} & JWT authentication filter \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Security\+Filter\+Chain bean 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+auth-\/service/src/main/java/com/destore/auth/config/\mbox{\hyperlink{auth-service_2src_2main_2java_2com_2destore_2auth_2config_2_security_config_8java}{Security\+Config.\+java}}\end{DoxyCompactItemize}

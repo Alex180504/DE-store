@@ -1,0 +1,36 @@
+\doxysection{auth-\/service/src/main/java/com/destore/auth/security/\+Jwt\+Authentication\+Filter.java File Reference}
+\hypertarget{auth-service_2src_2main_2java_2com_2destore_2auth_2security_2_jwt_authentication_filter_8java}{}\label{auth-service_2src_2main_2java_2com_2destore_2auth_2security_2_jwt_authentication_filter_8java}\index{auth-\/service/src/main/java/com/destore/auth/security/JwtAuthenticationFilter.java@{auth-\/service/src/main/java/com/destore/auth/security/JwtAuthenticationFilter.java}}
+
+
+JWT authentication filter for Spring Security.  
+
+
+{\ttfamily import jakarta.\+servlet.\+Filter\+Chain;}\newline
+{\ttfamily import jakarta.\+servlet.\+Servlet\+Exception;}\newline
+{\ttfamily import jakarta.\+servlet.\+http.\+Http\+Servlet\+Request;}\newline
+{\ttfamily import jakarta.\+servlet.\+http.\+Http\+Servlet\+Response;}\newline
+{\ttfamily import lombok.\+Required\+Args\+Constructor;}\newline
+{\ttfamily import org.\+springframework.\+security.\+authentication.\+Username\+Password\+Authentication\+Token;}\newline
+{\ttfamily import org.\+springframework.\+security.\+core.\+context.\+Security\+Context\+Holder;}\newline
+{\ttfamily import org.\+springframework.\+security.\+core.\+userdetails.\+User\+Details;}\newline
+{\ttfamily import org.\+springframework.\+security.\+web.\+authentication.\+Web\+Authentication\+Details\+Source;}\newline
+{\ttfamily import org.\+springframework.\+web.\+filter.\+Once\+Per\+Request\+Filter;}\newline
+{\ttfamily import java.\+io.\+IOException;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1security_1_1_jwt_authentication_filter}{com.\+destore.\+auth.\+security.\+Jwt\+Authentication\+Filter}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+JWT authentication filter for Spring Security. 
+
+Intercepts requests to validate JWT tokens from Authorization header
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

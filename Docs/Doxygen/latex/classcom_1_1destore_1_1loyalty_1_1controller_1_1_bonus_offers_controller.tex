@@ -1,0 +1,142 @@
+\doxysection{com.\+destore.\+loyalty.\+controller.\+Bonus\+Offers\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller}{}\label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller}\index{com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a06b8b90531c499bac8511e114f22bcc1}{get\+All\+Bonuses}} ()
+\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_ad2aa935bdfd832d47f913d5d05abf173}{get\+Active\+Bonuses}} ()
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a7ce6b823d64ad0cc2277c64721cd5fc0}{get\+Bonus\+By\+Id}} (@Path\+Variable Integer id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_aaa334ee12d1f1537798bdeb514463969}{create\+Bonus}} (@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_request}{Bonus\+Offer\+Request}} request)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a98b06d06be6cf383f0fddda37c343da0}{update\+Bonus}} ( @Path\+Variable Integer id, @Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_request}{Bonus\+Offer\+Request}} request)
+\item 
+Response\+Entity$<$ Void $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a3e6a8e65caaa4114da8be5d9b0d06ba9}{delete\+Bonus}} (@Path\+Variable Integer id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_ad3ac571a2ca1eeb5c35d3ebb169ab182}{toggle\+Bonus\+Status}} (@Path\+Variable Integer id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for bonus offer management.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_aaa334ee12d1f1537798bdeb514463969}\index{com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}!createBonus@{createBonus}}
+\index{createBonus@{createBonus}!com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}}
+\doxysubsubsection{\texorpdfstring{createBonus()}{createBonus()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_aaa334ee12d1f1537798bdeb514463969} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ com.\+destore.\+loyalty.\+controller.\+Bonus\+Offers\+Controller.\+create\+Bonus (\begin{DoxyParamCaption}\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_request}{Bonus\+Offer\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Create a new bonus offer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & Bonus offer request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Created bonus offer 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a3e6a8e65caaa4114da8be5d9b0d06ba9}\index{com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}!deleteBonus@{deleteBonus}}
+\index{deleteBonus@{deleteBonus}!com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}}
+\doxysubsubsection{\texorpdfstring{deleteBonus()}{deleteBonus()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a3e6a8e65caaa4114da8be5d9b0d06ba9} 
+Response\+Entity$<$ Void $>$ com.\+destore.\+loyalty.\+controller.\+Bonus\+Offers\+Controller.\+delete\+Bonus (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{}\end{DoxyParamCaption})}
+
+Delete a bonus offer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Offer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+No content 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_ad2aa935bdfd832d47f913d5d05abf173}\index{com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}!getActiveBonuses@{getActiveBonuses}}
+\index{getActiveBonuses@{getActiveBonuses}!com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}}
+\doxysubsubsection{\texorpdfstring{getActiveBonuses()}{getActiveBonuses()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_ad2aa935bdfd832d47f913d5d05abf173} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ $>$ com.\+destore.\+loyalty.\+controller.\+Bonus\+Offers\+Controller.\+get\+Active\+Bonuses (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get active bonus offers.
+
+\begin{DoxyReturn}{Returns}
+List of active bonus offers 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a06b8b90531c499bac8511e114f22bcc1}\index{com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}!getAllBonuses@{getAllBonuses}}
+\index{getAllBonuses@{getAllBonuses}!com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}}
+\doxysubsubsection{\texorpdfstring{getAllBonuses()}{getAllBonuses()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a06b8b90531c499bac8511e114f22bcc1} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ $>$ com.\+destore.\+loyalty.\+controller.\+Bonus\+Offers\+Controller.\+get\+All\+Bonuses (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get all bonus offers.
+
+\begin{DoxyReturn}{Returns}
+List of all bonus offers 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a7ce6b823d64ad0cc2277c64721cd5fc0}\index{com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}!getBonusById@{getBonusById}}
+\index{getBonusById@{getBonusById}!com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}}
+\doxysubsubsection{\texorpdfstring{getBonusById()}{getBonusById()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a7ce6b823d64ad0cc2277c64721cd5fc0} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ com.\+destore.\+loyalty.\+controller.\+Bonus\+Offers\+Controller.\+get\+Bonus\+By\+Id (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{}\end{DoxyParamCaption})}
+
+Get bonus offer by ID.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Offer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Bonus offer 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_ad3ac571a2ca1eeb5c35d3ebb169ab182}\index{com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}!toggleBonusStatus@{toggleBonusStatus}}
+\index{toggleBonusStatus@{toggleBonusStatus}!com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}}
+\doxysubsubsection{\texorpdfstring{toggleBonusStatus()}{toggleBonusStatus()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_ad3ac571a2ca1eeb5c35d3ebb169ab182} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ com.\+destore.\+loyalty.\+controller.\+Bonus\+Offers\+Controller.\+toggle\+Bonus\+Status (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{}\end{DoxyParamCaption})}
+
+Toggle bonus offer active status.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Offer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated bonus offer 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a98b06d06be6cf383f0fddda37c343da0}\index{com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}!updateBonus@{updateBonus}}
+\index{updateBonus@{updateBonus}!com.destore.loyalty.controller.BonusOffersController@{com.destore.loyalty.controller.BonusOffersController}}
+\doxysubsubsection{\texorpdfstring{updateBonus()}{updateBonus()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller_a98b06d06be6cf383f0fddda37c343da0} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_response}{Bonus\+Offer\+Response}} $>$ com.\+destore.\+loyalty.\+controller.\+Bonus\+Offers\+Controller.\+update\+Bonus (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{, }\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_bonus_offer_request}{Bonus\+Offer\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Update an existing bonus offer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Offer ID \\
+\hline
+{\em request} & Updated bonus offer data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated bonus offer 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/controller/Bonus\+Offers\+Controller.\+java\end{DoxyCompactItemize}

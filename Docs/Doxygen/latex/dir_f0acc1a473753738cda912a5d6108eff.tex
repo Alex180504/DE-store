@@ -1,0 +1,249 @@
+\doxysection{loyalty-\/service Directory Reference}
+\hypertarget{dir_f0acc1a473753738cda912a5d6108eff}{}\label{dir_f0acc1a473753738cda912a5d6108eff}\index{loyalty-\/service Directory Reference@{loyalty-\/service Directory Reference}}
+
+
+\doxysubsection{Detailed Description}
+\hypertarget{README.md_autotoc_md102}{}\doxysubsection{\texorpdfstring{Overview}{Overview}}\label{README.md_autotoc_md102}
+The Loyalty Service manages the DE-\/\+Store loyalty points program at the network level. It handles points earning rules, bonus offers, redemption discounts, and customer points balances.\hypertarget{README.md_autotoc_md103}{}\doxysubsection{\texorpdfstring{Features}{Features}}\label{README.md_autotoc_md103}
+\hypertarget{README.md_autotoc_md104}{}\doxysubsubsection{\texorpdfstring{Points Earning}{Points Earning}}\label{README.md_autotoc_md104}
+
+\begin{DoxyItemize}
+\item {\bfseries{Product Points Rules}}\+: Configure points earned per product (e.\+g., 5 points per cordless drill)
+\item {\bfseries{Bonus Offers}}\+: Award extra points for spending thresholds (e.\+g., 50 points for £100+ purchases)
+\item {\bfseries{Store-\/\+Specific Offers}}\+: Global or store-\/level bonus configurations
+\item {\bfseries{Historical Accuracy}}\+: Rules have validity periods for accurate retroactive calculation
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md105}{}\doxysubsubsection{\texorpdfstring{Points Redemption}{Points Redemption}}\label{README.md_autotoc_md105}
+
+\begin{DoxyItemize}
+\item {\bfseries{Discount Offers}}\+: Use points for percentage discounts on items
+\item {\bfseries{Usage Limits}}\+: Per-\/customer and total usage caps
+\item {\bfseries{Real-\/time Validation}}\+: Check points balance and offer eligibility at checkout
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md106}{}\doxysubsubsection{\texorpdfstring{Points Calculation}{Points Calculation}}\label{README.md_autotoc_md106}
+
+\begin{DoxyItemize}
+\item {\bfseries{Batch Updates}}\+: Automated recalculation every 6 hours
+\item {\bfseries{Incremental Processing}}\+: Only process new transactions since last update
+\item {\bfseries{On-\/\+Demand API}}\+: Update all customers or single customer via REST endpoint
+\item {\bfseries{Historical Matching}}\+: Match transaction timestamps with active rules at purchase time
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md107}{}\doxysubsection{\texorpdfstring{Database Schema}{Database Schema}}\label{README.md_autotoc_md107}
+\hypertarget{README.md_autotoc_md108}{}\doxysubsubsection{\texorpdfstring{Core Tables}{Core Tables}}\label{README.md_autotoc_md108}
+\hypertarget{README.md_autotoc_md109}{}\doxysubsubsubsection{\texorpdfstring{{\ttfamily product\+\_\+points\+\_\+rules}}{{\ttfamily product\+\_\+points\+\_\+rules}}}\label{README.md_autotoc_md109}
+Defines points earned per product purchase.
+\begin{DoxyItemize}
+\item Supports points per unit OR points per £1 spent
+\item Validity periods with start/end dates
+\item Soft delete (archived, not removed)
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md110}{}\doxysubsubsubsection{\texorpdfstring{{\ttfamily bonus\+\_\+offers}}{{\ttfamily bonus\+\_\+offers}}}\label{README.md_autotoc_md110}
+Additional points for spending thresholds.
+\begin{DoxyItemize}
+\item Global or store-\/specific
+\item Minimum spend requirements
+\item Bonus points awarded
+\item Validity periods
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md111}{}\doxysubsubsubsection{\texorpdfstring{{\ttfamily redemption\+\_\+offers}}{{\ttfamily redemption\+\_\+offers}}}\label{README.md_autotoc_md111}
+Point-\/based discounts on items.
+\begin{DoxyItemize}
+\item Discount percentage (5-\/100\%)
+\item Points cost to redeem
+\item Per-\/customer usage limits
+\item Total usage tracking
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md112}{}\doxysubsubsubsection{\texorpdfstring{{\ttfamily customer\+\_\+points\+\_\+balance}}{{\ttfamily customer\+\_\+points\+\_\+balance}}}\label{README.md_autotoc_md112}
+Current points balance per customer.
+\begin{DoxyItemize}
+\item Current balance (earned -\/ redeemed)
+\item Lifetime earned/redeemed tracking
+\item Version number for optimistic locking
+\item Last update timestamp for incremental calculation
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md113}{}\doxysubsubsubsection{\texorpdfstring{{\ttfamily points\+\_\+transactions}}{{\ttfamily points\+\_\+transactions}}}\label{README.md_autotoc_md113}
+Complete audit trail of all points activity.
+\begin{DoxyItemize}
+\item Types\+: EARNED, REDEEMED, BONUS, ADJUSTMENT, EXPIRED, REVERSED
+\item Links to accounting transactions
+\item Links to redemption offers
+\item Balance snapshots (before/after)
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md114}{}\doxysubsubsubsection{\texorpdfstring{{\ttfamily redemption\+\_\+usage}}{{\ttfamily redemption\+\_\+usage}}}\label{README.md_autotoc_md114}
+Tracks customer usage of redemption offers.
+\begin{DoxyItemize}
+\item Enforces per-\/customer usage limits
+\item Usage count and timestamps
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md115}{}\doxysubsubsection{\texorpdfstring{Views}{Views}}\label{README.md_autotoc_md115}
+
+\begin{DoxyItemize}
+\item {\bfseries{{\ttfamily active\+\_\+product\+\_\+points}}}\+: Currently active product points rules
+\item {\bfseries{{\ttfamily active\+\_\+bonus\+\_\+offers}}}\+: Currently active bonus offers
+\item {\bfseries{{\ttfamily active\+\_\+redemption\+\_\+offers}}}\+: Currently active redemption offers with availability
+\item {\bfseries{{\ttfamily customer\+\_\+points\+\_\+summary}}}\+: Comprehensive customer loyalty status
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md116}{}\doxysubsection{\texorpdfstring{Architecture}{Architecture}}\label{README.md_autotoc_md116}
+\hypertarget{README.md_autotoc_md117}{}\doxysubsubsection{\texorpdfstring{Database Connections}{Database Connections}}\label{README.md_autotoc_md117}
+
+\begin{DoxyItemize}
+\item {\bfseries{Loyalty DB}} (read/write)\+: Primary loyalty database
+\item {\bfseries{Accounting DB}} (read-\/only)\+: Source of purchase transactions for points calculation
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md118}{}\doxysubsubsection{\texorpdfstring{Integration Points}{Integration Points}}\label{README.md_autotoc_md118}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Accounting Service}}\+: Read transaction history for points calculation
+\item {\bfseries{Shopping Service}}\+: Provide pricing with loyalty discounts applied
+\item {\bfseries{Auth Service}}\+: Validate network manager JWT tokens for rule management
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md119}{}\doxysubsubsection{\texorpdfstring{SAGA Pattern for Basket Checkout}{SAGA Pattern for Basket Checkout}}\label{README.md_autotoc_md119}
+The loyalty redemption uses SAGA pattern to ensure consistency\+:
+
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Validate}}\+: Check customer has sufficient points
+\item {\bfseries{Reserve}}\+: Lock points using optimistic locking (version column)
+\item {\bfseries{Calculate}}\+: Apply discounts to basket items
+\item {\bfseries{Commit}}\+: Deduct points and create transaction record
+\item {\bfseries{Compensate}}\+: Release reserved points if checkout fails
+\end{DoxyEnumerate}\hypertarget{README.md_autotoc_md120}{}\doxysubsubsection{\texorpdfstring{Edge Case Handling}{Edge Case Handling}}\label{README.md_autotoc_md120}
+
+\begin{DoxyItemize}
+\item {\bfseries{Concurrent Redemptions}}\+: Optimistic locking with version column
+\item {\bfseries{Insufficient Points}}\+: Validation before reservation
+\item {\bfseries{Expired Offers}}\+: Check validity dates in real-\/time
+\item {\bfseries{Usage Limit Exceeded}}\+: Check current usage vs limits
+\item {\bfseries{Rule Changes Mid-\/\+Checkout}}\+: Use snapshot of rules at basket creation time
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md121}{}\doxysubsection{\texorpdfstring{REST API Endpoints}{REST API Endpoints}}\label{README.md_autotoc_md121}
+\hypertarget{README.md_autotoc_md122}{}\doxysubsubsection{\texorpdfstring{Loyalty Rules Management (Network Managers Only)}{Loyalty Rules Management (Network Managers Only)}}\label{README.md_autotoc_md122}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ \ \ /api/loyalty/rules/product-\/points\ \ \ \ \ \ -\/\ Create\ product\ points\ rule}
+\DoxyCodeLine{GET\ \ \ \ /api/loyalty/rules/product-\/points\ \ \ \ \ \ -\/\ List\ all\ product\ points\ rules}
+\DoxyCodeLine{PUT\ \ \ \ /api/loyalty/rules/product-\/points/\{id\}\ -\/\ Update\ product\ points\ rule}
+\DoxyCodeLine{DELETE\ /api/loyalty/rules/product-\/points/\{id\}\ -\/\ Deactivate\ product\ points\ rule\ (soft\ delete)}
+\DoxyCodeLine{}
+\DoxyCodeLine{POST\ \ \ /api/loyalty/rules/bonus-\/offers\ \ \ \ \ \ \ \ \ -\/\ Create\ bonus\ offer}
+\DoxyCodeLine{GET\ \ \ \ /api/loyalty/rules/bonus-\/offers\ \ \ \ \ \ \ \ \ -\/\ List\ all\ bonus\ offers}
+\DoxyCodeLine{PUT\ \ \ \ /api/loyalty/rules/bonus-\/offers/\{id\}\ \ \ \ -\/\ Update\ bonus\ offer}
+\DoxyCodeLine{DELETE\ /api/loyalty/rules/bonus-\/offers/\{id\}\ \ \ \ -\/\ Deactivate\ bonus\ offer}
+\DoxyCodeLine{}
+\DoxyCodeLine{POST\ \ \ /api/loyalty/rules/redemption-\/offers\ \ \ \ -\/\ Create\ redemption\ offer}
+\DoxyCodeLine{GET\ \ \ \ /api/loyalty/rules/redemption-\/offers\ \ \ \ -\/\ List\ all\ redemption\ offers}
+\DoxyCodeLine{PUT\ \ \ \ /api/loyalty/rules/redemption-\/offers/\{id\}\ -\/\ Update\ redemption\ offer}
+\DoxyCodeLine{DELETE\ /api/loyalty/rules/redemption-\/offers/\{id\}\ -\/\ Deactivate\ redemption\ offer}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md123}{}\doxysubsubsection{\texorpdfstring{Points Calculation}{Points Calculation}}\label{README.md_autotoc_md123}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{POST\ \ \ /api/loyalty/points/calculate\ \ \ \ \ \ \ \ \ \ \ -\/\ Calculate\ points\ for\ all\ customers}
+\DoxyCodeLine{POST\ \ \ /api/loyalty/points/calculate/\{customerId\}\ -\/\ Calculate\ points\ for\ specific\ customer}
+\DoxyCodeLine{GET\ \ \ \ /api/loyalty/points/balance/\{customerId\}\ \ \ -\/\ Get\ customer\ points\ balance}
+\DoxyCodeLine{GET\ \ \ \ /api/loyalty/points/history/\{customerId\}\ \ \ -\/\ Get\ customer\ points\ history}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md124}{}\doxysubsubsection{\texorpdfstring{Shopping Integration}{Shopping Integration}}\label{README.md_autotoc_md124}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{GET\ \ \ \ /api/loyalty/offers/active\ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/\ Get\ all\ active\ redemption\ offers}
+\DoxyCodeLine{POST\ \ \ /api/loyalty/basket/validate\ \ \ \ \ \ \ \ \ \ \ \ -\/\ Validate\ basket\ with\ selected\ offers}
+\DoxyCodeLine{POST\ \ \ /api/loyalty/basket/checkout\ \ \ \ \ \ \ \ \ \ \ \ -\/\ Apply\ loyalty\ discounts\ and\ deduct\ points}
+\DoxyCodeLine{POST\ \ \ /api/loyalty/basket/rollback\ \ \ \ \ \ \ \ \ \ \ \ -\/\ Rollback\ points\ deduction\ (compensate)}
+
+\end{DoxyCode}
+\hypertarget{README.md_autotoc_md125}{}\doxysubsection{\texorpdfstring{Scheduled Tasks}{Scheduled Tasks}}\label{README.md_autotoc_md125}
+\hypertarget{README.md_autotoc_md126}{}\doxysubsubsection{\texorpdfstring{Points Calculation Job}{Points Calculation Job}}\label{README.md_autotoc_md126}
+
+\begin{DoxyItemize}
+\item {\bfseries{Schedule}}\+: Every 6 hours (0\+:00, 6\+:00, 12\+:00, 18\+:00)
+\item {\bfseries{Cron Expression}}\+: {\ttfamily 0 0 \texorpdfstring{$\ast$}{*}/6 \texorpdfstring{$\ast$}{*} \texorpdfstring{$\ast$}{*} \texorpdfstring{$\ast$}{*}}
+\item {\bfseries{Process}}\+:
+\begin{DoxyEnumerate}
+\item Query all customers
+\item For each customer, find transactions since {\ttfamily last\+\_\+calculated\+\_\+at}
+\item Match transactions with rules active at transaction timestamp
+\item Calculate earned points (product points + bonus offers)
+\item Update {\ttfamily customer\+\_\+points\+\_\+balance}
+\item Create {\ttfamily points\+\_\+transactions} audit records
+\end{DoxyEnumerate}
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md127}{}\doxysubsubsection{\texorpdfstring{Optimization Strategies}{Optimization Strategies}}\label{README.md_autotoc_md127}
+
+\begin{DoxyItemize}
+\item Batch processing with pagination (100 customers per batch)
+\item JDBC batch inserts for transaction records
+\item Cache active rules in memory
+\item Parallel processing for independent customer calculations
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md128}{}\doxysubsection{\texorpdfstring{Connection Details}{Connection Details}}\label{README.md_autotoc_md128}
+
+\begin{DoxyItemize}
+\item {\bfseries{Host}}\+: {\ttfamily loyalty-\/db} (Docker) or {\ttfamily localhost\+:5436} (external)
+\item {\bfseries{Database}}\+: {\ttfamily loyalty}
+\item {\bfseries{User}}\+: {\ttfamily loyalty\+\_\+user}
+\item {\bfseries{Password}}\+: {\ttfamily loyalty\+\_\+pass}
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md129}{}\doxysubsection{\texorpdfstring{Sample Data}{Sample Data}}\label{README.md_autotoc_md129}
+The database is pre-\/populated with\+:
+\begin{DoxyItemize}
+\item {\bfseries{18 product points rules}} covering all warehouse items
+\item {\bfseries{6 bonus offers}} (4 global, 2 store-\/specific)
+\item {\bfseries{11 redemption offers}} covering power tools, paint, garden equipment
+\item {\bfseries{20 customer balance records}} (initialized to 0, will be calculated)
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md130}{}\doxysubsubsection{\texorpdfstring{Example Rules}{Example Rules}}\label{README.md_autotoc_md130}
+{\bfseries{Product Points}}\+:
+\begin{DoxyItemize}
+\item Cordless Drill\+: 5 points per unit
+\item Lawn Mower\+: 10 points per unit
+\item Paint\+: 0.\+5 points per £1 spent
+\end{DoxyItemize}
+
+{\bfseries{Bonus Offers}}\+:
+\begin{DoxyItemize}
+\item £50+\+: 20 bonus points
+\item £100+\+: 50 bonus points
+\item £500+\+: 300 bonus points
+\end{DoxyItemize}
+
+{\bfseries{Redemption Offers}}\+:
+\begin{DoxyItemize}
+\item 10\% off Cordless Drill for 50 points
+\item 25\% off Lawn Mower for 200 points
+\item 20\% off Paint for 30 points
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md131}{}\doxysubsection{\texorpdfstring{Implementation Notes}{Implementation Notes}}\label{README.md_autotoc_md131}
+\hypertarget{README.md_autotoc_md132}{}\doxysubsubsection{\texorpdfstring{Rule Archival Strategy}{Rule Archival Strategy}}\label{README.md_autotoc_md132}
+Rules are never deleted from the database. Instead\+:
+\begin{DoxyItemize}
+\item {\ttfamily is\+\_\+active} set to FALSE
+\item {\ttfamily deactivated\+\_\+at} timestamp recorded
+\item {\ttfamily valid\+\_\+to} set to deactivation date
+\item Historical calculations remain accurate
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md133}{}\doxysubsubsection{\texorpdfstring{Incremental Calculation}{Incremental Calculation}}\label{README.md_autotoc_md133}
+Each customer balance tracks\+:
+\begin{DoxyItemize}
+\item {\ttfamily last\+\_\+calculated\+\_\+at}\+: Timestamp of last points calculation
+\item {\ttfamily last\+\_\+transaction\+\_\+processed\+\_\+id}\+: Last accounting transaction processed
+\end{DoxyItemize}
+
+This enables efficient incremental updates without reprocessing entire transaction history.\hypertarget{README.md_autotoc_md134}{}\doxysubsubsection{\texorpdfstring{Concurrency Control}{Concurrency Control}}\label{README.md_autotoc_md134}
+Optimistic locking prevents double-\/spending\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{UPDATE}\ customer\_points\_balance\ }
+\DoxyCodeLine{\textcolor{keyword}{SET}\ current\_balance\ =\ current\_balance\ -\/\ :points,}
+\DoxyCodeLine{\ \ \ \ version\ =\ version\ +\ \textcolor{stringliteral}{1}}
+\DoxyCodeLine{\textcolor{keyword}{WHERE}\ customer\_id\ =\ :customerId\ }
+\DoxyCodeLine{\ \ \textcolor{keyword}{AND}\ version\ =\ :expectedVersion}
+\DoxyCodeLine{\ \ \textcolor{keyword}{AND}\ current\_balance\ >=\ :points}
+
+\end{DoxyCode}
+
+
+If version doesn\textquotesingle{}t match or balance insufficient, update fails and transaction rolls back.\hypertarget{README.md_autotoc_md135}{}\doxysubsection{\texorpdfstring{Future Enhancements}{Future Enhancements}}\label{README.md_autotoc_md135}
+
+\begin{DoxyItemize}
+\item Points expiration (e.\+g., expire after 12 months)
+\item Tiered loyalty levels (Bronze, Silver, Gold, Platinum)
+\item Birthday bonus points
+\item Referral bonuses
+\item Points transfer between customers
+\item Loyalty card physical/digital integration
+\item Machine learning for personalized offers
+\item Real-\/time points balance webhooks
+\end{DoxyItemize}\hypertarget{README.md_autotoc_md136}{}\doxysubsection{\texorpdfstring{Testing}{Testing}}\label{README.md_autotoc_md136}
+Use the shopping-\/mock-\/service to test\+:
+\begin{DoxyEnumerate}
+\item View active offers
+\item Create a basket with items
+\item Select loyalty offers to apply
+\item Submit for checkout
+\item Verify points deducted and prices calculated correctly
+\end{DoxyEnumerate}
+
+Monitor points\+\_\+transactions table for audit trail. 

@@ -1,0 +1,55 @@
+\doxysection{com.\+destore.\+inventory.\+security.\+Security\+Config Class Reference}
+\hypertarget{classcom_1_1destore_1_1inventory_1_1security_1_1_security_config}{}\label{classcom_1_1destore_1_1inventory_1_1security_1_1_security_config}\index{com.destore.inventory.security.SecurityConfig@{com.destore.inventory.security.SecurityConfig}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1security_1_1_security_config_a2024d5a955c5b8560c7be817d3802c93}\label{classcom_1_1destore_1_1inventory_1_1security_1_1_security_config_a2024d5a955c5b8560c7be817d3802c93} 
+{\bfseries Security\+Config} (\mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_authentication_filter}{Jwt\+Authentication\+Filter}} jwt\+Authentication\+Filter)
+\item 
+Security\+Filter\+Chain \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1security_1_1_security_config_aa6c43f999a18c0de3596b9dff2cf6cdb}{filter\+Chain}} (Http\+Security http)  throws Exception 
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Security Configuration for Inventory Service
+
+Endpoint Access\+:
+\begin{DoxyItemize}
+\item Public\+: /api/inventory/health (health check)
+\item Public\+: /actuator/\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} (monitoring endpoints)
+\item NETWORK\+\_\+\+MANAGER only\+: /api/inventory/admin/\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*} (all inventory management)
+\end{DoxyItemize}
+
+Security\+:
+\begin{DoxyItemize}
+\item JWT-\/based authentication
+\item Role-\/based authorization with @\+Pre\+Authorize annotations
+\item Stateless session (no cookies)
+\item All other endpoints denied by default 
+\end{DoxyItemize}
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1security_1_1_security_config_aa6c43f999a18c0de3596b9dff2cf6cdb}\index{com.destore.inventory.security.SecurityConfig@{com.destore.inventory.security.SecurityConfig}!filterChain@{filterChain}}
+\index{filterChain@{filterChain}!com.destore.inventory.security.SecurityConfig@{com.destore.inventory.security.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{filterChain()}{filterChain()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1security_1_1_security_config_aa6c43f999a18c0de3596b9dff2cf6cdb} 
+Security\+Filter\+Chain com.\+destore.\+inventory.\+security.\+Security\+Config.\+filter\+Chain (\begin{DoxyParamCaption}\item[{Http\+Security}]{http}{}\end{DoxyParamCaption}) throws Exception}
+
+
+\begin{DoxyParams}{Parameters}
+{\em http} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Security\+Filter\+Chain 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Exception} & \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inventory-\/service/src/main/java/com/destore/inventory/security/Security\+Config.\+java\end{DoxyCompactItemize}

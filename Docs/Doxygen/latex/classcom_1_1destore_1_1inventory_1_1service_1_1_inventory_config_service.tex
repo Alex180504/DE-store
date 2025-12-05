@@ -1,0 +1,109 @@
+\doxysection{com.\+destore.\+inventory.\+service.\+Inventory\+Config\+Service Class Reference}
+\hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service}{}\label{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service}\index{com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_threshold_config}{Threshold\+Config}} \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_ae12f33beb519ea2fa0e7f6fe27e82d02}{get\+Thresholds}} ()
+\begin{DoxyCompactList}\small\item\em Get current threshold configuration. \end{DoxyCompactList}\item 
+synchronized void \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a9641d14299350c3697c029ee587993d6}{update\+Thresholds}} (int low\+Stock, int critical\+Stock)
+\begin{DoxyCompactList}\small\item\em Update threshold configuration. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a96b31e51c6d1a7370544554a4c8a7924}{get\+Low\+Stock\+Threshold}} ()
+\begin{DoxyCompactList}\small\item\em Get low stock threshold. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a7b9a0839fa7a3e7832bf8b608c0bc06b}{get\+Critical\+Stock\+Threshold}} ()
+\begin{DoxyCompactList}\small\item\em Get critical stock threshold. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a3222c950d480a2b139562833c00b9ee9}{get\+Out\+Of\+Stock\+Threshold}} ()
+\begin{DoxyCompactList}\small\item\em Get out of stock threshold. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a7b9a0839fa7a3e7832bf8b608c0bc06b}\index{com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}!getCriticalStockThreshold@{getCriticalStockThreshold}}
+\index{getCriticalStockThreshold@{getCriticalStockThreshold}!com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}}
+\doxysubsubsection{\texorpdfstring{getCriticalStockThreshold()}{getCriticalStockThreshold()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a7b9a0839fa7a3e7832bf8b608c0bc06b} 
+int com.\+destore.\+inventory.\+service.\+Inventory\+Config\+Service.\+get\+Critical\+Stock\+Threshold (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get critical stock threshold. 
+
+Returns the current threshold for triggering CRITICAL stock alerts. Items with stock quantity between 0 and critical threshold (exclusive) are flagged as critical.
+
+\begin{DoxyReturn}{Returns}
+Critical stock threshold value 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a96b31e51c6d1a7370544554a4c8a7924}\index{com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}!getLowStockThreshold@{getLowStockThreshold}}
+\index{getLowStockThreshold@{getLowStockThreshold}!com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}}
+\doxysubsubsection{\texorpdfstring{getLowStockThreshold()}{getLowStockThreshold()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a96b31e51c6d1a7370544554a4c8a7924} 
+int com.\+destore.\+inventory.\+service.\+Inventory\+Config\+Service.\+get\+Low\+Stock\+Threshold (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get low stock threshold. 
+
+Returns the current threshold for triggering LOW stock alerts. Items with stock quantity between critical and low thresholds are flagged as low stock.
+
+\begin{DoxyReturn}{Returns}
+Low stock threshold value 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a3222c950d480a2b139562833c00b9ee9}\index{com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}!getOutOfStockThreshold@{getOutOfStockThreshold}}
+\index{getOutOfStockThreshold@{getOutOfStockThreshold}!com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}}
+\doxysubsubsection{\texorpdfstring{getOutOfStockThreshold()}{getOutOfStockThreshold()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a3222c950d480a2b139562833c00b9ee9} 
+int com.\+destore.\+inventory.\+service.\+Inventory\+Config\+Service.\+get\+Out\+Of\+Stock\+Threshold (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get out of stock threshold. 
+
+Returns the threshold for triggering OUT\+\_\+\+OF\+\_\+\+STOCK alerts. This is always 0 (items with exactly 0 stock).
+
+\begin{DoxyReturn}{Returns}
+Out of stock threshold (always 0) 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_ae12f33beb519ea2fa0e7f6fe27e82d02}\index{com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}!getThresholds@{getThresholds}}
+\index{getThresholds@{getThresholds}!com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}}
+\doxysubsubsection{\texorpdfstring{getThresholds()}{getThresholds()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_ae12f33beb519ea2fa0e7f6fe27e82d02} 
+\mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_threshold_config}{Threshold\+Config}} com.\+destore.\+inventory.\+service.\+Inventory\+Config\+Service.\+get\+Thresholds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get current threshold configuration. 
+
+Returns threshold values as a DTO for API responses. Initializes from environment variables on first call if needed. Note\+: Out-\/of-\/stock is always 0 and not configurable.
+
+\begin{DoxyReturn}{Returns}
+\doxylink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_threshold_config}{Threshold\+Config} DTO with current values 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a9641d14299350c3697c029ee587993d6}\index{com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}!updateThresholds@{updateThresholds}}
+\index{updateThresholds@{updateThresholds}!com.destore.inventory.service.InventoryConfigService@{com.destore.inventory.service.InventoryConfigService}}
+\doxysubsubsection{\texorpdfstring{updateThresholds()}{updateThresholds()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service_a9641d14299350c3697c029ee587993d6} 
+synchronized void com.\+destore.\+inventory.\+service.\+Inventory\+Config\+Service.\+update\+Thresholds (\begin{DoxyParamCaption}\item[{int}]{low\+Stock}{, }\item[{int}]{critical\+Stock}{}\end{DoxyParamCaption})}
+
+
+
+Update threshold configuration. 
+
+Updates configurable thresholds atomically in memory. Changes take effect immediately for the next stock check. Out-\/of-\/stock threshold is always 0 and cannot be changed.
+
+Thread Safety\+: Method is synchronized to prevent race conditions during concurrent updates.
+
+
+\begin{DoxyParams}{Parameters}
+{\em low\+Stock} & New low stock threshold \\
+\hline
+{\em critical\+Stock} & New critical stock threshold\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+Changes are lost on service restart (in-\/memory only) 
+
+Should be enhanced to persist to database in production 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inventory-\/service/src/main/java/com/destore/inventory/service/\mbox{\hyperlink{_inventory_config_service_8java}{Inventory\+Config\+Service.\+java}}\end{DoxyCompactItemize}

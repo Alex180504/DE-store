@@ -1,0 +1,90 @@
+\doxysection{com.\+destore.\+auth.\+service.\+Auth\+Service Class Reference}
+\hypertarget{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service}{}\label{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service}\index{com.destore.auth.service.AuthService@{com.destore.auth.service.AuthService}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_login_response}{Login\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service_a26348c4bb8f487ba08b510fe09c97e07}{login}} (\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_login_request}{Login\+Request}} login\+Request)
+\begin{DoxyCompactList}\small\item\em Authenticate user and generate JWT token. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service_aff7b5f433e475cc87abfb2320c20a1ee}{get\+Current\+User}} (String username)
+\begin{DoxyCompactList}\small\item\em Get current user information. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service_a1e54fc129616caa82f6d9b51d6042c45}{register}} (\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_register_request}{Register\+Request}} register\+Request)
+\begin{DoxyCompactList}\small\item\em Register a new user. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service_aff7b5f433e475cc87abfb2320c20a1ee}\index{com.destore.auth.service.AuthService@{com.destore.auth.service.AuthService}!getCurrentUser@{getCurrentUser}}
+\index{getCurrentUser@{getCurrentUser}!com.destore.auth.service.AuthService@{com.destore.auth.service.AuthService}}
+\doxysubsubsection{\texorpdfstring{getCurrentUser()}{getCurrentUser()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service_aff7b5f433e475cc87abfb2320c20a1ee} 
+\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response}} com.\+destore.\+auth.\+service.\+Auth\+Service.\+get\+Current\+User (\begin{DoxyParamCaption}\item[{String}]{username}{}\end{DoxyParamCaption})}
+
+
+
+Get current user information. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & Username from JWT token \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response} with user details 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Username\+Not\+Found\+Exception} & if user not found \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service_a26348c4bb8f487ba08b510fe09c97e07}\index{com.destore.auth.service.AuthService@{com.destore.auth.service.AuthService}!login@{login}}
+\index{login@{login}!com.destore.auth.service.AuthService@{com.destore.auth.service.AuthService}}
+\doxysubsubsection{\texorpdfstring{login()}{login()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service_a26348c4bb8f487ba08b510fe09c97e07} 
+\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_login_response}{Login\+Response}} com.\+destore.\+auth.\+service.\+Auth\+Service.\+login (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_login_request}{Login\+Request}}}]{login\+Request}{}\end{DoxyParamCaption})}
+
+
+
+Authenticate user and generate JWT token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em login\+Request} & Login credentials \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_login_response}{Login\+Response} with JWT token and user info 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Username\+Not\+Found\+Exception} & if user not found \\
+\hline
+{\em Bad\+Credentials\+Exception} & if password is incorrect \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service_a1e54fc129616caa82f6d9b51d6042c45}\index{com.destore.auth.service.AuthService@{com.destore.auth.service.AuthService}!register@{register}}
+\index{register@{register}!com.destore.auth.service.AuthService@{com.destore.auth.service.AuthService}}
+\doxysubsubsection{\texorpdfstring{register()}{register()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service_a1e54fc129616caa82f6d9b51d6042c45} 
+\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response}} com.\+destore.\+auth.\+service.\+Auth\+Service.\+register (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_register_request}{Register\+Request}}}]{register\+Request}{}\end{DoxyParamCaption})}
+
+
+
+Register a new user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em register\+Request} & Registration details \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response} with user details (no token -\/ must login after registration) 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Illegal\+Argument\+Exception} & if username exists or validation fails \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+auth-\/service/src/main/java/com/destore/auth/service/\mbox{\hyperlink{_auth_service_8java}{Auth\+Service.\+java}}\end{DoxyCompactItemize}

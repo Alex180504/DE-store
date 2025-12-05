@@ -1,0 +1,214 @@
+\doxysection{com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service Class Reference}
+\hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service}{}\label{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service}\index{com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_abb27eb7223cd242483dfb78d57fcda43}{create\+Rule}} (\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_request}{Pricing\+Rule\+Request}} request)
+\begin{DoxyCompactList}\small\item\em Create a new pricing rule. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a41273df3b7a210d745ebc0fc9521da68}{get\+Rule}} (Integer rule\+Id)
+\begin{DoxyCompactList}\small\item\em Get a pricing rule by ID. \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a9bfeea60ed4c8fc887cad438b6c9647d}{get\+All\+Rules}} ()
+\begin{DoxyCompactList}\small\item\em Get all pricing rules. \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a4e8720b1219297d7bd91eff971377545}{get\+Active\+Rules}} ()
+\begin{DoxyCompactList}\small\item\em Get all active pricing rules. \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a90b31c11b2dc9f4c9c3861657e77a5d3}{get\+Rules\+By\+Item}} (Integer item\+Id)
+\begin{DoxyCompactList}\small\item\em Get pricing rules for a specific item. \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a7ba8b9726c0fbcfb2747c566dea6b1a8}{get\+Rules\+By\+Store}} (Integer store\+Id)
+\begin{DoxyCompactList}\small\item\em Get pricing rules for a specific store. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_acc624d3b87b8ce935138abd15c87990c}{update\+Rule}} (Integer rule\+Id, \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_request}{Pricing\+Rule\+Request}} request)
+\begin{DoxyCompactList}\small\item\em Update an existing pricing rule. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a63f53179b7ae84db8f8462cd42b24132}{delete\+Rule}} (Integer rule\+Id)
+\begin{DoxyCompactList}\small\item\em Delete a pricing rule. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a74dc3b9ab8f6624d56629516828fe211}{deactivate\+Rule}} (Integer rule\+Id)
+\begin{DoxyCompactList}\small\item\em Soft delete a pricing rule (set is\+Active = false) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_abb27eb7223cd242483dfb78d57fcda43}\index{com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}!createRule@{createRule}}
+\index{createRule@{createRule}!com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}}
+\doxysubsubsection{\texorpdfstring{createRule()}{createRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_abb27eb7223cd242483dfb78d57fcda43} 
+\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service.\+create\+Rule (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_request}{Pricing\+Rule\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+
+
+Create a new pricing rule. 
+
+Validation\+:
+\begin{DoxyEnumerate}
+\item Verify item exists in warehouse database
+\item If store-\/specific rule, verify store exists
+\item Ensure global rules don\textquotesingle{}t have store\+\_\+id
+\end{DoxyEnumerate}
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & The pricing rule request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Created pricing rule response 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classcom_1_1destore_1_1pricing_1_1exception_1_1_item_not_found_exception}{Item\+Not\+Found\+Exception}} & if item doesn\textquotesingle{}t exist \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a74dc3b9ab8f6624d56629516828fe211}\index{com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}!deactivateRule@{deactivateRule}}
+\index{deactivateRule@{deactivateRule}!com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}}
+\doxysubsubsection{\texorpdfstring{deactivateRule()}{deactivateRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a74dc3b9ab8f6624d56629516828fe211} 
+\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service.\+deactivate\+Rule (\begin{DoxyParamCaption}\item[{Integer}]{rule\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Soft delete a pricing rule (set is\+Active = false) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rule\+Id} & The rule ID to deactivate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Deactivated pricing rule response 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classcom_1_1destore_1_1pricing_1_1exception_1_1_pricing_rule_not_found_exception}{Pricing\+Rule\+Not\+Found\+Exception}} & if rule not found \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a63f53179b7ae84db8f8462cd42b24132}\index{com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}!deleteRule@{deleteRule}}
+\index{deleteRule@{deleteRule}!com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}}
+\doxysubsubsection{\texorpdfstring{deleteRule()}{deleteRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a63f53179b7ae84db8f8462cd42b24132} 
+void com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service.\+delete\+Rule (\begin{DoxyParamCaption}\item[{Integer}]{rule\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Delete a pricing rule. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rule\+Id} & The rule ID to delete \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classcom_1_1destore_1_1pricing_1_1exception_1_1_pricing_rule_not_found_exception}{Pricing\+Rule\+Not\+Found\+Exception}} & if rule not found \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a4e8720b1219297d7bd91eff971377545}\index{com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}!getActiveRules@{getActiveRules}}
+\index{getActiveRules@{getActiveRules}!com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}}
+\doxysubsubsection{\texorpdfstring{getActiveRules()}{getActiveRules()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a4e8720b1219297d7bd91eff971377545} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service.\+get\+Active\+Rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get all active pricing rules. 
+
+\begin{DoxyReturn}{Returns}
+List of currently active rules 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a9bfeea60ed4c8fc887cad438b6c9647d}\index{com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}!getAllRules@{getAllRules}}
+\index{getAllRules@{getAllRules}!com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}}
+\doxysubsubsection{\texorpdfstring{getAllRules()}{getAllRules()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a9bfeea60ed4c8fc887cad438b6c9647d} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service.\+get\+All\+Rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get all pricing rules. 
+
+\begin{DoxyReturn}{Returns}
+List of all pricing rules 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a41273df3b7a210d745ebc0fc9521da68}\index{com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}!getRule@{getRule}}
+\index{getRule@{getRule}!com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}}
+\doxysubsubsection{\texorpdfstring{getRule()}{getRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a41273df3b7a210d745ebc0fc9521da68} 
+\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service.\+get\+Rule (\begin{DoxyParamCaption}\item[{Integer}]{rule\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Get a pricing rule by ID. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rule\+Id} & The rule ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pricing rule response 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classcom_1_1destore_1_1pricing_1_1exception_1_1_pricing_rule_not_found_exception}{Pricing\+Rule\+Not\+Found\+Exception}} & if rule not found \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a90b31c11b2dc9f4c9c3861657e77a5d3}\index{com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}!getRulesByItem@{getRulesByItem}}
+\index{getRulesByItem@{getRulesByItem}!com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}}
+\doxysubsubsection{\texorpdfstring{getRulesByItem()}{getRulesByItem()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a90b31c11b2dc9f4c9c3861657e77a5d3} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service.\+get\+Rules\+By\+Item (\begin{DoxyParamCaption}\item[{Integer}]{item\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Get pricing rules for a specific item. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The item ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of rules for the item 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a7ba8b9726c0fbcfb2747c566dea6b1a8}\index{com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}!getRulesByStore@{getRulesByStore}}
+\index{getRulesByStore@{getRulesByStore}!com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}}
+\doxysubsubsection{\texorpdfstring{getRulesByStore()}{getRulesByStore()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_a7ba8b9726c0fbcfb2747c566dea6b1a8} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} $>$ com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service.\+get\+Rules\+By\+Store (\begin{DoxyParamCaption}\item[{Integer}]{store\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Get pricing rules for a specific store. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em store\+Id} & The store ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of store-\/specific rules 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_acc624d3b87b8ce935138abd15c87990c}\index{com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}!updateRule@{updateRule}}
+\index{updateRule@{updateRule}!com.destore.pricing.service.PricingRuleService@{com.destore.pricing.service.PricingRuleService}}
+\doxysubsubsection{\texorpdfstring{updateRule()}{updateRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service_acc624d3b87b8ce935138abd15c87990c} 
+\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_response}{Pricing\+Rule\+Response}} com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service.\+update\+Rule (\begin{DoxyParamCaption}\item[{Integer}]{rule\+Id}{, }\item[{\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_pricing_rule_request}{Pricing\+Rule\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+
+
+Update an existing pricing rule. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rule\+Id} & The rule ID to update \\
+\hline
+{\em request} & The updated rule data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated pricing rule response 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classcom_1_1destore_1_1pricing_1_1exception_1_1_pricing_rule_not_found_exception}{Pricing\+Rule\+Not\+Found\+Exception}} & if rule not found \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pricing-\/service/src/main/java/com/destore/pricing/service/\mbox{\hyperlink{_pricing_rule_service_8java}{Pricing\+Rule\+Service.\+java}}\end{DoxyCompactItemize}

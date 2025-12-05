@@ -1,0 +1,81 @@
+\doxysection{com.\+destore.\+analytics.\+controller.\+Store\+Analytics\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller}{}\label{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller}\index{com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ List$<$ Store\+Analytics\+Repository.\+Store\+Info $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a828733a90ce84ace92c785bffb30abea}{get\+All\+Stores}} ()
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_store_comparison_d_t_o}{Store\+Comparison\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a0e7ab9696e39d93c1a187c07ec90fc28}{get\+Store\+Comparison}} ( @Parameter(description="{}Start date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date start\+Date, @Parameter(description="{}End date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date end\+Date)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_store_comparison_d_t_o}{Store\+Comparison\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a957945aa86cb731ae7d1299f277578b1}{get\+Week\+Store\+Comparison}} ()
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_store_comparison_d_t_o}{Store\+Comparison\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a2ab16d6f8a71351260e8cef595d7e396}{get\+Month\+Store\+Comparison}} ()
+\item 
+Response\+Entity$<$ Store\+Comparison\+DTO.\+Store\+Metrics $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_af7863e239b9bd787fea0f13483d96651}{get\+Store\+Performance}} ( @Parameter(description="{}Store ID"{}, required=true) @Path\+Variable Long store\+Id, @Parameter(description="{}Start date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date start\+Date, @Parameter(description="{}End date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date end\+Date)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for store comparison and network analytics endpoints. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a828733a90ce84ace92c785bffb30abea}\index{com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}!getAllStores@{getAllStores}}
+\index{getAllStores@{getAllStores}!com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getAllStores()}{getAllStores()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a828733a90ce84ace92c785bffb30abea} 
+Response\+Entity$<$ List$<$ Store\+Analytics\+Repository.\+Store\+Info $>$ $>$ com.\+destore.\+analytics.\+controller.\+Store\+Analytics\+Controller.\+get\+All\+Stores (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+List$<$\+Store\+Info$>$$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a2ab16d6f8a71351260e8cef595d7e396}\index{com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}!getMonthStoreComparison@{getMonthStoreComparison}}
+\index{getMonthStoreComparison@{getMonthStoreComparison}!com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getMonthStoreComparison()}{getMonthStoreComparison()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a2ab16d6f8a71351260e8cef595d7e396} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_store_comparison_d_t_o}{Store\+Comparison\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Store\+Analytics\+Controller.\+get\+Month\+Store\+Comparison (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Store\+Comparison\+DTO$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a0e7ab9696e39d93c1a187c07ec90fc28}\index{com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}!getStoreComparison@{getStoreComparison}}
+\index{getStoreComparison@{getStoreComparison}!com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getStoreComparison()}{getStoreComparison()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a0e7ab9696e39d93c1a187c07ec90fc28} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_store_comparison_d_t_o}{Store\+Comparison\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Store\+Analytics\+Controller.\+get\+Store\+Comparison (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Start date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date}]{start\+Date}{, }\item[{@Parameter(description="{}End date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Store\+Comparison(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Store\+Comparison\+DTO$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_af7863e239b9bd787fea0f13483d96651}\index{com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}!getStorePerformance@{getStorePerformance}}
+\index{getStorePerformance@{getStorePerformance}!com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getStorePerformance()}{getStorePerformance()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_af7863e239b9bd787fea0f13483d96651} 
+Response\+Entity$<$ Store\+Comparison\+DTO.\+Store\+Metrics $>$ com.\+destore.\+analytics.\+controller.\+Store\+Analytics\+Controller.\+get\+Store\+Performance (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Path\+Variable Long}]{store\+Id}{, }\item[{@Parameter(description="{}Start date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date}]{start\+Date}{, }\item[{@Parameter(description="{}End date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Store\+Performance(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Store\+Metrics$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a957945aa86cb731ae7d1299f277578b1}\index{com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}!getWeekStoreComparison@{getWeekStoreComparison}}
+\index{getWeekStoreComparison@{getWeekStoreComparison}!com.destore.analytics.controller.StoreAnalyticsController@{com.destore.analytics.controller.StoreAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getWeekStoreComparison()}{getWeekStoreComparison()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_store_analytics_controller_a957945aa86cb731ae7d1299f277578b1} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_store_comparison_d_t_o}{Store\+Comparison\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Store\+Analytics\+Controller.\+get\+Week\+Store\+Comparison (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Store\+Comparison\+DTO$>$ 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/controller/Store\+Analytics\+Controller.\+java\end{DoxyCompactItemize}

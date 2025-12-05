@@ -1,0 +1,152 @@
+\doxysection{com.\+destore.\+inventory.\+controller.\+Inventory\+Admin\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller}{}\label{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller}\index{com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a67b2f8443ec2347e3bd3aeb5d61f64d2}\label{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a67b2f8443ec2347e3bd3aeb5d61f64d2} 
+{\bfseries Inventory\+Admin\+Controller} (\mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service}{Stock\+Monitoring\+Service}} stock\+Monitoring\+Service, \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service}{Inventory\+Config\+Service}} config\+Service)
+\item 
+Response\+Entity$<$ Map$<$ String, String $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a4f3d8b662106ff638055afe57f95ac6c}{health}} ()
+\begin{DoxyCompactList}\small\item\em Health check endpoint (public) \end{DoxyCompactList}\item 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a8ff86f93e71790102a3a8337da7d1bee}{trigger\+Stock\+Check}} ()
+\begin{DoxyCompactList}\small\item\em Manually trigger stock check and send emails. \end{DoxyCompactList}\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_stock_alert}{Stock\+Alert}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a1a5b37919621baea2d70855a5d30922e}{get\+Current\+Alerts}} ()
+\begin{DoxyCompactList}\small\item\em Get current stock alerts without sending emails. \end{DoxyCompactList}\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_threshold_config}{Threshold\+Config}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a8ca856025008b990a4b705cec691bf22}{get\+Thresholds}} ()
+\begin{DoxyCompactList}\small\item\em Get current threshold configuration. \end{DoxyCompactList}\item 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a23646dfba1ebecc0a762e3fdc9a31699}{update\+Thresholds}} ( @Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_threshold_update_request}{Threshold\+Update\+Request}} request)
+\begin{DoxyCompactList}\small\item\em Update threshold configuration. \end{DoxyCompactList}\item 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a2b8018cd2adaee36ad71cf97b867d6b6}{get\+Statistics}} ()
+\begin{DoxyCompactList}\small\item\em Get inventory monitoring statistics. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a1a5b37919621baea2d70855a5d30922e}\index{com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}!getCurrentAlerts@{getCurrentAlerts}}
+\index{getCurrentAlerts@{getCurrentAlerts}!com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}}
+\doxysubsubsection{\texorpdfstring{getCurrentAlerts()}{getCurrentAlerts()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a1a5b37919621baea2d70855a5d30922e} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_stock_alert}{Stock\+Alert}} $>$ $>$ com.\+destore.\+inventory.\+controller.\+Inventory\+Admin\+Controller.\+get\+Current\+Alerts (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get current stock alerts without sending emails. 
+
+Returns the current state of stock alerts for dashboard display. Does not trigger email notifications -\/ use for UI display only.
+
+HTTP Method\+: GET Path\+: /api/inventory/admin/alerts Authorization\+: JWT with NETWORK\+\_\+\+MANAGER role required
+
+\begin{DoxyReturn}{Returns}
+JSON array of \doxylink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_stock_alert}{Stock\+Alert} objects 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a2b8018cd2adaee36ad71cf97b867d6b6}\index{com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}!getStatistics@{getStatistics}}
+\index{getStatistics@{getStatistics}!com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}}
+\doxysubsubsection{\texorpdfstring{getStatistics()}{getStatistics()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a2b8018cd2adaee36ad71cf97b867d6b6} 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ com.\+destore.\+inventory.\+controller.\+Inventory\+Admin\+Controller.\+get\+Statistics (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get inventory monitoring statistics. 
+
+Returns comprehensive dashboard data including\+:
+\begin{DoxyItemize}
+\item Total number of alerts
+\item Count by severity (out-\/of-\/stock, critical, low)
+\item Current threshold configuration
+\end{DoxyItemize}
+
+Used by the admin UI to populate the statistics cards and provide an overview of inventory health.
+
+HTTP Method\+: GET Path\+: /api/inventory/admin/stats Authorization\+: JWT with NETWORK\+\_\+\+MANAGER role required
+
+\begin{DoxyReturn}{Returns}
+JSON with total\+Alerts, out\+Of\+Stock, critical, low counts, and thresholds 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a8ca856025008b990a4b705cec691bf22}\index{com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}!getThresholds@{getThresholds}}
+\index{getThresholds@{getThresholds}!com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}}
+\doxysubsubsection{\texorpdfstring{getThresholds()}{getThresholds()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a8ca856025008b990a4b705cec691bf22} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_threshold_config}{Threshold\+Config}} $>$ com.\+destore.\+inventory.\+controller.\+Inventory\+Admin\+Controller.\+get\+Thresholds (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get current threshold configuration. 
+
+Returns the current alert thresholds for display in the admin UI. Used to populate the threshold configuration form.
+
+HTTP Method\+: GET Path\+: /api/inventory/admin/thresholds Authorization\+: JWT with NETWORK\+\_\+\+MANAGER role required
+
+\begin{DoxyReturn}{Returns}
+JSON object with low\+Stock, critical\+Stock values 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a4f3d8b662106ff638055afe57f95ac6c}\index{com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}!health@{health}}
+\index{health@{health}!com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}}
+\doxysubsubsection{\texorpdfstring{health()}{health()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a4f3d8b662106ff638055afe57f95ac6c} 
+Response\+Entity$<$ Map$<$ String, String $>$ $>$ com.\+destore.\+inventory.\+controller.\+Inventory\+Admin\+Controller.\+health (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Health check endpoint (public) 
+
+Simple health check to verify service is running. No authentication required -\/ accessible to all.
+
+HTTP Method\+: GET Path\+: /api/inventory/health Authorization\+: None (public endpoint)
+
+\begin{DoxyReturn}{Returns}
+JSON with status and service name 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a8ff86f93e71790102a3a8337da7d1bee}\index{com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}!triggerStockCheck@{triggerStockCheck}}
+\index{triggerStockCheck@{triggerStockCheck}!com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}}
+\doxysubsubsection{\texorpdfstring{triggerStockCheck()}{triggerStockCheck()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a8ff86f93e71790102a3a8337da7d1bee} 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ com.\+destore.\+inventory.\+controller.\+Inventory\+Admin\+Controller.\+trigger\+Stock\+Check (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Manually trigger stock check and send emails. 
+
+Endpoint for Network Managers to trigger an immediate stock check outside of the regular schedule. Useful for\+:
+\begin{DoxyItemize}
+\item Testing alert system
+\item Immediate checks after restocking
+\item On-\/demand reports
+\end{DoxyItemize}
+
+HTTP Method\+: POST Path\+: /api/inventory/admin/trigger-\/check Authorization\+: JWT with NETWORK\+\_\+\+MANAGER role required
+
+\begin{DoxyReturn}{Returns}
+JSON with status, message, and timestamp 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a23646dfba1ebecc0a762e3fdc9a31699}\index{com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}!updateThresholds@{updateThresholds}}
+\index{updateThresholds@{updateThresholds}!com.destore.inventory.controller.InventoryAdminController@{com.destore.inventory.controller.InventoryAdminController}}
+\doxysubsubsection{\texorpdfstring{updateThresholds()}{updateThresholds()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller_a23646dfba1ebecc0a762e3fdc9a31699} 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ com.\+destore.\+inventory.\+controller.\+Inventory\+Admin\+Controller.\+update\+Thresholds (\begin{DoxyParamCaption}\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_threshold_update_request}{Threshold\+Update\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+
+
+Update threshold configuration. 
+
+Allows Network Managers to modify alert thresholds via the admin UI. Changes take effect immediately for subsequent stock checks. Out-\/of-\/stock threshold is always 0 (hardcoded).
+
+Validation\+:
+\begin{DoxyItemize}
+\item critical\+Stock must be less than low\+Stock
+\end{DoxyItemize}
+
+HTTP Method\+: PUT Path\+: /api/inventory/admin/thresholds Authorization\+: JWT with NETWORK\+\_\+\+MANAGER role required Content-\/\+Type\+: application/json
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & \doxylink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_threshold_update_request}{Threshold\+Update\+Request} with new values \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+JSON with status, message, and updated thresholds 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inventory-\/service/src/main/java/com/destore/inventory/controller/\mbox{\hyperlink{_inventory_admin_controller_8java}{Inventory\+Admin\+Controller.\+java}}\end{DoxyCompactItemize}

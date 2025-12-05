@@ -1,0 +1,71 @@
+\doxysection{com.\+destore.\+pricing.\+service.\+Promotion\+Engine Class Reference}
+\hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_promotion_engine}{}\label{classcom_1_1destore_1_1pricing_1_1service_1_1_promotion_engine}\index{com.destore.pricing.service.PromotionEngine@{com.destore.pricing.service.PromotionEngine}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Big\+Decimal \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_promotion_engine_a43270f4f01a0e6fe45da73564e6ace9b}{calculate\+Discount}} (\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} rule, Big\+Decimal unit\+Price, Integer quantity)
+\begin{DoxyCompactList}\small\item\em Calculate discount amount based on promotion type. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_promotion_engine_acbdea0d27f2b241b9f680e09fc3cdce0}{get\+Promotion\+Description}} (\mbox{\hyperlink{enumcom_1_1destore_1_1pricing_1_1model_1_1enums_1_1_promotion_type}{Promotion\+Type}} promotion, Big\+Decimal promotion\+Value, Integer quantity)
+\begin{DoxyCompactList}\small\item\em Generate human-\/readable description of promotion. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_promotion_engine_a43270f4f01a0e6fe45da73564e6ace9b}\index{com.destore.pricing.service.PromotionEngine@{com.destore.pricing.service.PromotionEngine}!calculateDiscount@{calculateDiscount}}
+\index{calculateDiscount@{calculateDiscount}!com.destore.pricing.service.PromotionEngine@{com.destore.pricing.service.PromotionEngine}}
+\doxysubsubsection{\texorpdfstring{calculateDiscount()}{calculateDiscount()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_promotion_engine_a43270f4f01a0e6fe45da73564e6ace9b} 
+Big\+Decimal com.\+destore.\+pricing.\+service.\+Promotion\+Engine.\+calculate\+Discount (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}}}]{rule}{, }\item[{Big\+Decimal}]{unit\+Price}{, }\item[{Integer}]{quantity}{}\end{DoxyParamCaption})}
+
+
+
+Calculate discount amount based on promotion type. 
+
+Algorithm\+:
+\begin{DoxyEnumerate}
+\item If promotion is NONE, return zero discount
+\item For quantity-\/based promotions (3FOR2, BOGOF), calculate free items
+\item For value-\/based promotions (PERCENTAGE\+\_\+\+OFF, FIXED\+\_\+\+DISCOUNT), apply to subtotal
+\item Round result to 2 decimal places
+\end{DoxyEnumerate}
+
+
+\begin{DoxyParams}{Parameters}
+{\em rule} & The pricing rule containing promotion details \\
+\hline
+{\em unit\+Price} & The unit price of the item \\
+\hline
+{\em quantity} & The quantity being purchased \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Discount amount (always \texorpdfstring{$>$}{>}= 0) 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_promotion_engine_acbdea0d27f2b241b9f680e09fc3cdce0}\index{com.destore.pricing.service.PromotionEngine@{com.destore.pricing.service.PromotionEngine}!getPromotionDescription@{getPromotionDescription}}
+\index{getPromotionDescription@{getPromotionDescription}!com.destore.pricing.service.PromotionEngine@{com.destore.pricing.service.PromotionEngine}}
+\doxysubsubsection{\texorpdfstring{getPromotionDescription()}{getPromotionDescription()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_promotion_engine_acbdea0d27f2b241b9f680e09fc3cdce0} 
+String com.\+destore.\+pricing.\+service.\+Promotion\+Engine.\+get\+Promotion\+Description (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{enumcom_1_1destore_1_1pricing_1_1model_1_1enums_1_1_promotion_type}{Promotion\+Type}}}]{promotion}{, }\item[{Big\+Decimal}]{promotion\+Value}{, }\item[{Integer}]{quantity}{}\end{DoxyParamCaption})}
+
+
+
+Generate human-\/readable description of promotion. 
+
+Creates a user-\/friendly explanation of the applied promotion.
+
+
+\begin{DoxyParams}{Parameters}
+{\em promotion} & The promotion type \\
+\hline
+{\em promotion\+Value} & The promotion value (for percentage/fixed) \\
+\hline
+{\em quantity} & The quantity purchased \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Description string 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pricing-\/service/src/main/java/com/destore/pricing/service/\mbox{\hyperlink{_promotion_engine_8java}{Promotion\+Engine.\+java}}\end{DoxyCompactItemize}

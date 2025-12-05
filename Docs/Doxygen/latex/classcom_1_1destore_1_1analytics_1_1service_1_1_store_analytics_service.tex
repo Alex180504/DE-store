@@ -1,0 +1,40 @@
+\doxysection{com.\+destore.\+analytics.\+service.\+Store\+Analytics\+Service Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service}{}\label{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service}\index{com.destore.analytics.service.StoreAnalyticsService@{com.destore.analytics.service.StoreAnalyticsService}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_store_comparison_d_t_o}{Store\+Comparison\+DTO}} \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service_ad537773eaa963e89d18957681ea6d0c5}{generate\+Store\+Comparison}} (Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+Store\+Comparison\+DTO.\+Store\+Metrics \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service_a2a12872658a226c4a26a80a7a61576b6}{get\+Store\+Performance}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+List$<$ Store\+Analytics\+Repository.\+Store\+Info $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service_aa1c6e8a26d0a40af392f83cf2f627bdf}{get\+All\+Stores}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service layer for store comparison and network analytics. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service_ad537773eaa963e89d18957681ea6d0c5}\index{com.destore.analytics.service.StoreAnalyticsService@{com.destore.analytics.service.StoreAnalyticsService}!generateStoreComparison@{generateStoreComparison}}
+\index{generateStoreComparison@{generateStoreComparison}!com.destore.analytics.service.StoreAnalyticsService@{com.destore.analytics.service.StoreAnalyticsService}}
+\doxysubsubsection{\texorpdfstring{generateStoreComparison()}{generateStoreComparison()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service_ad537773eaa963e89d18957681ea6d0c5} 
+\mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_store_comparison_d_t_o}{Store\+Comparison\+DTO}} com.\+destore.\+analytics.\+service.\+Store\+Analytics\+Service.\+generate\+Store\+Comparison (\begin{DoxyParamCaption}\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Generate store comparison report across all stores in the network. \Hypertarget{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service_aa1c6e8a26d0a40af392f83cf2f627bdf}\index{com.destore.analytics.service.StoreAnalyticsService@{com.destore.analytics.service.StoreAnalyticsService}!getAllStores@{getAllStores}}
+\index{getAllStores@{getAllStores}!com.destore.analytics.service.StoreAnalyticsService@{com.destore.analytics.service.StoreAnalyticsService}}
+\doxysubsubsection{\texorpdfstring{getAllStores()}{getAllStores()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service_aa1c6e8a26d0a40af392f83cf2f627bdf} 
+List$<$ Store\+Analytics\+Repository.\+Store\+Info $>$ com.\+destore.\+analytics.\+service.\+Store\+Analytics\+Service.\+get\+All\+Stores (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get all stores for dropdown selection. \Hypertarget{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service_a2a12872658a226c4a26a80a7a61576b6}\index{com.destore.analytics.service.StoreAnalyticsService@{com.destore.analytics.service.StoreAnalyticsService}!getStorePerformance@{getStorePerformance}}
+\index{getStorePerformance@{getStorePerformance}!com.destore.analytics.service.StoreAnalyticsService@{com.destore.analytics.service.StoreAnalyticsService}}
+\doxysubsubsection{\texorpdfstring{getStorePerformance()}{getStorePerformance()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1service_1_1_store_analytics_service_a2a12872658a226c4a26a80a7a61576b6} 
+Store\+Comparison\+DTO.\+Store\+Metrics com.\+destore.\+analytics.\+service.\+Store\+Analytics\+Service.\+get\+Store\+Performance (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get performance metrics for a specific store. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/service/Store\+Analytics\+Service.\+java\end{DoxyCompactItemize}

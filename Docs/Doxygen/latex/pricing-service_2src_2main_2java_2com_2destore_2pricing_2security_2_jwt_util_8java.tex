@@ -1,0 +1,36 @@
+\doxysection{pricing-\/service/src/main/java/com/destore/pricing/security/\+Jwt\+Util.java File Reference}
+\hypertarget{pricing-service_2src_2main_2java_2com_2destore_2pricing_2security_2_jwt_util_8java}{}\label{pricing-service_2src_2main_2java_2com_2destore_2pricing_2security_2_jwt_util_8java}\index{pricing-\/service/src/main/java/com/destore/pricing/security/JwtUtil.java@{pricing-\/service/src/main/java/com/destore/pricing/security/JwtUtil.java}}
+
+
+Utility class for JWT token validation.  
+
+
+{\ttfamily import io.\+jsonwebtoken.\+Claims;}\newline
+{\ttfamily import io.\+jsonwebtoken.\+Jwts;}\newline
+{\ttfamily import io.\+jsonwebtoken.\+security.\+Keys;}\newline
+{\ttfamily import org.\+slf4j.\+Logger;}\newline
+{\ttfamily import org.\+slf4j.\+Logger\+Factory;}\newline
+{\ttfamily import org.\+springframework.\+beans.\+factory.\+annotation.\+Value;}\newline
+{\ttfamily import org.\+springframework.\+stereotype.\+Component;}\newline
+{\ttfamily import javax.\+crypto.\+Secret\+Key;}\newline
+{\ttfamily import java.\+nio.\+charset.\+Standard\+Charsets;}\newline
+{\ttfamily import java.\+util.\+Date;}\newline
+{\ttfamily import java.\+util.\+function.\+Function;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util}{com.\+destore.\+pricing.\+security.\+Jwt\+Util}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Utility class for JWT token validation. 
+
+Validates JWT tokens and extracts claims (username, role, store\+Id)
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

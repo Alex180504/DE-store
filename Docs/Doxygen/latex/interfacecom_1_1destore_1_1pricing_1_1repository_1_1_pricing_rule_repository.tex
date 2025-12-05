@@ -1,0 +1,183 @@
+\doxysection{com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository Interface Reference}
+\hypertarget{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository}{}\label{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository}\index{com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}}
+Inheritance diagram for com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a4ad25dd8c148ac4af8e18082fe11c386}{find\+Active\+Rules\+For\+Item\+And\+Store}} ( @Param("{}item\+Id"{}) Integer item\+Id, @Param("{}store\+Id"{}) Integer store\+Id, @Param("{}now"{}) Local\+Date\+Time now)
+\begin{DoxyCompactList}\small\item\em Find all active pricing rules for a specific item and store. \end{DoxyCompactList}\item 
+Optional$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a3bc28a905b9f1cee4fe8e60c21b8eb4f}{find\+Active\+Global\+Rule\+For\+Item}} ( @Param("{}item\+Id"{}) Integer item\+Id, @Param("{}now"{}) Local\+Date\+Time now)
+\begin{DoxyCompactList}\small\item\em Find active global pricing rule for an item. \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a25e6dd7ff02ee4e593229383a2479b2f}{find\+By\+Item\+Id}} (Integer item\+Id)
+\begin{DoxyCompactList}\small\item\em Find all pricing rules for a specific item. \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_adb053f09b4118a5afc91206a41207f49}{find\+By\+Store\+Id}} (@Param("{}store\+Id"{}) Integer store\+Id)
+\begin{DoxyCompactList}\small\item\em Find all pricing rules for a specific store. \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_af762a00e72783cdc04ec081806d0c770}{find\+All\+Global\+Rules}} ()
+\begin{DoxyCompactList}\small\item\em Find all global (network-\/wide) pricing rules. \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a3190422ef0f2e48e19b949da915659d9}{find\+By\+Promotion}} (\mbox{\hyperlink{enumcom_1_1destore_1_1pricing_1_1model_1_1enums_1_1_promotion_type}{Promotion\+Type}} promotion)
+\begin{DoxyCompactList}\small\item\em Find all pricing rules with a specific promotion type. \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_ad7f8fdcea5fde0fb210a9d765041eaf5}{find\+All\+Active\+Rules}} (@Param("{}now"{}) Local\+Date\+Time now)
+\begin{DoxyCompactList}\small\item\em Find all active pricing rules. \end{DoxyCompactList}\item 
+boolean \mbox{\hyperlink{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a54dbe5bf156e5dac66e4e9b68810e03b}{exists\+Active\+Rule\+For\+Item\+And\+Store}} ( @Param("{}item\+Id"{}) Integer item\+Id, @Param("{}store\+Id"{}) Integer store\+Id, @Param("{}now"{}) Local\+Date\+Time now)
+\begin{DoxyCompactList}\small\item\em Check if an active rule exists for item/store combination. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a54dbe5bf156e5dac66e4e9b68810e03b}\index{com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}!existsActiveRuleForItemAndStore@{existsActiveRuleForItemAndStore}}
+\index{existsActiveRuleForItemAndStore@{existsActiveRuleForItemAndStore}!com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}}
+\doxysubsubsection{\texorpdfstring{existsActiveRuleForItemAndStore()}{existsActiveRuleForItemAndStore()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a54dbe5bf156e5dac66e4e9b68810e03b} 
+boolean com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository.\+exists\+Active\+Rule\+For\+Item\+And\+Store (\begin{DoxyParamCaption}\item[{@Param("{}item\+Id"{}) Integer}]{item\+Id}{, }\item[{@Param("{}store\+Id"{}) Integer}]{store\+Id}{, }\item[{@Param("{}now"{}) Local\+Date\+Time}]{now}{}\end{DoxyParamCaption})}
+
+
+
+Check if an active rule exists for item/store combination. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The warehouse item ID \\
+\hline
+{\em store\+Id} & The store ID (can be null for global) \\
+\hline
+{\em now} & Current timestamp \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if an active rule exists 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a3bc28a905b9f1cee4fe8e60c21b8eb4f}\index{com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}!findActiveGlobalRuleForItem@{findActiveGlobalRuleForItem}}
+\index{findActiveGlobalRuleForItem@{findActiveGlobalRuleForItem}!com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}}
+\doxysubsubsection{\texorpdfstring{findActiveGlobalRuleForItem()}{findActiveGlobalRuleForItem()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a3bc28a905b9f1cee4fe8e60c21b8eb4f} 
+Optional$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository.\+find\+Active\+Global\+Rule\+For\+Item (\begin{DoxyParamCaption}\item[{@Param("{}item\+Id"{}) Integer}]{item\+Id}{, }\item[{@Param("{}now"{}) Local\+Date\+Time}]{now}{}\end{DoxyParamCaption})}
+
+
+
+Find active global pricing rule for an item. 
+
+Retrieves the global (network-\/wide) pricing rule for an item. Used as fallback when no store-\/specific rule exists.
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The warehouse item ID \\
+\hline
+{\em now} & Current timestamp for validity check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Optional containing the global rule if found 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a4ad25dd8c148ac4af8e18082fe11c386}\index{com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}!findActiveRulesForItemAndStore@{findActiveRulesForItemAndStore}}
+\index{findActiveRulesForItemAndStore@{findActiveRulesForItemAndStore}!com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}}
+\doxysubsubsection{\texorpdfstring{findActiveRulesForItemAndStore()}{findActiveRulesForItemAndStore()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a4ad25dd8c148ac4af8e18082fe11c386} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository.\+find\+Active\+Rules\+For\+Item\+And\+Store (\begin{DoxyParamCaption}\item[{@Param("{}item\+Id"{}) Integer}]{item\+Id}{, }\item[{@Param("{}store\+Id"{}) Integer}]{store\+Id}{, }\item[{@Param("{}now"{}) Local\+Date\+Time}]{now}{}\end{DoxyParamCaption})}
+
+
+
+Find all active pricing rules for a specific item and store. 
+
+Retrieves rules that are currently active and within their validity period. This query is used by the price calculation engine to determine applicable rules.
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The warehouse item ID \\
+\hline
+{\em store\+Id} & The store ID (can be null for global rules) \\
+\hline
+{\em now} & Current timestamp for validity check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of active pricing rules (should typically be 0 or 1) 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_ad7f8fdcea5fde0fb210a9d765041eaf5}\index{com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}!findAllActiveRules@{findAllActiveRules}}
+\index{findAllActiveRules@{findAllActiveRules}!com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}}
+\doxysubsubsection{\texorpdfstring{findAllActiveRules()}{findAllActiveRules()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_ad7f8fdcea5fde0fb210a9d765041eaf5} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository.\+find\+All\+Active\+Rules (\begin{DoxyParamCaption}\item[{@Param("{}now"{}) Local\+Date\+Time}]{now}{}\end{DoxyParamCaption})}
+
+
+
+Find all active pricing rules. 
+
+\begin{DoxyReturn}{Returns}
+List of currently active rules 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_af762a00e72783cdc04ec081806d0c770}\index{com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}!findAllGlobalRules@{findAllGlobalRules}}
+\index{findAllGlobalRules@{findAllGlobalRules}!com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}}
+\doxysubsubsection{\texorpdfstring{findAllGlobalRules()}{findAllGlobalRules()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_af762a00e72783cdc04ec081806d0c770} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository.\+find\+All\+Global\+Rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Find all global (network-\/wide) pricing rules. 
+
+\begin{DoxyReturn}{Returns}
+List of all global rules 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a25e6dd7ff02ee4e593229383a2479b2f}\index{com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}!findByItemId@{findByItemId}}
+\index{findByItemId@{findByItemId}!com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}}
+\doxysubsubsection{\texorpdfstring{findByItemId()}{findByItemId()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a25e6dd7ff02ee4e593229383a2479b2f} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository.\+find\+By\+Item\+Id (\begin{DoxyParamCaption}\item[{Integer}]{item\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Find all pricing rules for a specific item. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The warehouse item ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of all rules (active and inactive) for the item 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a3190422ef0f2e48e19b949da915659d9}\index{com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}!findByPromotion@{findByPromotion}}
+\index{findByPromotion@{findByPromotion}!com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}}
+\doxysubsubsection{\texorpdfstring{findByPromotion()}{findByPromotion()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_a3190422ef0f2e48e19b949da915659d9} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository.\+find\+By\+Promotion (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{enumcom_1_1destore_1_1pricing_1_1model_1_1enums_1_1_promotion_type}{Promotion\+Type}}}]{promotion}{}\end{DoxyParamCaption})}
+
+
+
+Find all pricing rules with a specific promotion type. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em promotion} & The promotion type to filter by \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of rules with the specified promotion 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_adb053f09b4118a5afc91206a41207f49}\index{com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}!findByStoreId@{findByStoreId}}
+\index{findByStoreId@{findByStoreId}!com.destore.pricing.repository.PricingRuleRepository@{com.destore.pricing.repository.PricingRuleRepository}}
+\doxysubsubsection{\texorpdfstring{findByStoreId()}{findByStoreId()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1pricing_1_1repository_1_1_pricing_rule_repository_adb053f09b4118a5afc91206a41207f49} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{Pricing\+Rule}} $>$ com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository.\+find\+By\+Store\+Id (\begin{DoxyParamCaption}\item[{@Param("{}store\+Id"{}) Integer}]{store\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Find all pricing rules for a specific store. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em store\+Id} & The store ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of all store-\/specific rules 
+\end{DoxyReturn}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pricing-\/service/src/main/java/com/destore/pricing/repository/\mbox{\hyperlink{_pricing_rule_repository_8java}{Pricing\+Rule\+Repository.\+java}}\end{DoxyCompactItemize}

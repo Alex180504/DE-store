@@ -1,0 +1,62 @@
+\doxysection{com.\+destore.\+loyalty.\+config.\+Security\+Config Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_security_config}{}\label{classcom_1_1destore_1_1loyalty_1_1config_1_1_security_config}\index{com.destore.loyalty.config.SecurityConfig@{com.destore.loyalty.config.SecurityConfig}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Security\+Filter\+Chain \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1config_1_1_security_config_a61807226daf9d6b6e4ea2d1e5b733a86}{security\+Filter\+Chain}} (Http\+Security http)  throws Exception 
+\item 
+Once\+Per\+Request\+Filter \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1config_1_1_security_config_a8288857791cc72ccc13f54192e10513b}{jwt\+Authentication\+Filter}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Security configuration for loyalty service. 
+
+Validates JWT tokens from auth-\/service to protect endpoints. Allows public access to health checks for Docker. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_security_config_a8288857791cc72ccc13f54192e10513b}\index{com.destore.loyalty.config.SecurityConfig@{com.destore.loyalty.config.SecurityConfig}!jwtAuthenticationFilter@{jwtAuthenticationFilter}}
+\index{jwtAuthenticationFilter@{jwtAuthenticationFilter}!com.destore.loyalty.config.SecurityConfig@{com.destore.loyalty.config.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{jwtAuthenticationFilter()}{jwtAuthenticationFilter()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1config_1_1_security_config_a8288857791cc72ccc13f54192e10513b} 
+Once\+Per\+Request\+Filter com.\+destore.\+loyalty.\+config.\+Security\+Config.\+jwt\+Authentication\+Filter (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Creates JWT authentication filter.
+
+\begin{DoxyReturn}{Returns}
+JWT filter 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_security_config_a61807226daf9d6b6e4ea2d1e5b733a86}\index{com.destore.loyalty.config.SecurityConfig@{com.destore.loyalty.config.SecurityConfig}!securityFilterChain@{securityFilterChain}}
+\index{securityFilterChain@{securityFilterChain}!com.destore.loyalty.config.SecurityConfig@{com.destore.loyalty.config.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{securityFilterChain()}{securityFilterChain()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1config_1_1_security_config_a61807226daf9d6b6e4ea2d1e5b733a86} 
+Security\+Filter\+Chain com.\+destore.\+loyalty.\+config.\+Security\+Config.\+security\+Filter\+Chain (\begin{DoxyParamCaption}\item[{Http\+Security}]{http}{}\end{DoxyParamCaption}) throws Exception}
+
+Configures HTTP security for the application.
+
+
+\begin{DoxyParams}{Parameters}
+{\em http} & Http\+Security configuration \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Security\+Filter\+Chain 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Exception} & if configuration fails \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/config/Security\+Config.\+java\end{DoxyCompactItemize}

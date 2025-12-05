@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['of_20additional_20plantuml_20elements_0',['Optional support of additional PlantUML elements',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md19',1,'']]],
+  ['of_20available_20c4_20language_20themes_1',['List of available C4 language themes',['../md__docs_2c4-plantuml_2_themes.html#autotoc_md88',1,'']]],
+  ['of_20available_20c4_20style_20themes_2',['List of available C4 style themes',['../md__docs_2c4-plantuml_2_themes.html#autotoc_md76',1,'']]],
+  ['of_20supported_20plantuml_20elements_3',['List of supported PlantUML elements',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md20',1,'']]],
+  ['offerscontroller_4',['OffersController',['../classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller.html',1,'com::destore::loyalty::controller']]],
+  ['old_20style_5',['Use new/old style',['../md__docs_2c4-plantuml_2_themes.html#autotoc_md74',1,'']]],
+  ['oncreate_6',['onCreate',['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer.html#afb5508fd06bf9b05016bc1c8873d31c3',1,'com.destore.loyalty.entity.BonusOffer.onCreate()'],['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance.html#a1b8163f354687f69c69141d602e47c5c',1,'com.destore.loyalty.entity.CustomerPointsBalance.onCreate()'],['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_points_transaction.html#ad1b9ea3b2b355f6fc794ad8fced554ed',1,'com.destore.loyalty.entity.PointsTransaction.onCreate()'],['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule.html#a205d4f4b7afda14cf00e24779b5dea74',1,'com.destore.loyalty.entity.ProductPointsRule.onCreate()'],['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer.html#acd0b1165372585bc6d2c9a4e0ac23560',1,'com.destore.loyalty.entity.RedemptionOffer.onCreate()'],['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage.html#a10f8efc618413376607b243ae6f42a7b',1,'com.destore.loyalty.entity.RedemptionUsage.onCreate()']]],
+  ['only_7',['Loyalty Rules Management (Network Managers Only)',['../C:/Users/Alex/Documents/Code/DE-store/loyalty-service/README.md#autotoc_md122',1,'']]],
+  ['onupdate_8',['onUpdate',['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer.html#a5e4ff0494da7e1f850927bc91ee5edfc',1,'com.destore.loyalty.entity.BonusOffer.onUpdate()'],['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance.html#a13b772311603ca6a3f22ca452e94cb14',1,'com.destore.loyalty.entity.CustomerPointsBalance.onUpdate()'],['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule.html#ac0e08430a7be18b5fefae3bbd0013483',1,'com.destore.loyalty.entity.ProductPointsRule.onUpdate()'],['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer.html#a1572b1c5fcdeea293f26447ac5caca11',1,'com.destore.loyalty.entity.RedemptionOffer.onUpdate()'],['../classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_usage.html#a8971106a44e01de6a15df6f98b382d22',1,'com.destore.loyalty.entity.RedemptionUsage.onUpdate()']]],
+  ['openapiconfig_9',['OpenApiConfig',['../classcom_1_1destore_1_1pricing_1_1config_1_1_open_api_config.html',1,'com::destore::pricing::config']]],
+  ['openapiconfig_2ejava_10',['OpenApiConfig.java',['../_open_api_config_8java.html',1,'']]],
+  ['optimization_20strategies_11',['Optimization Strategies',['../C:/Users/Alex/Documents/Code/DE-store/loyalty-service/README.md#autotoc_md127',1,'']]],
+  ['optional_20support_20of_20additional_20plantuml_20elements_12',['Optional support of additional PlantUML elements',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md19',1,'']]],
+  ['options_13',['Options',['../C:/Users/Alex/Documents/Code/DE-store/Docs/c4-plantuml/README.md#autotoc_md36',1,'Global Layout Options'],['../md__docs_2c4-plantuml_2_layout_options.html',1,'Layout Options']]],
+  ['options_14',['(C4 styled) Sequence diagram specific layout options',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md15',1,'']]],
+  ['or_20layout_5flandscape_15',['LAYOUT_TOP_DOWN() or LAYOUT_LEFT_RIGHT() or LAYOUT_LANDSCAPE()',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md4',1,'']]],
+  ['or_20layout_5fleft_5fright_20or_20layout_5flandscape_16',['LAYOUT_TOP_DOWN() or LAYOUT_LEFT_RIGHT() or LAYOUT_LANDSCAPE()',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md4',1,'']]],
+  ['or_20show_5flegend_20hidestereotype_20details_17',['LAYOUT_WITH_LEGEND() or SHOW_LEGEND(?hideStereotype, ?details)',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md5',1,'']]],
+  ['other_20images_18',['Sprites and other images',['../C:/Users/Alex/Documents/Code/DE-store/Docs/c4-plantuml/README.md#autotoc_md37',1,'']]],
+  ['overall_20guidance_19',['Overall Guidance',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md2',1,'']]],
+  ['overview_20',['Overview',['../C:/Users/Alex/Documents/Code/DE-store/loyalty-service/README.md#autotoc_md102',1,'']]]
+];

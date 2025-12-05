@@ -1,0 +1,88 @@
+\doxysection{com.\+destore.\+auth.\+controller.\+Auth\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller}{}\label{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller}\index{com.destore.auth.controller.AuthController@{com.destore.auth.controller.AuthController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_a6314f22754aabaf7600c22437e13cbbd}{register}} (@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_register_request}{Register\+Request}} register\+Request)
+\begin{DoxyCompactList}\small\item\em Register a new user. \end{DoxyCompactList}\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_login_response}{Login\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_a9c031bb7258a2b0a046905947f7f4ed2}{login}} (@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_login_request}{Login\+Request}} login\+Request)
+\begin{DoxyCompactList}\small\item\em Login endpoint. \end{DoxyCompactList}\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_afaea95455b3ea4bdafc79fedba41ee95}{get\+Current\+User}} (Authentication authentication)
+\begin{DoxyCompactList}\small\item\em Get current user information. \end{DoxyCompactList}\item 
+Response\+Entity$<$ String $>$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_ab5418a52e62212ecd64bd705698f04b4}{health}} ()
+\begin{DoxyCompactList}\small\item\em Health check endpoint. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_afaea95455b3ea4bdafc79fedba41ee95}\index{com.destore.auth.controller.AuthController@{com.destore.auth.controller.AuthController}!getCurrentUser@{getCurrentUser}}
+\index{getCurrentUser@{getCurrentUser}!com.destore.auth.controller.AuthController@{com.destore.auth.controller.AuthController}}
+\doxysubsubsection{\texorpdfstring{getCurrentUser()}{getCurrentUser()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_afaea95455b3ea4bdafc79fedba41ee95} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response}} $>$ com.\+destore.\+auth.\+controller.\+Auth\+Controller.\+get\+Current\+User (\begin{DoxyParamCaption}\item[{Authentication}]{authentication}{}\end{DoxyParamCaption})}
+
+
+
+Get current user information. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em authentication} & Spring Security authentication (contains username from JWT) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response} with user details 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_ab5418a52e62212ecd64bd705698f04b4}\index{com.destore.auth.controller.AuthController@{com.destore.auth.controller.AuthController}!health@{health}}
+\index{health@{health}!com.destore.auth.controller.AuthController@{com.destore.auth.controller.AuthController}}
+\doxysubsubsection{\texorpdfstring{health()}{health()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_ab5418a52e62212ecd64bd705698f04b4} 
+Response\+Entity$<$ String $>$ com.\+destore.\+auth.\+controller.\+Auth\+Controller.\+health (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Health check endpoint. 
+
+\begin{DoxyReturn}{Returns}
+Simple health status 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_a9c031bb7258a2b0a046905947f7f4ed2}\index{com.destore.auth.controller.AuthController@{com.destore.auth.controller.AuthController}!login@{login}}
+\index{login@{login}!com.destore.auth.controller.AuthController@{com.destore.auth.controller.AuthController}}
+\doxysubsubsection{\texorpdfstring{login()}{login()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_a9c031bb7258a2b0a046905947f7f4ed2} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_login_response}{Login\+Response}} $>$ com.\+destore.\+auth.\+controller.\+Auth\+Controller.\+login (\begin{DoxyParamCaption}\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_login_request}{Login\+Request}}}]{login\+Request}{}\end{DoxyParamCaption})}
+
+
+
+Login endpoint. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em login\+Request} & Login credentials \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_login_response}{Login\+Response} with JWT token 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_a6314f22754aabaf7600c22437e13cbbd}\index{com.destore.auth.controller.AuthController@{com.destore.auth.controller.AuthController}!register@{register}}
+\index{register@{register}!com.destore.auth.controller.AuthController@{com.destore.auth.controller.AuthController}}
+\doxysubsubsection{\texorpdfstring{register()}{register()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1auth_1_1controller_1_1_auth_controller_a6314f22754aabaf7600c22437e13cbbd} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response}} $>$ com.\+destore.\+auth.\+controller.\+Auth\+Controller.\+register (\begin{DoxyParamCaption}\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_register_request}{Register\+Request}}}]{register\+Request}{}\end{DoxyParamCaption})}
+
+
+
+Register a new user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em register\+Request} & Registration details \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response}{User\+Response} with user details 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+auth-\/service/src/main/java/com/destore/auth/controller/\mbox{\hyperlink{_auth_controller_8java}{Auth\+Controller.\+java}}\end{DoxyCompactItemize}

@@ -1,0 +1,4 @@
+var pricing_service_2src_2main_2java_2com_2destore_2pricing_2repository_2_warehouse_item_repository_8java =
+[
+    [ "com.destore.pricing.repository.WarehouseItemRepository", "classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository.html", "classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository" ]
+];

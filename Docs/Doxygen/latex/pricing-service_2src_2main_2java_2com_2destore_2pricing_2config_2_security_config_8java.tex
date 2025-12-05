@@ -1,0 +1,45 @@
+\doxysection{pricing-\/service/src/main/java/com/destore/pricing/config/\+Security\+Config.java File Reference}
+\hypertarget{pricing-service_2src_2main_2java_2com_2destore_2pricing_2config_2_security_config_8java}{}\label{pricing-service_2src_2main_2java_2com_2destore_2pricing_2config_2_security_config_8java}\index{pricing-\/service/src/main/java/com/destore/pricing/config/SecurityConfig.java@{pricing-\/service/src/main/java/com/destore/pricing/config/SecurityConfig.java}}
+
+
+Spring Security configuration for JWT authentication.  
+
+
+{\ttfamily import com.\+destore.\+pricing.\+security.\+Jwt\+Authentication\+Filter;}\newline
+{\ttfamily import lombok.\+Required\+Args\+Constructor;}\newline
+{\ttfamily import org.\+springframework.\+context.\+annotation.\+Bean;}\newline
+{\ttfamily import org.\+springframework.\+context.\+annotation.\+Configuration;}\newline
+{\ttfamily import org.\+springframework.\+security.\+config.\+annotation.\+method.\+configuration.\+Enable\+Method\+Security;}\newline
+{\ttfamily import org.\+springframework.\+security.\+config.\+annotation.\+web.\+builders.\+Http\+Security;}\newline
+{\ttfamily import org.\+springframework.\+security.\+config.\+annotation.\+web.\+configuration.\+Enable\+Web\+Security;}\newline
+{\ttfamily import org.\+springframework.\+security.\+config.\+http.\+Session\+Creation\+Policy;}\newline
+{\ttfamily import org.\+springframework.\+security.\+web.\+Security\+Filter\+Chain;}\newline
+{\ttfamily import org.\+springframework.\+security.\+web.\+authentication.\+Username\+Password\+Authentication\+Filter;}\newline
+{\ttfamily import org.\+springframework.\+web.\+cors.\+Cors\+Configuration;}\newline
+{\ttfamily import org.\+springframework.\+web.\+cors.\+Cors\+Configuration\+Source;}\newline
+{\ttfamily import org.\+springframework.\+web.\+cors.\+Url\+Based\+Cors\+Configuration\+Source;}\newline
+{\ttfamily import java.\+util.\+Arrays;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1config_1_1_security_config}{com.\+destore.\+pricing.\+config.\+Security\+Config}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Spring Security configuration for JWT authentication. 
+
+Configures\+:
+\begin{DoxyItemize}
+\item JWT authentication filter
+\item CORS for frontend access
+\item Stateless session management
+\item Public endpoints (health checks)
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

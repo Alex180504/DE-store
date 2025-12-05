@@ -1,0 +1,84 @@
+\doxysection{com.\+destore.\+inventory.\+service.\+Stock\+Monitoring\+Service Class Reference}
+\hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service}{}\label{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service}\index{com.destore.inventory.service.StockMonitoringService@{com.destore.inventory.service.StockMonitoringService}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a0cf6d41b18fb310f4435012065f0bd3e}\label{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a0cf6d41b18fb310f4435012065f0bd3e} 
+{\bfseries Stock\+Monitoring\+Service} (\mbox{\hyperlink{interfacecom_1_1destore_1_1inventory_1_1repository_1_1warehouse_1_1_warehouse_item_repository}{Warehouse\+Item\+Repository}} warehouse\+Item\+Repository, \mbox{\hyperlink{interfacecom_1_1destore_1_1inventory_1_1repository_1_1auth_1_1_user_repository}{User\+Repository}} user\+Repository, \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_email_service}{Email\+Service}} email\+Service, \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service}{Inventory\+Config\+Service}} config\+Service)
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a33e24f3542c41f9755c6be58cc0b27d9}{check\+Stock\+Levels}} ()
+\begin{DoxyCompactList}\small\item\em Scheduled task to check stock levels and send alerts. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a40a290d51109f9fb998745afece62e04}{trigger\+Manual\+Check}} ()
+\begin{DoxyCompactList}\small\item\em Manual trigger for stock check (callable via REST endpoint) \end{DoxyCompactList}\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_stock_alert}{Stock\+Alert}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a25bcb882961f4eca5e24653c8bd6bccc}{get\+Current\+Alerts}} ()
+\begin{DoxyCompactList}\small\item\em Get current stock alerts without sending emails. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a33e24f3542c41f9755c6be58cc0b27d9}\index{com.destore.inventory.service.StockMonitoringService@{com.destore.inventory.service.StockMonitoringService}!checkStockLevels@{checkStockLevels}}
+\index{checkStockLevels@{checkStockLevels}!com.destore.inventory.service.StockMonitoringService@{com.destore.inventory.service.StockMonitoringService}}
+\doxysubsubsection{\texorpdfstring{checkStockLevels()}{checkStockLevels()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a33e24f3542c41f9755c6be58cc0b27d9} 
+void com.\+destore.\+inventory.\+service.\+Stock\+Monitoring\+Service.\+check\+Stock\+Levels (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Scheduled task to check stock levels and send alerts. 
+
+This method runs automatically according to the cron expression configured in application.\+yml (default\+: every 6 hours at minute 0).
+
+Workflow\+:
+\begin{DoxyEnumerate}
+\item Query warehouse DB for items below low stock threshold
+\item Classify items by severity (out-\/of-\/stock, critical, low)
+\item Query auth DB for active network manager emails
+\item Send HTML email with grouped alerts
+\item Log results and completion
+\end{DoxyEnumerate}
+
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Exception} & Catches all exceptions to prevent schedule disruption \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a25bcb882961f4eca5e24653c8bd6bccc}\index{com.destore.inventory.service.StockMonitoringService@{com.destore.inventory.service.StockMonitoringService}!getCurrentAlerts@{getCurrentAlerts}}
+\index{getCurrentAlerts@{getCurrentAlerts}!com.destore.inventory.service.StockMonitoringService@{com.destore.inventory.service.StockMonitoringService}}
+\doxysubsubsection{\texorpdfstring{getCurrentAlerts()}{getCurrentAlerts()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a25bcb882961f4eca5e24653c8bd6bccc} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_stock_alert}{Stock\+Alert}} $>$ com.\+destore.\+inventory.\+service.\+Stock\+Monitoring\+Service.\+get\+Current\+Alerts (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get current stock alerts without sending emails. 
+
+Retrieves the current state of stock alerts for display purposes. Does not trigger email notifications.
+
+Used by\+:
+\begin{DoxyItemize}
+\item Admin dashboard to display current alerts
+\item REST API for querying alert status
+\end{DoxyItemize}
+
+\begin{DoxyReturn}{Returns}
+List of current stock alerts 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a40a290d51109f9fb998745afece62e04}\index{com.destore.inventory.service.StockMonitoringService@{com.destore.inventory.service.StockMonitoringService}!triggerManualCheck@{triggerManualCheck}}
+\index{triggerManualCheck@{triggerManualCheck}!com.destore.inventory.service.StockMonitoringService@{com.destore.inventory.service.StockMonitoringService}}
+\doxysubsubsection{\texorpdfstring{triggerManualCheck()}{triggerManualCheck()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a40a290d51109f9fb998745afece62e04} 
+void com.\+destore.\+inventory.\+service.\+Stock\+Monitoring\+Service.\+trigger\+Manual\+Check (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Manual trigger for stock check (callable via REST endpoint) 
+
+Executes the same logic as the scheduled task but on-\/demand. Used by Network Managers through the admin UI for immediate checks.
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service_a33e24f3542c41f9755c6be58cc0b27d9}{check\+Stock\+Levels()} for workflow details 
+\end{DoxySeeAlso}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inventory-\/service/src/main/java/com/destore/inventory/service/\mbox{\hyperlink{_stock_monitoring_service_8java}{Stock\+Monitoring\+Service.\+java}}\end{DoxyCompactItemize}

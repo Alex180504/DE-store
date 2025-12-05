@@ -1,0 +1,52 @@
+\doxysection{inventory-\/service/src/main/java/com/destore/inventory/service/\+Stock\+Monitoring\+Service.java File Reference}
+\hypertarget{_stock_monitoring_service_8java}{}\label{_stock_monitoring_service_8java}\index{inventory-\/service/src/main/java/com/destore/inventory/service/StockMonitoringService.java@{inventory-\/service/src/main/java/com/destore/inventory/service/StockMonitoringService.java}}
+
+
+Service for monitoring warehouse stock levels and sending alerts.  
+
+
+{\ttfamily import com.\+destore.\+inventory.\+model.\+auth.\+User;}\newline
+{\ttfamily import com.\+destore.\+inventory.\+model.\+dto.\+Stock\+Alert;}\newline
+{\ttfamily import com.\+destore.\+inventory.\+model.\+warehouse.\+Warehouse\+Item;}\newline
+{\ttfamily import com.\+destore.\+inventory.\+repository.\+auth.\+User\+Repository;}\newline
+{\ttfamily import com.\+destore.\+inventory.\+repository.\+warehouse.\+Warehouse\+Item\+Repository;}\newline
+{\ttfamily import org.\+slf4j.\+Logger;}\newline
+{\ttfamily import org.\+slf4j.\+Logger\+Factory;}\newline
+{\ttfamily import org.\+springframework.\+beans.\+factory.\+annotation.\+Value;}\newline
+{\ttfamily import org.\+springframework.\+scheduling.\+annotation.\+Scheduled;}\newline
+{\ttfamily import org.\+springframework.\+stereotype.\+Service;}\newline
+{\ttfamily import java.\+util.\+Array\+List;}\newline
+{\ttfamily import java.\+util.\+List;}\newline
+{\ttfamily import java.\+util.\+stream.\+Collectors;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_stock_monitoring_service}{com.\+destore.\+inventory.\+service.\+Stock\+Monitoring\+Service}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service for monitoring warehouse stock levels and sending alerts. 
+
+This service is responsible for the core inventory monitoring functionality\+:
+\begin{DoxyItemize}
+\item Scheduled stock level checks (default\+: every 6 hours)
+\item Detection of low, critical, and out-\/of-\/stock items
+\item Email notification to network managers
+\item Manual trigger support for on-\/demand checks
+\end{DoxyItemize}
+
+The service reads from two databases\+:
+\begin{DoxyItemize}
+\item Warehouse DB (My\+SQL)\+: Item stock levels (read-\/only)
+\item Auth DB (Postgre\+SQL)\+: Network manager email addresses (read-\/only)
+\end{DoxyItemize}
+
+Thresholds are dynamically configured via Inventory\+Config\+Service, allowing runtime updates without service restart.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

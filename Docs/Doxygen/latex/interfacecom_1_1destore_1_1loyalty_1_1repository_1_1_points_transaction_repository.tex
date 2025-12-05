@@ -1,0 +1,148 @@
+\doxysection{com.\+destore.\+loyalty.\+repository.\+Points\+Transaction\+Repository Interface Reference}
+\hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository}{}\label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository}\index{com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}}
+Inheritance diagram for com.\+destore.\+loyalty.\+repository.\+Points\+Transaction\+Repository\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_points_transaction}{Points\+Transaction}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a2eee7911a8898ae931f9a3d466878305}{find\+By\+Customer\+Id\+Order\+By\+Created\+At\+Desc}} (Integer customer\+Id)
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_points_transaction}{Points\+Transaction}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_aadc24136f8082b7b11c690508e89ded9}{find\+By\+Customer\+Id\+And\+Created\+At\+Between\+Order\+By\+Created\+At\+Desc}} (Integer customer\+Id, Local\+Date\+Time start\+Date, Local\+Date\+Time end\+Date)
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_points_transaction}{Points\+Transaction}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a25220a0e610b2cba4c04175fb8d2b4d4}{find\+By\+Customer\+Id\+And\+Transaction\+Type}} (Integer customer\+Id, Points\+Transaction.\+Transaction\+Type transaction\+Type)
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_points_transaction}{Points\+Transaction}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_af608cab9506c4f001cb0b511aa3b79bf}{find\+By\+Basket\+Reference}} (String basket\+Reference)
+\item 
+Integer \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a59b26b9300bc7c0770a32fd9830097cc}{calculate\+Total\+Earned}} (@Param("{}customer\+Id"{}) Integer customer\+Id)
+\item 
+Integer \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a8e1178965c0e0a272dba00bcf964203f}{calculate\+Total\+Redeemed}} (@Param("{}customer\+Id"{}) Integer customer\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Repository interface for \doxylink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_points_transaction}{Points\+Transaction} entity operations. 
+
+Provides data access methods for points transaction audit trail. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a59b26b9300bc7c0770a32fd9830097cc}\index{com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}!calculateTotalEarned@{calculateTotalEarned}}
+\index{calculateTotalEarned@{calculateTotalEarned}!com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}}
+\doxysubsubsection{\texorpdfstring{calculateTotalEarned()}{calculateTotalEarned()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a59b26b9300bc7c0770a32fd9830097cc} 
+Integer com.\+destore.\+loyalty.\+repository.\+Points\+Transaction\+Repository.\+calculate\+Total\+Earned (\begin{DoxyParamCaption}\item[{@Param("{}customer\+Id"{}) Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Calculates total points earned by a customer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Total earned points (or 0 if no transactions) 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a8e1178965c0e0a272dba00bcf964203f}\index{com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}!calculateTotalRedeemed@{calculateTotalRedeemed}}
+\index{calculateTotalRedeemed@{calculateTotalRedeemed}!com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}}
+\doxysubsubsection{\texorpdfstring{calculateTotalRedeemed()}{calculateTotalRedeemed()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a8e1178965c0e0a272dba00bcf964203f} 
+Integer com.\+destore.\+loyalty.\+repository.\+Points\+Transaction\+Repository.\+calculate\+Total\+Redeemed (\begin{DoxyParamCaption}\item[{@Param("{}customer\+Id"{}) Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Calculates total points redeemed by a customer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Total redeemed points (or 0 if no transactions) 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_af608cab9506c4f001cb0b511aa3b79bf}\index{com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}!findByBasketReference@{findByBasketReference}}
+\index{findByBasketReference@{findByBasketReference}!com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}}
+\doxysubsubsection{\texorpdfstring{findByBasketReference()}{findByBasketReference()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_af608cab9506c4f001cb0b511aa3b79bf} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_points_transaction}{Points\+Transaction}} $>$ com.\+destore.\+loyalty.\+repository.\+Points\+Transaction\+Repository.\+find\+By\+Basket\+Reference (\begin{DoxyParamCaption}\item[{String}]{basket\+Reference}{}\end{DoxyParamCaption})}
+
+Finds transactions associated with a specific basket reference. 
+
+Used for SAGA pattern compensation and audit tracking. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em basket\+Reference} & Basket reference UUID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of transactions for the basket 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_aadc24136f8082b7b11c690508e89ded9}\index{com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}!findByCustomerIdAndCreatedAtBetweenOrderByCreatedAtDesc@{findByCustomerIdAndCreatedAtBetweenOrderByCreatedAtDesc}}
+\index{findByCustomerIdAndCreatedAtBetweenOrderByCreatedAtDesc@{findByCustomerIdAndCreatedAtBetweenOrderByCreatedAtDesc}!com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}}
+\doxysubsubsection{\texorpdfstring{findByCustomerIdAndCreatedAtBetweenOrderByCreatedAtDesc()}{findByCustomerIdAndCreatedAtBetweenOrderByCreatedAtDesc()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_aadc24136f8082b7b11c690508e89ded9} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_points_transaction}{Points\+Transaction}} $>$ com.\+destore.\+loyalty.\+repository.\+Points\+Transaction\+Repository.\+find\+By\+Customer\+Id\+And\+Created\+At\+Between\+Order\+By\+Created\+At\+Desc (\begin{DoxyParamCaption}\item[{Integer}]{customer\+Id}{, }\item[{Local\+Date\+Time}]{start\+Date}{, }\item[{Local\+Date\+Time}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Finds transactions for a customer within a date range.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+{\em start\+Date} & Start date (inclusive) \\
+\hline
+{\em end\+Date} & End date (exclusive) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of transactions in the date range 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a25220a0e610b2cba4c04175fb8d2b4d4}\index{com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}!findByCustomerIdAndTransactionType@{findByCustomerIdAndTransactionType}}
+\index{findByCustomerIdAndTransactionType@{findByCustomerIdAndTransactionType}!com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}}
+\doxysubsubsection{\texorpdfstring{findByCustomerIdAndTransactionType()}{findByCustomerIdAndTransactionType()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a25220a0e610b2cba4c04175fb8d2b4d4} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_points_transaction}{Points\+Transaction}} $>$ com.\+destore.\+loyalty.\+repository.\+Points\+Transaction\+Repository.\+find\+By\+Customer\+Id\+And\+Transaction\+Type (\begin{DoxyParamCaption}\item[{Integer}]{customer\+Id}{, }\item[{Points\+Transaction.\+Transaction\+Type}]{transaction\+Type}{}\end{DoxyParamCaption})}
+
+Finds transactions by type for a customer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+{\em transaction\+Type} & Type of transaction \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of matching transactions 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a2eee7911a8898ae931f9a3d466878305}\index{com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}!findByCustomerIdOrderByCreatedAtDesc@{findByCustomerIdOrderByCreatedAtDesc}}
+\index{findByCustomerIdOrderByCreatedAtDesc@{findByCustomerIdOrderByCreatedAtDesc}!com.destore.loyalty.repository.PointsTransactionRepository@{com.destore.loyalty.repository.PointsTransactionRepository}}
+\doxysubsubsection{\texorpdfstring{findByCustomerIdOrderByCreatedAtDesc()}{findByCustomerIdOrderByCreatedAtDesc()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_points_transaction_repository_a2eee7911a8898ae931f9a3d466878305} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_points_transaction}{Points\+Transaction}} $>$ com.\+destore.\+loyalty.\+repository.\+Points\+Transaction\+Repository.\+find\+By\+Customer\+Id\+Order\+By\+Created\+At\+Desc (\begin{DoxyParamCaption}\item[{Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Finds all transactions for a specific customer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of transactions ordered by creation date descending 
+\end{DoxyReturn}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/repository/Points\+Transaction\+Repository.\+java\end{DoxyCompactItemize}

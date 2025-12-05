@@ -1,0 +1,51 @@
+\doxysection{pricing-\/service/src/main/java/com/destore/pricing/service/\+Pricing\+Rule\+Service.java File Reference}
+\hypertarget{_pricing_rule_service_8java}{}\label{_pricing_rule_service_8java}\index{pricing-\/service/src/main/java/com/destore/pricing/service/PricingRuleService.java@{pricing-\/service/src/main/java/com/destore/pricing/service/PricingRuleService.java}}
+
+
+Service for managing pricing rules (CRUD operations)  
+
+
+{\ttfamily import com.\+destore.\+pricing.\+exception.\+Forbidden\+Access\+Exception;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+exception.\+Item\+Not\+Found\+Exception;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+exception.\+Pricing\+Rule\+Not\+Found\+Exception;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+model.\+dto.\+Pricing\+Rule\+Request;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+model.\+dto.\+Pricing\+Rule\+Response;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+model.\+entity.\+Pricing\+Rule;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+repository.\+Pricing\+Rule\+Repository;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+repository.\+Warehouse\+Item\+Repository;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+security.\+User\+Principal;}\newline
+{\ttfamily import lombok.\+Required\+Args\+Constructor;}\newline
+{\ttfamily import lombok.\+extern.\+slf4j.\+Slf4j;}\newline
+{\ttfamily import org.\+springframework.\+security.\+core.\+Authentication;}\newline
+{\ttfamily import org.\+springframework.\+security.\+core.\+context.\+Security\+Context\+Holder;}\newline
+{\ttfamily import org.\+springframework.\+stereotype.\+Service;}\newline
+{\ttfamily import org.\+springframework.\+transaction.\+annotation.\+Transactional;}\newline
+{\ttfamily import java.\+time.\+Local\+Date\+Time;}\newline
+{\ttfamily import java.\+util.\+List;}\newline
+{\ttfamily import java.\+util.\+stream.\+Collectors;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service}{com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service for managing pricing rules (CRUD operations) 
+
+This service provides business logic for creating, reading, updating, and deleting pricing rules. It enforces validation rules and converts between entities and DTOs.
+
+Responsibilities\+:
+\begin{DoxyItemize}
+\item Validate item exists in warehouse before creating rules
+\item Validate store exists before creating store-\/specific rules
+\item Convert between Pricing\+Rule entities and DTOs
+\item Manage rule lifecycle (create, update, delete)
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
