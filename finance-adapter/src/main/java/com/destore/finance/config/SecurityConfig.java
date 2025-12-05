@@ -72,8 +72,7 @@ public class SecurityConfig {
                         SecurityContextHolder.getContext().setAuthentication(authentication);
 
                     } catch (Exception e) {
-                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                        response.getWriter().write("Invalid or expired token");
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or expired token");
                         return;
                     }
                 }
