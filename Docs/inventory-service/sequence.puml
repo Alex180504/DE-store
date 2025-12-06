@@ -23,7 +23,7 @@ database "Warehouse DB\n(MySQL)" as warehouseDB
 database "Auth DB\n(PostgreSQL)" as authDB
 participant "Email Server\n(SMTP)" as mailServer
 
-== Scheduled Stock Monitoring (Every 6 Hours) ==
+== Scheduled Stock Monitoring  ==
 
 scheduler -> monitoringService: 1. Trigger @Scheduled(cron)
 activate monitoringService
@@ -37,8 +37,8 @@ monitoringService -> monitoringService: 2. checkStockLevels()
 monitoringService -> configService: 3. getThresholds()
 configService --> monitoringService: 4. Return ThresholdConfig\n{low: 50, critical: 20, out: 0}
 
-monitoringService -> warehouseRepo: 5. findByStockQuantityLessThan(50)
-warehouseRepo -> warehouseDB: 6. SELECT * FROM items\nWHERE stock_quantity < 50
+monitoringService -> warehouseRepo: 5. findLowStockItems(50)
+warehouseRepo -> warehouseDB: 6. SELECT * FROM items\nWHERE stock_quantity <= 50 AND stock_quantity > 0
 warehouseDB --> warehouseRepo: 7. Return low stock items
 warehouseRepo --> monitoringService: 8. Return List<WarehouseItem>
 
@@ -48,8 +48,8 @@ alt No alerts found
     monitoringService -> monitoringService: Log: "All items have sufficient stock"
     deactivate monitoringService
 else Alerts found
-    monitoringService -> userRepo: 10. findByRoleAndIsActiveTrue('NETWORK_MANAGER')
-    userRepo -> authDB: 11. SELECT email FROM users\nWHERE role='NETWORK_MANAGER' AND is_active=true
+    monitoringService -> userRepo: 10. findActiveNetworkManagers()
+    userRepo -> authDB: 11. SELECT * FROM users\nWHERE role='NETWORK_MANAGER' AND is_active=true
     authDB --> userRepo: 12. Return network manager users
     userRepo --> monitoringService: 13. Return List<User>
     
@@ -108,15 +108,15 @@ else Valid JWT with NETWORK_MANAGER role
     monitoringService -> configService: 30. getThresholds()
     configService --> monitoringService: 31. Return thresholds
     
-    monitoringService -> warehouseRepo: 32. findByStockQuantityLessThan(50)
-    warehouseRepo -> warehouseDB: 33. SELECT * FROM items WHERE stock_quantity < 50
+    monitoringService -> warehouseRepo: 32. findLowStockItems(50)
+    warehouseRepo -> warehouseDB: 33. SELECT * FROM items WHERE stock_quantity <= 50 AND stock_quantity > 0
     warehouseDB --> warehouseRepo: 34. Return items
     warehouseRepo --> monitoringService: 35. Return List<WarehouseItem>
     
     monitoringService -> monitoringService: 36. Classify alerts
     
-    monitoringService -> userRepo: 37. findByRoleAndIsActiveTrue('NETWORK_MANAGER')
-    userRepo -> authDB: 38. SELECT email FROM users WHERE role=? AND is_active=true
+    monitoringService -> userRepo: 37. findActiveNetworkManagers()
+    userRepo -> authDB: 38. SELECT * FROM users WHERE role=? AND is_active=true
     authDB --> userRepo: 39. Return users
     userRepo --> monitoringService: 40. Return List<User>
     

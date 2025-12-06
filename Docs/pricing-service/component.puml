@@ -7,12 +7,12 @@ LAYOUT_WITH_LEGEND()
 
 Container_Boundary(pricing_service, "Pricing Service") {
     
-    Component(price_calc_ctrl, "PriceCalculationController", "Spring REST Controller", "Handles price calculation requests from Shopping System. Calculates final prices with promotions and hierarchical rules.")
+    Component(price_calc_ctrl, "PriceCalculationController", "Spring REST Controller", "POST /api/pricing/calculate - Calculate single item price\nPOST /api/pricing/calculate/bulk - Calculate multiple items\nGET /api/pricing/check - Check if pricing rule exists")
     Component(pricing_rule_ctrl, "PricingRuleController", "Spring REST Controller", "Manages pricing rules CRUD operations. Used by Store Managers and Network Managers to configure prices.")
     Component(global_exception, "GlobalExceptionHandler", "Spring ControllerAdvice", "Centralized exception handling for REST controllers. Returns standardized error responses.")
     
     Component(price_calc_engine, "PriceCalculationEngine", "Spring Service", "Core pricing calculation engine. Implements hierarchical rule logic where store-specific rules override global rules. Validates items, finds applicable rules, calculates discounts.")
-    Component(promotion_engine, "PromotionEngine", "Spring Service", "Calculates promotional discounts. Supports THREE_FOR_TWO, BOGOF, PERCENTAGE_OFF, FIXED_DISCOUNT, FREE_DELIVERY promotions with BigDecimal precision.")
+    Component(promotion_engine, "PromotionEngine", "Spring Service", "Calculates promotional discounts. Supports: THREE_FOR_TWO, BOGOF, PERCENTAGE_OFF, FIXED_DISCOUNT, FREE_DELIVERY promotions with BigDecimal precision.")
     Component(pricing_rule_svc, "PricingRuleService", "Spring Service", "Business logic for managing pricing rules. Validates item/store existence, enforces authorization rules, converts entities to DTOs.")
     
     Component(jwt_filter, "JwtAuthenticationFilter", "Spring Filter", "Validates JWT tokens from Authorization header. Extracts username and role claims, sets SecurityContext for authorization.")
@@ -38,7 +38,7 @@ ContainerDb(warehouse_db, "Warehouse Database", "MySQL 8", "Legacy database cont
 Container(shopping_system, "Shopping System", "External System", "Calls price calculation during checkout to get final prices with promotions.")
 Container(management_ui, "Management UI", "HTML5/JavaScript", "Used by Store Managers and Network Managers to configure pricing rules and view active promotions.")
 
-Rel(shopping_system, price_calc_ctrl, "POST /api/pricing/calculate", "HTTPS/JSON")
+Rel(shopping_system, price_calc_ctrl, "POST /api/pricing/calculate, /calculate/bulk", "HTTPS/JSON")
 Rel(management_ui, pricing_rule_ctrl, "CRUD /api/pricing/rules", "HTTPS/JSON")
 
 Rel(price_calc_ctrl, price_calc_engine, "Calls calculatePrice()")
@@ -66,7 +66,7 @@ Rel(price_calc_ctrl, dto_request, "Receives requests")
 Rel(price_calc_ctrl, dto_response, "Returns responses")
 Rel(pricing_rule_ctrl, dto_request, "Receives requests")
 Rel(pricing_rule_ctrl, dto_response, "Returns responses")
-Rel(promotion_engine, promotion_enum, "Uses promotion types")
+Rel(promotion_engine, promotion_enum, "Uses promotion types: NONE, THREE_FOR_TWO, BOGOF, FREE_DELIVERY, PERCENTAGE_OFF, FIXED_DISCOUNT")
 
 Rel(datasource_config, pricing_db, "Configures primary datasource")
 Rel(datasource_config, warehouse_db, "Configures secondary datasource")

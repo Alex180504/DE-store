@@ -27,15 +27,6 @@ Table(pricing_rules, "pricing_rules") {
   UNIQUE(item_id, store_id, valid_from)
 }
 
-Table(product_points_rules, "product_points_rules") {
-  primary_key(id): BIGSERIAL
-  --
-  unique(item_id): BIGINT NOT NULL
-  points_per_unit: DECIMAL(10,2) NOT NULL DEFAULT 1.0
-  created_at: TIMESTAMP
-  updated_at: TIMESTAMP
-}
-
 note right of pricing_rules
   **Hierarchical Pricing:**
   - store_id = NULL: Global rule (Network Manager)
@@ -55,16 +46,6 @@ note right of pricing_rules
   - item_id → warehouse.items.id (legacy MySQL)
   - store_id → stores.id (Store Service)
   - created_by → users.id (Auth Service)
-end note
-
-note right of product_points_rules
-  **Loyalty Points Configuration:**
-  - Network Manager sets points earned per unit
-  - Default: 1.0 point per unit
-  - Used by Loyalty Service for points calculation
-  
-  **References (not enforced):**
-  - item_id → warehouse.items.id (legacy MySQL)
 end note
 
 @enduml

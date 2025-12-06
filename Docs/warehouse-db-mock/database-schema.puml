@@ -1,0 +1,62 @@
+@startuml warehouse-db-schema
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b><u>x</u></b>
+!define foreign_key(x) <i>x</i>
+!define unique(x) <color:green>x</color>
+!define not_null(x) <b>x</b>
+
+skinparam defaultFontSize 16
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+
+title Database Schema - Warehouse DB
+
+Table(items, "items") {
+        primary_key(item_id) : INT AUTO_INCREMENT
+        --
+        not_null(name) : VARCHAR(255)
+        not_null(category) : VARCHAR(100)
+        not_null(base_price) : DECIMAL(10,2)
+        not_null(stock_quantity) : INT DEFAULT 0
+        created_at : TIMESTAMP
+        updated_at : TIMESTAMP
+        --
+        INDEX idx_category (category)
+        INDEX idx_name (name)
+    }
+    
+    note right of items
+        **Purpose:** Product catalog and inventory
+        
+        **Read-Only Access By:**
+        - Inventory Service (stock monitoring)
+        - Analytics Service (product performance)
+        - Shopping Mock Service (basket pricing)
+        
+        **Storage Engine:** InnoDB
+        **Charset:** utf8mb4_unicode_ci
+    end note
+    
+    Table(items_summary, "items_summary\n[VIEW]") {
+        category : VARCHAR(100)
+        item_count : INT
+        avg_price : DECIMAL(10,2)
+        total_stock : INT
+    }
+    
+    note right of items_summary
+        **Read-Only View**
+        Aggregated summary by category
+        
+        SELECT category,
+               COUNT(*) as item_count,
+               AVG(base_price) as avg_price,
+               SUM(stock_quantity) as total_stock
+        FROM items
+        GROUP BY category
+    end note
+    
+    items_summary .up.|> items : aggregates
+
+@enduml

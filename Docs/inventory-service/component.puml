@@ -25,11 +25,11 @@ Container_Boundary(inventoryService, "Inventory Service") {
     Component(securityConfig, "Security Configuration", "Spring Security Config", "Configures authentication, role-based access, filter chain")
     
     ' Data Access Layer - Warehouse
-    Component(warehouseRepo, "Warehouse Item Repository", "Spring Data JPA", "Queries warehouse stock: findByStockQuantityLessThan(), findAll()")
+    Component(warehouseRepo, "Warehouse Item Repository", "Spring Data JPA", "Queries warehouse stock: findLowStockItems(threshold), findOutOfStockItems(), findLowStockByCategory()")
     Component(warehouseEntity, "Warehouse Item Entity", "JPA Entity @Table(warehouse)", "itemId, name, category, stockQuantity (MySQL)")
     
     ' Data Access Layer - Auth
-    Component(userRepo, "User Repository", "Spring Data JPA", "Queries auth DB: findByRoleAndIsActiveTrue('NETWORK_MANAGER')")
+    Component(userRepo, "User Repository", "Spring Data JPA", "Queries auth DB: findActiveNetworkManagers() [@Query custom]")
     Component(userEntity, "User Entity", "JPA Entity @Table(users)", "userId, username, email, role, isActive (PostgreSQL)")
     
     ' Domain Models
@@ -40,7 +40,7 @@ Container_Boundary(inventoryService, "Inventory Service") {
     
     ' Databases
     ContainerDb(warehouseDB, "Warehouse DB", "MySQL 8:3306", "items table (itemId, name, category, stockQuantity) - Read-Only")
-    ContainerDb(authDB, "Auth DB", "PostgreSQL 15:5433", "users table (userId, email, role, isActive) - Read-Only")
+    ContainerDb(authDB, "Auth DB", "PostgreSQL 15:5432", "users table (userId, email, role, isActive) - Read-Only")
 }
 
 ' --- Relationships ---
@@ -59,11 +59,11 @@ Rel(controller, monitoringService, "triggerManualCheck()", "Method call")
 ' Scheduled Flow - Background Job
 Rel(monitoringService, monitoringService, "@Scheduled(cron) every 6 hours", "Spring Task Scheduler")
 Rel(monitoringService, configService, "getThresholds()", "Get low/critical/out thresholds")
-Rel(monitoringService, warehouseRepo, "findByStockQuantityLessThan(lowThreshold)", "JPA Query")
+Rel(monitoringService, warehouseRepo, "findLowStockItems(lowThreshold)", "JPA Query")
 Rel(warehouseRepo, warehouseDB, "SELECT * FROM items WHERE stock_quantity < ?", "JDBC/MySQL")
 Rel(warehouseRepo, warehouseEntity, "Maps to entity", "JPA")
 Rel(warehouseEntity, dtoModels, "Converts to StockAlert", "")
-Rel(monitoringService, userRepo, "findByRoleAndIsActiveTrue('NETWORK_MANAGER')", "JPA Query")
+Rel(monitoringService, userRepo, "findActiveNetworkManagers()", "JPA Query")
 Rel(userRepo, authDB, "SELECT email FROM users WHERE role=? AND is_active=true", "JDBC/PostgreSQL")
 Rel(userRepo, userEntity, "Maps to entity", "JPA")
 

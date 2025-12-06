@@ -77,6 +77,26 @@ Table(bonus_offers, "bonus_offers") {
   created_at: TIMESTAMP
 }
 
+Table(product_points_rules, "product_points_rules") {
+  primary_key(rule_id): SERIAL
+  --
+  item_id: INT NOT NULL
+  points_per_unit: INT
+  points_per_gbp: DECIMAL(10,2)
+  valid_from: TIMESTAMP NOT NULL
+  valid_to: TIMESTAMP
+  is_active: BOOLEAN DEFAULT TRUE
+  is_deleted: BOOLEAN DEFAULT FALSE
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+  deactivated_at: TIMESTAMP
+  --
+  Indexes:
+  idx_product_points_item (item_id)
+  idx_product_points_active (is_active, valid_from, valid_to)
+  idx_product_points_validity (valid_from, valid_to)
+}
+
 customer_points_balance "1" -- "0..*" points_transactions : customer_id
 customer_points_balance "1" -- "0..*" redemption_usage : customer_id
 redemption_offers "1" -- "0..*" redemption_usage : offer_id
@@ -141,6 +161,26 @@ note bottom of bonus_offers
   **Application:**
   - Applied during scheduled points calculation
   - Retroactive to qualifying transactions
+end note
+
+note bottom of product_points_rules
+  **Loyalty Points Configuration:**
+  - Network Manager sets points earned per product
+  - Two modes:
+    * points_per_unit: Fixed points (e.g., 5 points per drill)
+    * points_per_gbp: Percentage-based (e.g., 0.5 points per £1)
+  
+  **Validity & Soft Delete:**
+  - valid_from/valid_to: Time-based rules
+  - is_active: Active/inactive toggle
+  - is_deleted: Soft delete flag (preserves history)
+  
+  **Constraints:**
+  - At least one of points_per_unit OR points_per_gbp must be set
+  - Both cannot be NULL
+  
+  **References (not enforced):**
+  - item_id → warehouse.items.item_id (legacy MySQL)
 end note
 
 @enduml

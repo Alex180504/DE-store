@@ -13,26 +13,31 @@ System_Ext(apiGw, "API Gateway", "Routes loyalty requests")
 
 Container_Boundary(loyaltyService, "Loyalty Service") {
     ' API Layer - Customer Facing
-    Component(basketController, "Basket Controller", "Spring REST Controller", "POST /basket/price - SAGA orchestrator for basket pricing with redemption\nPOST /basket/compensate - SAGA compensation endpoint")
-    Component(pointsController, "Points Controller", "Spring REST Controller", "GET /points/balance/{id} - Customer points query\nPOST /points/calculate/{id} - Manual recalculation")
+    Component(basketController, "BasketController", "Spring REST Controller", "POST /basket/price - SAGA orchestrator for basket pricing with redemption")
+    Component(pointsController, "PointsController", "Spring REST Controller", "GET /points/balance/{id} - Customer points query\nPOST /points/calculate/{id} - Manual recalculation")
     
     ' API Layer - Configuration
-    Component(offersController, "Redemption Offers Controller", "Spring REST Controller", "CRUD for redemption offers (Network Manager only)")
-    Component(bonusController, "Bonus Offers Controller", "Spring REST Controller", "CRUD for bonus point offers (Network Manager only)")
-    Component(rulesController, "Product Points Rules Controller", "Spring REST Controller", "CRUD for product earning rules (Network Manager only)")
+    Component(offersController, "OffersController", "Spring REST Controller", "CRUD for redemption offers (Network Manager only)")
+    Component(bonusController, "BonusOffersController", "Spring REST Controller", "CRUD for bonus point offers (Network Manager only)")
+    Component(rulesController, "ProductPointsRulesController", "Spring REST Controller", "CRUD for product earning rules (Network Manager only)")
     
     ' Business Logic Layer - SAGA Orchestration
-    Component(redemptionService, "Redemption Service", "Spring Service @Transactional", "SAGA Orchestrator:\n1. Validate & reserve points (pessimistic lock)\n2. Calculate discounted prices\n3. Record redemption transactions\n4. Update offer usage\n5. Compensate on failure (rollback)")
+    Component(redemptionService, "RedemptionService", "Spring Service @Transactional", "SAGA Orchestrator:\n1. Validate & reserve points (pessimistic lock)\n2. Calculate discounted prices\n3. Record redemption transactions\n4. Update offer usage\n5. Auto-rollback on failure (@Transactional)")
     
     ' Business Logic Layer - Points Processing
-    Component(calculationService, "Points Calculation Service", "Spring Service @Scheduled", "Scheduled job (every 6 hours):\n- Queries accounting DB for transactions\n- Applies product rules & bonus offers\n- Updates customer balances\n- Incremental processing from last_calculated_at")
+    Component(calculationService, "PointsCalculationService", "Spring Service @Scheduled", "Scheduled job (every 6 hours):\n- Queries accounting DB for transactions\n- Applies product rules & bonus offers\n- Updates customer balances\n- Incremental processing from last_calculated_at")
+    
+    ' Security Layer
+    Component(jwtFilter, "JwtAuthenticationFilter", "Spring Security Filter", "Validates JWT tokens, extracts user claims")
+    Component(jwtUtil, "JwtUtil", "Security Utility", "JWT parsing and validation logic")
+    Component(userPrincipal, "UserPrincipal", "Security Model", "User authentication principal with role-based access")
     
     ' Data Access Layer - Loyalty DB
-    Component(balanceRepo, "Customer Points Balance Repository", "Spring Data JPA", "Queries: findByCustomerId(), findByCustomerIdForUpdate() [pessimistic lock]")
+    Component(balanceRepo, "CustomerPointsBalanceRepository", "Spring Data JPA", "findByCustomerId(), findByCustomerIdForUpdate() [@Lock PESSIMISTIC_WRITE]")
     Component(offerRepo, "Redemption Offer Repository", "Spring Data JPA", "Manages redemption offers with validity & usage limits")
     Component(bonusRepo, "Bonus Offer Repository", "Spring Data JPA", "Manages bonus point multipliers")
     Component(rulesRepo, "Product Points Rules Repository", "Spring Data JPA", "Product-level earning rules")
-    Component(transactionRepo, "Points Transaction Repository", "Spring Data JPA", "Audit trail: EARNED, REDEEMED, REFUNDED")
+    Component(transactionRepo, "PointsTransactionRepository", "Spring Data JPA", "Audit trail: EARNED, REDEEMED, BONUS, ADJUSTMENT, EXPIRED, REVERSED")
     Component(usageRepo, "Redemption Usage Repository", "Spring Data JPA", "Tracks per-customer offer usage counts")
     
     ' Data Access Layer - Accounting DB
@@ -61,6 +66,16 @@ Rel(netMgr, apiGw, "Configure offers and rules", "HTTPS")
 Rel(apiGw, basketController, "Basket pricing requests", "HTTP:8085")
 Rel(apiGw, pointsController, "Points queries", "HTTP:8085")
 Rel(apiGw, offersController, "Offer management", "HTTP:8085")
+
+' Security Flow
+Rel(basketController, jwtFilter, "Token validation")
+Rel(pointsController, jwtFilter, "Token validation")
+Rel(offersController, jwtFilter, "Token validation")
+Rel(bonusController, jwtFilter, "Token validation")
+Rel(rulesController, jwtFilter, "Token validation")
+Rel(jwtFilter, jwtUtil, "Parse & validate JWT")
+Rel(jwtFilter, userPrincipal, "Creates principal")
+Rel(securityConfig, jwtFilter, "Registers in filter chain")
 
 ' SAGA Flow - Basket Pricing with Redemption
 Rel(basketController, redemptionService, "priceBasketWithRedemption(request)", "SAGA orchestration")
