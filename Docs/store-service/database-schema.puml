@@ -1,0 +1,44 @@
+@startuml store-service-database-schema
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b><u>x</u></b>
+!define foreign_key(x) <i>x</i>
+!define unique(x) <color:blue>x</color>
+
+title Store Service Database Schema (store-db)
+
+Table(stores, "stores") {
+  primary_key(id): BIGSERIAL
+  --
+  name: VARCHAR(100) NOT NULL
+  address: VARCHAR(255)
+  postcode: VARCHAR(10)
+  status: VARCHAR(20) NOT NULL DEFAULT 'ACTIVE'
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+  created_by: BIGINT
+  --
+  Indexes:
+  idx_stores_status (status)
+}
+
+note right of stores
+  **Status Values:**
+  - ACTIVE: Store operational
+  - INACTIVE: Store closed/deleted
+  
+  **created_by:**
+  - References users.id from Auth Service
+  - Not enforced by foreign key
+  
+  **Soft Delete:**
+  - DELETE operations set status = 'INACTIVE'
+  - Never hard-deleted from database
+  
+  **Referenced By:**
+  - users.store_id (Auth Service)
+  - pricing_rules.store_id (Pricing Service)
+  - Transactions in Accounting DB
+end note
+
+@enduml

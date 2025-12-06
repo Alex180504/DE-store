@@ -1,0 +1,70 @@
+@startuml pricing-service-database-schema
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b><u>x</u></b>
+!define foreign_key(x) <i>x</i>
+!define unique(x) <color:blue>x</color>
+
+title Pricing Service Database Schema (pricing-db)
+
+Table(pricing_rules, "pricing_rules") {
+  primary_key(id): BIGSERIAL
+  --
+  item_id: BIGINT NOT NULL
+  store_id: BIGINT
+  price: DECIMAL(10,2) NOT NULL
+  valid_from: DATE
+  valid_to: DATE
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+  created_by: BIGINT
+  --
+  Indexes:
+  idx_pricing_rules_item_store (item_id, store_id)
+  idx_pricing_rules_validity (valid_from, valid_to)
+  --
+  Unique Constraint:
+  UNIQUE(item_id, store_id, valid_from)
+}
+
+Table(product_points_rules, "product_points_rules") {
+  primary_key(id): BIGSERIAL
+  --
+  unique(item_id): BIGINT NOT NULL
+  points_per_unit: DECIMAL(10,2) NOT NULL DEFAULT 1.0
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+}
+
+note right of pricing_rules
+  **Hierarchical Pricing:**
+  - store_id = NULL: Global rule (Network Manager)
+  - store_id = <id>: Store-specific override (Store/Network Manager)
+  
+  **Rule Precedence:**
+  1. Store-specific rule (if exists)
+  2. Global rule (fallback)
+  3. Warehouse catalog price (final fallback)
+  
+  **Validity Period:**
+  - valid_from/valid_to: Optional date range
+  - NULL = always valid
+  - Checked against current date during calculation
+  
+  **References (not enforced):**
+  - item_id → warehouse.items.id (legacy MySQL)
+  - store_id → stores.id (Store Service)
+  - created_by → users.id (Auth Service)
+end note
+
+note right of product_points_rules
+  **Loyalty Points Configuration:**
+  - Network Manager sets points earned per unit
+  - Default: 1.0 point per unit
+  - Used by Loyalty Service for points calculation
+  
+  **References (not enforced):**
+  - item_id → warehouse.items.id (legacy MySQL)
+end note
+
+@enduml
