@@ -1,0 +1,40 @@
+\doxysection{auth-\/service/src/main/java/com/destore/auth/service/\+Auth\+Service.java File Reference}
+\hypertarget{_auth_service_8java}{}\label{_auth_service_8java}\index{auth-\/service/src/main/java/com/destore/auth/service/AuthService.java@{auth-\/service/src/main/java/com/destore/auth/service/AuthService.java}}
+
+
+Service class for authentication operations.  
+
+
+{\ttfamily import com.\+destore.\+auth.\+model.\+dto.\+Login\+Request;}\newline
+{\ttfamily import com.\+destore.\+auth.\+model.\+dto.\+Login\+Response;}\newline
+{\ttfamily import com.\+destore.\+auth.\+model.\+dto.\+Register\+Request;}\newline
+{\ttfamily import com.\+destore.\+auth.\+model.\+dto.\+User\+Response;}\newline
+{\ttfamily import com.\+destore.\+auth.\+model.\+entity.\+User;}\newline
+{\ttfamily import com.\+destore.\+auth.\+model.\+enums.\+User\+Role;}\newline
+{\ttfamily import com.\+destore.\+auth.\+repository.\+User\+Repository;}\newline
+{\ttfamily import com.\+destore.\+auth.\+security.\+Jwt\+Util;}\newline
+{\ttfamily import lombok.\+Required\+Args\+Constructor;}\newline
+{\ttfamily import lombok.\+extern.\+slf4j.\+Slf4j;}\newline
+{\ttfamily import org.\+springframework.\+security.\+authentication.\+Bad\+Credentials\+Exception;}\newline
+{\ttfamily import org.\+springframework.\+security.\+core.\+userdetails.\+Username\+Not\+Found\+Exception;}\newline
+{\ttfamily import org.\+springframework.\+security.\+crypto.\+password.\+Password\+Encoder;}\newline
+{\ttfamily import org.\+springframework.\+stereotype.\+Service;}\newline
+{\ttfamily import org.\+springframework.\+transaction.\+annotation.\+Transactional;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1service_1_1_auth_service}{com.\+destore.\+auth.\+service.\+Auth\+Service}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service class for authentication operations. 
+
+Handles user login and JWT token generation
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

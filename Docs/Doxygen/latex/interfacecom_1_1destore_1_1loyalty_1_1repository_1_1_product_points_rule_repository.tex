@@ -1,0 +1,85 @@
+\doxysection{com.\+destore.\+loyalty.\+repository.\+Product\+Points\+Rule\+Repository Interface Reference}
+\hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository}{}\label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository}\index{com.destore.loyalty.repository.ProductPointsRuleRepository@{com.destore.loyalty.repository.ProductPointsRuleRepository}}
+Inheritance diagram for com.\+destore.\+loyalty.\+repository.\+Product\+Points\+Rule\+Repository\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule}{Product\+Points\+Rule}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository_a444c33f3751d484e43939665c7306daf}{find\+By\+Is\+Deleted\+False}} ()
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule}{Product\+Points\+Rule}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository_a0ab214b312e12cf041adcd7b80c798dc}{find\+Applicable\+Rules}} (@Param("{}item\+Id"{}) Integer item\+Id, @Param("{}timestamp"{}) Local\+Date\+Time timestamp)
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule}{Product\+Points\+Rule}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository_a150ad7aba6db3339665c568358a53c99}{find\+By\+Item\+Id}} (Integer item\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Repository interface for \doxylink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule}{Product\+Points\+Rule} entity operations. 
+
+Provides data access methods for managing product points rules, including historical queries for retroactive points calculation. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository_a0ab214b312e12cf041adcd7b80c798dc}\index{com.destore.loyalty.repository.ProductPointsRuleRepository@{com.destore.loyalty.repository.ProductPointsRuleRepository}!findApplicableRules@{findApplicableRules}}
+\index{findApplicableRules@{findApplicableRules}!com.destore.loyalty.repository.ProductPointsRuleRepository@{com.destore.loyalty.repository.ProductPointsRuleRepository}}
+\doxysubsubsection{\texorpdfstring{findApplicableRules()}{findApplicableRules()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository_a0ab214b312e12cf041adcd7b80c798dc} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule}{Product\+Points\+Rule}} $>$ com.\+destore.\+loyalty.\+repository.\+Product\+Points\+Rule\+Repository.\+find\+Applicable\+Rules (\begin{DoxyParamCaption}\item[{@Param("{}item\+Id"{}) Integer}]{item\+Id}{, }\item[{@Param("{}timestamp"{}) Local\+Date\+Time}]{timestamp}{}\end{DoxyParamCaption})}
+
+Finds product points rules valid at a specific timestamp. 
+
+Used for historical points calculation from past transactions. Does NOT filter by is\+Active to allow calculation of points earned under rules that are now deactivated/archived. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & Product/item ID \\
+\hline
+{\em timestamp} & Transaction timestamp \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of applicable rules 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository_a444c33f3751d484e43939665c7306daf}\index{com.destore.loyalty.repository.ProductPointsRuleRepository@{com.destore.loyalty.repository.ProductPointsRuleRepository}!findByIsDeletedFalse@{findByIsDeletedFalse}}
+\index{findByIsDeletedFalse@{findByIsDeletedFalse}!com.destore.loyalty.repository.ProductPointsRuleRepository@{com.destore.loyalty.repository.ProductPointsRuleRepository}}
+\doxysubsubsection{\texorpdfstring{findByIsDeletedFalse()}{findByIsDeletedFalse()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository_a444c33f3751d484e43939665c7306daf} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule}{Product\+Points\+Rule}} $>$ com.\+destore.\+loyalty.\+repository.\+Product\+Points\+Rule\+Repository.\+find\+By\+Is\+Deleted\+False (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Finds all product points rules that are not deleted. Includes both active and inactive rules for UI display.
+
+\begin{DoxyReturn}{Returns}
+List of non-\/deleted rules 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository_a150ad7aba6db3339665c568358a53c99}\index{com.destore.loyalty.repository.ProductPointsRuleRepository@{com.destore.loyalty.repository.ProductPointsRuleRepository}!findByItemId@{findByItemId}}
+\index{findByItemId@{findByItemId}!com.destore.loyalty.repository.ProductPointsRuleRepository@{com.destore.loyalty.repository.ProductPointsRuleRepository}}
+\doxysubsubsection{\texorpdfstring{findByItemId()}{findByItemId()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1loyalty_1_1repository_1_1_product_points_rule_repository_a150ad7aba6db3339665c568358a53c99} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule}{Product\+Points\+Rule}} $>$ com.\+destore.\+loyalty.\+repository.\+Product\+Points\+Rule\+Repository.\+find\+By\+Item\+Id (\begin{DoxyParamCaption}\item[{Integer}]{item\+Id}{}\end{DoxyParamCaption})}
+
+Finds all rules for a specific item (including inactive for historical reference).
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & Product/item ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of all rules for the item 
+\end{DoxyReturn}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/repository/Product\+Points\+Rule\+Repository.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,47 @@
+\doxysection{pricing-\/service/src/main/java/com/destore/pricing/controller/\+Price\+Calculation\+Controller.java File Reference}
+\hypertarget{_price_calculation_controller_8java}{}\label{_price_calculation_controller_8java}\index{pricing-\/service/src/main/java/com/destore/pricing/controller/PriceCalculationController.java@{pricing-\/service/src/main/java/com/destore/pricing/controller/PriceCalculationController.java}}
+
+
+REST controller for price calculation operations.  
+
+
+{\ttfamily import com.\+destore.\+pricing.\+model.\+dto.\+Bulk\+Price\+Calculation\+Request;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+model.\+dto.\+Bulk\+Price\+Calculation\+Response;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+model.\+dto.\+Price\+Calculation\+Request;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+model.\+dto.\+Price\+Calculation\+Response;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+service.\+Price\+Calculation\+Engine;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+Operation;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+media.\+Content;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+media.\+Schema;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+responses.\+Api\+Response;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+responses.\+Api\+Responses;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+tags.\+Tag;}\newline
+{\ttfamily import jakarta.\+validation.\+Valid;}\newline
+{\ttfamily import lombok.\+Required\+Args\+Constructor;}\newline
+{\ttfamily import lombok.\+extern.\+slf4j.\+Slf4j;}\newline
+{\ttfamily import org.\+springframework.\+http.\+Response\+Entity;}\newline
+{\ttfamily import org.\+springframework.\+web.\+bind.\+annotation.\texorpdfstring{$\ast$}{*};}\newline
+{\ttfamily import java.\+math.\+Big\+Decimal;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller}{com.\+destore.\+pricing.\+controller.\+Price\+Calculation\+Controller}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for price calculation operations. 
+
+This controller handles price calculation requests from the Shopping System. It applies hierarchical pricing rules and promotional discounts to calculate final prices.
+
+Endpoints\+:
+\begin{DoxyItemize}
+\item POST /api/pricing/calculate -\/ Calculate final price with promotions
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

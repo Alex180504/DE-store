@@ -1,0 +1,52 @@
+\doxysection{inventory-\/service/src/main/java/com/destore/inventory/service/\+Inventory\+Config\+Service.java File Reference}
+\hypertarget{_inventory_config_service_8java}{}\label{_inventory_config_service_8java}\index{inventory-\/service/src/main/java/com/destore/inventory/service/InventoryConfigService.java@{inventory-\/service/src/main/java/com/destore/inventory/service/InventoryConfigService.java}}
+
+
+Service for managing inventory threshold configuration.  
+
+
+{\ttfamily import com.\+destore.\+inventory.\+model.\+dto.\+Threshold\+Config;}\newline
+{\ttfamily import org.\+slf4j.\+Logger;}\newline
+{\ttfamily import org.\+slf4j.\+Logger\+Factory;}\newline
+{\ttfamily import org.\+springframework.\+beans.\+factory.\+annotation.\+Value;}\newline
+{\ttfamily import org.\+springframework.\+stereotype.\+Service;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service}{com.\+destore.\+inventory.\+service.\+Inventory\+Config\+Service}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service for managing inventory threshold configuration. 
+
+This service provides runtime configuration management for stock alert thresholds. Thresholds determine when items are flagged as low, critical, or out of stock.
+
+Current Implementation\+:
+\begin{DoxyItemize}
+\item In-\/memory storage (volatile -\/ resets on service restart)
+\item Initialized from environment variables
+\item Thread-\/safe updates with synchronized methods
+\item Network managers can update via admin API
+\end{DoxyItemize}
+
+Configuration Parameters\+:
+\begin{DoxyItemize}
+\item low\+Stock\+Threshold\+: Items below this trigger LOW alerts (default\+: 50)
+\item critical\+Stock\+Threshold\+: Items below this trigger CRITICAL alerts (default\+: 20)
+\item out\+Of\+Stock\+Threshold\+: Items at this level trigger OUT\+\_\+\+OF\+\_\+\+STOCK alerts (default\+: 0)
+\end{DoxyItemize}
+
+\begin{DoxyNote}{Note}
+Production TODO\+: Persist configuration to database table 
+
+Production TODO\+: Track configuration change history 
+
+Production TODO\+: Support per-\/category thresholds
+\end{DoxyNote}
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

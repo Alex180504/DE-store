@@ -1,0 +1,138 @@
+package com.destore.finance.config;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.crypto.SecretKey;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+
+    /** 
+     * @param http
+     * @return SecurityFilterChain
+     * @throws Exception
+     */
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .sessionManagement(session -> 
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/actuator/health", "/actuator/health/**").permitAll()
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                .anyRequest().authenticated())
+            .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        return http.build();
+    }
+
+    /** 
+     * @return OncePerRequestFilter
+     */
+    @Bean
+    public OncePerRequestFilter jwtAuthenticationFilter() {
+        return new OncePerRequestFilter() {
+            @Override
+            protected void doFilterInternal(
+                    HttpServletRequest request,
+                    HttpServletResponse response,
+                    FilterChain filterChain) throws ServletException, IOException {
+
+                String authHeader = request.getHeader("Authorization");
+
+                if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                    String token = authHeader.substring(7);
+
+                    try {
+                        SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+                        Claims claims = Jwts.parser()
+                                .verifyWith(key)
+                                .build()
+                                .parseSignedClaims(token)
+                                .getPayload();
+
+                        String username = claims.getSubject();
+                        
+                        JwtAuthentication authentication = new JwtAuthentication(username, claims);
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                    } catch (Exception e) {
+                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or expired token");
+                        return;
+                    }
+                }
+
+                filterChain.doFilter(request, response);
+            }
+        };
+    }
+
+    private static class JwtAuthentication implements org.springframework.security.core.Authentication {
+        private final String username;
+        private final Claims claims;
+        private boolean authenticated = true;
+
+        public JwtAuthentication(String username, Claims claims) {
+            this.username = username;
+            this.claims = claims;
+        }
+
+        @Override
+        public java.util.Collection<? extends org.springframework.security.core.GrantedAuthority> getAuthorities() {
+            return java.util.Collections.emptyList();
+        }
+
+        @Override
+        public Object getCredentials() {
+            return null;
+        }
+
+        @Override
+        public Object getDetails() {
+            return claims;
+        }
+
+        @Override
+        public Object getPrincipal() {
+            return username;
+        }
+
+        @Override
+        public boolean isAuthenticated() {
+            return authenticated;
+        }
+
+        @Override
+        public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+            this.authenticated = isAuthenticated;
+        }
+
+        @Override
+        public String getName() {
+            return username;
+        }
+    }
+}

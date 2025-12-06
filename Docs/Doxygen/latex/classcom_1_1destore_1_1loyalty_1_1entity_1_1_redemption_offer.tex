@@ -1,0 +1,104 @@
+\doxysection{com.\+destore.\+loyalty.\+entity.\+Redemption\+Offer Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer}{}\label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer}\index{com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_ae66ef4fc13a4e735034b6328cca248dc}{applies\+To\+Item}} (Integer target\+Item\+Id)
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_ad286c1740a2db98d550f8b18e3ae7d1d}{is\+Valid\+At}} (Local\+Date\+Time timestamp)
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_a3a10f53542ac6ad1736e1eccc93ed82d}{has\+Available\+Uses}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_a07c3931d5690ba933e7992a0cc8f1d42}{increment\+Usage}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_acd0b1165372585bc6d2c9a4e0ac23560}{on\+Create}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_a1572b1c5fcdeea293f26447ac5caca11}{on\+Update}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Entity representing loyalty point redemption offers. 
+
+Defines discounts customers can redeem by spending loyalty points (e.\+g., 10\% off cordless drills for 50 points). Supports usage limits per customer and total redemptions. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_ae66ef4fc13a4e735034b6328cca248dc}\index{com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}!appliesToItem@{appliesToItem}}
+\index{appliesToItem@{appliesToItem}!com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}}
+\doxysubsubsection{\texorpdfstring{appliesToItem()}{appliesToItem()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_ae66ef4fc13a4e735034b6328cca248dc} 
+boolean com.\+destore.\+loyalty.\+entity.\+Redemption\+Offer.\+applies\+To\+Item (\begin{DoxyParamCaption}\item[{Integer}]{target\+Item\+Id}{}\end{DoxyParamCaption})}
+
+Checks if this offer is applicable to a specific item.
+
+
+\begin{DoxyParams}{Parameters}
+{\em target\+Item\+Id} & The item ID to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if offer applies to the item 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_a3a10f53542ac6ad1736e1eccc93ed82d}\index{com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}!hasAvailableUses@{hasAvailableUses}}
+\index{hasAvailableUses@{hasAvailableUses}!com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}}
+\doxysubsubsection{\texorpdfstring{hasAvailableUses()}{hasAvailableUses()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_a3a10f53542ac6ad1736e1eccc93ed82d} 
+boolean com.\+destore.\+loyalty.\+entity.\+Redemption\+Offer.\+has\+Available\+Uses (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Checks if total usage limit has been reached.
+
+\begin{DoxyReturn}{Returns}
+true if the offer can still be used globally 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_a07c3931d5690ba933e7992a0cc8f1d42}\index{com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}!incrementUsage@{incrementUsage}}
+\index{incrementUsage@{incrementUsage}!com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}}
+\doxysubsubsection{\texorpdfstring{incrementUsage()}{incrementUsage()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_a07c3931d5690ba933e7992a0cc8f1d42} 
+void com.\+destore.\+loyalty.\+entity.\+Redemption\+Offer.\+increment\+Usage (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Increments the total usage count. 
+
+Should be called within a transaction with optimistic locking. \Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_ad286c1740a2db98d550f8b18e3ae7d1d}\index{com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}!isValidAt@{isValidAt}}
+\index{isValidAt@{isValidAt}!com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}}
+\doxysubsubsection{\texorpdfstring{isValidAt()}{isValidAt()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_ad286c1740a2db98d550f8b18e3ae7d1d} 
+boolean com.\+destore.\+loyalty.\+entity.\+Redemption\+Offer.\+is\+Valid\+At (\begin{DoxyParamCaption}\item[{Local\+Date\+Time}]{timestamp}{}\end{DoxyParamCaption})}
+
+Checks if this offer is valid at a specific timestamp.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timestamp} & The timestamp to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the offer is valid at the given timestamp 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_acd0b1165372585bc6d2c9a4e0ac23560}\index{com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}!onCreate@{onCreate}}
+\index{onCreate@{onCreate}!com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}}
+\doxysubsubsection{\texorpdfstring{onCreate()}{onCreate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_acd0b1165372585bc6d2c9a4e0ac23560} 
+void com.\+destore.\+loyalty.\+entity.\+Redemption\+Offer.\+on\+Create (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Sets creation timestamp before persisting new entity. \Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_a1572b1c5fcdeea293f26447ac5caca11}\index{com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}!onUpdate@{onUpdate}}
+\index{onUpdate@{onUpdate}!com.destore.loyalty.entity.RedemptionOffer@{com.destore.loyalty.entity.RedemptionOffer}}
+\doxysubsubsection{\texorpdfstring{onUpdate()}{onUpdate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_redemption_offer_a1572b1c5fcdeea293f26447ac5caca11} 
+void com.\+destore.\+loyalty.\+entity.\+Redemption\+Offer.\+on\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Updates modification timestamp before updating entity. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/entity/Redemption\+Offer.\+java\end{DoxyCompactItemize}

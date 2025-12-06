@@ -1,0 +1,36 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title System Context Diagram for DE-Store
+
+' Personas
+Person(storeMgr, "Store Manager", "Manages single store pricing rules and monitors local performance.")
+Person(netMgr, "Network Manager", "Manages network-wide pricing, loyalty programs, store registry, and views analytics across all stores.")
+Person(customer, "Customer", "Shops at DE-Store locations, earns and redeems loyalty points.")
+
+' The Core System
+System(deStore, "DE-Store MSOA System", "Microservices-Oriented Architecture for multi-store retail management: hierarchical pricing, loyalty points, inventory monitoring, and business analytics.")
+
+' External Systems (The Environment)
+System_Ext(shoppingSys, "Shopping System", "External POS/E-commerce platform processing customer transactions, basket pricing, and point redemption.")
+System_Ext(warehouseDB, "Central Warehouse DB", "Legacy MySQL database (read-only) containing product catalog and real-time stock levels.")
+System_Ext(accountingDB, "Central Accounting DB", "Legacy PostgreSQL database (read-only) with historical transaction and financial data.")
+System_Ext(enablingSys, "Enabling Finance API", "External BNPL (Buy Now Pay Later) service provider for customer financing.")
+System_Ext(emailSys, "Email System", "SMTP server for sending automated stock alerts and notifications to managers.")
+
+' Relationships - Human to System
+Rel(storeMgr, deStore, "Configures store-specific pricing rules via web UI", "HTTPS")
+Rel(netMgr, deStore, "Manages global pricing, loyalty rules, stores, and views network analytics", "HTTPS")
+Rel(customer, shoppingSys, "Makes purchases, earns points, redeems offers", "POS/Web/Mobile")
+
+' Relationships - External Systems to DE-Store
+Rel(shoppingSys, deStore, "Requests pricing, loyalty calculations, basket discounts, and finance approvals", "REST/JSON over HTTP")
+
+' Relationships - DE-Store to Legacy/External
+Rel(deStore, warehouseDB, "Monitors inventory levels and reads product catalog (read-only)", "JDBC/MySQL")
+Rel(deStore, accountingDB, "Reads transaction history for points calculation and analytics (read-only)", "JDBC/PostgreSQL")
+Rel(deStore, enablingSys, "Requests BNPL approval for customer purchases", "REST/JSON over HTTPS")
+Rel(deStore, emailSys, "Sends scheduled low stock alerts to Network Managers", "SMTP")
+
+SHOW_LEGEND()
+@enduml

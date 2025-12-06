@@ -1,0 +1,64 @@
+@startuml auth-service-database-schema
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b><u>x</u></b>
+!define foreign_key(x) <i>x</i>
+!define unique(x) <color:blue>x</color>
+
+title Auth Service Database Schema (auth-db)
+
+Table(users, "users") {
+  primary_key(id): BIGSERIAL
+  --
+  unique(username): VARCHAR(50) NOT NULL
+  password_hash: VARCHAR(255) NOT NULL
+  unique(email): VARCHAR(100) NOT NULL
+  role: VARCHAR(20) NOT NULL
+  store_id: BIGINT
+  created_at: TIMESTAMP
+  updated_at: TIMESTAMP
+  --
+  Indexes:
+  idx_users_username (username)
+  idx_users_store_id (store_id)
+}
+
+Table(inventory_thresholds, "inventory_thresholds") {
+  primary_key(id): BIGSERIAL
+  --
+  threshold_type: VARCHAR(20) NOT NULL
+  threshold_value: INT NOT NULL
+  created_by: BIGINT
+  created_at: TIMESTAMP
+  --
+  Types: OUT_OF_STOCK, CRITICAL, LOW
+}
+
+note right of users
+  **Role Values:**
+  - STORE_MANAGER
+  - NETWORK_MANAGER
+  
+  **store_id:**
+  - NULL for Network Managers
+  - References stores.id (not enforced)
+  
+  **Password:**
+  - BCrypt hashed (cost factor 12)
+  - Never returned in API responses
+end note
+
+note right of inventory_thresholds
+  **Threshold Configuration:**
+  Used by Inventory Service
+  to determine alert levels
+  
+  **Default Values:**
+  - OUT_OF_STOCK: 0
+  - CRITICAL: 10
+  - LOW: 50
+end note
+
+users "1" -- "0..*" inventory_thresholds : created_by
+
+@enduml

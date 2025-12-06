@@ -1,0 +1,57 @@
+\doxysection{inventory-\/service/src/main/java/com/destore/inventory/service/\+Email\+Service.java File Reference}
+\hypertarget{_email_service_8java}{}\label{_email_service_8java}\index{inventory-\/service/src/main/java/com/destore/inventory/service/EmailService.java@{inventory-\/service/src/main/java/com/destore/inventory/service/EmailService.java}}
+
+
+Service for composing and sending stock alert emails.  
+
+
+{\ttfamily import com.\+destore.\+inventory.\+model.\+dto.\+Stock\+Alert;}\newline
+{\ttfamily import org.\+slf4j.\+Logger;}\newline
+{\ttfamily import org.\+slf4j.\+Logger\+Factory;}\newline
+{\ttfamily import org.\+springframework.\+beans.\+factory.\+annotation.\+Value;}\newline
+{\ttfamily import org.\+springframework.\+mail.\+Mail\+Exception;}\newline
+{\ttfamily import org.\+springframework.\+mail.\+javamail.\+Java\+Mail\+Sender;}\newline
+{\ttfamily import org.\+springframework.\+mail.\+javamail.\+Mime\+Message\+Helper;}\newline
+{\ttfamily import org.\+springframework.\+stereotype.\+Service;}\newline
+{\ttfamily import jakarta.\+mail.\+Messaging\+Exception;}\newline
+{\ttfamily import jakarta.\+mail.\+internet.\+Mime\+Message;}\newline
+{\ttfamily import java.\+time.\+Local\+Date\+Time;}\newline
+{\ttfamily import java.\+time.\+format.\+Date\+Time\+Formatter;}\newline
+{\ttfamily import java.\+util.\+List;}\newline
+{\ttfamily import java.\+util.\+Map;}\newline
+{\ttfamily import java.\+util.\+stream.\+Collectors;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_email_service}{com.\+destore.\+inventory.\+service.\+Email\+Service}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service for composing and sending stock alert emails. 
+
+This service handles all email communication for the inventory monitoring system. It formats stock alerts into professional HTML emails and sends them to network managers via SMTP.
+
+Features\+:
+\begin{DoxyItemize}
+\item HTML email formatting with color-\/coded severity levels
+\item Grouped alerts by status (Out of Stock, Critical, Low)
+\item XSS protection with HTML escaping
+\item Configurable sender address and subject prefix
+\item Enable/disable toggle for testing
+\end{DoxyItemize}
+
+Email Structure\+:
+\begin{DoxyItemize}
+\item Header with timestamp
+\item Statistics summary
+\item Tables grouped by severity (red/orange/yellow)
+\item Footer with automated message disclaimer
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

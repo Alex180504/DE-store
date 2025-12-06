@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loyalty Management - DE-Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Page-specific styles */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+            margin-top: 5px;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .user-info {
+            opacity: 0.9;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 8px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: white;
+            color: #667eea;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            background: #e9ecef;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        .card-body {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .input, input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .input:focus, input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.875rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 3% auto;
+            padding: 0;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s;
+        }
+
+        .modal-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .close {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            transition: opacity 0.2s;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .loading, .info-message, .error-message {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+
+        .error-message {
+            color: #dc3545;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10000;
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        .toast.success {
+            background: #28a745;
+        }
+
+        .toast.error {
+            background: #dc3545;
+        }
+
+        .toast.info {
+            background: #17a2b8;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .search-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-section input {
+            flex: 1;
+        }
+
+        .customer-points-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .customer-points-card h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .points-item {
+            background: white;
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .points-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body data-page="loyalty">
+    <div class="page-container">
+        <div class="container">
+                <div class="header-right">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>🎁 Loyalty Management</h1>
+                <p>Configure loyalty points rules and redemption offers</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('rules')">Product Points Rules</button>
+                <button class="tab" onclick="showTab('redemptions')">Redemption Offers</button>
+                <button class="tab" onclick="showTab('customers')">Customer Points</button>
+            </div>
+
+            <!-- Product Points Rules Tab -->
+            <div id="rulesTab" class="tab-content" style="display: block;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Product Points Rules</h2>
+                        <button onclick="showAddRuleModal()" class="btn btn-primary">+ Add Rule</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="rulesTable" class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Rule ID</th>
+                                        <th>Item ID</th>
+                                        <th>Points per Unit</th>
+                                        <th>Points per £</th>
+                                        <th>Valid From</th>
+                                        <th>Valid To</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rulesTableBody">
+                                    <tr><td colspan="8" class="loading">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Redemption Offers Tab -->
+            <div id="redemptionsTab" class="tab-content" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Redemption Offers</h2>
+                        <button onclick="showAddRedemptionModal()" class="btn btn-primary">+ Add Redemption</button>
+                    </div>
+                    <div class="card-body">
+                        <div id="redemptionsTable" class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Offer ID</th>
+                                        <th>Item ID</th>
+                                        <th>Offer Name</th>
+                                        <th>Discount %</th>
+                                        <th>Points Cost</th>
+                                        <th>Max Per Customer</th>
+                                        <th>Total Usage</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="redemptionsTableBody">
+                                    <tr><td colspan="9" class="loading">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Points Tab -->
+            <div id="customersTab" class="tab-content" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Customer Points Lookup</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-section">
+                            <input type="number" id="customerIdSearch" placeholder="Enter Customer ID" class="input">
+                            <button onclick="searchCustomerPoints()" class="btn btn-primary">Search</button>
+                            <button onclick="calculateCustomerPoints()" class="btn btn-secondary">Recalculate Points</button>
+                        </div>
+                        <div id="customerPointsResult" class="customer-points-card" style="display: none;">
+                            <h3>Customer <span id="customerIdDisplay"></span></h3>
+                            <div class="points-grid">
+                                <div class="points-item">
+                                    <div class="points-label">Current Balance</div>
+                                    <div class="points-value" id="currentBalance">0</div>
+                                </div>
+                                <div class="points-item">
+                                    <div class="points-label">Lifetime Earned</div>
+                                    <div class="points-value" id="lifetimeEarned">0</div>
+                                </div>
+                                <div class="points-item">
+                                    <div class="points-label">Lifetime Redeemed</div>
+                                    <div class="points-value" id="lifetimeRedeemed">0</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Product Points Rule Modal -->
+    <div id="ruleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="ruleModalTitle">Add Product Points Rule</h2>
+                <span class="close" onclick="closeRuleModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="ruleForm">
+                    <input type="hidden" id="ruleId">
+                    
+                    <div class="form-group">
+                        <label for="ruleItemId">Item ID *</label>
+                        <input type="number" id="ruleItemId" class="input" required min="1" placeholder="e.g., 101">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rulePointsPerUnit">Points Per Unit (leave empty if using points per £)</label>
+                        <input type="number" id="rulePointsPerUnit" class="input" min="0" placeholder="e.g., 5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rulePointsPerPound">Points Per £1 (leave empty if using points per unit)</label>
+                        <input type="number" id="rulePointsPerPound" class="input" step="0.01" min="0" placeholder="e.g., 0.50">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ruleValidFrom">Valid From *</label>
+                        <input type="datetime-local" id="ruleValidFrom" class="input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ruleValidTo">Valid To (leave empty for ongoing)</label>
+                        <input type="datetime-local" id="ruleValidTo" class="input">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="ruleIsActive" checked>
+                            Active
+                        </label>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeRuleModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Redemption Offer Modal -->
+    <!--
+    <div id="redemptionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="redemptionModalTitle">Add Redemption Offer</h2>
+                <span class="close" onclick="closeRedemptionModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="redemptionForm">
+                    <input type="hidden" id="redemptionOfferId">
+                    
+                    <div class="form-group">
+                        <label for="redemptionItemId">Item ID (leave empty for any item)</label>
+                        <input type="number" id="redemptionItemId" class="input" placeholder="e.g., 1 for Cordless Drill">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redemptionOfferName">Offer Name *</label>
+                        <input type="text" id="redemptionOfferName" class="input" required placeholder="e.g., 10% Off Drills">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redemptionDescription">Description</label>
+                        <textarea id="redemptionDescription" class="input" rows="3" placeholder="Offer details..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redemptionDiscount">Discount Percentage (%) *</label>
+                        <input type="number" id="redemptionDiscount" class="input" required step="0.01" min="0.01" max="100" placeholder="e.g., 10">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redemptionPoints">Points Cost *</label>
+                        <input type="number" id="redemptionPoints" class="input" required step="0.01" min="0.01" placeholder="e.g., 50">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redemptionMaxPerCustomer">Max Uses Per Customer (leave empty for unlimited)</label>
+                        <input type="number" id="redemptionMaxPerCustomer" class="input" min="1" placeholder="e.g., 5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redemptionMaxTotal">Max Total Uses (leave empty for unlimited)</label>
+                        <input type="number" id="redemptionMaxTotal" class="input" min="1" placeholder="e.g., 100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redemptionValidFrom">Valid From *</label>
+                        <input type="datetime-local" id="redemptionValidFrom" class="input" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="redemptionValidTo">Valid To (leave empty for ongoing)</label>
+                        <input type="datetime-local" id="redemptionValidTo" class="input">
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="redemptionIsActive" checked>
+                            Active
+                        </label>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeRedemptionModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    -->
+
+    <script src="app.js"></script>
+    <script src="loyalty.js"></script>
+</body>
+</html>

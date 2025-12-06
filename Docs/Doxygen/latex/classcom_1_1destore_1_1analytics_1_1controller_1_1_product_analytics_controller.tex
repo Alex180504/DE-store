@@ -1,0 +1,64 @@
+\doxysection{com.\+destore.\+analytics.\+controller.\+Product\+Analytics\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller}{}\label{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller}\index{com.destore.analytics.controller.ProductAnalyticsController@{com.destore.analytics.controller.ProductAnalyticsController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_product_performance_d_t_o}{Product\+Performance\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller_a71bf0ed8f552473fc65278db72d9a272}{get\+Product\+Performance}} ( @Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long store\+Id, @Parameter(description="{}Start date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date start\+Date, @Parameter(description="{}End date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date end\+Date, @Parameter(description="{}Number of top products to return (1-\/100, default\+: 10)"{}) @Request\+Param(required=false, default\+Value="{}10"{}) Integer limit)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_product_performance_d_t_o}{Product\+Performance\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller_a639bc7bc6610be40ad2069992bd3984f}{get\+Week\+Product\+Performance}} ( @Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long store\+Id, @Parameter(description="{}Number of top products to return (1-\/100, default\+: 10)"{}) @Request\+Param(required=false, default\+Value="{}10"{}) Integer limit)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_product_performance_d_t_o}{Product\+Performance\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller_a4ab4b57563bff92874bd4d031b245f18}{get\+Month\+Product\+Performance}} ( @Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long store\+Id, @Parameter(description="{}Number of top products to return (1-\/100, default\+: 10)"{}) @Request\+Param(required=false, default\+Value="{}10"{}) Integer limit)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for product performance analytics endpoints. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller_a4ab4b57563bff92874bd4d031b245f18}\index{com.destore.analytics.controller.ProductAnalyticsController@{com.destore.analytics.controller.ProductAnalyticsController}!getMonthProductPerformance@{getMonthProductPerformance}}
+\index{getMonthProductPerformance@{getMonthProductPerformance}!com.destore.analytics.controller.ProductAnalyticsController@{com.destore.analytics.controller.ProductAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getMonthProductPerformance()}{getMonthProductPerformance()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller_a4ab4b57563bff92874bd4d031b245f18} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_product_performance_d_t_o}{Product\+Performance\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Product\+Analytics\+Controller.\+get\+Month\+Product\+Performance (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long}]{store\+Id}{, }\item[{@Parameter(description="{}Number of top products to return (1-\/100, default\+: 10)"{}) @Request\+Param(required=false, default\+Value="{}10"{}) Integer}]{limit}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Month\+Product\+Performance(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Product\+Performance\+DTO$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller_a71bf0ed8f552473fc65278db72d9a272}\index{com.destore.analytics.controller.ProductAnalyticsController@{com.destore.analytics.controller.ProductAnalyticsController}!getProductPerformance@{getProductPerformance}}
+\index{getProductPerformance@{getProductPerformance}!com.destore.analytics.controller.ProductAnalyticsController@{com.destore.analytics.controller.ProductAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getProductPerformance()}{getProductPerformance()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller_a71bf0ed8f552473fc65278db72d9a272} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_product_performance_d_t_o}{Product\+Performance\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Product\+Analytics\+Controller.\+get\+Product\+Performance (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long}]{store\+Id}{, }\item[{@Parameter(description="{}Start date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date}]{start\+Date}{, }\item[{@Parameter(description="{}End date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date}]{end\+Date}{, }\item[{@Parameter(description="{}Number of top products to return (1-\/100, default\+: 10)"{}) @Request\+Param(required=false, default\+Value="{}10"{}) Integer}]{limit}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Product\+Performance(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Product\+Performance\+DTO$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller_a639bc7bc6610be40ad2069992bd3984f}\index{com.destore.analytics.controller.ProductAnalyticsController@{com.destore.analytics.controller.ProductAnalyticsController}!getWeekProductPerformance@{getWeekProductPerformance}}
+\index{getWeekProductPerformance@{getWeekProductPerformance}!com.destore.analytics.controller.ProductAnalyticsController@{com.destore.analytics.controller.ProductAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getWeekProductPerformance()}{getWeekProductPerformance()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_product_analytics_controller_a639bc7bc6610be40ad2069992bd3984f} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_product_performance_d_t_o}{Product\+Performance\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Product\+Analytics\+Controller.\+get\+Week\+Product\+Performance (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long}]{store\+Id}{, }\item[{@Parameter(description="{}Number of top products to return (1-\/100, default\+: 10)"{}) @Request\+Param(required=false, default\+Value="{}10"{}) Integer}]{limit}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Week\+Product\+Performance(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Product\+Performance\+DTO$>$ 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/controller/Product\+Analytics\+Controller.\+java\end{DoxyCompactItemize}

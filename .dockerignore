@@ -1,0 +1,36 @@
+# Root .dockerignore
+.git
+.gitignore
+*.md
+LICENSE
+Docs/
+*.puml
+*.png
+*.svg
+
+# IDE files
+.vscode/
+.idea/
+*.iml
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+target/
+build/
+*.jar
+*.war
+*.class
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.bak

@@ -1,0 +1,40 @@
+\doxysection{pricing-\/service/src/main/java/com/destore/pricing/service/\+Promotion\+Engine.java File Reference}
+\hypertarget{_promotion_engine_8java}{}\label{_promotion_engine_8java}\index{pricing-\/service/src/main/java/com/destore/pricing/service/PromotionEngine.java@{pricing-\/service/src/main/java/com/destore/pricing/service/PromotionEngine.java}}
+
+
+Service for calculating promotional discounts.  
+
+
+{\ttfamily import com.\+destore.\+pricing.\+model.\+entity.\+Pricing\+Rule;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+model.\+enums.\+Promotion\+Type;}\newline
+{\ttfamily import lombok.\+extern.\+slf4j.\+Slf4j;}\newline
+{\ttfamily import org.\+springframework.\+stereotype.\+Service;}\newline
+{\ttfamily import java.\+math.\+Big\+Decimal;}\newline
+{\ttfamily import java.\+math.\+Rounding\+Mode;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_promotion_engine}{com.\+destore.\+pricing.\+service.\+Promotion\+Engine}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Service for calculating promotional discounts. 
+
+This engine implements various promotion types including\+:
+\begin{DoxyItemize}
+\item THREE\+\_\+\+FOR\+\_\+\+TWO\+: Buy 3, pay for 2
+\item BOGOF\+: Buy One Get One Free
+\item FREE\+\_\+\+DELIVERY\+: Waive delivery charges (noted but not calculated here)
+\item PERCENTAGE\+\_\+\+OFF\+: X\% discount
+\item FIXED\+\_\+\+DISCOUNT\+: Fixed amount off
+\end{DoxyItemize}
+
+All calculations use Big\+Decimal for precision and round to 2 decimal places.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

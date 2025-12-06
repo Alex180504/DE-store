@@ -1,0 +1,113 @@
+\doxysection{com.\+destore.\+pricing.\+controller.\+Global\+Exception\+Handler Class Reference}
+\hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler}{}\label{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler}\index{com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_aa1ff8f5ab5f0bbf28cf1cc7b712e0a6f}{handle\+Item\+Not\+Found}} (\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1exception_1_1_item_not_found_exception}{Item\+Not\+Found\+Exception}} ex)
+\begin{DoxyCompactList}\small\item\em Handle item not found exceptions. \end{DoxyCompactList}\item 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_ab750e483ed495ac1e5c7ad1f3c4f1779}{handle\+Pricing\+Rule\+Not\+Found}} (\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1exception_1_1_pricing_rule_not_found_exception}{Pricing\+Rule\+Not\+Found\+Exception}} ex)
+\begin{DoxyCompactList}\small\item\em Handle pricing rule not found exceptions. \end{DoxyCompactList}\item 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_a46bf7bd427a811ce217ece22ec0f298e}{handle\+Forbidden\+Access}} (\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1exception_1_1_forbidden_access_exception}{Forbidden\+Access\+Exception}} ex)
+\begin{DoxyCompactList}\small\item\em Handle forbidden access exceptions. \end{DoxyCompactList}\item 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_a9e154239b496dafc8a1aac8a52659f1c}{handle\+Validation\+Errors}} (Method\+Argument\+Not\+Valid\+Exception ex)
+\begin{DoxyCompactList}\small\item\em Handle validation errors. \end{DoxyCompactList}\item 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_a2b20a1d27fdcf88ceb657847f7b08149}{handle\+Generic\+Exception}} (Exception ex)
+\begin{DoxyCompactList}\small\item\em Handle all other exceptions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_a46bf7bd427a811ce217ece22ec0f298e}\index{com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}!handleForbiddenAccess@{handleForbiddenAccess}}
+\index{handleForbiddenAccess@{handleForbiddenAccess}!com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}}
+\doxysubsubsection{\texorpdfstring{handleForbiddenAccess()}{handleForbiddenAccess()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_a46bf7bd427a811ce217ece22ec0f298e} 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ com.\+destore.\+pricing.\+controller.\+Global\+Exception\+Handler.\+handle\+Forbidden\+Access (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1exception_1_1_forbidden_access_exception}{Forbidden\+Access\+Exception}}}]{ex}{}\end{DoxyParamCaption})}
+
+
+
+Handle forbidden access exceptions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ex} & The exception \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error response with 403 status 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_a2b20a1d27fdcf88ceb657847f7b08149}\index{com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}!handleGenericException@{handleGenericException}}
+\index{handleGenericException@{handleGenericException}!com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}}
+\doxysubsubsection{\texorpdfstring{handleGenericException()}{handleGenericException()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_a2b20a1d27fdcf88ceb657847f7b08149} 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ com.\+destore.\+pricing.\+controller.\+Global\+Exception\+Handler.\+handle\+Generic\+Exception (\begin{DoxyParamCaption}\item[{Exception}]{ex}{}\end{DoxyParamCaption})}
+
+
+
+Handle all other exceptions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ex} & The exception \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error response with 500 status 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_aa1ff8f5ab5f0bbf28cf1cc7b712e0a6f}\index{com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}!handleItemNotFound@{handleItemNotFound}}
+\index{handleItemNotFound@{handleItemNotFound}!com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}}
+\doxysubsubsection{\texorpdfstring{handleItemNotFound()}{handleItemNotFound()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_aa1ff8f5ab5f0bbf28cf1cc7b712e0a6f} 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ com.\+destore.\+pricing.\+controller.\+Global\+Exception\+Handler.\+handle\+Item\+Not\+Found (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1exception_1_1_item_not_found_exception}{Item\+Not\+Found\+Exception}}}]{ex}{}\end{DoxyParamCaption})}
+
+
+
+Handle item not found exceptions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ex} & The exception \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error response with 404 status 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_ab750e483ed495ac1e5c7ad1f3c4f1779}\index{com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}!handlePricingRuleNotFound@{handlePricingRuleNotFound}}
+\index{handlePricingRuleNotFound@{handlePricingRuleNotFound}!com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}}
+\doxysubsubsection{\texorpdfstring{handlePricingRuleNotFound()}{handlePricingRuleNotFound()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_ab750e483ed495ac1e5c7ad1f3c4f1779} 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ com.\+destore.\+pricing.\+controller.\+Global\+Exception\+Handler.\+handle\+Pricing\+Rule\+Not\+Found (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1exception_1_1_pricing_rule_not_found_exception}{Pricing\+Rule\+Not\+Found\+Exception}}}]{ex}{}\end{DoxyParamCaption})}
+
+
+
+Handle pricing rule not found exceptions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ex} & The exception \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error response with 404 status 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_a9e154239b496dafc8a1aac8a52659f1c}\index{com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}!handleValidationErrors@{handleValidationErrors}}
+\index{handleValidationErrors@{handleValidationErrors}!com.destore.pricing.controller.GlobalExceptionHandler@{com.destore.pricing.controller.GlobalExceptionHandler}}
+\doxysubsubsection{\texorpdfstring{handleValidationErrors()}{handleValidationErrors()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_global_exception_handler_a9e154239b496dafc8a1aac8a52659f1c} 
+Response\+Entity$<$ Map$<$ String, Object $>$ $>$ com.\+destore.\+pricing.\+controller.\+Global\+Exception\+Handler.\+handle\+Validation\+Errors (\begin{DoxyParamCaption}\item[{Method\+Argument\+Not\+Valid\+Exception}]{ex}{}\end{DoxyParamCaption})}
+
+
+
+Handle validation errors. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ex} & The validation exception \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Error response with 400 status and field errors 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pricing-\/service/src/main/java/com/destore/pricing/controller/\mbox{\hyperlink{_global_exception_handler_8java}{Global\+Exception\+Handler.\+java}}\end{DoxyCompactItemize}

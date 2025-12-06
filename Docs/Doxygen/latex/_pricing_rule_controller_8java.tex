@@ -1,0 +1,54 @@
+\doxysection{pricing-\/service/src/main/java/com/destore/pricing/controller/\+Pricing\+Rule\+Controller.java File Reference}
+\hypertarget{_pricing_rule_controller_8java}{}\label{_pricing_rule_controller_8java}\index{pricing-\/service/src/main/java/com/destore/pricing/controller/PricingRuleController.java@{pricing-\/service/src/main/java/com/destore/pricing/controller/PricingRuleController.java}}
+
+
+REST controller for pricing rule management.  
+
+
+{\ttfamily import com.\+destore.\+pricing.\+model.\+dto.\+Pricing\+Rule\+Request;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+model.\+dto.\+Pricing\+Rule\+Response;}\newline
+{\ttfamily import com.\+destore.\+pricing.\+service.\+Pricing\+Rule\+Service;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+Operation;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+media.\+Content;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+media.\+Schema;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+responses.\+Api\+Response;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+responses.\+Api\+Responses;}\newline
+{\ttfamily import io.\+swagger.\+v3.\+oas.\+annotations.\+tags.\+Tag;}\newline
+{\ttfamily import jakarta.\+validation.\+Valid;}\newline
+{\ttfamily import lombok.\+Required\+Args\+Constructor;}\newline
+{\ttfamily import lombok.\+extern.\+slf4j.\+Slf4j;}\newline
+{\ttfamily import org.\+springframework.\+http.\+Http\+Status;}\newline
+{\ttfamily import org.\+springframework.\+http.\+Response\+Entity;}\newline
+{\ttfamily import org.\+springframework.\+web.\+bind.\+annotation.\texorpdfstring{$\ast$}{*};}\newline
+{\ttfamily import java.\+util.\+List;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller}{com.\+destore.\+pricing.\+controller.\+Pricing\+Rule\+Controller}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for pricing rule management. 
+
+This controller provides CRUD operations for pricing rules. Used by Store Managers (store-\/specific rules) and Network Managers (global rules) to configure pricing and promotions.
+
+Endpoints\+:
+\begin{DoxyItemize}
+\item GET /api/pricing/rules -\/ List all pricing rules
+\item GET /api/pricing/rules/\{id\} -\/ Get specific rule
+\item GET /api/pricing/rules/item/\{item\+Id\} -\/ Get rules for item
+\item GET /api/pricing/rules/store/\{store\+Id\} -\/ Get rules for store
+\item GET /api/pricing/rules/active -\/ Get all active rules
+\item POST /api/pricing/rules -\/ Create new pricing rule
+\item PUT /api/pricing/rules/\{id\} -\/ Update existing rule
+\item DELETE /api/pricing/rules/\{id\} -\/ Delete rule
+\item POST /api/pricing/rules/\{id\}/deactivate -\/ Soft delete (deactivate)
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

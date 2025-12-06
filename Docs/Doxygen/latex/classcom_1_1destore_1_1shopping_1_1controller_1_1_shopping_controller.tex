@@ -1,0 +1,168 @@
+\doxysection{com.\+destore.\+shopping.\+controller.\+Shopping\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller}{}\label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a583146d28a57548ca270c927f9660d44}\label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a583146d28a57548ca270c927f9660d44} 
+{\bfseries Shopping\+Controller} (\mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client}{Loyalty\+Service\+Client}} loyalty\+Service\+Client)
+\item 
+Integer \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a8c67b5d15c3ff739abbadd664343340f}{get\+Current\+Customer\+Id}} ()
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a845c23763af40a5a9806b63ea402333d}{set\+Customer\+Id}} (@Request\+Param Integer customer\+Id)
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_af7c64c5377f8f2db9ada3cd44150ac6a}{calculate\+Points}} (@Request\+Param Integer customer\+Id)
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1model_1_1_customer_points_d_t_o}{Customer\+Points\+DTO}} \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a4f1725ccd268f165f98f3ecb9e575522}{refresh\+Balance}} (@Request\+Param Integer customer\+Id)
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_acc3e065cff54500cfe58167fa5e0d0ed}{test\+Nonexistent\+Customer}} ()
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a64bdcabe3cbb34733b84f96d168c7aaf}{test\+Zero\+Transactions}} ()
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a9914a8e1a60d73941b249cc83d9b73d2}{test\+Negative\+Customer\+Id}} ()
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_aecd4590d10bdd6a1347935e9c4dbe150}{test\+Large\+Customer\+Id}} ()
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_aed760f6ceb0488ea4f39f2b218ad28c1}{test\+Insufficient\+Points}} ()
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_ac7712bd88a02da05b4aad5ed0422716f}{test\+Invalid\+Offer}} ()
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_ac3f9e46bd4eab8dff90d168af903d4af}{test\+Successful\+Redemption}} ()
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_ac93546e1468e1f806775827c4e9367ed}{test\+Multiple\+Offers}} ()
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a99170343128dfde4745ee4d2a1a4afed}{test\+Empty\+Basket}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Shopping Mock Controller -\/ Test Harness 
+
+Provides simple test scenarios for loyalty system integration testing. Each scenario button triggers a specific test case. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_af7c64c5377f8f2db9ada3cd44150ac6a}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!calculatePoints@{calculatePoints}}
+\index{calculatePoints@{calculatePoints}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{calculatePoints()}{calculatePoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_af7c64c5377f8f2db9ada3cd44150ac6a} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+calculate\+Points (\begin{DoxyParamCaption}\item[{@Request\+Param Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Trigger points calculation for a customer
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+result message 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a8c67b5d15c3ff739abbadd664343340f}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!getCurrentCustomerId@{getCurrentCustomerId}}
+\index{getCurrentCustomerId@{getCurrentCustomerId}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{getCurrentCustomerId()}{getCurrentCustomerId()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a8c67b5d15c3ff739abbadd664343340f} 
+Integer com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+get\+Current\+Customer\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get current default customer ID
+
+\begin{DoxyReturn}{Returns}
+default customer ID 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a4f1725ccd268f165f98f3ecb9e575522}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!refreshBalance@{refreshBalance}}
+\index{refreshBalance@{refreshBalance}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{refreshBalance()}{refreshBalance()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a4f1725ccd268f165f98f3ecb9e575522} 
+\mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1model_1_1_customer_points_d_t_o}{Customer\+Points\+DTO}} com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+refresh\+Balance (\begin{DoxyParamCaption}\item[{@Request\+Param Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Get customer balance (prints to terminal via logging)
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+JSON response with balance data 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a845c23763af40a5a9806b63ea402333d}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!setCustomerId@{setCustomerId}}
+\index{setCustomerId@{setCustomerId}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{setCustomerId()}{setCustomerId()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a845c23763af40a5a9806b63ea402333d} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+set\+Customer\+Id (\begin{DoxyParamCaption}\item[{@Request\+Param Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Set new default customer ID
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & new customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+confirmation message 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a99170343128dfde4745ee4d2a1a4afed}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!testEmptyBasket@{testEmptyBasket}}
+\index{testEmptyBasket@{testEmptyBasket}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{testEmptyBasket()}{testEmptyBasket()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a99170343128dfde4745ee4d2a1a4afed} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+test\+Empty\+Basket (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Test\+: Empty basket redemption \Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_aed760f6ceb0488ea4f39f2b218ad28c1}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!testInsufficientPoints@{testInsufficientPoints}}
+\index{testInsufficientPoints@{testInsufficientPoints}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{testInsufficientPoints()}{testInsufficientPoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_aed760f6ceb0488ea4f39f2b218ad28c1} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+test\+Insufficient\+Points (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Test\+: Redeem with insufficient points \Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_ac7712bd88a02da05b4aad5ed0422716f}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!testInvalidOffer@{testInvalidOffer}}
+\index{testInvalidOffer@{testInvalidOffer}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{testInvalidOffer()}{testInvalidOffer()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_ac7712bd88a02da05b4aad5ed0422716f} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+test\+Invalid\+Offer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Test\+: Redeem with invalid offer ID \Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_aecd4590d10bdd6a1347935e9c4dbe150}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!testLargeCustomerId@{testLargeCustomerId}}
+\index{testLargeCustomerId@{testLargeCustomerId}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{testLargeCustomerId()}{testLargeCustomerId()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_aecd4590d10bdd6a1347935e9c4dbe150} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+test\+Large\+Customer\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Test\+: Large customer ID \Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_ac93546e1468e1f806775827c4e9367ed}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!testMultipleOffers@{testMultipleOffers}}
+\index{testMultipleOffers@{testMultipleOffers}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{testMultipleOffers()}{testMultipleOffers()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_ac93546e1468e1f806775827c4e9367ed} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+test\+Multiple\+Offers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Test\+: Multiple offers redemption \Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a9914a8e1a60d73941b249cc83d9b73d2}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!testNegativeCustomerId@{testNegativeCustomerId}}
+\index{testNegativeCustomerId@{testNegativeCustomerId}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{testNegativeCustomerId()}{testNegativeCustomerId()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a9914a8e1a60d73941b249cc83d9b73d2} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+test\+Negative\+Customer\+Id (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Test\+: Negative customer ID \Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_acc3e065cff54500cfe58167fa5e0d0ed}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!testNonexistentCustomer@{testNonexistentCustomer}}
+\index{testNonexistentCustomer@{testNonexistentCustomer}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{testNonexistentCustomer()}{testNonexistentCustomer()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_acc3e065cff54500cfe58167fa5e0d0ed} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+test\+Nonexistent\+Customer (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Test\+: Calculate points for non-\/existent customer \Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_ac3f9e46bd4eab8dff90d168af903d4af}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!testSuccessfulRedemption@{testSuccessfulRedemption}}
+\index{testSuccessfulRedemption@{testSuccessfulRedemption}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{testSuccessfulRedemption()}{testSuccessfulRedemption()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_ac3f9e46bd4eab8dff90d168af903d4af} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+test\+Successful\+Redemption (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Test\+: Successful redemption \Hypertarget{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a64bdcabe3cbb34733b84f96d168c7aaf}\index{com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}!testZeroTransactions@{testZeroTransactions}}
+\index{testZeroTransactions@{testZeroTransactions}!com.destore.shopping.controller.ShoppingController@{com.destore.shopping.controller.ShoppingController}}
+\doxysubsubsection{\texorpdfstring{testZeroTransactions()}{testZeroTransactions()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1controller_1_1_shopping_controller_a64bdcabe3cbb34733b84f96d168c7aaf} 
+String com.\+destore.\+shopping.\+controller.\+Shopping\+Controller.\+test\+Zero\+Transactions (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Test\+: Calculate with zero transactions 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+shopping-\/mock-\/service/src/main/java/com/destore/shopping/controller/Shopping\+Controller.\+java\end{DoxyCompactItemize}

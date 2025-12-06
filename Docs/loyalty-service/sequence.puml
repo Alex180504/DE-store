@@ -1,0 +1,205 @@
+@startuml
+
+skinparam defaultFontSize 16
+skinparam sequenceMessageAlign center
+skinparam ParticipantPadding 10
+skinparam BoxPadding 10
+
+title Loyalty Service - SAGA Pattern for Basket Pricing with Points Redemption
+
+actor "Customer" as customer
+participant "Shopping System\n(POS)" as pos
+participant "API Gateway" as apiGw
+box "Loyalty Service" #LightBlue
+    participant "Basket Controller" as controller
+    participant "Redemption Service\n(SAGA Orchestrator)" as saga
+    participant "Balance Repository" as balanceRepo
+    participant "Offer Repository" as offerRepo
+    participant "Usage Repository" as usageRepo
+    participant "Transaction Repository" as txRepo
+end box
+database "Loyalty DB\n(PostgreSQL)" as loyaltyDB
+
+== SAGA Happy Path: Successful Redemption ==
+
+customer -> pos: 1. Checkout with basket\nSelect redemption offers
+pos -> apiGw: 2. POST /api/loyalty/basket/price\n{\n  customerId: {id},\n  basketReference: "{ref}",\n  selectedOfferIds: [{id1}, {id2}],\n  items: [...]\n}
+apiGw -> controller: 3. Forward request (HTTP:8085)
+controller -> saga: 4. priceBasketWithRedemption(request)
+activate saga
+
+note right of saga
+  **SAGA Transaction Begins**
+  @Transactional boundary starts
+  All steps atomic - rollback on failure
+end note
+
+' === SAGA STEP 1: Validate and Reserve Points ===
+saga -> saga: **SAGA STEP 1**\nvalidateAndReservePoints()
+
+saga -> balanceRepo: 5. findByCustomerIdForUpdate(customerId)\n[Pessimistic Lock]
+activate balanceRepo
+balanceRepo -> loyaltyDB: 6. SELECT * FROM customer_points_balance\nWHERE customer_id = ?\n**FOR UPDATE** [Row Lock]
+note right of loyaltyDB
+  **Pessimistic Locking**
+  Row locked until transaction commits
+  Prevents concurrent modifications
+end note
+loyaltyDB --> balanceRepo: 7. Return locked balance\n{currentBalance: N}
+balanceRepo --> saga: 8. CustomerPointsBalance entity (locked)
+deactivate balanceRepo
+
+loop For each selected offer
+    saga -> offerRepo: 9. findById(offerId)
+    offerRepo -> loyaltyDB: 10. SELECT FROM redemption_offers WHERE id=?
+    loyaltyDB --> offerRepo: 11. Return offer
+    offerRepo --> saga: 12. RedemptionOffer {pointsCost: X, discount: Y%}
+    
+    saga -> saga: 13. Validate offer:\n- isValidAt(now) - check active dates\n- hasAvailableUses() - check global limit\n- Check expiration
+    
+    saga -> usageRepo: 14. findByCustomerIdAndRedemptionOfferId(customerId, offerId)
+    usageRepo -> loyaltyDB: 15. SELECT FROM redemption_usage\nWHERE customer_id=? AND offer_id=?
+    loyaltyDB --> usageRepo: 16. Return usage record
+    usageRepo --> saga: 17. RedemptionUsage {usageCount: M}
+    
+    saga -> saga: 18. Validate customer usage:\nusageCount < maxUsesPerCustomer
+end
+
+saga -> saga: 19. Calculate total points cost:\nSum of all selected offers = totalPointsCost
+
+saga -> saga: 20. Validate sufficient balance:\ncurrentBalance >= totalPointsCost ✓
+
+alt Insufficient points
+    saga --> controller: Throw IllegalArgumentException\n"Insufficient points. Required: 250, Available: 500"
+    controller --> apiGw: 400 Bad Request
+    apiGw --> pos: Error response
+    pos --> customer: Cannot redeem - insufficient points
+else Sufficient points - Continue SAGA
+    saga -> balanceRepo: 21. balance.debitPoints(totalPointsCost)
+    note right of saga
+      In-memory deduction
+      Not persisted yet
+    end note
+    
+    saga -> balanceRepo: 22. save(balance)
+    balanceRepo -> loyaltyDB: 23. UPDATE customer_points_balance\nSET current_balance = current_balance - totalPointsCost,\n    lifetime_redeemed = lifetime_redeemed + totalPointsCost\nWHERE customer_id = ?
+    loyaltyDB --> balanceRepo: 24. Update successful
+    balanceRepo --> saga: 25. Updated balance entity
+    
+    note right of saga
+      **SAGA STEP 1 COMPLETE**
+      Points reserved (deducted)
+      Still in transaction
+    end note
+    
+    ' === SAGA STEP 2: Calculate Discounted Prices ===
+    saga -> saga: **SAGA STEP 2**\ncalculateDiscountedPrices()
+    
+    saga -> saga: 26. Apply offer discounts to basket items:\nFor each item, apply discount percentage\nCalculate total savings
+    
+    saga -> saga: 27. Build BasketPricingResponse:\n{\n  originalTotal: X,\n  discountedTotal: Y,\n  totalSavings: Z,\n  pointsDeducted: totalPointsCost\n}
+    
+    note right of saga
+      **SAGA STEP 2 COMPLETE**
+      Prices calculated
+      Response prepared
+    end note
+    
+    ' === SAGA STEP 3: Record Redemption Transactions ===
+    saga -> saga: **SAGA STEP 3**\nrecordRedemptionTransactions()
+    
+    saga -> txRepo: 28. save(PointsTransaction)\n{\n  customerId: customerId,\n  type: REDEEMED,\n  amount: -totalPointsCost,\n  description: "Basket {basketReference}"\n}
+    txRepo -> loyaltyDB: 29. INSERT INTO points_transactions\n(customer_id, type, points_amount, source_ref, timestamp)
+    loyaltyDB --> txRepo: 30. Insert successful
+    txRepo --> saga: 31. Transaction record created
+    
+    note right of saga
+      **SAGA STEP 3 COMPLETE**
+      Audit trail recorded
+      Transaction logged
+    end note
+    
+    ' === SAGA STEP 4: Update Offer Usage ===
+    saga -> saga: **SAGA STEP 4**\nupdateOfferUsage()
+    
+    loop For each redeemed offer
+        saga -> usageRepo: 32. Increment usage count
+        usageRepo -> loyaltyDB: 33. UPDATE redemption_usage\nSET usage_count = usage_count + 1\nWHERE customer_id=? AND offer_id=?
+        loyaltyDB --> usageRepo: 34. Update successful
+        usageRepo --> saga: 35. Updated usage
+        
+        saga -> offerRepo: 36. Decrement global offer uses
+        offerRepo -> loyaltyDB: 37. UPDATE redemption_offers\nSET current_uses = current_uses + 1\nWHERE id=?
+        loyaltyDB --> offerRepo: 38. Update successful
+        offerRepo --> saga: 39. Updated offer
+    end
+    
+    note right of saga
+      **SAGA STEP 4 COMPLETE**
+      Usage limits updated
+      All SAGA steps successful!
+    end note
+    
+    note right of saga
+      **SAGA Transaction Commits**
+      All database changes persist
+      Lock released
+    end note
+    
+    deactivate saga
+    
+    saga --> controller: 40. Return BasketPricingResponse
+    controller --> apiGw: 41. 200 OK + Pricing response
+    apiGw --> pos: 42. Discounted prices
+    pos --> customer: 43. Checkout complete\nSaved {totalSavings} with {pointsDeducted} points
+end
+
+|||
+
+== SAGA Compensation: Failure During Transaction ==
+
+customer -> pos: 44. Checkout attempt with invalid offer
+pos -> apiGw: 45. POST /api/loyalty/basket/price\n{selectedOfferIds: [{expiredOfferId}]}
+apiGw -> controller: 46. Forward request
+controller -> saga: 47. priceBasketWithRedemption(request)
+activate saga
+
+saga -> balanceRepo: 48. findByCustomerIdForUpdate() [Lock acquired]
+balanceRepo -> loyaltyDB: 49. SELECT FOR UPDATE
+loyaltyDB --> balanceRepo: 50. Return locked balance
+balanceRepo --> saga: 51. Balance (locked)
+
+saga -> offerRepo: 52. findById(offerId)
+offerRepo -> loyaltyDB: 53. SELECT FROM redemption_offers WHERE id=?
+loyaltyDB --> offerRepo: 54. Return offer
+offerRepo --> saga: 55. Offer {validUntil: {pastDate}, expired}
+
+saga -> saga: 56. Validate: isValidAt(now)\ncurrentDate > validUntil ✗
+
+note right of saga
+  **SAGA Failure Detected**
+  Offer expired!
+end note
+
+saga --> saga: 57. Throw IllegalArgumentException\n"Offer expired or inactive: {offerId}"
+
+note right of saga
+  **@Transactional Rollback**
+  All database changes reverted:
+  - Lock released
+  - No points deducted
+  - No transactions recorded
+  - No usage updated
+  
+  **Compensation Automatic**
+  No manual cleanup needed
+end note
+
+deactivate saga
+
+saga --> controller: 58. Exception propagated
+controller --> apiGw: 59. 400 Bad Request\n"Offer expired or inactive: {offerId}"
+apiGw --> pos: 60. Error response
+pos --> customer: 61. Redemption failed - offer expired
+
+@enduml

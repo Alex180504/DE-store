@@ -1,0 +1,59 @@
+\doxysection{com.\+destore.\+auth.\+repository.\+User\+Repository Interface Reference}
+\hypertarget{interfacecom_1_1destore_1_1auth_1_1repository_1_1_user_repository}{}\label{interfacecom_1_1destore_1_1auth_1_1repository_1_1_user_repository}\index{com.destore.auth.repository.UserRepository@{com.destore.auth.repository.UserRepository}}
+Inheritance diagram for com.\+destore.\+auth.\+repository.\+User\+Repository\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interfacecom_1_1destore_1_1auth_1_1repository_1_1_user_repository}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Optional$<$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1entity_1_1_user}{User}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1auth_1_1repository_1_1_user_repository_a10ee6983a036bac37b87590967963731}{find\+By\+Username}} (String username)
+\begin{DoxyCompactList}\small\item\em Find user by username. \end{DoxyCompactList}\item 
+Optional$<$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1entity_1_1_user}{User}} $>$ \mbox{\hyperlink{interfacecom_1_1destore_1_1auth_1_1repository_1_1_user_repository_a4ffdc30123ae6d5cedbcf04732bdca7b}{find\+By\+Username\+And\+Is\+Active\+True}} (String username)
+\begin{DoxyCompactList}\small\item\em Find active user by username. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{interfacecom_1_1destore_1_1auth_1_1repository_1_1_user_repository_a10ee6983a036bac37b87590967963731}\index{com.destore.auth.repository.UserRepository@{com.destore.auth.repository.UserRepository}!findByUsername@{findByUsername}}
+\index{findByUsername@{findByUsername}!com.destore.auth.repository.UserRepository@{com.destore.auth.repository.UserRepository}}
+\doxysubsubsection{\texorpdfstring{findByUsername()}{findByUsername()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1auth_1_1repository_1_1_user_repository_a10ee6983a036bac37b87590967963731} 
+Optional$<$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1entity_1_1_user}{User}} $>$ com.\+destore.\+auth.\+repository.\+User\+Repository.\+find\+By\+Username (\begin{DoxyParamCaption}\item[{String}]{username}{}\end{DoxyParamCaption})}
+
+
+
+Find user by username. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & The username to search for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Optional containing the user if found 
+\end{DoxyReturn}
+\Hypertarget{interfacecom_1_1destore_1_1auth_1_1repository_1_1_user_repository_a4ffdc30123ae6d5cedbcf04732bdca7b}\index{com.destore.auth.repository.UserRepository@{com.destore.auth.repository.UserRepository}!findByUsernameAndIsActiveTrue@{findByUsernameAndIsActiveTrue}}
+\index{findByUsernameAndIsActiveTrue@{findByUsernameAndIsActiveTrue}!com.destore.auth.repository.UserRepository@{com.destore.auth.repository.UserRepository}}
+\doxysubsubsection{\texorpdfstring{findByUsernameAndIsActiveTrue()}{findByUsernameAndIsActiveTrue()}}
+{\footnotesize\ttfamily \label{interfacecom_1_1destore_1_1auth_1_1repository_1_1_user_repository_a4ffdc30123ae6d5cedbcf04732bdca7b} 
+Optional$<$ \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1model_1_1entity_1_1_user}{User}} $>$ com.\+destore.\+auth.\+repository.\+User\+Repository.\+find\+By\+Username\+And\+Is\+Active\+True (\begin{DoxyParamCaption}\item[{String}]{username}{}\end{DoxyParamCaption})}
+
+
+
+Find active user by username. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em username} & The username to search for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Optional containing the user if found and active 
+\end{DoxyReturn}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+auth-\/service/src/main/java/com/destore/auth/repository/\mbox{\hyperlink{auth-service_2src_2main_2java_2com_2destore_2auth_2repository_2_user_repository_8java}{User\+Repository.\+java}}\end{DoxyCompactItemize}

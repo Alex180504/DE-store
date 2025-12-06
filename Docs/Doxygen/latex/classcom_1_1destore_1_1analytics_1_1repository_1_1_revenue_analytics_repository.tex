@@ -1,0 +1,64 @@
+\doxysection{com.\+destore.\+analytics.\+repository.\+Revenue\+Analytics\+Repository Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository}{}\label{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository}\index{com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class {\bfseries Revenue\+Stats}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_ae54befc5dbd474d87cb9e40678a1bc8c}\label{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_ae54befc5dbd474d87cb9e40678a1bc8c} 
+{\bfseries Revenue\+Analytics\+Repository} ( @Qualifier("{}accounting\+Jdbc\+Template"{}) Jdbc\+Template accounting\+Jdbc\+Template, @Qualifier("{}store\+Jdbc\+Template"{}) Jdbc\+Template store\+Jdbc\+Template)
+\item 
+Revenue\+Report\+DTO.\+Daily\+Revenue \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_a10a6b7b5269b6b3b50735103864f001a}{get\+Revenue\+Summary}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+List$<$ Revenue\+Report\+DTO.\+Daily\+Revenue $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_a9894a76bc7db971786f5b2369f4c43f4}{get\+Daily\+Revenue}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+List$<$ Revenue\+Report\+DTO.\+Payment\+Method\+Revenue $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_ae1826a0d547f50dca580ba107573eb0c}{get\+Payment\+Method\+Breakdown}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+Revenue\+Stats \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_abb544020994a3e428313384a5df9c127}{get\+Revenue\+Stats}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date)
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_a5a6202284371551e640f87d6d74aaf8d}{get\+Store\+Name}} (Long store\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Repository for revenue analytics queries using read-\/only accounting database. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_a9894a76bc7db971786f5b2369f4c43f4}\index{com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}!getDailyRevenue@{getDailyRevenue}}
+\index{getDailyRevenue@{getDailyRevenue}!com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getDailyRevenue()}{getDailyRevenue()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_a9894a76bc7db971786f5b2369f4c43f4} 
+List$<$ Revenue\+Report\+DTO.\+Daily\+Revenue $>$ com.\+destore.\+analytics.\+repository.\+Revenue\+Analytics\+Repository.\+get\+Daily\+Revenue (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get daily revenue breakdown for trend analysis. \Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_ae1826a0d547f50dca580ba107573eb0c}\index{com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}!getPaymentMethodBreakdown@{getPaymentMethodBreakdown}}
+\index{getPaymentMethodBreakdown@{getPaymentMethodBreakdown}!com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getPaymentMethodBreakdown()}{getPaymentMethodBreakdown()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_ae1826a0d547f50dca580ba107573eb0c} 
+List$<$ Revenue\+Report\+DTO.\+Payment\+Method\+Revenue $>$ com.\+destore.\+analytics.\+repository.\+Revenue\+Analytics\+Repository.\+get\+Payment\+Method\+Breakdown (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get payment method breakdown with revenue and transaction counts. \Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_abb544020994a3e428313384a5df9c127}\index{com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}!getRevenueStats@{getRevenueStats}}
+\index{getRevenueStats@{getRevenueStats}!com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getRevenueStats()}{getRevenueStats()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_abb544020994a3e428313384a5df9c127} 
+Revenue\+Stats com.\+destore.\+analytics.\+repository.\+Revenue\+Analytics\+Repository.\+get\+Revenue\+Stats (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get revenue statistics including min, max, and average transaction values. \Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_a10a6b7b5269b6b3b50735103864f001a}\index{com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}!getRevenueSummary@{getRevenueSummary}}
+\index{getRevenueSummary@{getRevenueSummary}!com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getRevenueSummary()}{getRevenueSummary()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_a10a6b7b5269b6b3b50735103864f001a} 
+Revenue\+Report\+DTO.\+Daily\+Revenue com.\+destore.\+analytics.\+repository.\+Revenue\+Analytics\+Repository.\+get\+Revenue\+Summary (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get revenue summary for a specific store and date range. \Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_a5a6202284371551e640f87d6d74aaf8d}\index{com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}!getStoreName@{getStoreName}}
+\index{getStoreName@{getStoreName}!com.destore.analytics.repository.RevenueAnalyticsRepository@{com.destore.analytics.repository.RevenueAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getStoreName()}{getStoreName()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_revenue_analytics_repository_a5a6202284371551e640f87d6d74aaf8d} 
+String com.\+destore.\+analytics.\+repository.\+Revenue\+Analytics\+Repository.\+get\+Store\+Name (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{}\end{DoxyParamCaption})}
+
+Get store name from store database. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/repository/Revenue\+Analytics\+Repository.\+java\end{DoxyCompactItemize}

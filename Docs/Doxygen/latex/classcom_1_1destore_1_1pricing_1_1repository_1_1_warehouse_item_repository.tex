@@ -1,0 +1,79 @@
+\doxysection{com.\+destore.\+pricing.\+repository.\+Warehouse\+Item\+Repository Class Reference}
+\hypertarget{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository}{}\label{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository}\index{com.destore.pricing.repository.WarehouseItemRepository@{com.destore.pricing.repository.WarehouseItemRepository}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository_a5ea0325ad2d3444bf284345b52cfd077}{exists\+By\+Id}} (Integer item\+Id)
+\begin{DoxyCompactList}\small\item\em Check if an item exists in the warehouse database. \end{DoxyCompactList}\item 
+Optional$<$ String $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository_aede5850ebb2c8856fa7d031890d8bb06}{get\+Item\+Name}} (Integer item\+Id)
+\begin{DoxyCompactList}\small\item\em Get item name from warehouse database. \end{DoxyCompactList}\item 
+Optional$<$ java.\+math.\+Big\+Decimal $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository_af8a2c824158d08ecd55293d92f252792}{get\+Item\+Base\+Price}} (Integer item\+Id)
+\begin{DoxyCompactList}\small\item\em Get item base price from warehouse database. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository_a5ea0325ad2d3444bf284345b52cfd077}\index{com.destore.pricing.repository.WarehouseItemRepository@{com.destore.pricing.repository.WarehouseItemRepository}!existsById@{existsById}}
+\index{existsById@{existsById}!com.destore.pricing.repository.WarehouseItemRepository@{com.destore.pricing.repository.WarehouseItemRepository}}
+\doxysubsubsection{\texorpdfstring{existsById()}{existsById()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository_a5ea0325ad2d3444bf284345b52cfd077} 
+boolean com.\+destore.\+pricing.\+repository.\+Warehouse\+Item\+Repository.\+exists\+By\+Id (\begin{DoxyParamCaption}\item[{Integer}]{item\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Check if an item exists in the warehouse database. 
+
+Validates that an item\+\_\+id exists before allowing pricing rules to be created. This prevents orphaned pricing rules for non-\/existent items.
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The warehouse item ID to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if item exists in warehouse database 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository_af8a2c824158d08ecd55293d92f252792}\index{com.destore.pricing.repository.WarehouseItemRepository@{com.destore.pricing.repository.WarehouseItemRepository}!getItemBasePrice@{getItemBasePrice}}
+\index{getItemBasePrice@{getItemBasePrice}!com.destore.pricing.repository.WarehouseItemRepository@{com.destore.pricing.repository.WarehouseItemRepository}}
+\doxysubsubsection{\texorpdfstring{getItemBasePrice()}{getItemBasePrice()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository_af8a2c824158d08ecd55293d92f252792} 
+Optional$<$ java.\+math.\+Big\+Decimal $>$ com.\+destore.\+pricing.\+repository.\+Warehouse\+Item\+Repository.\+get\+Item\+Base\+Price (\begin{DoxyParamCaption}\item[{Integer}]{item\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Get item base price from warehouse database. 
+
+Retrieves the warehouse base price for an item. This can be used as a fallback when no pricing rule exists.
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The warehouse item ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Optional containing base price if found 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository_aede5850ebb2c8856fa7d031890d8bb06}\index{com.destore.pricing.repository.WarehouseItemRepository@{com.destore.pricing.repository.WarehouseItemRepository}!getItemName@{getItemName}}
+\index{getItemName@{getItemName}!com.destore.pricing.repository.WarehouseItemRepository@{com.destore.pricing.repository.WarehouseItemRepository}}
+\doxysubsubsection{\texorpdfstring{getItemName()}{getItemName()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1repository_1_1_warehouse_item_repository_aede5850ebb2c8856fa7d031890d8bb06} 
+Optional$<$ String $>$ com.\+destore.\+pricing.\+repository.\+Warehouse\+Item\+Repository.\+get\+Item\+Name (\begin{DoxyParamCaption}\item[{Integer}]{item\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Get item name from warehouse database. 
+
+Retrieves the item name for display purposes. This is optional and used for enriching API responses.
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The warehouse item ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Optional containing item name if found 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pricing-\/service/src/main/java/com/destore/pricing/repository/\mbox{\hyperlink{pricing-service_2src_2main_2java_2com_2destore_2pricing_2repository_2_warehouse_item_repository_8java}{Warehouse\+Item\+Repository.\+java}}\end{DoxyCompactItemize}

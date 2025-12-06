@@ -1,0 +1,147 @@
+@startuml finance-adapter-sequence
+
+skinparam defaultFontSize 16
+skinparam sequenceMessageAlign center
+skinparam ParticipantPadding 10
+skinparam BoxPadding 10
+
+title Sequence Diagram - Finance Adapter: BNPL Approval Integration
+
+actor "Shopping System" as shopping
+participant "FinanceController" as ctrl
+participant "EnablingClient" as client
+participant "WebClient" as webclient
+participant "Enabling Finance\nSystem" as enabling
+
+== Happy Path: Finance Approval Granted ==
+
+shopping -> ctrl: POST /api/finance/request\n{customerId, firstName, lastName, phone, amount}
+activate ctrl
+
+ctrl -> ctrl: Validate request (@Valid)
+note right of ctrl
+Validation checks:
+- customerId not null
+- firstName not blank
+- lastName not blank
+- phone not blank
+- amount positive
+end note
+
+ctrl -> client: requestApproval(request)
+activate client
+
+client -> client: Log request details\n"Sending finance request for customer {customerId}: £{amount}"
+
+client -> webclient: POST to /api/finance/approve
+activate webclient
+note right of webclient
+WebClient configured with:
+- Base URL: http://enabling-mock:8095
+- Body: FinanceRequest
+- Response type: FinanceResponse
+- Blocking call: .block()
+end note
+
+webclient -> enabling: POST /api/finance/approve\n{\n  "customerId": {id},\n  "firstName": "{firstName}",\n  "lastName": "{lastName}",\n  "phone": "{phone}",\n  "amount": {amount}\n}
+activate enabling
+
+enabling -> enabling: Evaluate credit application\n- Check credit score\n- Assess risk\n- Determine approval
+
+enabling --> webclient: 200 OK\n{\n  "approved": true,\n  "reference": "{approvalRef}",\n  "customerId": {id},\n  "amount": {amount},\n  "reason": "Approved",\n  "timestamp": "{timestamp}"\n}
+deactivate enabling
+
+webclient -> webclient: Parse response to FinanceResponse
+webclient --> client: FinanceResponse{approved: true}
+deactivate webclient
+
+client -> client: Log response\n"Enabling response: APPROVED - {reference}"
+
+client --> ctrl: FinanceResponse
+deactivate client
+
+ctrl --> shopping: 200 OK\n{\n  "approved": true,\n  "reference": "{approvalRef}",\n  "customerId": {id},\n  "amount": {amount},\n  "reason": "Approved",\n  "timestamp": "{timestamp}"\n}
+deactivate ctrl
+
+== Alternative Path: Finance Approval Denied ==
+
+shopping -> ctrl: POST /api/finance/request\n{customerId, firstName, lastName, phone, amount}
+activate ctrl
+
+ctrl -> client: requestApproval(request)
+activate client
+
+client -> webclient: POST to /api/finance/approve
+activate webclient
+
+webclient -> enabling: POST /api/finance/approve
+activate enabling
+
+enabling -> enabling: Evaluate credit application\n- Credit score too low\n- Insufficient income
+
+enabling --> webclient: 200 OK\n{\n  "approved": false,\n  "reference": null,\n  "customerId": {id},\n  "amount": {amount},\n  "reason": "Insufficient credit score",\n  "timestamp": "{timestamp}"\n}
+deactivate enabling
+
+webclient --> client: FinanceResponse{approved: false}
+deactivate webclient
+
+client -> client: Log response\n"Enabling response: DENIED - null"
+
+client --> ctrl: FinanceResponse
+deactivate client
+
+ctrl --> shopping: 200 OK\n{\n  "approved": false,\n  "reference": null,\n  "customerId": {id},\n  "amount": {amount},\n  "reason": "Insufficient credit score",\n  "timestamp": "{timestamp}"\n}
+deactivate ctrl
+
+== Error Path: Enabling Finance System Unavailable ==
+
+shopping -> ctrl: POST /api/finance/request\n{customerId, firstName, lastName, phone, amount}
+activate ctrl
+
+ctrl -> client: requestApproval(request)
+activate client
+
+client -> webclient: POST to /api/finance/approve
+activate webclient
+
+webclient -> enabling: POST /api/finance/approve
+activate enabling
+enabling --> webclient: Connection timeout / 500 Error
+deactivate enabling
+
+webclient --> client: throw Exception
+deactivate webclient
+
+client -> client: Catch exception\nLog error: "Error calling Enabling API"
+
+client -> client: Build fallback response\nFinanceResponse.builder()\n  .approved(false)\n  .customerId(request.customerId)\n  .amount(request.amount)\n  .reason("Service unavailable")\n  .build()
+note right of client
+Graceful degradation:
+Instead of propagating exception,
+return denial response with reason
+end note
+
+client --> ctrl: FinanceResponse{approved: false, reason: "Service unavailable"}
+deactivate client
+
+ctrl --> shopping: 200 OK\n{\n  "approved": false,\n  "reference": null,\n  "customerId": {id},\n  "amount": {amount},\n  "reason": "Service unavailable",\n  "timestamp": null\n}
+deactivate ctrl
+
+== Error Path: Invalid JWT Token ==
+
+shopping -> ctrl: POST /api/finance/request\nAuthorization: Bearer {invalidToken}
+activate ctrl
+
+ctrl -> ctrl: JwtAuthenticationFilter intercepts
+note right of ctrl
+Filter extracts token and validates:
+- Parse JWT with shared secret
+- Verify signature
+- Extract claims
+end note
+
+ctrl -> ctrl: Token validation fails
+ctrl --> shopping: 401 Unauthorized\n"Invalid or expired token"
+deactivate ctrl
+
+@enduml

@@ -1,0 +1,43 @@
+\doxysection{com.\+destore.\+inventory.\+security.\+Jwt\+Token\+Provider Class Reference}
+\hypertarget{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider}{}\label{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider}\index{com.destore.inventory.security.JwtTokenProvider@{com.destore.inventory.security.JwtTokenProvider}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_a647f4be396a5b61eec0597be69e82619}\label{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_a647f4be396a5b61eec0597be69e82619} 
+{\bfseries Jwt\+Token\+Provider} (@Value("{}\$\{jwt.\+secret\}"{}) String secret)
+\item 
+Claims \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_a5c63424af7e71125259265c2a4350b69}{validate\+Token}} (String token)
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_adb8ef83582bb407ba92a9cb41d0417cd}{get\+Username\+From\+Token}} (String token)
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_aa7aa6ddfe66c330f4461044f9ac9d72c}{get\+Role\+From\+Token}} (String token)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+JWT Token Provider -\/ validates JWT tokens from auth service 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_aa7aa6ddfe66c330f4461044f9ac9d72c}\index{com.destore.inventory.security.JwtTokenProvider@{com.destore.inventory.security.JwtTokenProvider}!getRoleFromToken@{getRoleFromToken}}
+\index{getRoleFromToken@{getRoleFromToken}!com.destore.inventory.security.JwtTokenProvider@{com.destore.inventory.security.JwtTokenProvider}}
+\doxysubsubsection{\texorpdfstring{getRoleFromToken()}{getRoleFromToken()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_aa7aa6ddfe66c330f4461044f9ac9d72c} 
+String com.\+destore.\+inventory.\+security.\+Jwt\+Token\+Provider.\+get\+Role\+From\+Token (\begin{DoxyParamCaption}\item[{String}]{token}{}\end{DoxyParamCaption})}
+
+Extract role from token \Hypertarget{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_adb8ef83582bb407ba92a9cb41d0417cd}\index{com.destore.inventory.security.JwtTokenProvider@{com.destore.inventory.security.JwtTokenProvider}!getUsernameFromToken@{getUsernameFromToken}}
+\index{getUsernameFromToken@{getUsernameFromToken}!com.destore.inventory.security.JwtTokenProvider@{com.destore.inventory.security.JwtTokenProvider}}
+\doxysubsubsection{\texorpdfstring{getUsernameFromToken()}{getUsernameFromToken()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_adb8ef83582bb407ba92a9cb41d0417cd} 
+String com.\+destore.\+inventory.\+security.\+Jwt\+Token\+Provider.\+get\+Username\+From\+Token (\begin{DoxyParamCaption}\item[{String}]{token}{}\end{DoxyParamCaption})}
+
+Extract username from token \Hypertarget{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_a5c63424af7e71125259265c2a4350b69}\index{com.destore.inventory.security.JwtTokenProvider@{com.destore.inventory.security.JwtTokenProvider}!validateToken@{validateToken}}
+\index{validateToken@{validateToken}!com.destore.inventory.security.JwtTokenProvider@{com.destore.inventory.security.JwtTokenProvider}}
+\doxysubsubsection{\texorpdfstring{validateToken()}{validateToken()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1security_1_1_jwt_token_provider_a5c63424af7e71125259265c2a4350b69} 
+Claims com.\+destore.\+inventory.\+security.\+Jwt\+Token\+Provider.\+validate\+Token (\begin{DoxyParamCaption}\item[{String}]{token}{}\end{DoxyParamCaption})}
+
+Validate JWT token and extract claims 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inventory-\/service/src/main/java/com/destore/inventory/security/Jwt\+Token\+Provider.\+java\end{DoxyCompactItemize}

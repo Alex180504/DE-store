@@ -1,0 +1,62 @@
+@startuml store-service-component
+!include ../c4-plantuml/C4_Component.puml
+
+title Component Diagram - Store Service
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(store_service, "Store Service") {
+    
+    Component(store_ctrl, "StoreController", "Spring REST Controller", "Handles store management requests. Provides CRUD operations for store locations with role-based authorization.")
+    
+    Component(store_svc, "StoreService", "Spring Service", "Business logic for store management. Enforces authorization rules: Network Managers can create/update/delete stores, all authenticated users can read store data.")
+    
+    Component(jwt_filter, "JwtAuthenticationFilter", "Spring Filter", "Validates JWT tokens from Authorization header. Extracts username, role, and storeId claims to set SecurityContext.")
+    Component(jwt_util, "JwtUtil", "Security Component", "JWT parsing and validation utility. Uses shared secret to verify token signatures and extract claims.")
+    Component(security_config, "SecurityConfig", "Spring Security Configuration", "Configures security rules, CORS, JWT filter chain, and role-based access control (STORE_MANAGER/NETWORK_MANAGER).")
+    Component(user_principal, "UserPrincipal", "Security Model", "User authentication principal containing username, storeId, and role information from JWT claims. Provides isNetworkManager() and isStoreManager() helper methods.")
+    
+    Component(store_repo, "StoreRepository", "Spring Data JPA", "Repository for stores table. Provides CRUD operations and custom queries: findByStoreCode, findByIsActive, existsByStoreCode.")
+    
+    Component(store_entity, "Store", "JPA Entity", "Store domain model with storeId, storeCode (unique), storeName, address, postcode, isActive flag, and audit timestamps. Includes @PrePersist and @PreUpdate hooks.")
+    Component(dto_request, "StoreRequest", "DTO", "Store creation/update request with validation: storeCode format (XXX-NNN), storeName, address, postcode, isActive flag.")
+    Component(dto_response, "StoreResponse", "DTO", "Store response containing all store details: storeId, storeCode, storeName, address, postcode, isActive, createdAt, updatedAt.")
+    
+    Component(exception_handler, "ResourceNotFoundException", "Exception", "Thrown when store not found by ID or code.")
+    Component(forbidden_exception, "ForbiddenAccessException", "Exception", "Thrown when user lacks permissions for create/update/delete operations.")
+}
+
+ContainerDb(store_db, "Store Database", "PostgreSQL 15", "Stores table with store locations: storeId, storeCode (unique constraint + format check), storeName, address, postcode, isActive, timestamps.")
+
+Container(management_ui, "Management UI", "HTML5/JavaScript", "Used by Network Managers to create/update/delete stores, and by all users to view store listings.")
+Container(pricing_service, "Pricing Service", "Spring Boot", "Queries store existence when creating store-specific pricing rules.")
+Container(analytics_service, "Analytics Service", "Spring Boot", "Queries store data for reporting and dashboards.")
+
+Rel(management_ui, store_ctrl, "CRUD /api/stores", "HTTPS/JSON")
+Rel(pricing_service, store_ctrl, "GET /api/stores/{id}", "HTTPS/JSON")
+Rel(analytics_service, store_ctrl, "GET /api/stores", "HTTPS/JSON")
+
+Rel(store_ctrl, store_svc, "Calls CRUD methods")
+Rel(store_ctrl, exception_handler, "Throws exceptions")
+
+Rel(store_svc, store_repo, "CRUD operations")
+Rel(store_svc, user_principal, "Gets current user for authorization")
+Rel(store_svc, exception_handler, "Throws ResourceNotFoundException")
+Rel(store_svc, forbidden_exception, "Throws ForbiddenAccessException")
+
+Rel(store_repo, store_db, "Reads/writes stores", "JDBC")
+
+Rel(jwt_filter, jwt_util, "Validates token")
+Rel(jwt_filter, user_principal, "Creates authentication")
+Rel(security_config, jwt_filter, "Registers filter")
+
+Rel(store_svc, store_entity, "Uses domain model")
+Rel(store_repo, store_entity, "Maps to/from DB")
+Rel(store_ctrl, dto_request, "Receives requests")
+Rel(store_ctrl, dto_response, "Returns responses")
+Rel(store_svc, dto_request, "Validates and processes")
+Rel(store_svc, dto_response, "Builds responses")
+
+SHOW_LEGEND()
+
+@enduml

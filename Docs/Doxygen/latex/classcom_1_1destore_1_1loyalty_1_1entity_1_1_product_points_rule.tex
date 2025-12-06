@@ -1,0 +1,83 @@
+\doxysection{com.\+destore.\+loyalty.\+entity.\+Product\+Points\+Rule Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule}{}\label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule}\index{com.destore.loyalty.entity.ProductPointsRule@{com.destore.loyalty.entity.ProductPointsRule}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_a11ee8a6db415674d8d7ec7137bf1f3b1}{is\+Valid\+At}} (Local\+Date\+Time timestamp)
+\item 
+Big\+Decimal \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_a9f52015a14fb574fd87f7c13ad0be31f}{calculate\+Points}} (Big\+Decimal quantity, Big\+Decimal total\+Price)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_a205d4f4b7afda14cf00e24779b5dea74}{on\+Create}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_ac0e08430a7be18b5fefae3bbd0013483}{on\+Update}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Entity representing loyalty points rules for products. 
+
+Defines how many points customers earn when purchasing specific products. Supports both per-\/unit points and percentage-\/based points (points per £1 spent). Rules have validity periods to maintain historical accuracy for retroactive calculations. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_a9f52015a14fb574fd87f7c13ad0be31f}\index{com.destore.loyalty.entity.ProductPointsRule@{com.destore.loyalty.entity.ProductPointsRule}!calculatePoints@{calculatePoints}}
+\index{calculatePoints@{calculatePoints}!com.destore.loyalty.entity.ProductPointsRule@{com.destore.loyalty.entity.ProductPointsRule}}
+\doxysubsubsection{\texorpdfstring{calculatePoints()}{calculatePoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_a9f52015a14fb574fd87f7c13ad0be31f} 
+Big\+Decimal com.\+destore.\+loyalty.\+entity.\+Product\+Points\+Rule.\+calculate\+Points (\begin{DoxyParamCaption}\item[{Big\+Decimal}]{quantity}{, }\item[{Big\+Decimal}]{total\+Price}{}\end{DoxyParamCaption})}
+
+Calculates points earned for a purchase.
+
+
+\begin{DoxyParams}{Parameters}
+{\em quantity} & Quantity of items purchased \\
+\hline
+{\em total\+Price} & Total price paid for the items \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Calculated loyalty points (rounded down to 2 decimal places) 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_a11ee8a6db415674d8d7ec7137bf1f3b1}\index{com.destore.loyalty.entity.ProductPointsRule@{com.destore.loyalty.entity.ProductPointsRule}!isValidAt@{isValidAt}}
+\index{isValidAt@{isValidAt}!com.destore.loyalty.entity.ProductPointsRule@{com.destore.loyalty.entity.ProductPointsRule}}
+\doxysubsubsection{\texorpdfstring{isValidAt()}{isValidAt()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_a11ee8a6db415674d8d7ec7137bf1f3b1} 
+boolean com.\+destore.\+loyalty.\+entity.\+Product\+Points\+Rule.\+is\+Valid\+At (\begin{DoxyParamCaption}\item[{Local\+Date\+Time}]{timestamp}{}\end{DoxyParamCaption})}
+
+Checks if this rule is valid at a specific timestamp.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timestamp} & The timestamp to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the rule is valid at the given timestamp 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_a205d4f4b7afda14cf00e24779b5dea74}\index{com.destore.loyalty.entity.ProductPointsRule@{com.destore.loyalty.entity.ProductPointsRule}!onCreate@{onCreate}}
+\index{onCreate@{onCreate}!com.destore.loyalty.entity.ProductPointsRule@{com.destore.loyalty.entity.ProductPointsRule}}
+\doxysubsubsection{\texorpdfstring{onCreate()}{onCreate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_a205d4f4b7afda14cf00e24779b5dea74} 
+void com.\+destore.\+loyalty.\+entity.\+Product\+Points\+Rule.\+on\+Create (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Sets creation timestamp before persisting new entity. \Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_ac0e08430a7be18b5fefae3bbd0013483}\index{com.destore.loyalty.entity.ProductPointsRule@{com.destore.loyalty.entity.ProductPointsRule}!onUpdate@{onUpdate}}
+\index{onUpdate@{onUpdate}!com.destore.loyalty.entity.ProductPointsRule@{com.destore.loyalty.entity.ProductPointsRule}}
+\doxysubsubsection{\texorpdfstring{onUpdate()}{onUpdate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_product_points_rule_ac0e08430a7be18b5fefae3bbd0013483} 
+void com.\+destore.\+loyalty.\+entity.\+Product\+Points\+Rule.\+on\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Updates modification timestamp before updating entity. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/entity/Product\+Points\+Rule.\+java\end{DoxyCompactItemize}

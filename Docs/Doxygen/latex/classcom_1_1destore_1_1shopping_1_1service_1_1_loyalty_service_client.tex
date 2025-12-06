@@ -1,0 +1,93 @@
+\doxysection{com.\+destore.\+shopping.\+service.\+Loyalty\+Service\+Client Class Reference}
+\hypertarget{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client}{}\label{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client}\index{com.destore.shopping.service.LoyaltyServiceClient@{com.destore.shopping.service.LoyaltyServiceClient}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_ae897e8ddf9b071b36118d84c073c9b3d}\label{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_ae897e8ddf9b071b36118d84c073c9b3d} 
+{\bfseries Loyalty\+Service\+Client} (Web\+Client.\+Builder web\+Client\+Builder, @Value("{}\$\{loyalty.\+service.\+url\}"{}) String loyalty\+Service\+Url, @Value("{}\$\{shopping.\+system.\+token\}"{}) String service\+Token)
+\item 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1model_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_aee1f8bf1cc8d730daa0d0a9e37648ec6}{get\+Active\+Offers}} ()
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1model_1_1_customer_points_d_t_o}{Customer\+Points\+DTO}} \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_a4a1f5ec90621bc4f03cc084e39b7bdf6}{get\+Customer\+Points}} (Integer customer\+Id)
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_a50eaefc60494f50a6e80fbb2a369ee70}{calculate\+Customer\+Points}} (Integer customer\+Id)
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1model_1_1_basket_pricing_response}{Basket\+Pricing\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_aeef53f6d10d11ac170d2abe411d186ee}{price\+Basket}} (\mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1model_1_1_basket_pricing_request}{Basket\+Pricing\+Request}} request)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Loyalty Service Client 
+
+Handles communication with the loyalty service API. Provides methods for fetching offers and customer points balance. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_a50eaefc60494f50a6e80fbb2a369ee70}\index{com.destore.shopping.service.LoyaltyServiceClient@{com.destore.shopping.service.LoyaltyServiceClient}!calculateCustomerPoints@{calculateCustomerPoints}}
+\index{calculateCustomerPoints@{calculateCustomerPoints}!com.destore.shopping.service.LoyaltyServiceClient@{com.destore.shopping.service.LoyaltyServiceClient}}
+\doxysubsubsection{\texorpdfstring{calculateCustomerPoints()}{calculateCustomerPoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_a50eaefc60494f50a6e80fbb2a369ee70} 
+void com.\+destore.\+shopping.\+service.\+Loyalty\+Service\+Client.\+calculate\+Customer\+Points (\begin{DoxyParamCaption}\item[{Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Trigger manual points calculation for a customer
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & the customer ID \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_aee1f8bf1cc8d730daa0d0a9e37648ec6}\index{com.destore.shopping.service.LoyaltyServiceClient@{com.destore.shopping.service.LoyaltyServiceClient}!getActiveOffers@{getActiveOffers}}
+\index{getActiveOffers@{getActiveOffers}!com.destore.shopping.service.LoyaltyServiceClient@{com.destore.shopping.service.LoyaltyServiceClient}}
+\doxysubsubsection{\texorpdfstring{getActiveOffers()}{getActiveOffers()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_aee1f8bf1cc8d730daa0d0a9e37648ec6} 
+List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1model_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ com.\+destore.\+shopping.\+service.\+Loyalty\+Service\+Client.\+get\+Active\+Offers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get all active redemption offers from loyalty service
+
+\begin{DoxyReturn}{Returns}
+list of active redemption offers 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_a4a1f5ec90621bc4f03cc084e39b7bdf6}\index{com.destore.shopping.service.LoyaltyServiceClient@{com.destore.shopping.service.LoyaltyServiceClient}!getCustomerPoints@{getCustomerPoints}}
+\index{getCustomerPoints@{getCustomerPoints}!com.destore.shopping.service.LoyaltyServiceClient@{com.destore.shopping.service.LoyaltyServiceClient}}
+\doxysubsubsection{\texorpdfstring{getCustomerPoints()}{getCustomerPoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_a4a1f5ec90621bc4f03cc084e39b7bdf6} 
+\mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1model_1_1_customer_points_d_t_o}{Customer\+Points\+DTO}} com.\+destore.\+shopping.\+service.\+Loyalty\+Service\+Client.\+get\+Customer\+Points (\begin{DoxyParamCaption}\item[{Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Get customer points balance
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & the customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+customer points balance 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_aeef53f6d10d11ac170d2abe411d186ee}\index{com.destore.shopping.service.LoyaltyServiceClient@{com.destore.shopping.service.LoyaltyServiceClient}!priceBasket@{priceBasket}}
+\index{priceBasket@{priceBasket}!com.destore.shopping.service.LoyaltyServiceClient@{com.destore.shopping.service.LoyaltyServiceClient}}
+\doxysubsubsection{\texorpdfstring{priceBasket()}{priceBasket()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1shopping_1_1service_1_1_loyalty_service_client_aeef53f6d10d11ac170d2abe411d186ee} 
+\mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1model_1_1_basket_pricing_response}{Basket\+Pricing\+Response}} com.\+destore.\+shopping.\+service.\+Loyalty\+Service\+Client.\+price\+Basket (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1shopping_1_1model_1_1_basket_pricing_request}{Basket\+Pricing\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Price a basket with redemption offers
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & the basket pricing request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+basket pricing response with discounts 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+shopping-\/mock-\/service/src/main/java/com/destore/shopping/service/Loyalty\+Service\+Client.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,98 @@
+\doxysection{com.\+destore.\+pricing.\+controller.\+Price\+Calculation\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller}{}\label{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller}\index{com.destore.pricing.controller.PriceCalculationController@{com.destore.pricing.controller.PriceCalculationController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_price_calculation_response}{Price\+Calculation\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller_aaa9c24f7404d9facd417c7fb2e90c68d}{calculate\+Price}} ( @Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_price_calculation_request}{Price\+Calculation\+Request}} request)
+\begin{DoxyCompactList}\small\item\em Calculate final price for an item with quantity and promotions. \end{DoxyCompactList}\item 
+Response\+Entity$<$ Boolean $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller_a3c505515435f7e108921b4e68fc05b0b}{check\+Pricing\+Exists}} ( @Request\+Param Integer item\+Id, @Request\+Param(required=false) Integer store\+Id)
+\begin{DoxyCompactList}\small\item\em Check if a pricing rule exists for an item/store combination. \end{DoxyCompactList}\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_bulk_price_calculation_response}{Bulk\+Price\+Calculation\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller_a4304a45ff4f5a6a5bcae2cf66a93a2c2}{calculate\+Bulk\+Price}} ( @Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_bulk_price_calculation_request}{Bulk\+Price\+Calculation\+Request}} request)
+\begin{DoxyCompactList}\small\item\em Calculate prices for multiple items in bulk. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller_a4304a45ff4f5a6a5bcae2cf66a93a2c2}\index{com.destore.pricing.controller.PriceCalculationController@{com.destore.pricing.controller.PriceCalculationController}!calculateBulkPrice@{calculateBulkPrice}}
+\index{calculateBulkPrice@{calculateBulkPrice}!com.destore.pricing.controller.PriceCalculationController@{com.destore.pricing.controller.PriceCalculationController}}
+\doxysubsubsection{\texorpdfstring{calculateBulkPrice()}{calculateBulkPrice()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller_a4304a45ff4f5a6a5bcae2cf66a93a2c2} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_bulk_price_calculation_response}{Bulk\+Price\+Calculation\+Response}} $>$ com.\+destore.\+pricing.\+controller.\+Price\+Calculation\+Controller.\+calculate\+Bulk\+Price (\begin{DoxyParamCaption}\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_bulk_price_calculation_request}{Bulk\+Price\+Calculation\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+
+
+Calculate prices for multiple items in bulk. 
+
+This endpoint calculates prices for a list of items in a single request, useful for shopping cart pricing. All items are priced for the same store.
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & Bulk price calculation request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Bulk price calculation response with totals 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller_aaa9c24f7404d9facd417c7fb2e90c68d}\index{com.destore.pricing.controller.PriceCalculationController@{com.destore.pricing.controller.PriceCalculationController}!calculatePrice@{calculatePrice}}
+\index{calculatePrice@{calculatePrice}!com.destore.pricing.controller.PriceCalculationController@{com.destore.pricing.controller.PriceCalculationController}}
+\doxysubsubsection{\texorpdfstring{calculatePrice()}{calculatePrice()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller_aaa9c24f7404d9facd417c7fb2e90c68d} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_price_calculation_response}{Price\+Calculation\+Response}} $>$ com.\+destore.\+pricing.\+controller.\+Price\+Calculation\+Controller.\+calculate\+Price (\begin{DoxyParamCaption}\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_price_calculation_request}{Price\+Calculation\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+
+
+Calculate final price for an item with quantity and promotions. 
+
+This endpoint is called by the Shopping System during checkout to calculate the final price including any applicable promotions. The calculation uses hierarchical pricing where store-\/specific rules override global rules.
+
+Request body contains\+:
+\begin{DoxyItemize}
+\item item\+Id\+: Warehouse item identifier
+\item store\+Id\+: Store identifier (optional, null = use global pricing)
+\item quantity\+: Number of items being purchased
+\end{DoxyItemize}
+
+Response contains detailed price breakdown\+:
+\begin{DoxyItemize}
+\item unit\+Price\+: Price per item
+\item subtotal\+: unit\+Price × quantity
+\item discount\+Amount\+: Total promotional discount
+\item final\+Price\+: subtotal -\/ discount\+Amount
+\item promotion\+: Type of promotion applied
+\item used\+Store\+Specific\+Rule\+: Whether store-\/specific pricing was used
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & Price calculation request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Detailed price calculation response 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller_a3c505515435f7e108921b4e68fc05b0b}\index{com.destore.pricing.controller.PriceCalculationController@{com.destore.pricing.controller.PriceCalculationController}!checkPricingExists@{checkPricingExists}}
+\index{checkPricingExists@{checkPricingExists}!com.destore.pricing.controller.PriceCalculationController@{com.destore.pricing.controller.PriceCalculationController}}
+\doxysubsubsection{\texorpdfstring{checkPricingExists()}{checkPricingExists()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1controller_1_1_price_calculation_controller_a3c505515435f7e108921b4e68fc05b0b} 
+Response\+Entity$<$ Boolean $>$ com.\+destore.\+pricing.\+controller.\+Price\+Calculation\+Controller.\+check\+Pricing\+Exists (\begin{DoxyParamCaption}\item[{@Request\+Param Integer}]{item\+Id}{, }\item[{@Request\+Param(required=false) Integer}]{store\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Check if a pricing rule exists for an item/store combination. 
+
+Utility endpoint to verify if pricing is configured before attempting price calculation. Used for validation in the UI.
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The item ID \\
+\hline
+{\em store\+Id} & The store ID (optional) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if pricing rule exists 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pricing-\/service/src/main/java/com/destore/pricing/controller/\mbox{\hyperlink{_price_calculation_controller_8java}{Price\+Calculation\+Controller.\+java}}\end{DoxyCompactItemize}

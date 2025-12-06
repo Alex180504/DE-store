@@ -1,0 +1,49 @@
+\doxysection{auth-\/service/src/main/java/com/destore/auth/config/\+Security\+Config.java File Reference}
+\hypertarget{auth-service_2src_2main_2java_2com_2destore_2auth_2config_2_security_config_8java}{}\label{auth-service_2src_2main_2java_2com_2destore_2auth_2config_2_security_config_8java}\index{auth-\/service/src/main/java/com/destore/auth/config/SecurityConfig.java@{auth-\/service/src/main/java/com/destore/auth/config/SecurityConfig.java}}
+
+
+Spring Security configuration.  
+
+
+{\ttfamily import com.\+destore.\+auth.\+security.\+Custom\+User\+Details\+Service;}\newline
+{\ttfamily import com.\+destore.\+auth.\+security.\+Jwt\+Authentication\+Filter;}\newline
+{\ttfamily import com.\+destore.\+auth.\+security.\+Jwt\+Util;}\newline
+{\ttfamily import lombok.\+Required\+Args\+Constructor;}\newline
+{\ttfamily import org.\+springframework.\+context.\+annotation.\+Bean;}\newline
+{\ttfamily import org.\+springframework.\+context.\+annotation.\+Configuration;}\newline
+{\ttfamily import org.\+springframework.\+security.\+authentication.\+Authentication\+Manager;}\newline
+{\ttfamily import org.\+springframework.\+security.\+authentication.\+Authentication\+Provider;}\newline
+{\ttfamily import org.\+springframework.\+security.\+authentication.\+dao.\+Dao\+Authentication\+Provider;}\newline
+{\ttfamily import org.\+springframework.\+security.\+config.\+annotation.\+authentication.\+configuration.\+Authentication\+Configuration;}\newline
+{\ttfamily import org.\+springframework.\+security.\+config.\+annotation.\+method.\+configuration.\+Enable\+Method\+Security;}\newline
+{\ttfamily import org.\+springframework.\+security.\+config.\+annotation.\+web.\+builders.\+Http\+Security;}\newline
+{\ttfamily import org.\+springframework.\+security.\+config.\+annotation.\+web.\+configuration.\+Enable\+Web\+Security;}\newline
+{\ttfamily import org.\+springframework.\+security.\+config.\+annotation.\+web.\+configurers.\+Abstract\+Http\+Configurer;}\newline
+{\ttfamily import org.\+springframework.\+security.\+config.\+http.\+Session\+Creation\+Policy;}\newline
+{\ttfamily import org.\+springframework.\+security.\+crypto.\+bcrypt.\+BCrypt\+Password\+Encoder;}\newline
+{\ttfamily import org.\+springframework.\+security.\+crypto.\+password.\+Password\+Encoder;}\newline
+{\ttfamily import org.\+springframework.\+security.\+web.\+Security\+Filter\+Chain;}\newline
+{\ttfamily import org.\+springframework.\+security.\+web.\+authentication.\+Username\+Password\+Authentication\+Filter;}\newline
+{\ttfamily import org.\+springframework.\+web.\+cors.\+Cors\+Configuration;}\newline
+{\ttfamily import org.\+springframework.\+web.\+cors.\+Cors\+Configuration\+Source;}\newline
+{\ttfamily import org.\+springframework.\+web.\+cors.\+Url\+Based\+Cors\+Configuration\+Source;}\newline
+{\ttfamily import java.\+util.\+Arrays;}\newline
+{\ttfamily import java.\+util.\+List;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1auth_1_1config_1_1_security_config}{com.\+destore.\+auth.\+config.\+Security\+Config}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Spring Security configuration. 
+
+Configures authentication, authorization, and JWT filter
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

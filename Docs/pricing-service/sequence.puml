@@ -1,0 +1,173 @@
+@startuml pricing-service-sequence
+
+skinparam defaultFontSize 16
+skinparam sequenceMessageAlign center
+skinparam ParticipantPadding 10
+skinparam BoxPadding 10
+
+title Sequence Diagram - Pricing Service: Price Calculation with Hierarchical Rules
+
+actor "Shopping System" as shopping
+participant "PriceCalculationController" as ctrl
+participant "PriceCalculationEngine" as engine
+participant "WarehouseItemRepository" as warehouse_repo
+participant "PricingRuleRepository" as pricing_repo
+participant "PromotionEngine" as promo
+database "Warehouse DB\n(MySQL)" as warehouse_db
+database "Pricing DB\n(PostgreSQL)" as pricing_db
+
+== Happy Path: Store-Specific Rule with Promotion ==
+
+shopping -> ctrl: POST /api/pricing/calculate\n{itemId, storeId, quantity}
+activate ctrl
+
+ctrl -> ctrl: Validate request (@Valid)
+ctrl -> engine: calculatePrice(request)
+activate engine
+
+engine -> warehouse_repo: existsById(itemId)
+activate warehouse_repo
+warehouse_repo -> warehouse_db: SELECT COUNT(*) FROM items\nWHERE item_id = {itemId}
+warehouse_db --> warehouse_repo: 1
+warehouse_repo --> engine: true
+deactivate warehouse_repo
+
+engine -> engine: findApplicableRule(itemId, storeId)
+activate engine
+
+engine -> pricing_repo: findActiveRulesForItemAndStore\n(itemId, storeId, currentDate)
+activate pricing_repo
+note right of pricing_repo
+Query retrieves both store-specific 
+and global rules, ordered by:
+1. is_global ASC (false first)
+2. created_at DESC
+end note
+
+pricing_repo -> pricing_db: SELECT * FROM pricing_rules\nWHERE item_id = {itemId}\nAND (store_id = {storeId} OR (is_global = true AND store_id IS NULL))\nAND is_active = true\nAND valid_from <= currentDate\nAND (valid_to IS NULL OR valid_to > currentDate)\nORDER BY is_global ASC, created_at DESC
+pricing_db --> pricing_repo: [StoreRule{storeId, price: X, promotion: PERCENTAGE_OFF, value: Y}]
+pricing_repo --> engine: List<PricingRule>
+deactivate pricing_repo
+
+engine -> engine: Select first rule (store-specific)
+note right of engine
+Hierarchical Override Logic:
+- First rule = store-specific (is_global=false)
+- If no store rule, fallback to global rule
+- Store rules override global rules
+end note
+deactivate engine
+
+engine -> engine: Calculate subtotal\nsubtotal = unitPrice × quantity
+
+engine -> promo: calculateDiscount(rule, unitPrice, quantity)
+activate promo
+
+promo -> promo: Switch on PromotionType
+note right of promo
+Promotion Types:
+- PERCENTAGE_OFF: subtotal × (promotionValue / 100)
+- FIXED_DISCOUNT: promotionValue × quantity
+- THREE_FOR_TWO: (quantity / 3) × unitPrice
+- BOGOF: (quantity / 2) × unitPrice
+- FREE_DELIVERY: $0 (noted in response)
+end note
+
+promo -> promo: Apply promotion formula\ndiscount = subtotal × (Y / 100)
+promo -> promo: Ensure discount ≤ subtotal
+promo -> promo: Round to 2 decimal places
+promo --> engine: discountAmount
+deactivate promo
+
+engine -> engine: Calculate final price\nfinalPrice = subtotal - discountAmount
+
+engine -> warehouse_repo: getItemName(itemId)
+activate warehouse_repo
+warehouse_repo -> warehouse_db: SELECT item_name FROM items\nWHERE item_id = {itemId}
+warehouse_db --> warehouse_repo: "{itemName}"
+warehouse_repo --> engine: "{itemName}"
+deactivate warehouse_repo
+
+engine -> engine: Build response with breakdown\n- unitPrice\n- subtotal\n- discountAmount\n- finalPrice\n- ruleSource: "STORE_SPECIFIC"\n- appliedRuleId
+
+engine --> ctrl: PriceCalculationResponse
+deactivate engine
+
+ctrl --> shopping: 200 OK\n{\n  "unitPrice": X,\n  "subtotal": X × quantity,\n  "discount": discountAmount,\n  "finalPrice": finalPrice,\n  "promotionApplied": "PERCENTAGE_OFF",\n  "promotionValue": Y,\n  "ruleSource": "STORE_SPECIFIC"\n}
+deactivate ctrl
+
+== Alternative Path: Global Rule Fallback ==
+
+shopping -> ctrl: POST /api/pricing/calculate\n{itemId, storeId: null, quantity}
+activate ctrl
+
+ctrl -> engine: calculatePrice(request)
+activate engine
+
+engine -> warehouse_repo: existsById(itemId)
+warehouse_repo --> engine: true
+
+engine -> engine: findApplicableRule(itemId, null)
+activate engine
+
+engine -> pricing_repo: findGlobalRulesForItem(itemId, currentDate)
+activate pricing_repo
+note right of pricing_repo
+When storeId is null, 
+only query global rules
+end note
+
+pricing_repo -> pricing_db: SELECT * FROM pricing_rules\nWHERE item_id = {itemId}\nAND is_global = true\nAND store_id IS NULL\nAND is_active = true\nAND valid_from <= currentDate\nAND (valid_to IS NULL OR valid_to > currentDate)
+pricing_db --> pricing_repo: [GlobalRule{price: Z, promotion: NONE}]
+pricing_repo --> engine: List<PricingRule>
+deactivate pricing_repo
+
+engine -> engine: Select first rule (global)
+deactivate engine
+
+engine -> promo: calculateDiscount(rule, unitPrice, quantity)
+activate promo
+promo -> promo: promotion = NONE
+promo --> engine: $0
+deactivate promo
+
+engine -> engine: finalPrice = subtotal (no discount)
+
+engine -> warehouse_repo: getItemName(itemId)
+warehouse_repo --> engine: "{itemName}"
+
+engine -> engine: Build response\nruleSource: "GLOBAL"
+
+engine --> ctrl: PriceCalculationResponse
+deactivate engine
+
+ctrl --> shopping: 200 OK\n{\n  "finalPrice": Z × quantity,\n  "discount": 0,\n  "ruleSource": "GLOBAL"\n}
+deactivate ctrl
+
+== Error Path: No Pricing Rule Found ==
+
+shopping -> ctrl: POST /api/pricing/calculate\n{itemId, storeId, quantity}
+activate ctrl
+
+ctrl -> engine: calculatePrice(request)
+activate engine
+
+engine -> warehouse_repo: existsById(itemId)
+warehouse_repo --> engine: true
+
+engine -> pricing_repo: findActiveRulesForItemAndStore(itemId, storeId, currentDate)
+activate pricing_repo
+pricing_repo -> pricing_db: SELECT ... (no results)
+pricing_db --> pricing_repo: []
+pricing_repo --> engine: empty list
+deactivate pricing_repo
+
+engine -> engine: No rules found
+engine --> ctrl: throw PricingRuleNotFoundException
+deactivate engine
+
+ctrl -> ctrl: GlobalExceptionHandler catches exception
+ctrl --> shopping: 404 Not Found\n{\n  "error": "No pricing rule found for item"\n}
+deactivate ctrl
+
+@enduml

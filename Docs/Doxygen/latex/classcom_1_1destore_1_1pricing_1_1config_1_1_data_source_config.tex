@@ -1,0 +1,84 @@
+\doxysection{com.\+destore.\+pricing.\+config.\+Data\+Source\+Config Class Reference}
+\hypertarget{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config}{}\label{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config}\index{com.destore.pricing.config.DataSourceConfig@{com.destore.pricing.config.DataSourceConfig}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Data\+Source\+Properties \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_a25727d2972d5542f08f318c7d776bd03}{data\+Source\+Properties}} ()
+\begin{DoxyCompactList}\small\item\em Data\+Source properties for primary database. \end{DoxyCompactList}\item 
+Hikari\+Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_af8c6471cb51a89548f345e8b2f86e80b}{data\+Source}} (Data\+Source\+Properties properties)
+\begin{DoxyCompactList}\small\item\em Primary datasource for Pricing Database (Postgre\+SQL) \end{DoxyCompactList}\item 
+Hikari\+Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_a1f43ff01263d83af48acd2168ad44ef0}{warehouse\+Data\+Source}} ( @Value("{}\$\{pricing.\+warehouse.\+datasource.\+url\}"{}) String url, @Value("{}\$\{pricing.\+warehouse.\+datasource.\+username\}"{}) String username, @Value("{}\$\{pricing.\+warehouse.\+datasource.\+password\}"{}) String password, @Value("{}\$\{pricing.\+warehouse.\+datasource.\+driver-\/class-\/name\}"{}) String driver\+Class\+Name)
+\begin{DoxyCompactList}\small\item\em Secondary datasource for Warehouse Database (My\+SQL -\/ Read-\/\+Only) \end{DoxyCompactList}\item 
+Jdbc\+Template \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_a71f2c48a33edff5ec5255472da09b1d6}{warehouse\+Jdbc\+Template}} (@Qualifier("{}warehouse\+Data\+Source"{}) Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_a1f43ff01263d83af48acd2168ad44ef0}{warehouse\+Data\+Source}})
+\begin{DoxyCompactList}\small\item\em Jdbc\+Template for executing queries against Warehouse DB. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_af8c6471cb51a89548f345e8b2f86e80b}\index{com.destore.pricing.config.DataSourceConfig@{com.destore.pricing.config.DataSourceConfig}!dataSource@{dataSource}}
+\index{dataSource@{dataSource}!com.destore.pricing.config.DataSourceConfig@{com.destore.pricing.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{dataSource()}{dataSource()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_af8c6471cb51a89548f345e8b2f86e80b} 
+Hikari\+Data\+Source com.\+destore.\+pricing.\+config.\+Data\+Source\+Config.\+data\+Source (\begin{DoxyParamCaption}\item[{Data\+Source\+Properties}]{properties}{}\end{DoxyParamCaption})}
+
+
+
+Primary datasource for Pricing Database (Postgre\+SQL) 
+
+This is marked as @\+Primary to ensure JPA/\+Hibernate uses this datasource and not the warehouse datasource.
+
+\begin{DoxyReturn}{Returns}
+Configured Postgre\+SQL Data\+Source 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_a25727d2972d5542f08f318c7d776bd03}\index{com.destore.pricing.config.DataSourceConfig@{com.destore.pricing.config.DataSourceConfig}!dataSourceProperties@{dataSourceProperties}}
+\index{dataSourceProperties@{dataSourceProperties}!com.destore.pricing.config.DataSourceConfig@{com.destore.pricing.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{dataSourceProperties()}{dataSourceProperties()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_a25727d2972d5542f08f318c7d776bd03} 
+Data\+Source\+Properties com.\+destore.\+pricing.\+config.\+Data\+Source\+Config.\+data\+Source\+Properties (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Data\+Source properties for primary database. 
+
+\begin{DoxyReturn}{Returns}
+Data\+Source properties from spring.\+datasource.\texorpdfstring{$\ast$}{*} configuration 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_a1f43ff01263d83af48acd2168ad44ef0}\index{com.destore.pricing.config.DataSourceConfig@{com.destore.pricing.config.DataSourceConfig}!warehouseDataSource@{warehouseDataSource}}
+\index{warehouseDataSource@{warehouseDataSource}!com.destore.pricing.config.DataSourceConfig@{com.destore.pricing.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{warehouseDataSource()}{warehouseDataSource()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_a1f43ff01263d83af48acd2168ad44ef0} 
+Hikari\+Data\+Source com.\+destore.\+pricing.\+config.\+Data\+Source\+Config.\+warehouse\+Data\+Source (\begin{DoxyParamCaption}\item[{@Value("{}\$\{pricing.\+warehouse.\+datasource.\+url\}"{}) String}]{url}{, }\item[{@Value("{}\$\{pricing.\+warehouse.\+datasource.\+username\}"{}) String}]{username}{, }\item[{@Value("{}\$\{pricing.\+warehouse.\+datasource.\+password\}"{}) String}]{password}{, }\item[{@Value("{}\$\{pricing.\+warehouse.\+datasource.\+driver-\/class-\/name\}"{}) String}]{driver\+Class\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Secondary datasource for Warehouse Database (My\+SQL -\/ Read-\/\+Only) 
+
+This datasource connects to the legacy warehouse database for item validation. Should only be used for SELECT queries to verify item\+\_\+id exists.
+
+\begin{DoxyReturn}{Returns}
+Configured My\+SQL Data\+Source (Read-\/\+Only) 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_a71f2c48a33edff5ec5255472da09b1d6}\index{com.destore.pricing.config.DataSourceConfig@{com.destore.pricing.config.DataSourceConfig}!warehouseJdbcTemplate@{warehouseJdbcTemplate}}
+\index{warehouseJdbcTemplate@{warehouseJdbcTemplate}!com.destore.pricing.config.DataSourceConfig@{com.destore.pricing.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{warehouseJdbcTemplate()}{warehouseJdbcTemplate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config_a71f2c48a33edff5ec5255472da09b1d6} 
+Jdbc\+Template com.\+destore.\+pricing.\+config.\+Data\+Source\+Config.\+warehouse\+Jdbc\+Template (\begin{DoxyParamCaption}\item[{@Qualifier("{}warehouse\+Data\+Source"{}) Data\+Source}]{warehouse\+Data\+Source}{}\end{DoxyParamCaption})}
+
+
+
+Jdbc\+Template for executing queries against Warehouse DB. 
+
+Provides a simple interface for executing read-\/only SQL queries against the My\+SQL warehouse database.
+
+
+\begin{DoxyParams}{Parameters}
+{\em warehouse\+Data\+Source} & The warehouse database datasource \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Configured Jdbc\+Template instance 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pricing-\/service/src/main/java/com/destore/pricing/config/\mbox{\hyperlink{pricing-service_2src_2main_2java_2com_2destore_2pricing_2config_2_data_source_config_8java}{Data\+Source\+Config.\+java}}\end{DoxyCompactItemize}

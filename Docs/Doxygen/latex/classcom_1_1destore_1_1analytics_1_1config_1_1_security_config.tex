@@ -1,0 +1,62 @@
+\doxysection{com.\+destore.\+analytics.\+config.\+Security\+Config Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1config_1_1_security_config}{}\label{classcom_1_1destore_1_1analytics_1_1config_1_1_security_config}\index{com.destore.analytics.config.SecurityConfig@{com.destore.analytics.config.SecurityConfig}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Security\+Filter\+Chain \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_security_config_ac8346d4940fb80b4dd10978631de5d4c}{security\+Filter\+Chain}} (Http\+Security http)  throws Exception 
+\item 
+Once\+Per\+Request\+Filter \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_security_config_a34e34856eff59b2a14dfd8f6d1927f2d}{jwt\+Authentication\+Filter}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Security configuration for analytics service. 
+
+Validates JWT tokens from auth-\/service to protect analytics endpoints. All analytics endpoints require authentication. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1config_1_1_security_config_a34e34856eff59b2a14dfd8f6d1927f2d}\index{com.destore.analytics.config.SecurityConfig@{com.destore.analytics.config.SecurityConfig}!jwtAuthenticationFilter@{jwtAuthenticationFilter}}
+\index{jwtAuthenticationFilter@{jwtAuthenticationFilter}!com.destore.analytics.config.SecurityConfig@{com.destore.analytics.config.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{jwtAuthenticationFilter()}{jwtAuthenticationFilter()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1config_1_1_security_config_a34e34856eff59b2a14dfd8f6d1927f2d} 
+Once\+Per\+Request\+Filter com.\+destore.\+analytics.\+config.\+Security\+Config.\+jwt\+Authentication\+Filter (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Creates JWT authentication filter.
+
+\begin{DoxyReturn}{Returns}
+JWT filter 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1config_1_1_security_config_ac8346d4940fb80b4dd10978631de5d4c}\index{com.destore.analytics.config.SecurityConfig@{com.destore.analytics.config.SecurityConfig}!securityFilterChain@{securityFilterChain}}
+\index{securityFilterChain@{securityFilterChain}!com.destore.analytics.config.SecurityConfig@{com.destore.analytics.config.SecurityConfig}}
+\doxysubsubsection{\texorpdfstring{securityFilterChain()}{securityFilterChain()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1config_1_1_security_config_ac8346d4940fb80b4dd10978631de5d4c} 
+Security\+Filter\+Chain com.\+destore.\+analytics.\+config.\+Security\+Config.\+security\+Filter\+Chain (\begin{DoxyParamCaption}\item[{Http\+Security}]{http}{}\end{DoxyParamCaption}) throws Exception}
+
+Configures HTTP security for the application.
+
+
+\begin{DoxyParams}{Parameters}
+{\em http} & Http\+Security configuration \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Security\+Filter\+Chain 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Exception} & if configuration fails \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/config/Security\+Config.\+java\end{DoxyCompactItemize}

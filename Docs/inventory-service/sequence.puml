@@ -1,0 +1,138 @@
+@startuml
+
+skinparam defaultFontSize 16
+skinparam sequenceMessageAlign center
+skinparam ParticipantPadding 10
+skinparam BoxPadding 10
+
+title Inventory Service - Scheduled Stock Monitoring & Manual Check Sequence Diagram
+
+actor "Network Manager" as netMgr
+participant "API Gateway" as apiGw
+participant "Scheduler\n(@Scheduled)" as scheduler
+box "Inventory Service" #LightBlue
+    participant "JWT Filter" as jwtFilter
+    participant "Admin Controller" as controller
+    participant "Stock Monitoring\nService" as monitoringService
+    participant "Config Service" as configService
+    participant "Warehouse\nRepository" as warehouseRepo
+    participant "User\nRepository" as userRepo
+    participant "Email Service" as emailService
+end box
+database "Warehouse DB\n(MySQL)" as warehouseDB
+database "Auth DB\n(PostgreSQL)" as authDB
+participant "Email Server\n(SMTP)" as mailServer
+
+== Scheduled Stock Monitoring  ==
+
+scheduler -> monitoringService: 1. Trigger @Scheduled(cron)
+activate monitoringService
+
+note right of scheduler
+  Cron: 0 0 */6 * * ?
+  Runs at 00:00, 06:00, 12:00, 18:00
+end note
+
+monitoringService -> monitoringService: 2. checkStockLevels()
+monitoringService -> configService: 3. getThresholds()
+configService --> monitoringService: 4. Return ThresholdConfig\n{low: 50, critical: 20, out: 0}
+
+monitoringService -> warehouseRepo: 5. findLowStockItems(50)
+warehouseRepo -> warehouseDB: 6. SELECT * FROM items\nWHERE stock_quantity <= 50 AND stock_quantity > 0
+warehouseDB --> warehouseRepo: 7. Return low stock items
+warehouseRepo --> monitoringService: 8. Return List<WarehouseItem>
+
+monitoringService -> monitoringService: 9. Classify items by severity:\n- Out of Stock (0)\n- Critical (≤20)\n- Low (≤50)
+
+alt No alerts found
+    monitoringService -> monitoringService: Log: "All items have sufficient stock"
+    deactivate monitoringService
+else Alerts found
+    monitoringService -> userRepo: 10. findActiveNetworkManagers()
+    userRepo -> authDB: 11. SELECT * FROM users\nWHERE role='NETWORK_MANAGER' AND is_active=true
+    authDB --> userRepo: 12. Return network manager users
+    userRepo --> monitoringService: 13. Return List<User>
+    
+    monitoringService -> monitoringService: 14. Extract email addresses
+    
+    alt No network managers found
+        monitoringService -> monitoringService: Log warning: "No recipients for alerts"
+        deactivate monitoringService
+    else Network managers found
+        monitoringService -> emailService: 15. sendStockAlerts(emails, alerts)
+        activate emailService
+        
+        emailService -> emailService: 16. Group alerts by status\n(Out/Critical/Low)
+        emailService -> emailService: 17. Build HTML email:\n- Color-coded tables (red/orange/yellow)\n- Statistics summary\n- Timestamp
+        
+        emailService -> mailServer: 18. Send email via SMTP
+        mailServer -> netMgr: 19. Deliver stock alert email
+        
+        mailServer --> emailService: 20. SMTP response (250 OK)
+        emailService --> monitoringService: 21. Email sent successfully
+        deactivate emailService
+        
+        monitoringService -> monitoringService: 22. Log: "Sent alerts to X managers"
+        deactivate monitoringService
+    end
+end
+
+|||
+
+== Manual Stock Check (Triggered by Network Manager) ==
+
+netMgr -> apiGw: 23. POST /api/inventory/admin/trigger-check\nAuthorization: Bearer <JWT>
+apiGw -> jwtFilter: 24. Forward request with JWT
+
+jwtFilter -> jwtFilter: 25. Extract and validate JWT token
+jwtFilter -> jwtFilter: 26. Check role = NETWORK_MANAGER
+
+alt Invalid token or wrong role
+    jwtFilter --> apiGw: 401 Unauthorized / 403 Forbidden
+    apiGw --> netMgr: Error response
+else Valid JWT with NETWORK_MANAGER role
+    jwtFilter -> controller: 27. Forward authenticated request
+    controller -> controller: 28. @PreAuthorize("hasRole('NETWORK_MANAGER')")
+    
+    controller -> monitoringService: 29. triggerManualCheck()
+    activate monitoringService
+    
+    note right of monitoringService
+      Same logic as scheduled check:
+      - Query warehouse DB
+      - Classify alerts
+      - Get manager emails
+      - Send email
+    end note
+    
+    monitoringService -> configService: 30. getThresholds()
+    configService --> monitoringService: 31. Return thresholds
+    
+    monitoringService -> warehouseRepo: 32. findLowStockItems(50)
+    warehouseRepo -> warehouseDB: 33. SELECT * FROM items WHERE stock_quantity <= 50 AND stock_quantity > 0
+    warehouseDB --> warehouseRepo: 34. Return items
+    warehouseRepo --> monitoringService: 35. Return List<WarehouseItem>
+    
+    monitoringService -> monitoringService: 36. Classify alerts
+    
+    monitoringService -> userRepo: 37. findActiveNetworkManagers()
+    userRepo -> authDB: 38. SELECT * FROM users WHERE role=? AND is_active=true
+    authDB --> userRepo: 39. Return users
+    userRepo --> monitoringService: 40. Return List<User>
+    
+    monitoringService -> emailService: 41. sendStockAlerts(emails, alerts)
+    emailService -> mailServer: 42. Send email
+    mailServer -> netMgr: 43. Deliver email
+    mailServer --> emailService: 44. SMTP OK
+    emailService --> monitoringService: 45. Success
+    
+    monitoringService --> controller: 46. Check completed
+    deactivate monitoringService
+    
+    controller --> apiGw: 47. 200 OK\n{status: "success", message: "Stock check triggered"}
+    apiGw --> netMgr: 48. Success response
+    
+    netMgr -> netMgr: 49. Check email inbox for alert
+end
+
+@enduml

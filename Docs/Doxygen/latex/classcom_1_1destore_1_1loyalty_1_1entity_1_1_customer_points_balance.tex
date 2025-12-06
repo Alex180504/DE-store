@@ -1,0 +1,103 @@
+\doxysection{com.\+destore.\+loyalty.\+entity.\+Customer\+Points\+Balance Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance}{}\label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance}\index{com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a1149e0f4d2cb7382f8416970dadce293}{credit\+Points}} (Big\+Decimal points)
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_ab58b939a427ee0a10421260424cc66f5}{debit\+Points}} (Big\+Decimal points)
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a25a8c5e6bf31ca78d946198afb69c5ac}{has\+Sufficient\+Points}} (Big\+Decimal required\+Points)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a1b8163f354687f69c69141d602e47c5c}{on\+Create}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a13b772311603ca6a3f22ca452e94cb14}{on\+Update}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Entity representing a customer\textquotesingle{}s loyalty points balance. 
+
+Stores current balance, lifetime statistics, and last calculation timestamp. Uses optimistic locking to prevent concurrent modification issues during point redemption. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a1149e0f4d2cb7382f8416970dadce293}\index{com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}!creditPoints@{creditPoints}}
+\index{creditPoints@{creditPoints}!com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}}
+\doxysubsubsection{\texorpdfstring{creditPoints()}{creditPoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a1149e0f4d2cb7382f8416970dadce293} 
+void com.\+destore.\+loyalty.\+entity.\+Customer\+Points\+Balance.\+credit\+Points (\begin{DoxyParamCaption}\item[{Big\+Decimal}]{points}{}\end{DoxyParamCaption})}
+
+Credits points to the customer\textquotesingle{}s balance.
+
+
+\begin{DoxyParams}{Parameters}
+{\em points} & Points to add (must be positive) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Illegal\+Argument\+Exception} & if points is negative \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_ab58b939a427ee0a10421260424cc66f5}\index{com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}!debitPoints@{debitPoints}}
+\index{debitPoints@{debitPoints}!com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}}
+\doxysubsubsection{\texorpdfstring{debitPoints()}{debitPoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_ab58b939a427ee0a10421260424cc66f5} 
+void com.\+destore.\+loyalty.\+entity.\+Customer\+Points\+Balance.\+debit\+Points (\begin{DoxyParamCaption}\item[{Big\+Decimal}]{points}{}\end{DoxyParamCaption})}
+
+Debits points from the customer\textquotesingle{}s balance.
+
+
+\begin{DoxyParams}{Parameters}
+{\em points} & Points to deduct (must be positive) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Illegal\+Argument\+Exception} & if points is negative or exceeds balance \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a25a8c5e6bf31ca78d946198afb69c5ac}\index{com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}!hasSufficientPoints@{hasSufficientPoints}}
+\index{hasSufficientPoints@{hasSufficientPoints}!com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}}
+\doxysubsubsection{\texorpdfstring{hasSufficientPoints()}{hasSufficientPoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a25a8c5e6bf31ca78d946198afb69c5ac} 
+boolean com.\+destore.\+loyalty.\+entity.\+Customer\+Points\+Balance.\+has\+Sufficient\+Points (\begin{DoxyParamCaption}\item[{Big\+Decimal}]{required\+Points}{}\end{DoxyParamCaption})}
+
+Checks if customer has sufficient points for a transaction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em required\+Points} & Points needed \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if balance is sufficient 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a1b8163f354687f69c69141d602e47c5c}\index{com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}!onCreate@{onCreate}}
+\index{onCreate@{onCreate}!com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}}
+\doxysubsubsection{\texorpdfstring{onCreate()}{onCreate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a1b8163f354687f69c69141d602e47c5c} 
+void com.\+destore.\+loyalty.\+entity.\+Customer\+Points\+Balance.\+on\+Create (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Sets creation timestamp before persisting new entity. \Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a13b772311603ca6a3f22ca452e94cb14}\index{com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}!onUpdate@{onUpdate}}
+\index{onUpdate@{onUpdate}!com.destore.loyalty.entity.CustomerPointsBalance@{com.destore.loyalty.entity.CustomerPointsBalance}}
+\doxysubsubsection{\texorpdfstring{onUpdate()}{onUpdate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_customer_points_balance_a13b772311603ca6a3f22ca452e94cb14} 
+void com.\+destore.\+loyalty.\+entity.\+Customer\+Points\+Balance.\+on\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Updates modification timestamp before updating entity. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/entity/Customer\+Points\+Balance.\+java\end{DoxyCompactItemize}

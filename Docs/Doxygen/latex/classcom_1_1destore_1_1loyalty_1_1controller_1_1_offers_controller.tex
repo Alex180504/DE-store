@@ -1,0 +1,178 @@
+\doxysection{com.\+destore.\+loyalty.\+controller.\+Offers\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller}{}\label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller}\index{com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a92f8850335f78d5265f1c1f1679adbd7}{get\+Active\+Offers}} ()
+\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_ac059313fe7a63e42ba647ab7c8d644ae}{get\+Applicable\+Offers}} ( @Request\+Param Integer item\+Id)
+\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a41ec76b00da5129f47f0b60b246151ac}{get\+Customer\+Offers}} (@Path\+Variable Integer customer\+Id)
+\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a5e8b24bcbc7318015aef7e53ead5d652}{get\+All\+Offers}} ()
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_ad19d477ed3fcbb079ff2a3ec871af08b}{get\+Offer\+By\+Id}} (@Path\+Variable Integer id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_aba47b1ffa5c42519932d851325212a4e}{create\+Offer}} (@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_request}{Redemption\+Offer\+Request}} request)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_ab4f8d3e5835f344b0e91bb25d469395d}{update\+Offer}} ( @Path\+Variable Integer id, @Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_request}{Redemption\+Offer\+Request}} request)
+\item 
+Response\+Entity$<$ Void $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a02646c657aab6f74da5a1a22e7ada842}{delete\+Offer}} (@Path\+Variable Integer id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a7ac3b25d10aca45412c32047192da307}{toggle\+Offer\+Status}} (@Path\+Variable Integer id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for redemption offers.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_aba47b1ffa5c42519932d851325212a4e}\index{com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}!createOffer@{createOffer}}
+\index{createOffer@{createOffer}!com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}}
+\doxysubsubsection{\texorpdfstring{createOffer()}{createOffer()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_aba47b1ffa5c42519932d851325212a4e} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ com.\+destore.\+loyalty.\+controller.\+Offers\+Controller.\+create\+Offer (\begin{DoxyParamCaption}\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_request}{Redemption\+Offer\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Create a new redemption offer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & Redemption offer request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Created redemption offer 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a02646c657aab6f74da5a1a22e7ada842}\index{com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}!deleteOffer@{deleteOffer}}
+\index{deleteOffer@{deleteOffer}!com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}}
+\doxysubsubsection{\texorpdfstring{deleteOffer()}{deleteOffer()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a02646c657aab6f74da5a1a22e7ada842} 
+Response\+Entity$<$ Void $>$ com.\+destore.\+loyalty.\+controller.\+Offers\+Controller.\+delete\+Offer (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{}\end{DoxyParamCaption})}
+
+Delete a redemption offer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Offer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+No content 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a92f8850335f78d5265f1c1f1679adbd7}\index{com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}!getActiveOffers@{getActiveOffers}}
+\index{getActiveOffers@{getActiveOffers}!com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}}
+\doxysubsubsection{\texorpdfstring{getActiveOffers()}{getActiveOffers()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a92f8850335f78d5265f1c1f1679adbd7} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ $>$ com.\+destore.\+loyalty.\+controller.\+Offers\+Controller.\+get\+Active\+Offers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Gets all active redemption offers.
+
+\begin{DoxyReturn}{Returns}
+List of active offers 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a5e8b24bcbc7318015aef7e53ead5d652}\index{com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}!getAllOffers@{getAllOffers}}
+\index{getAllOffers@{getAllOffers}!com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}}
+\doxysubsubsection{\texorpdfstring{getAllOffers()}{getAllOffers()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a5e8b24bcbc7318015aef7e53ead5d652} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ $>$ com.\+destore.\+loyalty.\+controller.\+Offers\+Controller.\+get\+All\+Offers (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get all redemption offers.
+
+\begin{DoxyReturn}{Returns}
+List of all redemption offers 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_ac059313fe7a63e42ba647ab7c8d644ae}\index{com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}!getApplicableOffers@{getApplicableOffers}}
+\index{getApplicableOffers@{getApplicableOffers}!com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}}
+\doxysubsubsection{\texorpdfstring{getApplicableOffers()}{getApplicableOffers()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_ac059313fe7a63e42ba647ab7c8d644ae} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ $>$ com.\+destore.\+loyalty.\+controller.\+Offers\+Controller.\+get\+Applicable\+Offers (\begin{DoxyParamCaption}\item[{@Request\+Param Integer}]{item\+Id}{}\end{DoxyParamCaption})}
+
+Gets applicable redemption offers for a specific item.
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & Item ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of applicable offers 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a41ec76b00da5129f47f0b60b246151ac}\index{com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}!getCustomerOffers@{getCustomerOffers}}
+\index{getCustomerOffers@{getCustomerOffers}!com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}}
+\doxysubsubsection{\texorpdfstring{getCustomerOffers()}{getCustomerOffers()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a41ec76b00da5129f47f0b60b246151ac} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ $>$ com.\+destore.\+loyalty.\+controller.\+Offers\+Controller.\+get\+Customer\+Offers (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Gets customer-\/specific offer availability.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of offers with customer usage info 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_ad19d477ed3fcbb079ff2a3ec871af08b}\index{com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}!getOfferById@{getOfferById}}
+\index{getOfferById@{getOfferById}!com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}}
+\doxysubsubsection{\texorpdfstring{getOfferById()}{getOfferById()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_ad19d477ed3fcbb079ff2a3ec871af08b} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ com.\+destore.\+loyalty.\+controller.\+Offers\+Controller.\+get\+Offer\+By\+Id (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{}\end{DoxyParamCaption})}
+
+Get redemption offer by ID.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Offer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Redemption offer 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a7ac3b25d10aca45412c32047192da307}\index{com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}!toggleOfferStatus@{toggleOfferStatus}}
+\index{toggleOfferStatus@{toggleOfferStatus}!com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}}
+\doxysubsubsection{\texorpdfstring{toggleOfferStatus()}{toggleOfferStatus()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_a7ac3b25d10aca45412c32047192da307} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ com.\+destore.\+loyalty.\+controller.\+Offers\+Controller.\+toggle\+Offer\+Status (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{}\end{DoxyParamCaption})}
+
+Toggle redemption offer active status.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Offer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated redemption offer 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_ab4f8d3e5835f344b0e91bb25d469395d}\index{com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}!updateOffer@{updateOffer}}
+\index{updateOffer@{updateOffer}!com.destore.loyalty.controller.OffersController@{com.destore.loyalty.controller.OffersController}}
+\doxysubsubsection{\texorpdfstring{updateOffer()}{updateOffer()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller_ab4f8d3e5835f344b0e91bb25d469395d} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_d_t_o}{Redemption\+Offer\+DTO}} $>$ com.\+destore.\+loyalty.\+controller.\+Offers\+Controller.\+update\+Offer (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{, }\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_redemption_offer_request}{Redemption\+Offer\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Update an existing redemption offer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Offer ID \\
+\hline
+{\em request} & Updated redemption offer data \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated redemption offer 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/controller/Offers\+Controller.\+java\end{DoxyCompactItemize}

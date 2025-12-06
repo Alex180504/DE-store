@@ -1,0 +1,42 @@
+\doxysection{pricing-\/service/src/main/java/com/destore/pricing/config/\+Data\+Source\+Config.java File Reference}
+\hypertarget{pricing-service_2src_2main_2java_2com_2destore_2pricing_2config_2_data_source_config_8java}{}\label{pricing-service_2src_2main_2java_2com_2destore_2pricing_2config_2_data_source_config_8java}\index{pricing-\/service/src/main/java/com/destore/pricing/config/DataSourceConfig.java@{pricing-\/service/src/main/java/com/destore/pricing/config/DataSourceConfig.java}}
+
+
+Configuration for multiple database connections.  
+
+
+{\ttfamily import com.\+zaxxer.\+hikari.\+Hikari\+Data\+Source;}\newline
+{\ttfamily import org.\+springframework.\+beans.\+factory.\+annotation.\+Qualifier;}\newline
+{\ttfamily import org.\+springframework.\+beans.\+factory.\+annotation.\+Value;}\newline
+{\ttfamily import org.\+springframework.\+boot.\+autoconfigure.\+jdbc.\+Data\+Source\+Properties;}\newline
+{\ttfamily import org.\+springframework.\+boot.\+context.\+properties.\+Configuration\+Properties;}\newline
+{\ttfamily import org.\+springframework.\+boot.\+jdbc.\+Data\+Source\+Builder;}\newline
+{\ttfamily import org.\+springframework.\+context.\+annotation.\+Bean;}\newline
+{\ttfamily import org.\+springframework.\+context.\+annotation.\+Configuration;}\newline
+{\ttfamily import org.\+springframework.\+context.\+annotation.\+Primary;}\newline
+{\ttfamily import org.\+springframework.\+jdbc.\+core.\+Jdbc\+Template;}\newline
+{\ttfamily import javax.\+sql.\+Data\+Source;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1config_1_1_data_source_config}{com.\+destore.\+pricing.\+config.\+Data\+Source\+Config}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Configuration for multiple database connections. 
+
+Configures two datasources\+:
+\begin{DoxyEnumerate}
+\item Primary\+: Pricing Database (Postgre\+SQL) -\/ Read/\+Write for JPA
+\item Secondary\+: Warehouse Database (My\+SQL) -\/ Read-\/\+Only for item validation
+\end{DoxyEnumerate}
+
+This allows the pricing service to validate items against the legacy warehouse database while managing its own pricing rules.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

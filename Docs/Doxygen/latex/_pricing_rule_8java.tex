@@ -1,0 +1,41 @@
+\doxysection{pricing-\/service/src/main/java/com/destore/pricing/model/entity/\+Pricing\+Rule.java File Reference}
+\hypertarget{_pricing_rule_8java}{}\label{_pricing_rule_8java}\index{pricing-\/service/src/main/java/com/destore/pricing/model/entity/PricingRule.java@{pricing-\/service/src/main/java/com/destore/pricing/model/entity/PricingRule.java}}
+
+
+JPA Entity representing a pricing rule.  
+
+
+{\ttfamily import com.\+destore.\+pricing.\+model.\+enums.\+Promotion\+Type;}\newline
+{\ttfamily import jakarta.\+persistence.\texorpdfstring{$\ast$}{*};}\newline
+{\ttfamily import lombok.\+All\+Args\+Constructor;}\newline
+{\ttfamily import lombok.\+Builder;}\newline
+{\ttfamily import lombok.\+Data;}\newline
+{\ttfamily import lombok.\+No\+Args\+Constructor;}\newline
+{\ttfamily import org.\+hibernate.\+annotations.\+Creation\+Timestamp;}\newline
+{\ttfamily import org.\+hibernate.\+annotations.\+Update\+Timestamp;}\newline
+{\ttfamily import java.\+math.\+Big\+Decimal;}\newline
+{\ttfamily import java.\+time.\+Local\+Date\+Time;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1entity_1_1_pricing_rule}{com.\+destore.\+pricing.\+model.\+entity.\+Pricing\+Rule}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+JPA Entity representing a pricing rule. 
+
+Pricing rules support hierarchical pricing with two levels\+:
+\begin{DoxyItemize}
+\item Global (is\+\_\+global=true, store\+\_\+id=null)\+: Network-\/wide pricing set by Network Manager
+\item Store-\/specific (is\+\_\+global=false, store\+\_\+id!=null)\+: Per-\/store pricing set by Store Manager
+\end{DoxyItemize}
+
+Store-\/specific rules override global rules when calculating final prices. Rules can include promotions (3FOR2, BOGOF, etc.) and time-\/based validity.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

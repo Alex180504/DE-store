@@ -1,0 +1,50 @@
+@startuml finance-adapter-component
+!include ../c4-plantuml/C4_Component.puml
+
+title Component Diagram - Finance Adapter
+
+LAYOUT_WITH_LEGEND()
+
+Container_Boundary(finance_adapter, "Finance Adapter") {
+    
+    Component(finance_ctrl, "FinanceController", "Spring REST Controller", "Handles finance approval requests from Shopping System. Provides POST /api/finance/request endpoint and health check.")
+    
+    Component(enabling_client, "EnablingClient", "Spring Service / HTTP Client", "HTTP client for Enabling Finance System integration. Uses Spring WebClient to send finance approval requests and handle responses. Includes error handling with fallback response.")
+    
+    Component(jwt_filter, "JwtAuthenticationFilter", "Spring Filter (inline)", "Validates JWT tokens from Authorization header. Extracts username and claims from token, sets SecurityContext. Embedded in SecurityConfig.")
+    Component(jwt_auth, "JwtAuthentication", "Authentication Model", "Custom Authentication implementation containing username, claims, and authenticated flag. Used by Spring Security context.")
+    Component(security_config, "SecurityConfig", "Spring Security Configuration", "Configures security rules, stateless session, JWT filter chain. Permits health and Swagger endpoints, requires authentication for finance operations.")
+    
+    Component(finance_request, "FinanceRequest", "DTO", "Finance approval request with validation: customerId, firstName, lastName, phone, amount (positive). Sent to Enabling Finance System.")
+    Component(finance_response, "FinanceResponse", "DTO", "Finance approval response: approved (boolean), reference, customerId, amount, reason, timestamp. Returned from Enabling Finance System.")
+    
+    Component(webclient, "WebClient", "Spring WebFlux", "Reactive HTTP client configured with Enabling Finance System base URL. Performs blocking calls with .block() for synchronous API.")
+}
+
+System_Ext(enabling_finance, "Enabling Finance System", "Third-party BNPL (Buy Now Pay Later) provider. Evaluates finance applications and returns approval/denial decisions.")
+
+Container(shopping_system, "Shopping System", "External System", "Calls finance adapter during checkout to request BNPL financing for customer orders.")
+
+Rel(shopping_system, finance_ctrl, "POST /api/finance/request", "HTTPS/JSON")
+
+Rel(finance_ctrl, enabling_client, "Calls requestApproval()")
+
+Rel(enabling_client, webclient, "Configures with base URL")
+Rel(enabling_client, enabling_finance, "POST /api/finance/approve", "HTTP/JSON")
+note on link
+Sends FinanceRequest
+Receives FinanceResponse
+Includes error handling
+end note
+
+Rel(jwt_filter, jwt_auth, "Creates authentication")
+Rel(security_config, jwt_filter, "Configures inline filter")
+
+Rel(finance_ctrl, finance_request, "Receives request")
+Rel(finance_ctrl, finance_response, "Returns response")
+Rel(enabling_client, finance_request, "Sends to Enabling")
+Rel(enabling_client, finance_response, "Builds from Enabling response")
+
+SHOW_LEGEND()
+
+@enduml

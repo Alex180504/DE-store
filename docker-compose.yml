@@ -1,0 +1,466 @@
+services:
+  # Legacy Warehouse Database (MySQL)
+  warehouse-db:
+    image: mysql:8.0
+    container_name: de-store-warehouse-db
+    environment:
+      MYSQL_ROOT_PASSWORD: warehouse_root_pass
+      MYSQL_DATABASE: warehouse
+      MYSQL_USER: warehouse_user
+      MYSQL_PASSWORD: warehouse_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./warehouse-db/init:/docker-entrypoint-initdb.d
+      - warehouse-data:/var/lib/mysql
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Pricing Database (PostgreSQL)
+  pricing-db:
+    image: postgres:15
+    container_name: de-store-pricing-db
+    environment:
+      POSTGRES_DB: pricing
+      POSTGRES_USER: pricing_user
+      POSTGRES_PASSWORD: pricing_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pricing-service/db/init:/docker-entrypoint-initdb.d
+      - pricing-data:/var/lib/postgresql/data
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pricing_user -d pricing"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Authentication Database (PostgreSQL)
+  auth-db:
+    image: postgres:15
+    container_name: de-store-auth-db
+    environment:
+      POSTGRES_DB: auth
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./auth-service/db/init:/docker-entrypoint-initdb.d
+      - auth-data:/var/lib/postgresql/data
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U auth_user -d auth"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Store Database (PostgreSQL)
+  store-db:
+    image: postgres:15
+    container_name: de-store-store-db
+    environment:
+      POSTGRES_DB: stores
+      POSTGRES_USER: store_user
+      POSTGRES_PASSWORD: store_pass
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./store-service/db/init:/docker-entrypoint-initdb.d
+      - store-data:/var/lib/postgresql/data
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U store_user -d stores"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Accounting Database (PostgreSQL)
+  accounting-db:
+    image: postgres:15
+    container_name: de-store-accounting-db
+    environment:
+      POSTGRES_DB: accounting
+      POSTGRES_USER: accounting_user
+      POSTGRES_PASSWORD: accounting_pass
+    ports:
+      - "5435:5432"
+    volumes:
+      - ./accounting-db/init:/docker-entrypoint-initdb.d
+      - accounting-data:/var/lib/postgresql/data
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U accounting_user -d accounting"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Loyalty Database (PostgreSQL)
+  loyalty-db:
+    image: postgres:15
+    container_name: de-store-loyalty-db
+    environment:
+      POSTGRES_DB: loyalty
+      POSTGRES_USER: loyalty_user
+      POSTGRES_PASSWORD: loyalty_pass
+    ports:
+      - "5436:5432"
+    volumes:
+      - ./loyalty-service/db/init:/docker-entrypoint-initdb.d
+      - loyalty-data:/var/lib/postgresql/data
+    networks:
+      - de-store-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U loyalty_user -d loyalty"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Pricing Service (Spring Boot)
+  pricing-service:
+    build:
+      context: ./pricing-service
+      dockerfile: Dockerfile
+    container_name: de-store-pricing-service
+    environment:
+      # Pricing DB Connection
+      SPRING_DATASOURCE_URL: jdbc:postgresql://pricing-db:5432/pricing
+      SPRING_DATASOURCE_USERNAME: pricing_user
+      SPRING_DATASOURCE_PASSWORD: pricing_pass
+      # Warehouse DB Connection (Read-Only)
+      WAREHOUSE_DATASOURCE_URL: jdbc:mysql://warehouse-db:3306/warehouse
+      WAREHOUSE_DATASOURCE_USERNAME: warehouse_user
+      WAREHOUSE_DATASOURCE_PASSWORD: warehouse_pass
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "true"
+      # Application Settings
+      SERVER_PORT: 8080
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+      # JWT Configuration (must match auth-service)
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      JWT_EXPIRATION: "86400000"
+    ports:
+      - "8080:8080"
+    depends_on:
+      pricing-db:
+        condition: service_healthy
+      warehouse-db:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
+  # Authentication Service (Spring Boot)
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    container_name: de-store-auth-service
+    environment:
+      # Auth DB Connection
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth-db:5432/auth
+      SPRING_DATASOURCE_USERNAME: auth_user
+      SPRING_DATASOURCE_PASSWORD: auth_pass
+      # JWT Configuration
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      JWT_EXPIRATION: 86400000
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "true"
+      # Application Settings
+      SERVER_PORT: 8081
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+    expose:
+      - "8081"
+    depends_on:
+      auth-db:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
+  # Store Service (Spring Boot)
+  store-service:
+    build:
+      context: ./store-service
+      dockerfile: Dockerfile
+    container_name: de-store-store-service
+    environment:
+      # Store DB Connection
+      SPRING_DATASOURCE_URL: jdbc:postgresql://store-db:5432/stores
+      SPRING_DATASOURCE_USERNAME: store_user
+      SPRING_DATASOURCE_PASSWORD: store_pass
+      # JWT Configuration (must match auth-service)
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "true"
+      # Application Settings
+      SERVER_PORT: 8083
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+    expose:
+      - "8083"
+    depends_on:
+      store-db:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
+  # Loyalty Service (Spring Boot)
+  loyalty-service:
+    build:
+      context: ./loyalty-service
+      dockerfile: Dockerfile
+    container_name: de-store-loyalty-service
+    environment:
+      # Loyalty DB Connection (Primary - Read/Write)
+      SPRING_DATASOURCE_URL: jdbc:postgresql://loyalty-db:5432/loyalty
+      SPRING_DATASOURCE_USERNAME: loyalty_user
+      SPRING_DATASOURCE_PASSWORD: loyalty_pass
+      # Accounting DB Connection (Secondary - Read-Only)
+      SPRING_DATASOURCE_ACCOUNTING_URL: jdbc:postgresql://accounting-db:5432/accounting
+      SPRING_DATASOURCE_ACCOUNTING_USERNAME: accounting_user
+      SPRING_DATASOURCE_ACCOUNTING_PASSWORD: accounting_pass
+      # JWT Configuration (must match auth-service)
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      # JPA Configuration
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_JPA_SHOW_SQL: "true"
+      # Application Settings
+      SERVER_PORT: 8085
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+      # Scheduler Configuration
+      LOYALTY_SCHEDULER_POINTS_CALCULATION_CRON: "0 0 */6 * * *"
+    expose:
+      - "8085"
+    depends_on:
+      loyalty-db:
+        condition: service_healthy
+      accounting-db:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
+  # Analytics Service (Spring Boot - Read-Only Multi-Database)
+  analytics-service:
+    build:
+      context: ./analytics-service
+      dockerfile: Dockerfile
+    container_name: de-store-analytics-service
+    environment:
+      # Accounting DB Connection (Primary - Read-Only)
+      SPRING_DATASOURCE_ACCOUNTING_URL: jdbc:postgresql://accounting-db:5432/accounting
+      SPRING_DATASOURCE_ACCOUNTING_USERNAME: accounting_user
+      SPRING_DATASOURCE_ACCOUNTING_PASSWORD: accounting_pass
+      # Store DB Connection (Read-Only)
+      SPRING_DATASOURCE_STORE_URL: jdbc:postgresql://store-db:5432/stores
+      SPRING_DATASOURCE_STORE_USERNAME: store_user
+      SPRING_DATASOURCE_STORE_PASSWORD: store_pass
+      # Warehouse DB Connection (Read-Only)
+      SPRING_DATASOURCE_WAREHOUSE_URL: jdbc:mysql://warehouse-db:3306/warehouse
+      SPRING_DATASOURCE_WAREHOUSE_USERNAME: warehouse_user
+      SPRING_DATASOURCE_WAREHOUSE_PASSWORD: warehouse_pass
+      # JWT Configuration (must match auth-service)
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+      # Application Settings
+      SERVER_PORT: 8086
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+    expose:
+      - "8086"
+    depends_on:
+      accounting-db:
+        condition: service_healthy
+      store-db:
+        condition: service_healthy
+      warehouse-db:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+
+  # Inventory Service (Stock Monitoring & Alerts)
+  inventory-service:
+    build:
+      context: ./inventory-service
+      dockerfile: Dockerfile
+    container_name: de-store-inventory-service
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_DATASOURCE_PRIMARY_URL: jdbc:mysql://warehouse-db:3306/warehouse?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_PRIMARY_USERNAME: warehouse_user
+      SPRING_DATASOURCE_PRIMARY_PASSWORD: warehouse_pass
+      SPRING_DATASOURCE_AUTH_URL: jdbc:postgresql://auth-db:5432/auth
+      SPRING_DATASOURCE_AUTH_USERNAME: auth_user
+      SPRING_DATASOURCE_AUTH_PASSWORD: auth_pass
+      SPRING_MAIL_HOST: mailhog
+      SPRING_MAIL_PORT: 1025
+      SERVER_PORT: 8084
+      JWT_SECRET: DEStoreSecretKeyForJWTAuthentication2025ChangeInProduction
+    depends_on:
+      warehouse-db:
+        condition: service_healthy
+      auth-db:
+        condition: service_healthy
+      mailhog:
+        condition: service_healthy
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8084/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
+
+  # API Gateway (Nginx)
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: de-store-api-gateway
+    ports:
+      - "80:80"
+    depends_on:
+      - pricing-service
+      - auth-service
+      - store-service
+      - inventory-service
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # MailHog (Email Testing Service)
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: de-store-mailhog
+    ports:
+      - "1025:1025"  # SMTP port
+      - "8025:8025"  # Web UI port
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8025"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # Management UI (Nginx + Static Files)
+  ui-service:
+    build:
+      context: ./ui-service
+      dockerfile: Dockerfile
+    container_name: de-store-ui-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api-gateway
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # Shopping Mock Service (for testing loyalty integration)
+  shopping-mock-service:
+    build:
+      context: ./shopping-mock-service
+      dockerfile: Dockerfile
+    container_name: de-store-shopping-mock
+    ports:
+      - "8090:8090"
+    environment:
+      LOYALTY_SERVICE_URL: http://loyalty-service:8085
+    depends_on:
+      - loyalty-service
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8090/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # Enabling Finance Mock (Node.js)
+  enabling-mock:
+    build:
+      context: ./enabling-mock
+      dockerfile: Dockerfile
+    container_name: de-store-enabling-mock
+    ports:
+      - "8095:8095"
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8095/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # Finance Adapter (Spring Boot)
+  finance-adapter:
+    build:
+      context: ./finance-adapter
+      dockerfile: Dockerfile
+    container_name: de-store-finance-adapter
+    ports:
+      - "8091:8091"
+    environment:
+      ENABLING_API_URL: http://enabling-mock:8095
+      SERVER_PORT: 8091
+      LOGGING_LEVEL_COM_DESTORE: DEBUG
+    depends_on:
+      - enabling-mock
+    networks:
+      - de-store-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8091/api/finance/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+networks:
+  de-store-network:
+    driver: bridge
+    name: de-store-network
+
+volumes:
+  warehouse-data:
+    name: de-store-warehouse-data
+  pricing-data:
+    name: de-store-pricing-data
+  auth-data:
+    name: de-store-auth-data
+  store-data:
+    name: de-store-store-data
+  accounting-data:
+    name: de-store-accounting-data
+  loyalty-data:
+    name: de-store-loyalty-data
+

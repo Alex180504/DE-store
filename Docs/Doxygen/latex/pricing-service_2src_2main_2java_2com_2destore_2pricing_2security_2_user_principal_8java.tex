@@ -1,0 +1,32 @@
+\doxysection{pricing-\/service/src/main/java/com/destore/pricing/security/\+User\+Principal.java File Reference}
+\hypertarget{pricing-service_2src_2main_2java_2com_2destore_2pricing_2security_2_user_principal_8java}{}\label{pricing-service_2src_2main_2java_2com_2destore_2pricing_2security_2_user_principal_8java}\index{pricing-\/service/src/main/java/com/destore/pricing/security/UserPrincipal.java@{pricing-\/service/src/main/java/com/destore/pricing/security/UserPrincipal.java}}
+
+
+Custom user principal containing JWT claims.  
+
+
+{\ttfamily import lombok.\+All\+Args\+Constructor;}\newline
+{\ttfamily import lombok.\+Getter;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1security_1_1_user_principal}{com.\+destore.\+pricing.\+security.\+User\+Principal}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Custom user principal containing JWT claims. 
+
+Holds authenticated user information extracted from JWT\+:
+\begin{DoxyItemize}
+\item username\+: User identifier
+\item role\+: NETWORK\+\_\+\+MANAGER or STORE\+\_\+\+MANAGER
+\item store\+Id\+: Store ID (null for network managers)
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

@@ -1,0 +1,64 @@
+\doxysection{com.\+destore.\+analytics.\+controller.\+Transaction\+Analytics\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller}{}\label{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller}\index{com.destore.analytics.controller.TransactionAnalyticsController@{com.destore.analytics.controller.TransactionAnalyticsController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_transaction_summary_d_t_o}{Transaction\+Summary\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller_abc25d55db23ec3f44fa2c20951b7d38e}{get\+Transaction\+Summary}} ( @Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long store\+Id, @Parameter(description="{}Start date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date start\+Date, @Parameter(description="{}End date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date end\+Date)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_transaction_summary_d_t_o}{Transaction\+Summary\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller_afc69883324678faca645e7261271b97d}{get\+Today\+Transactions}} ( @Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long store\+Id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_transaction_summary_d_t_o}{Transaction\+Summary\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller_a67bbdef2cc3256760e4b3472d275bbcb}{get\+Week\+Transactions}} ( @Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long store\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for transaction analytics endpoints. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller_afc69883324678faca645e7261271b97d}\index{com.destore.analytics.controller.TransactionAnalyticsController@{com.destore.analytics.controller.TransactionAnalyticsController}!getTodayTransactions@{getTodayTransactions}}
+\index{getTodayTransactions@{getTodayTransactions}!com.destore.analytics.controller.TransactionAnalyticsController@{com.destore.analytics.controller.TransactionAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getTodayTransactions()}{getTodayTransactions()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller_afc69883324678faca645e7261271b97d} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_transaction_summary_d_t_o}{Transaction\+Summary\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Transaction\+Analytics\+Controller.\+get\+Today\+Transactions (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long}]{store\+Id}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Today\+Transactions(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Transaction\+Summary\+DTO$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller_abc25d55db23ec3f44fa2c20951b7d38e}\index{com.destore.analytics.controller.TransactionAnalyticsController@{com.destore.analytics.controller.TransactionAnalyticsController}!getTransactionSummary@{getTransactionSummary}}
+\index{getTransactionSummary@{getTransactionSummary}!com.destore.analytics.controller.TransactionAnalyticsController@{com.destore.analytics.controller.TransactionAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getTransactionSummary()}{getTransactionSummary()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller_abc25d55db23ec3f44fa2c20951b7d38e} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_transaction_summary_d_t_o}{Transaction\+Summary\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Transaction\+Analytics\+Controller.\+get\+Transaction\+Summary (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long}]{store\+Id}{, }\item[{@Parameter(description="{}Start date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date}]{start\+Date}{, }\item[{@Parameter(description="{}End date (YYYY-\/MM-\/DD)"{}, required=true) @Request\+Param @Date\+Time\+Format(iso=Date\+Time\+Format.\+ISO.\+DATE) Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Transaction\+Summary(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Transaction\+Summary\+DTO$>$ 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller_a67bbdef2cc3256760e4b3472d275bbcb}\index{com.destore.analytics.controller.TransactionAnalyticsController@{com.destore.analytics.controller.TransactionAnalyticsController}!getWeekTransactions@{getWeekTransactions}}
+\index{getWeekTransactions@{getWeekTransactions}!com.destore.analytics.controller.TransactionAnalyticsController@{com.destore.analytics.controller.TransactionAnalyticsController}}
+\doxysubsubsection{\texorpdfstring{getWeekTransactions()}{getWeekTransactions()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1controller_1_1_transaction_analytics_controller_a67bbdef2cc3256760e4b3472d275bbcb} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1dto_1_1_transaction_summary_d_t_o}{Transaction\+Summary\+DTO}} $>$ com.\+destore.\+analytics.\+controller.\+Transaction\+Analytics\+Controller.\+get\+Week\+Transactions (\begin{DoxyParamCaption}\item[{@Parameter(description="{}Store ID"{}, required=true) @Request\+Param Long}]{store\+Id}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em get\+Week\+Transactions(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Response\+Entity$<$\+Transaction\+Summary\+DTO$>$ 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/controller/Transaction\+Analytics\+Controller.\+java\end{DoxyCompactItemize}

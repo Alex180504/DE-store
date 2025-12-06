@@ -1,0 +1,54 @@
+\doxysection{inventory-\/service/src/main/java/com/destore/inventory/controller/\+Inventory\+Admin\+Controller.java File Reference}
+\hypertarget{_inventory_admin_controller_8java}{}\label{_inventory_admin_controller_8java}\index{inventory-\/service/src/main/java/com/destore/inventory/controller/InventoryAdminController.java@{inventory-\/service/src/main/java/com/destore/inventory/controller/InventoryAdminController.java}}
+
+
+REST controller for inventory administration endpoints.  
+
+
+{\ttfamily import com.\+destore.\+inventory.\+model.\+dto.\+Stock\+Alert;}\newline
+{\ttfamily import com.\+destore.\+inventory.\+model.\+dto.\+Threshold\+Config;}\newline
+{\ttfamily import com.\+destore.\+inventory.\+model.\+dto.\+Threshold\+Update\+Request;}\newline
+{\ttfamily import com.\+destore.\+inventory.\+service.\+Inventory\+Config\+Service;}\newline
+{\ttfamily import com.\+destore.\+inventory.\+service.\+Stock\+Monitoring\+Service;}\newline
+{\ttfamily import jakarta.\+validation.\+Valid;}\newline
+{\ttfamily import org.\+springframework.\+http.\+Response\+Entity;}\newline
+{\ttfamily import org.\+springframework.\+security.\+access.\+prepost.\+Pre\+Authorize;}\newline
+{\ttfamily import org.\+springframework.\+web.\+bind.\+annotation.\texorpdfstring{$\ast$}{*};}\newline
+{\ttfamily import java.\+util.\+List;}\newline
+{\ttfamily import java.\+util.\+Map;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller}{com.\+destore.\+inventory.\+controller.\+Inventory\+Admin\+Controller}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for inventory administration endpoints. 
+
+This controller provides management APIs for Network Managers to\+:
+\begin{DoxyItemize}
+\item Trigger manual stock checks
+\item View current stock alerts
+\item Configure alert thresholds
+\item Monitor inventory statistics
+\end{DoxyItemize}
+
+Security\+: All admin endpoints require JWT authentication with NETWORK\+\_\+\+MANAGER role. Role validation is enforced via @\+Pre\+Authorize annotations. Health check endpoint is public (no authentication required).
+
+Endpoints\+:
+\begin{DoxyItemize}
+\item GET /api/inventory/health -\/ Public health check
+\item POST /api/inventory/admin/trigger-\/check -\/ Manual stock check with email
+\item GET /api/inventory/admin/alerts -\/ Current alerts (no email)
+\item GET /api/inventory/admin/thresholds -\/ Get threshold configuration
+\item PUT /api/inventory/admin/thresholds -\/ Update thresholds
+\item GET /api/inventory/admin/stats -\/ Statistics dashboard data
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

@@ -1,0 +1,39 @@
+\doxysection{pricing-\/service/src/main/java/com/destore/pricing/security/\+Jwt\+Authentication\+Filter.java File Reference}
+\hypertarget{pricing-service_2src_2main_2java_2com_2destore_2pricing_2security_2_jwt_authentication_filter_8java}{}\label{pricing-service_2src_2main_2java_2com_2destore_2pricing_2security_2_jwt_authentication_filter_8java}\index{pricing-\/service/src/main/java/com/destore/pricing/security/JwtAuthenticationFilter.java@{pricing-\/service/src/main/java/com/destore/pricing/security/JwtAuthenticationFilter.java}}
+
+
+Filter to validate JWT tokens and set authentication context.  
+
+
+{\ttfamily import jakarta.\+servlet.\+Filter\+Chain;}\newline
+{\ttfamily import jakarta.\+servlet.\+Servlet\+Exception;}\newline
+{\ttfamily import jakarta.\+servlet.\+http.\+Http\+Servlet\+Request;}\newline
+{\ttfamily import jakarta.\+servlet.\+http.\+Http\+Servlet\+Response;}\newline
+{\ttfamily import lombok.\+Required\+Args\+Constructor;}\newline
+{\ttfamily import lombok.\+extern.\+slf4j.\+Slf4j;}\newline
+{\ttfamily import org.\+springframework.\+security.\+authentication.\+Username\+Password\+Authentication\+Token;}\newline
+{\ttfamily import org.\+springframework.\+security.\+core.\+authority.\+Simple\+Granted\+Authority;}\newline
+{\ttfamily import org.\+springframework.\+security.\+core.\+context.\+Security\+Context\+Holder;}\newline
+{\ttfamily import org.\+springframework.\+security.\+web.\+authentication.\+Web\+Authentication\+Details\+Source;}\newline
+{\ttfamily import org.\+springframework.\+stereotype.\+Component;}\newline
+{\ttfamily import org.\+springframework.\+web.\+filter.\+Once\+Per\+Request\+Filter;}\newline
+{\ttfamily import java.\+io.\+IOException;}\newline
+{\ttfamily import java.\+util.\+Collections;}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_authentication_filter}{com.\+destore.\+pricing.\+security.\+Jwt\+Authentication\+Filter}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Filter to validate JWT tokens and set authentication context. 
+
+Intercepts requests, extracts JWT from Authorization header, validates the token, and sets Spring Security context.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Development Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}

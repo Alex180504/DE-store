@@ -1,0 +1,88 @@
+@startuml accounting-db-schema
+
+!define Table(name,desc) class name as "desc" << (T,#FFAAAA) >>
+!define primary_key(x) <b><u>x</u></b>
+!define foreign_key(x) <i>x</i>
+!define unique(x) <color:green>x</color>
+!define not_null(x) <b>x</b>
+
+skinparam defaultFontSize 16
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+
+title Database Schema - Accounting DB
+
+Table(transactions, "transactions") {
+        primary_key(transaction_id) : BIGSERIAL
+        --
+        not_null(customer_id) : INT
+        not_null(store_id) : INT
+        not_null(transaction_date) : TIMESTAMP
+        not_null(total_amount) : DECIMAL(10,2)
+        not_null(status) : VARCHAR(20) DEFAULT 'COMPLETED'
+        payment_method : VARCHAR(50)
+        --
+        created_at : TIMESTAMP
+        updated_at : TIMESTAMP
+        --
+        CHECK (total_amount >= 0)
+        CHECK (status IN ('PENDING', 'COMPLETED', 'CANCELLED', 'REFUNDED'))
+        --
+        INDEX idx_transactions_customer (customer_id)
+        INDEX idx_transactions_store (store_id)
+        INDEX idx_transactions_date (transaction_date)
+        INDEX idx_transactions_status (status)
+        INDEX idx_transactions_customer_date (customer_id, transaction_date)
+    }
+    
+    note top of transactions
+        **Purpose:** Customer purchase transaction records
+        
+        **Read-Only Access By:**
+        - Loyalty Service (points calculation)
+        - Analytics Service (revenue reporting)
+        
+        **Status Flow:**
+        PENDING → COMPLETED (normal)
+        PENDING → CANCELLED (customer cancellation)
+        COMPLETED → REFUNDED (return/refund)
+        
+    end note
+    
+    Table(transaction_items, "transaction_items") {
+        primary_key(transaction_item_id) : SERIAL
+        --
+        foreign_key(transaction_id) : BIGINT
+        not_null(item_id) : INT
+        not_null(quantity) : INT
+        not_null(unit_price) : DECIMAL(10,2)
+        not_null(line_total) : DECIMAL(10,2)
+        --
+        created_at : TIMESTAMP
+        --
+        CHECK (quantity > 0)
+        CHECK (unit_price >= 0)
+        CHECK (line_total >= 0)
+        --
+        INDEX idx_transaction_items_transaction (transaction_id)
+        INDEX idx_transaction_items_item (item_id)
+    }
+    
+    note bottom of transaction_items
+        **Purpose:** Line items for each transaction
+        
+        **Used For:**
+        - Product-level points calculation
+        - Product performance analytics
+        - Category-based reporting
+        
+        **References:**
+        - item_id → warehouse_db.items.item_id
+        - transaction_id → transactions.transaction_id
+        
+        **Calculation:**
+        line_total = quantity × unit_price
+    end note
+    
+    transactions ||--o{ transaction_items : "contains"
+@enduml

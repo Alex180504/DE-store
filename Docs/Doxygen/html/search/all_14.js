@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['updatebonus_0',['updateBonus',['../classcom_1_1destore_1_1loyalty_1_1controller_1_1_bonus_offers_controller.html#a98b06d06be6cf383f0fddda37c343da0',1,'com::destore::loyalty::controller::BonusOffersController']]],
+  ['updateelementstyle_1',['Custom schema definitions (via UpdateElementStyle())',['../C:/Users/Alex/Documents/Code/DE-store/Docs/c4-plantuml/README.md#autotoc_md46',1,'']]],
+  ['updateoffer_2',['updateOffer',['../classcom_1_1destore_1_1loyalty_1_1controller_1_1_offers_controller.html#ab4f8d3e5835f344b0e91bb25d469395d',1,'com::destore::loyalty::controller::OffersController']]],
+  ['updaterule_3',['updateRule',['../classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller.html#a92c91df5c3a896a3850a026d16a9cd9f',1,'com.destore.loyalty.controller.ProductPointsRulesController.updateRule()'],['../classcom_1_1destore_1_1pricing_1_1controller_1_1_pricing_rule_controller.html#ac26a378361376c01f21e4993c25317dc',1,'com.destore.pricing.controller.PricingRuleController.updateRule()'],['../classcom_1_1destore_1_1pricing_1_1service_1_1_pricing_rule_service.html#acc624d3b87b8ce935138abd15c87990c',1,'com.destore.pricing.service.PricingRuleService.updateRule()']]],
+  ['updates_4',['Custom tags/stereotypes support and skinparam updates',['../C:/Users/Alex/Documents/Code/DE-store/Docs/c4-plantuml/README.md#autotoc_md38',1,'']]],
+  ['updatestore_5',['updateStore',['../classcom_1_1destore_1_1store_1_1controller_1_1_store_controller.html#a045c1342a2192eec98eba75dca75a823',1,'com.destore.store.controller.StoreController.updateStore()'],['../classcom_1_1destore_1_1store_1_1service_1_1_store_service.html#a5019cbb090daebcc7b431061cf0af9a4',1,'com.destore.store.service.StoreService.updateStore()']]],
+  ['updatethresholds_6',['updateThresholds',['../classcom_1_1destore_1_1inventory_1_1controller_1_1_inventory_admin_controller.html#a23646dfba1ebecc0a762e3fdc9a31699',1,'com.destore.inventory.controller.InventoryAdminController.updateThresholds()'],['../classcom_1_1destore_1_1inventory_1_1service_1_1_inventory_config_service.html#a9641d14299350c3697c029ee587993d6',1,'com.destore.inventory.service.InventoryConfigService.updateThresholds()']]],
+  ['usage_7',['Usage',['../C:/Users/Alex/Documents/Code/DE-store/Docs/c4-plantuml/README.md#autotoc_md53',1,'']]],
+  ['use_20new_20old_20style_8',['Use new/old style',['../md__docs_2c4-plantuml_2_themes.html#autotoc_md74',1,'']]],
+  ['use_20theme_9',['Use theme',['../md__docs_2c4-plantuml_2_themes.html#autotoc_md75',1,'']]],
+  ['user_10',['User',['../classcom_1_1destore_1_1auth_1_1model_1_1entity_1_1_user.html',1,'com.destore.auth.model.entity.User'],['../classcom_1_1destore_1_1inventory_1_1model_1_1auth_1_1_user.html',1,'com.destore.inventory.model.auth.User']]],
+  ['user_2ejava_11',['User.java',['../auth-service_2src_2main_2java_2com_2destore_2auth_2model_2entity_2_user_8java.html',1,'']]],
+  ['userprincipal_12',['UserPrincipal',['../classcom_1_1destore_1_1pricing_1_1security_1_1_user_principal.html',1,'com.destore.pricing.security.UserPrincipal'],['../classcom_1_1destore_1_1store_1_1security_1_1_user_principal.html',1,'com.destore.store.security.UserPrincipal']]],
+  ['userprincipal_2ejava_13',['UserPrincipal.java',['../pricing-service_2src_2main_2java_2com_2destore_2pricing_2security_2_user_principal_8java.html',1,'(Global Namespace)'],['../store-service_2src_2main_2java_2com_2destore_2store_2security_2_user_principal_8java.html',1,'(Global Namespace)']]],
+  ['userrepository_14',['UserRepository',['../interfacecom_1_1destore_1_1auth_1_1repository_1_1_user_repository.html',1,'com.destore.auth.repository.UserRepository'],['../interfacecom_1_1destore_1_1inventory_1_1repository_1_1auth_1_1_user_repository.html',1,'com.destore.inventory.repository.auth.UserRepository']]],
+  ['userrepository_2ejava_15',['UserRepository.java',['../auth-service_2src_2main_2java_2com_2destore_2auth_2repository_2_user_repository_8java.html',1,'']]],
+  ['userresponse_16',['UserResponse',['../classcom_1_1destore_1_1auth_1_1model_1_1dto_1_1_user_response.html',1,'com::destore::auth::model::dto']]],
+  ['userresponse_2ejava_17',['UserResponse.java',['../_user_response_8java.html',1,'']]],
+  ['userrole_18',['UserRole',['../enumcom_1_1destore_1_1auth_1_1model_1_1enums_1_1_user_role.html',1,'com::destore::auth::model::enums']]],
+  ['userrole_2ejava_19',['UserRole.java',['../_user_role_8java.html',1,'']]],
+  ['using_20hide_5fperson_5fsprite_20',['Using HIDE_PERSON_SPRITE()',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md10',1,'']]],
+  ['using_20show_5fperson_5foutline_21',['Using SHOW_PERSON_OUTLINE()',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md14',1,'']]],
+  ['using_20show_5fperson_5fportrait_22',['Using SHOW_PERSON_PORTRAIT()',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md13',1,'']]],
+  ['using_20show_5fperson_5fsprite_23',['Using SHOW_PERSON_SPRITE()',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md11',1,'']]],
+  ['using_20show_5fperson_5fsprite_20sprite_24',['Using SHOW_PERSON_SPRITE(sprite)',['../md__docs_2c4-plantuml_2_layout_options.html#autotoc_md12',1,'']]]
+];

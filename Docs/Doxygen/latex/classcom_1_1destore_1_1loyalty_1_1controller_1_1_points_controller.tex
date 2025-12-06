@@ -1,0 +1,60 @@
+\doxysection{com.\+destore.\+loyalty.\+controller.\+Points\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_points_controller}{}\label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_points_controller}\index{com.destore.loyalty.controller.PointsController@{com.destore.loyalty.controller.PointsController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_customer_points_d_t_o}{Customer\+Points\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_points_controller_a3325d9186ccab5da187d0d6d4ba5f2e4}{get\+Customer\+Points}} (@Path\+Variable Integer customer\+Id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_customer_points_d_t_o}{Customer\+Points\+DTO}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_points_controller_a0965bd9ff8ef487cea26ae4570e46937}{calculate\+Points}} (@Path\+Variable Integer customer\+Id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for customer loyalty points operations.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_points_controller_a0965bd9ff8ef487cea26ae4570e46937}\index{com.destore.loyalty.controller.PointsController@{com.destore.loyalty.controller.PointsController}!calculatePoints@{calculatePoints}}
+\index{calculatePoints@{calculatePoints}!com.destore.loyalty.controller.PointsController@{com.destore.loyalty.controller.PointsController}}
+\doxysubsubsection{\texorpdfstring{calculatePoints()}{calculatePoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_points_controller_a0965bd9ff8ef487cea26ae4570e46937} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_customer_points_d_t_o}{Customer\+Points\+DTO}} $>$ com.\+destore.\+loyalty.\+controller.\+Points\+Controller.\+calculate\+Points (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Triggers manual points calculation for a customer.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated customer points 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_points_controller_a3325d9186ccab5da187d0d6d4ba5f2e4}\index{com.destore.loyalty.controller.PointsController@{com.destore.loyalty.controller.PointsController}!getCustomerPoints@{getCustomerPoints}}
+\index{getCustomerPoints@{getCustomerPoints}!com.destore.loyalty.controller.PointsController@{com.destore.loyalty.controller.PointsController}}
+\doxysubsubsection{\texorpdfstring{getCustomerPoints()}{getCustomerPoints()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_points_controller_a3325d9186ccab5da187d0d6d4ba5f2e4} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_customer_points_d_t_o}{Customer\+Points\+DTO}} $>$ com.\+destore.\+loyalty.\+controller.\+Points\+Controller.\+get\+Customer\+Points (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{customer\+Id}{}\end{DoxyParamCaption})}
+
+Gets customer points balance.
+
+
+\begin{DoxyParams}{Parameters}
+{\em customer\+Id} & Customer ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Customer points DTO 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/controller/Points\+Controller.\+java\end{DoxyCompactItemize}

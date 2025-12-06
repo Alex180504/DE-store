@@ -1,0 +1,62 @@
+\doxysection{com.\+destore.\+loyalty.\+controller.\+Basket\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_basket_controller}{}\label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_basket_controller}\index{com.destore.loyalty.controller.BasketController@{com.destore.loyalty.controller.BasketController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$?$>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_basket_controller_a340ecfa4f015125d819e7da7ba0421fa}{price\+Basket}} (@Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_basket_pricing_request}{Basket\+Pricing\+Request}} request)
+\item 
+Response\+Entity$<$ String $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_basket_controller_a7f2768baeff29247b200268a391aca03}{compensate\+Basket}} (@Path\+Variable String basket\+Reference)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for basket pricing with loyalty redemption.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_basket_controller_a7f2768baeff29247b200268a391aca03}\index{com.destore.loyalty.controller.BasketController@{com.destore.loyalty.controller.BasketController}!compensateBasket@{compensateBasket}}
+\index{compensateBasket@{compensateBasket}!com.destore.loyalty.controller.BasketController@{com.destore.loyalty.controller.BasketController}}
+\doxysubsubsection{\texorpdfstring{compensateBasket()}{compensateBasket()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_basket_controller_a7f2768baeff29247b200268a391aca03} 
+Response\+Entity$<$ String $>$ com.\+destore.\+loyalty.\+controller.\+Basket\+Controller.\+compensate\+Basket (\begin{DoxyParamCaption}\item[{@Path\+Variable String}]{basket\+Reference}{}\end{DoxyParamCaption})}
+
+Compensates a basket redemption (SAGA compensation).
+
+
+\begin{DoxyParams}{Parameters}
+{\em basket\+Reference} & Basket reference to refund \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Success response 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_basket_controller_a340ecfa4f015125d819e7da7ba0421fa}\index{com.destore.loyalty.controller.BasketController@{com.destore.loyalty.controller.BasketController}!priceBasket@{priceBasket}}
+\index{priceBasket@{priceBasket}!com.destore.loyalty.controller.BasketController@{com.destore.loyalty.controller.BasketController}}
+\doxysubsubsection{\texorpdfstring{priceBasket()}{priceBasket()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_basket_controller_a340ecfa4f015125d819e7da7ba0421fa} 
+Response\+Entity$<$?$>$ com.\+destore.\+loyalty.\+controller.\+Basket\+Controller.\+price\+Basket (\begin{DoxyParamCaption}\item[{@Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_basket_pricing_request}{Basket\+Pricing\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Prices a basket with loyalty point redemption. 
+
+Implements SAGA pattern for consistent point deduction and pricing. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & Basket pricing request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pricing response with discounts 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/controller/Basket\+Controller.\+java\end{DoxyCompactItemize}

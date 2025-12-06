@@ -1,0 +1,99 @@
+\doxysection{com.\+destore.\+loyalty.\+entity.\+Bonus\+Offer Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer}{}\label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer}\index{com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_aa56db7977ed09f2ad5d28efc3f1ed46f}{applies\+To\+Store}} (Integer target\+Store\+Id)
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_a51fee0bd742e746832a87ea9ec71cbd6}{is\+Valid\+At}} (Local\+Date\+Time timestamp)
+\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_a27fce74d6e45dadd0235f82d09d2a16f}{qualifies\+For\+Bonus}} (Big\+Decimal transaction\+Total)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_afb5508fd06bf9b05016bc1c8873d31c3}{on\+Create}} ()
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_a5e4ff0494da7e1f850927bc91ee5edfc}{on\+Update}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Entity representing bonus offers for spending thresholds. 
+
+Defines extra loyalty points awarded when customers reach spending milestones (e.\+g., 20 bonus points for purchases over £50). Supports global and store-\/specific offers. 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_aa56db7977ed09f2ad5d28efc3f1ed46f}\index{com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}!appliesToStore@{appliesToStore}}
+\index{appliesToStore@{appliesToStore}!com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}}
+\doxysubsubsection{\texorpdfstring{appliesToStore()}{appliesToStore()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_aa56db7977ed09f2ad5d28efc3f1ed46f} 
+boolean com.\+destore.\+loyalty.\+entity.\+Bonus\+Offer.\+applies\+To\+Store (\begin{DoxyParamCaption}\item[{Integer}]{target\+Store\+Id}{}\end{DoxyParamCaption})}
+
+Checks if this offer is applicable to a specific store.
+
+
+\begin{DoxyParams}{Parameters}
+{\em target\+Store\+Id} & The store ID to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if offer applies to the store (global or matching store ID) 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_a51fee0bd742e746832a87ea9ec71cbd6}\index{com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}!isValidAt@{isValidAt}}
+\index{isValidAt@{isValidAt}!com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}}
+\doxysubsubsection{\texorpdfstring{isValidAt()}{isValidAt()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_a51fee0bd742e746832a87ea9ec71cbd6} 
+boolean com.\+destore.\+loyalty.\+entity.\+Bonus\+Offer.\+is\+Valid\+At (\begin{DoxyParamCaption}\item[{Local\+Date\+Time}]{timestamp}{}\end{DoxyParamCaption})}
+
+Checks if this offer is valid at a specific timestamp.
+
+
+\begin{DoxyParams}{Parameters}
+{\em timestamp} & The timestamp to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the offer is valid at the given timestamp 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_afb5508fd06bf9b05016bc1c8873d31c3}\index{com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}!onCreate@{onCreate}}
+\index{onCreate@{onCreate}!com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}}
+\doxysubsubsection{\texorpdfstring{onCreate()}{onCreate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_afb5508fd06bf9b05016bc1c8873d31c3} 
+void com.\+destore.\+loyalty.\+entity.\+Bonus\+Offer.\+on\+Create (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Sets creation timestamp before persisting new entity. \Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_a5e4ff0494da7e1f850927bc91ee5edfc}\index{com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}!onUpdate@{onUpdate}}
+\index{onUpdate@{onUpdate}!com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}}
+\doxysubsubsection{\texorpdfstring{onUpdate()}{onUpdate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_a5e4ff0494da7e1f850927bc91ee5edfc} 
+void com.\+destore.\+loyalty.\+entity.\+Bonus\+Offer.\+on\+Update (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+Updates modification timestamp before updating entity. \Hypertarget{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_a27fce74d6e45dadd0235f82d09d2a16f}\index{com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}!qualifiesForBonus@{qualifiesForBonus}}
+\index{qualifiesForBonus@{qualifiesForBonus}!com.destore.loyalty.entity.BonusOffer@{com.destore.loyalty.entity.BonusOffer}}
+\doxysubsubsection{\texorpdfstring{qualifiesForBonus()}{qualifiesForBonus()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1entity_1_1_bonus_offer_a27fce74d6e45dadd0235f82d09d2a16f} 
+boolean com.\+destore.\+loyalty.\+entity.\+Bonus\+Offer.\+qualifies\+For\+Bonus (\begin{DoxyParamCaption}\item[{Big\+Decimal}]{transaction\+Total}{}\end{DoxyParamCaption})}
+
+Checks if a transaction total qualifies for this bonus.
+
+
+\begin{DoxyParams}{Parameters}
+{\em transaction\+Total} & Total purchase amount \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the transaction total meets or exceeds the threshold 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/entity/Bonus\+Offer.\+java\end{DoxyCompactItemize}

@@ -1,0 +1,81 @@
+\doxysection{com.\+destore.\+pricing.\+service.\+Price\+Calculation\+Engine Class Reference}
+\hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_price_calculation_engine}{}\label{classcom_1_1destore_1_1pricing_1_1service_1_1_price_calculation_engine}\index{com.destore.pricing.service.PriceCalculationEngine@{com.destore.pricing.service.PriceCalculationEngine}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_price_calculation_response}{Price\+Calculation\+Response}} \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_price_calculation_engine_ad17802c04e21e18c6d001332579929a4}{calculate\+Price}} (\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_price_calculation_request}{Price\+Calculation\+Request}} request)
+\begin{DoxyCompactList}\small\item\em Calculate final price for an item with quantity and promotions. \end{DoxyCompactList}\item 
+boolean \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1service_1_1_price_calculation_engine_a5dc8641dde02423b910a38205c792ac2}{has\+Pricing\+Rule}} (Integer item\+Id, Integer store\+Id)
+\begin{DoxyCompactList}\small\item\em Check if a pricing rule exists for an item/store combination. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_price_calculation_engine_ad17802c04e21e18c6d001332579929a4}\index{com.destore.pricing.service.PriceCalculationEngine@{com.destore.pricing.service.PriceCalculationEngine}!calculatePrice@{calculatePrice}}
+\index{calculatePrice@{calculatePrice}!com.destore.pricing.service.PriceCalculationEngine@{com.destore.pricing.service.PriceCalculationEngine}}
+\doxysubsubsection{\texorpdfstring{calculatePrice()}{calculatePrice()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_price_calculation_engine_ad17802c04e21e18c6d001332579929a4} 
+\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_price_calculation_response}{Price\+Calculation\+Response}} com.\+destore.\+pricing.\+service.\+Price\+Calculation\+Engine.\+calculate\+Price (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1model_1_1dto_1_1_price_calculation_request}{Price\+Calculation\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+
+
+Calculate final price for an item with quantity and promotions. 
+
+Algorithm\+:
+\begin{DoxyEnumerate}
+\item Validate item exists in warehouse
+\item Find applicable pricing rule (store-\/specific or global)
+\item Calculate subtotal = unit\+Price \texorpdfstring{$\ast$}{*} quantity
+\item Calculate promotion discount
+\item Calculate final price = subtotal -\/ discount
+\item Return detailed breakdown
+\end{DoxyEnumerate}
+
+Hierarchical Rule Logic\+:
+\begin{DoxyItemize}
+\item If store\+Id is provided, search for store-\/specific rule first
+\item If no store rule found, fallback to global rule
+\item Store-\/specific rules (is\+\_\+global=false) override global rules (is\+\_\+global=true)
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & The price calculation request (item\+Id, store\+Id, quantity) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Detailed price calculation response 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{classcom_1_1destore_1_1pricing_1_1exception_1_1_item_not_found_exception}{Item\+Not\+Found\+Exception}} & if item doesn\textquotesingle{}t exist in warehouse \\
+\hline
+{\em \doxylink{classcom_1_1destore_1_1pricing_1_1exception_1_1_pricing_rule_not_found_exception}{Pricing\+Rule\+Not\+Found\+Exception}} & if no pricing rule found \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1service_1_1_price_calculation_engine_a5dc8641dde02423b910a38205c792ac2}\index{com.destore.pricing.service.PriceCalculationEngine@{com.destore.pricing.service.PriceCalculationEngine}!hasPricingRule@{hasPricingRule}}
+\index{hasPricingRule@{hasPricingRule}!com.destore.pricing.service.PriceCalculationEngine@{com.destore.pricing.service.PriceCalculationEngine}}
+\doxysubsubsection{\texorpdfstring{hasPricingRule()}{hasPricingRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1service_1_1_price_calculation_engine_a5dc8641dde02423b910a38205c792ac2} 
+boolean com.\+destore.\+pricing.\+service.\+Price\+Calculation\+Engine.\+has\+Pricing\+Rule (\begin{DoxyParamCaption}\item[{Integer}]{item\+Id}{, }\item[{Integer}]{store\+Id}{}\end{DoxyParamCaption})}
+
+
+
+Check if a pricing rule exists for an item/store combination. 
+
+Utility method to verify if pricing is configured before attempting to calculate prices.
+
+
+\begin{DoxyParams}{Parameters}
+{\em item\+Id} & The warehouse item ID \\
+\hline
+{\em store\+Id} & The store ID (can be null) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if an active pricing rule exists 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pricing-\/service/src/main/java/com/destore/pricing/service/\mbox{\hyperlink{_price_calculation_engine_8java}{Price\+Calculation\+Engine.\+java}}\end{DoxyCompactItemize}

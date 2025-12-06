@@ -1,0 +1,86 @@
+\doxysection{com.\+destore.\+inventory.\+config.\+Auth\+Data\+Source\+Config Class Reference}
+\hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config}{}\label{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config}\index{com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Data\+Source\+Properties \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_afa2f61133babc2bb0df9c92ed3a15790}{auth\+Data\+Source\+Properties}} ()
+\item 
+Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_aa5438b6f55cdef180a4c9b6738d33aad}{auth\+Data\+Source}} ()
+\item 
+Local\+Container\+Entity\+Manager\+Factory\+Bean \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_a20ffecdfaa4225139db648e0b0ee6b6d}{auth\+Entity\+Manager\+Factory}} (Entity\+Manager\+Factory\+Builder builder, @Qualifier("{}auth\+Data\+Source"{}) Data\+Source data\+Source)
+\item 
+Platform\+Transaction\+Manager \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_a7ce235a0a262c26c2a940e3953151bbe}{auth\+Transaction\+Manager}} ( @Qualifier("{}auth\+Entity\+Manager\+Factory"{}) Local\+Container\+Entity\+Manager\+Factory\+Bean \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_a20ffecdfaa4225139db648e0b0ee6b6d}{auth\+Entity\+Manager\+Factory}})
+\item 
+Jdbc\+Template \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_abdcaac637de0e755cba6d7a31dac0d24}{auth\+Jdbc\+Template}} (@Qualifier("{}auth\+Data\+Source"{}) Data\+Source data\+Source)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Auth datasource configuration for reading network manager emails 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_aa5438b6f55cdef180a4c9b6738d33aad}\index{com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}!authDataSource@{authDataSource}}
+\index{authDataSource@{authDataSource}!com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{authDataSource()}{authDataSource()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_aa5438b6f55cdef180a4c9b6738d33aad} 
+Data\+Source com.\+destore.\+inventory.\+config.\+Auth\+Data\+Source\+Config.\+auth\+Data\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Data\+Source 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_afa2f61133babc2bb0df9c92ed3a15790}\index{com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}!authDataSourceProperties@{authDataSourceProperties}}
+\index{authDataSourceProperties@{authDataSourceProperties}!com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{authDataSourceProperties()}{authDataSourceProperties()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_afa2f61133babc2bb0df9c92ed3a15790} 
+Data\+Source\+Properties com.\+destore.\+inventory.\+config.\+Auth\+Data\+Source\+Config.\+auth\+Data\+Source\+Properties (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Data\+Source\+Properties 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_a20ffecdfaa4225139db648e0b0ee6b6d}\index{com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}!authEntityManagerFactory@{authEntityManagerFactory}}
+\index{authEntityManagerFactory@{authEntityManagerFactory}!com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{authEntityManagerFactory()}{authEntityManagerFactory()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_a20ffecdfaa4225139db648e0b0ee6b6d} 
+Local\+Container\+Entity\+Manager\+Factory\+Bean com.\+destore.\+inventory.\+config.\+Auth\+Data\+Source\+Config.\+auth\+Entity\+Manager\+Factory (\begin{DoxyParamCaption}\item[{Entity\+Manager\+Factory\+Builder}]{builder}{, }\item[{@Qualifier("{}auth\+Data\+Source"{}) Data\+Source}]{data\+Source}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em auth\+Entity\+Manager\+Factory(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Local\+Container\+Entity\+Manager\+Factory\+Bean 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_abdcaac637de0e755cba6d7a31dac0d24}\index{com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}!authJdbcTemplate@{authJdbcTemplate}}
+\index{authJdbcTemplate@{authJdbcTemplate}!com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{authJdbcTemplate()}{authJdbcTemplate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_abdcaac637de0e755cba6d7a31dac0d24} 
+Jdbc\+Template com.\+destore.\+inventory.\+config.\+Auth\+Data\+Source\+Config.\+auth\+Jdbc\+Template (\begin{DoxyParamCaption}\item[{@Qualifier("{}auth\+Data\+Source"{}) Data\+Source}]{data\+Source}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em data\+Source} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Jdbc\+Template 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_a7ce235a0a262c26c2a940e3953151bbe}\index{com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}!authTransactionManager@{authTransactionManager}}
+\index{authTransactionManager@{authTransactionManager}!com.destore.inventory.config.AuthDataSourceConfig@{com.destore.inventory.config.AuthDataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{authTransactionManager()}{authTransactionManager()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1config_1_1_auth_data_source_config_a7ce235a0a262c26c2a940e3953151bbe} 
+Platform\+Transaction\+Manager com.\+destore.\+inventory.\+config.\+Auth\+Data\+Source\+Config.\+auth\+Transaction\+Manager (\begin{DoxyParamCaption}\item[{@Qualifier("{}auth\+Entity\+Manager\+Factory"{}) Local\+Container\+Entity\+Manager\+Factory\+Bean}]{auth\+Entity\+Manager\+Factory}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em auth\+Transaction\+Manager(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Platform\+Transaction\+Manager 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inventory-\/service/src/main/java/com/destore/inventory/config/Auth\+Data\+Source\+Config.\+java\end{DoxyCompactItemize}

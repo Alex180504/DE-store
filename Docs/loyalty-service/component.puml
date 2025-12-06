@@ -1,0 +1,135 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Component Diagram for Loyalty Service
+
+' External Actors
+Person(customer, "Customer", "Earns and redeems loyalty points")
+Person(netMgr, "Network Manager", "Configures loyalty rules and offers")
+
+' External Systems
+System_Ext(shoppingSystem, "Shopping System", "POS/E-commerce submitting transactions")
+System_Ext(apiGw, "API Gateway", "Routes loyalty requests")
+
+Container_Boundary(loyaltyService, "Loyalty Service") {
+    ' API Layer - Customer Facing
+    Component(basketController, "BasketController", "Spring REST Controller", "POST /basket/price - SAGA orchestrator for basket pricing with redemption")
+    Component(pointsController, "PointsController", "Spring REST Controller", "GET /points/balance/{id} - Customer points query\nPOST /points/calculate/{id} - Manual recalculation")
+    
+    ' API Layer - Configuration
+    Component(offersController, "OffersController", "Spring REST Controller", "CRUD for redemption offers (Network Manager only)")
+    Component(bonusController, "BonusOffersController", "Spring REST Controller", "CRUD for bonus point offers (Network Manager only)")
+    Component(rulesController, "ProductPointsRulesController", "Spring REST Controller", "CRUD for product earning rules (Network Manager only)")
+    
+    ' Business Logic Layer - SAGA Orchestration
+    Component(redemptionService, "RedemptionService", "Spring Service @Transactional", "SAGA Orchestrator:\n1. Validate & reserve points (pessimistic lock)\n2. Calculate discounted prices\n3. Record redemption transactions\n4. Update offer usage\n5. Auto-rollback on failure (@Transactional)")
+    
+    ' Business Logic Layer - Points Processing
+    Component(calculationService, "PointsCalculationService", "Spring Service @Scheduled", "Scheduled job (every 6 hours):\n- Queries accounting DB for transactions\n- Applies product rules & bonus offers\n- Updates customer balances\n- Incremental processing from last_calculated_at")
+    
+    ' Security Layer
+    Component(jwtFilter, "JwtAuthenticationFilter", "Spring Security Filter", "Validates JWT tokens, extracts user claims")
+    Component(jwtUtil, "JwtUtil", "Security Utility", "JWT parsing and validation logic")
+    Component(userPrincipal, "UserPrincipal", "Security Model", "User authentication principal with role-based access")
+    
+    ' Data Access Layer - Loyalty DB
+    Component(balanceRepo, "CustomerPointsBalanceRepository", "Spring Data JPA", "findByCustomerId(), findByCustomerIdForUpdate() [@Lock PESSIMISTIC_WRITE]")
+    Component(offerRepo, "Redemption Offer Repository", "Spring Data JPA", "Manages redemption offers with validity & usage limits")
+    Component(bonusRepo, "Bonus Offer Repository", "Spring Data JPA", "Manages bonus point multipliers")
+    Component(rulesRepo, "Product Points Rules Repository", "Spring Data JPA", "Product-level earning rules")
+    Component(transactionRepo, "PointsTransactionRepository", "Spring Data JPA", "Audit trail: EARNED, REDEEMED, BONUS, ADJUSTMENT, EXPIRED, REVERSED")
+    Component(usageRepo, "Redemption Usage Repository", "Spring Data JPA", "Tracks per-customer offer usage counts")
+    
+    ' Data Access Layer - Accounting DB
+    Component(accountingJdbc, "Accounting JDBC Template", "JdbcTemplate", "Read-only queries for customer transactions and line items")
+    
+    ' Domain Models
+    Component(entities, "Domain Entities", "JPA @Entity", "CustomerPointsBalance, RedemptionOffer, BonusOffer,\nProductPointsRule, PointsTransaction, RedemptionUsage")
+    Component(dtos, "DTO Models", "Request/Response Objects", "BasketPricingRequest/Response, CustomerPointsDTO,\nRedemptionOfferDTO, ProductPointsRuleRequest/Response")
+    Component(accountingModels, "Accounting Models", "Read-only POJOs", "AccountingTransaction, AccountingTransactionItem")
+    
+    ' Configuration
+    Component(dataSourceConfig, "Multi-DataSource Config", "Spring Configuration", "Primary: Loyalty DB (PostgreSQL Read/Write)\nSecondary: Accounting DB (PostgreSQL Read-Only)")
+    Component(securityConfig, "Security Configuration", "Spring Security Config", "JWT validation, role-based access (NETWORK_MANAGER)")
+    
+    ' Databases
+    ContainerDb(loyaltyDB, "Loyalty DB", "PostgreSQL 15:5436", "customer_points_balance, redemption_offers, bonus_offers,\nproduct_points_rules, points_transactions, redemption_usage")
+    ContainerDb(accountingDB, "Accounting DB", "PostgreSQL 15:5435", "transactions, transaction_items (Read-Only)")
+}
+
+' --- Relationships ---
+
+' External to Service
+Rel(customer, shoppingSystem, "Makes purchase", "POS/Web")
+Rel(shoppingSystem, apiGw, "POST /api/loyalty/basket/price\nPOST /api/loyalty/points/balance", "HTTP")
+Rel(netMgr, apiGw, "Configure offers and rules", "HTTPS")
+Rel(apiGw, basketController, "Basket pricing requests", "HTTP:8085")
+Rel(apiGw, pointsController, "Points queries", "HTTP:8085")
+Rel(apiGw, offersController, "Offer management", "HTTP:8085")
+
+' Security Flow
+Rel(basketController, jwtFilter, "Token validation")
+Rel(pointsController, jwtFilter, "Token validation")
+Rel(offersController, jwtFilter, "Token validation")
+Rel(bonusController, jwtFilter, "Token validation")
+Rel(rulesController, jwtFilter, "Token validation")
+Rel(jwtFilter, jwtUtil, "Parse & validate JWT")
+Rel(jwtFilter, userPrincipal, "Creates principal")
+Rel(securityConfig, jwtFilter, "Registers in filter chain")
+
+' SAGA Flow - Basket Pricing with Redemption
+Rel(basketController, redemptionService, "priceBasketWithRedemption(request)", "SAGA orchestration")
+Rel(redemptionService, redemptionService, "SAGA Step 1: validateAndReservePoints()\n- Pessimistic lock on balance\n- Validate offers\n- Deduct points", "Internal")
+Rel(redemptionService, balanceRepo, "findByCustomerIdForUpdate(id) [SELECT FOR UPDATE]", "JPA pessimistic lock")
+Rel(balanceRepo, loyaltyDB, "SELECT * FROM customer_points_balance WHERE customer_id=? FOR UPDATE", "JDBC")
+Rel(redemptionService, offerRepo, "findById(offerId), validate active/usage limits", "JPA query")
+Rel(offerRepo, loyaltyDB, "SELECT FROM redemption_offers", "JDBC")
+Rel(redemptionService, usageRepo, "findByCustomerIdAndRedemptionOfferId()", "Check usage limits")
+Rel(usageRepo, loyaltyDB, "SELECT FROM redemption_usage", "JDBC")
+
+Rel(redemptionService, redemptionService, "SAGA Step 2: calculateDiscountedPrices()\n- Apply offer discounts to items\n- Calculate total savings", "Internal")
+
+Rel(redemptionService, redemptionService, "SAGA Step 3: recordRedemptionTransactions()\n- Create REDEEMED transaction\n- Audit trail", "Internal")
+Rel(redemptionService, transactionRepo, "save(PointsTransaction)", "JPA persist")
+Rel(transactionRepo, loyaltyDB, "INSERT INTO points_transactions", "JDBC")
+
+Rel(redemptionService, redemptionService, "SAGA Step 4: updateOfferUsage()\n- Increment usage counters", "Internal")
+Rel(redemptionService, usageRepo, "save(RedemptionUsage)", "JPA persist")
+
+Rel(redemptionService, redemptionService, "SAGA Compensation: On Exception\n- @Transactional rollback\n- Points refunded\n- Usage not incremented", "Automatic rollback")
+
+' Scheduled Points Calculation Flow
+Rel(calculationService, calculationService, "@Scheduled(cron) every 6 hours\n- Process all customers\n- Incremental calculation", "Spring Task Scheduler")
+Rel(calculationService, balanceRepo, "findAll(), findByCustomerId()", "JPA query")
+Rel(calculationService, accountingJdbc, "Query transactions since last_calculated_at", "JDBC Template")
+Rel(accountingJdbc, accountingDB, "SELECT FROM transactions t\nJOIN transaction_items ti\nWHERE customer_id=? AND timestamp > ?", "JDBC read-only")
+Rel(accountingJdbc, accountingModels, "Maps to POJOs", "RowMapper")
+Rel(calculationService, rulesRepo, "findActiveRules() for product points", "JPA query")
+Rel(rulesRepo, loyaltyDB, "SELECT FROM product_points_rules", "JDBC")
+Rel(calculationService, bonusRepo, "findActiveBonuses() for multipliers", "JPA query")
+Rel(bonusRepo, loyaltyDB, "SELECT FROM bonus_offers", "JDBC")
+Rel(calculationService, balanceRepo, "creditPoints(), update last_calculated_at", "JPA update")
+Rel(balanceRepo, loyaltyDB, "UPDATE customer_points_balance SET current_balance=?, lifetime_earned=?", "JDBC")
+Rel(calculationService, transactionRepo, "save(EARNED transaction)", "JPA persist")
+
+' Configuration Flow
+Rel(netMgr, offersController, "Create/Update redemption offers", "REST API")
+Rel(offersController, offerRepo, "save(RedemptionOffer)", "JPA persist")
+Rel(netMgr, bonusController, "Create/Update bonus offers", "REST API")
+Rel(bonusController, bonusRepo, "save(BonusOffer)", "JPA persist")
+Rel(netMgr, rulesController, "Create/Update product rules", "REST API")
+Rel(rulesController, rulesRepo, "save(ProductPointsRule)", "JPA persist")
+
+' Data Source Configuration
+Rel(dataSourceConfig, balanceRepo, "Configure Loyalty EntityManager (Primary)", "Bean wiring")
+Rel(dataSourceConfig, accountingJdbc, "Configure Accounting JdbcTemplate (Secondary)", "Bean wiring")
+Rel(dataSourceConfig, loyaltyDB, "Primary datasource (Read/Write)", "HikariCP")
+Rel(dataSourceConfig, accountingDB, "Secondary datasource (Read-Only)", "HikariCP")
+
+' Entities & DTOs
+Rel(balanceRepo, entities, "Maps to/from CustomerPointsBalance", "JPA")
+Rel(redemptionService, dtos, "Builds BasketPricingResponse", "")
+Rel(pointsController, dtos, "Builds CustomerPointsDTO", "")
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,49 @@
+\doxysection{com.\+destore.\+inventory.\+service.\+Email\+Service Class Reference}
+\hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_email_service}{}\label{classcom_1_1destore_1_1inventory_1_1service_1_1_email_service}\index{com.destore.inventory.service.EmailService@{com.destore.inventory.service.EmailService}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_email_service_a858f784a2c44bf03c393734bb2ba82a4}\label{classcom_1_1destore_1_1inventory_1_1service_1_1_email_service_a858f784a2c44bf03c393734bb2ba82a4} 
+{\bfseries Email\+Service} (Java\+Mail\+Sender mail\+Sender)
+\item 
+void \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1service_1_1_email_service_a393e6f6b141bee4c8552fe2ea1ca4594}{send\+Stock\+Alerts}} (List$<$ String $>$ recipients, List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_stock_alert}{Stock\+Alert}} $>$ alerts)
+\begin{DoxyCompactList}\small\item\em Send stock alert email to specified recipients. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1service_1_1_email_service_a393e6f6b141bee4c8552fe2ea1ca4594}\index{com.destore.inventory.service.EmailService@{com.destore.inventory.service.EmailService}!sendStockAlerts@{sendStockAlerts}}
+\index{sendStockAlerts@{sendStockAlerts}!com.destore.inventory.service.EmailService@{com.destore.inventory.service.EmailService}}
+\doxysubsubsection{\texorpdfstring{sendStockAlerts()}{sendStockAlerts()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1service_1_1_email_service_a393e6f6b141bee4c8552fe2ea1ca4594} 
+void com.\+destore.\+inventory.\+service.\+Email\+Service.\+send\+Stock\+Alerts (\begin{DoxyParamCaption}\item[{List$<$ String $>$}]{recipients}{, }\item[{List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1model_1_1dto_1_1_stock_alert}{Stock\+Alert}} $>$}]{alerts}{}\end{DoxyParamCaption})}
+
+
+
+Send stock alert email to specified recipients. 
+
+Composes and sends an HTML email containing stock alerts grouped by severity. Email includes color-\/coded tables and formatted timestamp.
+
+Validation\+:
+\begin{DoxyItemize}
+\item Checks if email sending is enabled (configurable via email.\+enabled)
+\item Validates recipients list is not empty
+\item Validates alerts list is not empty
+\end{DoxyItemize}
+
+
+\begin{DoxyParams}{Parameters}
+{\em recipients} & List of email addresses to send to (typically network managers) \\
+\hline
+{\em alerts} & List of stock alerts to include in email \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em Mail\+Exception} & if SMTP sending fails \\
+\hline
+\end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inventory-\/service/src/main/java/com/destore/inventory/service/\mbox{\hyperlink{_email_service_8java}{Email\+Service.\+java}}\end{DoxyCompactItemize}

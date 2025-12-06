@@ -1,0 +1,144 @@
+\doxysection{com.\+destore.\+loyalty.\+config.\+Data\+Source\+Config Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config}{}\label{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config}\index{com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Data\+Source\+Properties \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a39b7e536c1fe2be47806bda89272777c}{loyalty\+Data\+Source\+Properties}} ()
+\item 
+Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a58e2f210cec29cfaaaabbd39a3502b62}{loyalty\+Data\+Source}} ( @Qualifier("{}loyalty\+Data\+Source\+Properties"{}) Data\+Source\+Properties properties)
+\item 
+Local\+Container\+Entity\+Manager\+Factory\+Bean \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a468769c7c06bd3092936b57f2a20da2c}{loyalty\+Entity\+Manager\+Factory}} (Entity\+Manager\+Factory\+Builder builder, @Qualifier("{}loyalty\+Data\+Source"{}) Data\+Source data\+Source)
+\item 
+Platform\+Transaction\+Manager \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_ad8567a2536513412ad7e6450463b6efb}{loyalty\+Transaction\+Manager}} ( @Qualifier("{}loyalty\+Entity\+Manager\+Factory"{}) Local\+Container\+Entity\+Manager\+Factory\+Bean entity\+Manager\+Factory)
+\item 
+Data\+Source\+Properties \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a7eeddf9e285389a2dd5330771b67c7bf}{accounting\+Data\+Source\+Properties}} ()
+\item 
+Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_afcf662136c06d2db9fac585222cf8e2e}{accounting\+Data\+Source}} ( @Qualifier("{}accounting\+Data\+Source\+Properties"{}) Data\+Source\+Properties properties)
+\item 
+org.\+springframework.\+jdbc.\+core.\+Jdbc\+Template \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a613933b558a62ab0c1aa6c215e242eca}{accounting\+Jdbc\+Template}} ( @Qualifier("{}accounting\+Data\+Source"{}) Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_afcf662136c06d2db9fac585222cf8e2e}{accounting\+Data\+Source}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Configuration for dual datasources (loyalty DB and accounting DB). 
+
+Primary datasource\+: loyalty-\/db (read/write) -\/ for loyalty data Secondary datasource\+: accounting-\/db (read-\/only) -\/ for transaction queries 
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_afcf662136c06d2db9fac585222cf8e2e}\index{com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}!accountingDataSource@{accountingDataSource}}
+\index{accountingDataSource@{accountingDataSource}!com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{accountingDataSource()}{accountingDataSource()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_afcf662136c06d2db9fac585222cf8e2e} 
+Data\+Source com.\+destore.\+loyalty.\+config.\+Data\+Source\+Config.\+accounting\+Data\+Source (\begin{DoxyParamCaption}\item[{@Qualifier("{}accounting\+Data\+Source\+Properties"{}) Data\+Source\+Properties}]{properties}{}\end{DoxyParamCaption})}
+
+Secondary datasource bean for accounting database (read-\/only).
+
+
+\begin{DoxyParams}{Parameters}
+{\em properties} & Accounting datasource properties \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Configured Data\+Source 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a7eeddf9e285389a2dd5330771b67c7bf}\index{com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}!accountingDataSourceProperties@{accountingDataSourceProperties}}
+\index{accountingDataSourceProperties@{accountingDataSourceProperties}!com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{accountingDataSourceProperties()}{accountingDataSourceProperties()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a7eeddf9e285389a2dd5330771b67c7bf} 
+Data\+Source\+Properties com.\+destore.\+loyalty.\+config.\+Data\+Source\+Config.\+accounting\+Data\+Source\+Properties (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Secondary datasource properties for accounting database.
+
+\begin{DoxyReturn}{Returns}
+Data\+Source properties from application.\+properties 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a613933b558a62ab0c1aa6c215e242eca}\index{com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}!accountingJdbcTemplate@{accountingJdbcTemplate}}
+\index{accountingJdbcTemplate@{accountingJdbcTemplate}!com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{accountingJdbcTemplate()}{accountingJdbcTemplate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a613933b558a62ab0c1aa6c215e242eca} 
+org.\+springframework.\+jdbc.\+core.\+Jdbc\+Template com.\+destore.\+loyalty.\+config.\+Data\+Source\+Config.\+accounting\+Jdbc\+Template (\begin{DoxyParamCaption}\item[{@Qualifier("{}accounting\+Data\+Source"{}) Data\+Source}]{accounting\+Data\+Source}{}\end{DoxyParamCaption})}
+
+Jdbc\+Template bean for accounting database queries.
+
+
+\begin{DoxyParams}{Parameters}
+{\em accounting\+Data\+Source} & Accounting datasource \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Jdbc\+Template configured for accounting database 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a58e2f210cec29cfaaaabbd39a3502b62}\index{com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}!loyaltyDataSource@{loyaltyDataSource}}
+\index{loyaltyDataSource@{loyaltyDataSource}!com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{loyaltyDataSource()}{loyaltyDataSource()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a58e2f210cec29cfaaaabbd39a3502b62} 
+Data\+Source com.\+destore.\+loyalty.\+config.\+Data\+Source\+Config.\+loyalty\+Data\+Source (\begin{DoxyParamCaption}\item[{@Qualifier("{}loyalty\+Data\+Source\+Properties"{}) Data\+Source\+Properties}]{properties}{}\end{DoxyParamCaption})}
+
+Primary datasource bean for loyalty database.
+
+
+\begin{DoxyParams}{Parameters}
+{\em properties} & Loyalty datasource properties \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Configured Data\+Source 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a39b7e536c1fe2be47806bda89272777c}\index{com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}!loyaltyDataSourceProperties@{loyaltyDataSourceProperties}}
+\index{loyaltyDataSourceProperties@{loyaltyDataSourceProperties}!com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{loyaltyDataSourceProperties()}{loyaltyDataSourceProperties()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a39b7e536c1fe2be47806bda89272777c} 
+Data\+Source\+Properties com.\+destore.\+loyalty.\+config.\+Data\+Source\+Config.\+loyalty\+Data\+Source\+Properties (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Primary datasource properties for loyalty database.
+
+\begin{DoxyReturn}{Returns}
+Data\+Source properties from application.\+properties 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a468769c7c06bd3092936b57f2a20da2c}\index{com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}!loyaltyEntityManagerFactory@{loyaltyEntityManagerFactory}}
+\index{loyaltyEntityManagerFactory@{loyaltyEntityManagerFactory}!com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{loyaltyEntityManagerFactory()}{loyaltyEntityManagerFactory()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_a468769c7c06bd3092936b57f2a20da2c} 
+Local\+Container\+Entity\+Manager\+Factory\+Bean com.\+destore.\+loyalty.\+config.\+Data\+Source\+Config.\+loyalty\+Entity\+Manager\+Factory (\begin{DoxyParamCaption}\item[{Entity\+Manager\+Factory\+Builder}]{builder}{, }\item[{@Qualifier("{}loyalty\+Data\+Source"{}) Data\+Source}]{data\+Source}{}\end{DoxyParamCaption})}
+
+Primary entity manager factory for loyalty entities.
+
+
+\begin{DoxyParams}{Parameters}
+{\em builder} & Entity\+Manager\+Factory\+Builder \\
+\hline
+{\em data\+Source} & Loyalty datasource \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Local\+Container\+Entity\+Manager\+Factory\+Bean 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_ad8567a2536513412ad7e6450463b6efb}\index{com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}!loyaltyTransactionManager@{loyaltyTransactionManager}}
+\index{loyaltyTransactionManager@{loyaltyTransactionManager}!com.destore.loyalty.config.DataSourceConfig@{com.destore.loyalty.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{loyaltyTransactionManager()}{loyaltyTransactionManager()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1config_1_1_data_source_config_ad8567a2536513412ad7e6450463b6efb} 
+Platform\+Transaction\+Manager com.\+destore.\+loyalty.\+config.\+Data\+Source\+Config.\+loyalty\+Transaction\+Manager (\begin{DoxyParamCaption}\item[{@Qualifier("{}loyalty\+Entity\+Manager\+Factory"{}) Local\+Container\+Entity\+Manager\+Factory\+Bean}]{entity\+Manager\+Factory}{}\end{DoxyParamCaption})}
+
+Primary transaction manager for loyalty database.
+
+
+\begin{DoxyParams}{Parameters}
+{\em entity\+Manager\+Factory} & Loyalty entity manager factory \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Platform\+Transaction\+Manager 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/config/Data\+Source\+Config.\+java\end{DoxyCompactItemize}

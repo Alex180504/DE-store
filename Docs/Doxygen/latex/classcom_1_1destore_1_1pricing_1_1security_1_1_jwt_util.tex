@@ -1,0 +1,113 @@
+\doxysection{com.\+destore.\+pricing.\+security.\+Jwt\+Util Class Reference}
+\hypertarget{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util}{}\label{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util}\index{com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_a2ab972725bebb9b9c8707858aec3c9f8}{extract\+Username}} (String token)
+\begin{DoxyCompactList}\small\item\em Extract username from JWT token. \end{DoxyCompactList}\item 
+String \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_aee0232f8a6d7e9f01408e733d1b21c22}{extract\+Role}} (String token)
+\begin{DoxyCompactList}\small\item\em Extract role from JWT token. \end{DoxyCompactList}\item 
+Integer \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_a41784029534560417dbee07e5f547431}{extract\+Store\+Id}} (String token)
+\begin{DoxyCompactList}\small\item\em Extract store ID from JWT token. \end{DoxyCompactList}\item 
+Date \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_addfe93285651835e3cd468d66d4ea1f3}{extract\+Expiration}} (String token)
+\begin{DoxyCompactList}\small\item\em Extract expiration date from JWT token. \end{DoxyCompactList}\item 
+Boolean \mbox{\hyperlink{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_afc6b09a5e6b13a2d13055bae00a4d944}{validate\+Token}} (String token)
+\begin{DoxyCompactList}\small\item\em Validate JWT token. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_addfe93285651835e3cd468d66d4ea1f3}\index{com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}!extractExpiration@{extractExpiration}}
+\index{extractExpiration@{extractExpiration}!com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}}
+\doxysubsubsection{\texorpdfstring{extractExpiration()}{extractExpiration()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_addfe93285651835e3cd468d66d4ea1f3} 
+Date com.\+destore.\+pricing.\+security.\+Jwt\+Util.\+extract\+Expiration (\begin{DoxyParamCaption}\item[{String}]{token}{}\end{DoxyParamCaption})}
+
+
+
+Extract expiration date from JWT token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & JWT token \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Expiration date 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_aee0232f8a6d7e9f01408e733d1b21c22}\index{com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}!extractRole@{extractRole}}
+\index{extractRole@{extractRole}!com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}}
+\doxysubsubsection{\texorpdfstring{extractRole()}{extractRole()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_aee0232f8a6d7e9f01408e733d1b21c22} 
+String com.\+destore.\+pricing.\+security.\+Jwt\+Util.\+extract\+Role (\begin{DoxyParamCaption}\item[{String}]{token}{}\end{DoxyParamCaption})}
+
+
+
+Extract role from JWT token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & JWT token \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+User role (NETWORK\+\_\+\+MANAGER or STORE\+\_\+\+MANAGER) 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_a41784029534560417dbee07e5f547431}\index{com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}!extractStoreId@{extractStoreId}}
+\index{extractStoreId@{extractStoreId}!com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}}
+\doxysubsubsection{\texorpdfstring{extractStoreId()}{extractStoreId()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_a41784029534560417dbee07e5f547431} 
+Integer com.\+destore.\+pricing.\+security.\+Jwt\+Util.\+extract\+Store\+Id (\begin{DoxyParamCaption}\item[{String}]{token}{}\end{DoxyParamCaption})}
+
+
+
+Extract store ID from JWT token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & JWT token \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Store ID (null for network managers) 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_a2ab972725bebb9b9c8707858aec3c9f8}\index{com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}!extractUsername@{extractUsername}}
+\index{extractUsername@{extractUsername}!com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}}
+\doxysubsubsection{\texorpdfstring{extractUsername()}{extractUsername()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_a2ab972725bebb9b9c8707858aec3c9f8} 
+String com.\+destore.\+pricing.\+security.\+Jwt\+Util.\+extract\+Username (\begin{DoxyParamCaption}\item[{String}]{token}{}\end{DoxyParamCaption})}
+
+
+
+Extract username from JWT token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & JWT token \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Username 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_afc6b09a5e6b13a2d13055bae00a4d944}\index{com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}!validateToken@{validateToken}}
+\index{validateToken@{validateToken}!com.destore.pricing.security.JwtUtil@{com.destore.pricing.security.JwtUtil}}
+\doxysubsubsection{\texorpdfstring{validateToken()}{validateToken()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1pricing_1_1security_1_1_jwt_util_afc6b09a5e6b13a2d13055bae00a4d944} 
+Boolean com.\+destore.\+pricing.\+security.\+Jwt\+Util.\+validate\+Token (\begin{DoxyParamCaption}\item[{String}]{token}{}\end{DoxyParamCaption})}
+
+
+
+Validate JWT token. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em token} & JWT token \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if valid, false otherwise 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+pricing-\/service/src/main/java/com/destore/pricing/security/\mbox{\hyperlink{pricing-service_2src_2main_2java_2com_2destore_2pricing_2security_2_jwt_util_8java}{Jwt\+Util.\+java}}\end{DoxyCompactItemize}

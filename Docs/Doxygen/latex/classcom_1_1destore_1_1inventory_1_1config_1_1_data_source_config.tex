@@ -1,0 +1,72 @@
+\doxysection{com.\+destore.\+inventory.\+config.\+Data\+Source\+Config Class Reference}
+\hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config}{}\label{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config}\index{com.destore.inventory.config.DataSourceConfig@{com.destore.inventory.config.DataSourceConfig}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Data\+Source\+Properties \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_afa67835c613ef68cd2a8eae2939b340d}{warehouse\+Data\+Source\+Properties}} ()
+\item 
+Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_ae97720bb0844a3e750a99bf6ef2e8052}{warehouse\+Data\+Source}} ()
+\item 
+Local\+Container\+Entity\+Manager\+Factory\+Bean \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_acf0780b891c56e9ead36fc01232713b0}{warehouse\+Entity\+Manager\+Factory}} (Entity\+Manager\+Factory\+Builder builder, @Qualifier("{}warehouse\+Data\+Source"{}) Data\+Source data\+Source)
+\item 
+Platform\+Transaction\+Manager \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_adcceb360ad6d8205c6f4d8c251b5e5b4}{warehouse\+Transaction\+Manager}} ( @Qualifier("{}warehouse\+Entity\+Manager\+Factory"{}) Local\+Container\+Entity\+Manager\+Factory\+Bean \mbox{\hyperlink{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_acf0780b891c56e9ead36fc01232713b0}{warehouse\+Entity\+Manager\+Factory}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Multi-\/datasource configuration for Inventory Service
+
+Primary\+: Warehouse DB (My\+SQL -\/ Read-\/\+Only) Secondary\+: Auth DB (Postgre\+SQL -\/ Read emails for network managers) 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_ae97720bb0844a3e750a99bf6ef2e8052}\index{com.destore.inventory.config.DataSourceConfig@{com.destore.inventory.config.DataSourceConfig}!warehouseDataSource@{warehouseDataSource}}
+\index{warehouseDataSource@{warehouseDataSource}!com.destore.inventory.config.DataSourceConfig@{com.destore.inventory.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{warehouseDataSource()}{warehouseDataSource()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_ae97720bb0844a3e750a99bf6ef2e8052} 
+Data\+Source com.\+destore.\+inventory.\+config.\+Data\+Source\+Config.\+warehouse\+Data\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Data\+Source 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_afa67835c613ef68cd2a8eae2939b340d}\index{com.destore.inventory.config.DataSourceConfig@{com.destore.inventory.config.DataSourceConfig}!warehouseDataSourceProperties@{warehouseDataSourceProperties}}
+\index{warehouseDataSourceProperties@{warehouseDataSourceProperties}!com.destore.inventory.config.DataSourceConfig@{com.destore.inventory.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{warehouseDataSourceProperties()}{warehouseDataSourceProperties()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_afa67835c613ef68cd2a8eae2939b340d} 
+Data\+Source\+Properties com.\+destore.\+inventory.\+config.\+Data\+Source\+Config.\+warehouse\+Data\+Source\+Properties (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+Data\+Source\+Properties 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_acf0780b891c56e9ead36fc01232713b0}\index{com.destore.inventory.config.DataSourceConfig@{com.destore.inventory.config.DataSourceConfig}!warehouseEntityManagerFactory@{warehouseEntityManagerFactory}}
+\index{warehouseEntityManagerFactory@{warehouseEntityManagerFactory}!com.destore.inventory.config.DataSourceConfig@{com.destore.inventory.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{warehouseEntityManagerFactory()}{warehouseEntityManagerFactory()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_acf0780b891c56e9ead36fc01232713b0} 
+Local\+Container\+Entity\+Manager\+Factory\+Bean com.\+destore.\+inventory.\+config.\+Data\+Source\+Config.\+warehouse\+Entity\+Manager\+Factory (\begin{DoxyParamCaption}\item[{Entity\+Manager\+Factory\+Builder}]{builder}{, }\item[{@Qualifier("{}warehouse\+Data\+Source"{}) Data\+Source}]{data\+Source}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em warehouse\+Entity\+Manager\+Factory(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Local\+Container\+Entity\+Manager\+Factory\+Bean 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_adcceb360ad6d8205c6f4d8c251b5e5b4}\index{com.destore.inventory.config.DataSourceConfig@{com.destore.inventory.config.DataSourceConfig}!warehouseTransactionManager@{warehouseTransactionManager}}
+\index{warehouseTransactionManager@{warehouseTransactionManager}!com.destore.inventory.config.DataSourceConfig@{com.destore.inventory.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{warehouseTransactionManager()}{warehouseTransactionManager()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1inventory_1_1config_1_1_data_source_config_adcceb360ad6d8205c6f4d8c251b5e5b4} 
+Platform\+Transaction\+Manager com.\+destore.\+inventory.\+config.\+Data\+Source\+Config.\+warehouse\+Transaction\+Manager (\begin{DoxyParamCaption}\item[{@Qualifier("{}warehouse\+Entity\+Manager\+Factory"{}) Local\+Container\+Entity\+Manager\+Factory\+Bean}]{warehouse\+Entity\+Manager\+Factory}{}\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em warehouse\+Transaction\+Manager(} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Platform\+Transaction\+Manager 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+inventory-\/service/src/main/java/com/destore/inventory/config/Data\+Source\+Config.\+java\end{DoxyCompactItemize}

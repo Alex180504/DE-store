@@ -1,0 +1,35 @@
+\doxysection{com.\+destore.\+analytics.\+repository.\+Product\+Analytics\+Repository Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_product_analytics_repository}{}\label{classcom_1_1destore_1_1analytics_1_1repository_1_1_product_analytics_repository}\index{com.destore.analytics.repository.ProductAnalyticsRepository@{com.destore.analytics.repository.ProductAnalyticsRepository}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_product_analytics_repository_a15a38d5b80c4f57d972c96c77d342fe6}\label{classcom_1_1destore_1_1analytics_1_1repository_1_1_product_analytics_repository_a15a38d5b80c4f57d972c96c77d342fe6} 
+{\bfseries Product\+Analytics\+Repository} ( @Qualifier("{}accounting\+Jdbc\+Template"{}) Jdbc\+Template accounting\+Jdbc\+Template, @Qualifier("{}warehouse\+Jdbc\+Template"{}) Jdbc\+Template warehouse\+Jdbc\+Template)
+\item 
+List$<$ Product\+Performance\+DTO.\+Top\+Product $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_product_analytics_repository_a91c2afcaed0e14960077ecc1aebd0e00}{get\+Top\+Products}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date, int limit)
+\item 
+List$<$ Product\+Performance\+DTO.\+Category\+Performance $>$ \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1repository_1_1_product_analytics_repository_ad74c4a2a0a0aaffe38be63548e3f66dd}{get\+Category\+Performance}} (Long store\+Id, Local\+Date start\+Date, Local\+Date end\+Date)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Repository for product performance analytics using accounting and warehouse databases. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_product_analytics_repository_ad74c4a2a0a0aaffe38be63548e3f66dd}\index{com.destore.analytics.repository.ProductAnalyticsRepository@{com.destore.analytics.repository.ProductAnalyticsRepository}!getCategoryPerformance@{getCategoryPerformance}}
+\index{getCategoryPerformance@{getCategoryPerformance}!com.destore.analytics.repository.ProductAnalyticsRepository@{com.destore.analytics.repository.ProductAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getCategoryPerformance()}{getCategoryPerformance()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_product_analytics_repository_ad74c4a2a0a0aaffe38be63548e3f66dd} 
+List$<$ Product\+Performance\+DTO.\+Category\+Performance $>$ com.\+destore.\+analytics.\+repository.\+Product\+Analytics\+Repository.\+get\+Category\+Performance (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{}\end{DoxyParamCaption})}
+
+Get category performance aggregated across all products. \Hypertarget{classcom_1_1destore_1_1analytics_1_1repository_1_1_product_analytics_repository_a91c2afcaed0e14960077ecc1aebd0e00}\index{com.destore.analytics.repository.ProductAnalyticsRepository@{com.destore.analytics.repository.ProductAnalyticsRepository}!getTopProducts@{getTopProducts}}
+\index{getTopProducts@{getTopProducts}!com.destore.analytics.repository.ProductAnalyticsRepository@{com.destore.analytics.repository.ProductAnalyticsRepository}}
+\doxysubsubsection{\texorpdfstring{getTopProducts()}{getTopProducts()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1repository_1_1_product_analytics_repository_a91c2afcaed0e14960077ecc1aebd0e00} 
+List$<$ Product\+Performance\+DTO.\+Top\+Product $>$ com.\+destore.\+analytics.\+repository.\+Product\+Analytics\+Repository.\+get\+Top\+Products (\begin{DoxyParamCaption}\item[{Long}]{store\+Id}{, }\item[{Local\+Date}]{start\+Date}{, }\item[{Local\+Date}]{end\+Date}{, }\item[{int}]{limit}{}\end{DoxyParamCaption})}
+
+Get top-\/selling products for a store within date range. Joins accounting transaction\+\_\+items with warehouse items for product details. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/repository/Product\+Analytics\+Repository.\+java\end{DoxyCompactItemize}

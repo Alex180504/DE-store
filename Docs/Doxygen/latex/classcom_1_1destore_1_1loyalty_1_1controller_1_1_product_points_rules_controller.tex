@@ -1,0 +1,144 @@
+\doxysection{com.\+destore.\+loyalty.\+controller.\+Product\+Points\+Rules\+Controller Class Reference}
+\hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller}{}\label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller}\index{com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_ad51fa9e2a432baf2abaabb37fb2a2b94}{get\+All\+Rules}} ()
+\item 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a3edb0a7792b3c40e2f3b690d8a361868}{get\+Active\+Rules}} ()
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_aee1d2ea269eb729be99633941bed0d2e}{get\+Rule\+By\+Id}} (@Path\+Variable Integer id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_aa451f3d945f5518861f1b5b65b9b76ed}{create\+Rule}} (@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_request}{Product\+Points\+Rule\+Request}} request)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a92c91df5c3a896a3850a026d16a9cd9f}{update\+Rule}} ( @Path\+Variable Integer id, @Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_request}{Product\+Points\+Rule\+Request}} request)
+\item 
+Response\+Entity$<$ Void $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a05ff01d2b3412242e788c8d9529d7bfe}{delete\+Rule}} (@Path\+Variable Integer id)
+\item 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a6572e23be82df18f9dbfda30eebf8f94}{toggle\+Rule\+Status}} (@Path\+Variable Integer id)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+REST controller for product points rules CRUD operations.
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_aa451f3d945f5518861f1b5b65b9b76ed}\index{com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}!createRule@{createRule}}
+\index{createRule@{createRule}!com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}}
+\doxysubsubsection{\texorpdfstring{createRule()}{createRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_aa451f3d945f5518861f1b5b65b9b76ed} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ com.\+destore.\+loyalty.\+controller.\+Product\+Points\+Rules\+Controller.\+create\+Rule (\begin{DoxyParamCaption}\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_request}{Product\+Points\+Rule\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Create a new product points rule.
+
+
+\begin{DoxyParams}{Parameters}
+{\em request} & Rule creation request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Created rule 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a05ff01d2b3412242e788c8d9529d7bfe}\index{com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}!deleteRule@{deleteRule}}
+\index{deleteRule@{deleteRule}!com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}}
+\doxysubsubsection{\texorpdfstring{deleteRule()}{deleteRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a05ff01d2b3412242e788c8d9529d7bfe} 
+Response\+Entity$<$ Void $>$ com.\+destore.\+loyalty.\+controller.\+Product\+Points\+Rules\+Controller.\+delete\+Rule (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{}\end{DoxyParamCaption})}
+
+Delete (deactivate) a product points rule. 
+
+Rules are never truly deleted to preserve historical calculation accuracy. This endpoint deactivates the rule and sets deactivated\+At timestamp. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Rule ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+No content response 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a3edb0a7792b3c40e2f3b690d8a361868}\index{com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}!getActiveRules@{getActiveRules}}
+\index{getActiveRules@{getActiveRules}!com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}}
+\doxysubsubsection{\texorpdfstring{getActiveRules()}{getActiveRules()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a3edb0a7792b3c40e2f3b690d8a361868} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ $>$ com.\+destore.\+loyalty.\+controller.\+Product\+Points\+Rules\+Controller.\+get\+Active\+Rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get active product points rules (non-\/deleted, includes inactive for UI display).
+
+\begin{DoxyReturn}{Returns}
+List of non-\/deleted rules 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_ad51fa9e2a432baf2abaabb37fb2a2b94}\index{com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}!getAllRules@{getAllRules}}
+\index{getAllRules@{getAllRules}!com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}}
+\doxysubsubsection{\texorpdfstring{getAllRules()}{getAllRules()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_ad51fa9e2a432baf2abaabb37fb2a2b94} 
+Response\+Entity$<$ List$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ $>$ com.\+destore.\+loyalty.\+controller.\+Product\+Points\+Rules\+Controller.\+get\+All\+Rules (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Get all product points rules.
+
+\begin{DoxyReturn}{Returns}
+List of all rules 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_aee1d2ea269eb729be99633941bed0d2e}\index{com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}!getRuleById@{getRuleById}}
+\index{getRuleById@{getRuleById}!com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}}
+\doxysubsubsection{\texorpdfstring{getRuleById()}{getRuleById()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_aee1d2ea269eb729be99633941bed0d2e} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ com.\+destore.\+loyalty.\+controller.\+Product\+Points\+Rules\+Controller.\+get\+Rule\+By\+Id (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{}\end{DoxyParamCaption})}
+
+Get a specific product points rule by ID.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Rule ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Rule details 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a6572e23be82df18f9dbfda30eebf8f94}\index{com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}!toggleRuleStatus@{toggleRuleStatus}}
+\index{toggleRuleStatus@{toggleRuleStatus}!com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}}
+\doxysubsubsection{\texorpdfstring{toggleRuleStatus()}{toggleRuleStatus()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a6572e23be82df18f9dbfda30eebf8f94} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ com.\+destore.\+loyalty.\+controller.\+Product\+Points\+Rules\+Controller.\+toggle\+Rule\+Status (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{}\end{DoxyParamCaption})}
+
+Toggle rule active status.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Rule ID \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated rule 
+\end{DoxyReturn}
+\Hypertarget{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a92c91df5c3a896a3850a026d16a9cd9f}\index{com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}!updateRule@{updateRule}}
+\index{updateRule@{updateRule}!com.destore.loyalty.controller.ProductPointsRulesController@{com.destore.loyalty.controller.ProductPointsRulesController}}
+\doxysubsubsection{\texorpdfstring{updateRule()}{updateRule()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1loyalty_1_1controller_1_1_product_points_rules_controller_a92c91df5c3a896a3850a026d16a9cd9f} 
+Response\+Entity$<$ \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_response}{Product\+Points\+Rule\+Response}} $>$ com.\+destore.\+loyalty.\+controller.\+Product\+Points\+Rules\+Controller.\+update\+Rule (\begin{DoxyParamCaption}\item[{@Path\+Variable Integer}]{id}{, }\item[{@Valid @Request\+Body \mbox{\hyperlink{classcom_1_1destore_1_1loyalty_1_1dto_1_1_product_points_rule_request}{Product\+Points\+Rule\+Request}}}]{request}{}\end{DoxyParamCaption})}
+
+Update an existing product points rule.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & Rule ID \\
+\hline
+{\em request} & Rule update request \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Updated rule 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+loyalty-\/service/src/main/java/com/destore/loyalty/controller/Product\+Points\+Rules\+Controller.\+java\end{DoxyCompactItemize}

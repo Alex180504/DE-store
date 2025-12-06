@@ -1,0 +1,79 @@
+\doxysection{com.\+destore.\+analytics.\+config.\+Data\+Source\+Config Class Reference}
+\hypertarget{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config}{}\label{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config}\index{com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a24f73979a5da4220e9cf3a1d80b77bca}{accounting\+Data\+Source}} ()
+\item 
+Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a60405320c1ad67f6ae4e4439420283bc}{store\+Data\+Source}} ()
+\item 
+Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a508ec76d39b818775576528d11892c21}{warehouse\+Data\+Source}} ()
+\item 
+Jdbc\+Template \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a4f0932ac1954098ea76aabd2442104ff}{accounting\+Jdbc\+Template}} (Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a24f73979a5da4220e9cf3a1d80b77bca}{accounting\+Data\+Source}})
+\item 
+Jdbc\+Template \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_ac054086af0c1ef0d034700b866206437}{store\+Jdbc\+Template}} (@Qualifier("{}store\+Data\+Source"{}) Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a60405320c1ad67f6ae4e4439420283bc}{store\+Data\+Source}})
+\item 
+Jdbc\+Template \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a58969ba6561aeb06e26e9e87d039e6f0}{warehouse\+Jdbc\+Template}} (@Qualifier("{}warehouse\+Data\+Source"{}) Data\+Source \mbox{\hyperlink{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a508ec76d39b818775576528d11892c21}{warehouse\+Data\+Source}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Multi-\/datasource configuration for analytics service. 
+
+Configures read-\/only connections to\+:
+\begin{DoxyItemize}
+\item Accounting DB (primary data source for transactions)
+\item Store DB (store metadata)
+\item Warehouse DB (product metadata) 
+\end{DoxyItemize}
+
+\begin{DoxyAuthor}{Author}
+DE-\/\+Store Team 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+1.\+0.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a24f73979a5da4220e9cf3a1d80b77bca}\index{com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}!accountingDataSource@{accountingDataSource}}
+\index{accountingDataSource@{accountingDataSource}!com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{accountingDataSource()}{accountingDataSource()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a24f73979a5da4220e9cf3a1d80b77bca} 
+Data\+Source com.\+destore.\+analytics.\+config.\+Data\+Source\+Config.\+accounting\+Data\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Accounting database datasource (primary). Contains transaction and transaction\+\_\+items data. \Hypertarget{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a4f0932ac1954098ea76aabd2442104ff}\index{com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}!accountingJdbcTemplate@{accountingJdbcTemplate}}
+\index{accountingJdbcTemplate@{accountingJdbcTemplate}!com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{accountingJdbcTemplate()}{accountingJdbcTemplate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a4f0932ac1954098ea76aabd2442104ff} 
+Jdbc\+Template com.\+destore.\+analytics.\+config.\+Data\+Source\+Config.\+accounting\+Jdbc\+Template (\begin{DoxyParamCaption}\item[{Data\+Source}]{accounting\+Data\+Source}{}\end{DoxyParamCaption})}
+
+Jdbc\+Template for accounting database queries. \Hypertarget{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a60405320c1ad67f6ae4e4439420283bc}\index{com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}!storeDataSource@{storeDataSource}}
+\index{storeDataSource@{storeDataSource}!com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{storeDataSource()}{storeDataSource()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a60405320c1ad67f6ae4e4439420283bc} 
+Data\+Source com.\+destore.\+analytics.\+config.\+Data\+Source\+Config.\+store\+Data\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Store database datasource. Contains store metadata (names, locations, etc.). \Hypertarget{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_ac054086af0c1ef0d034700b866206437}\index{com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}!storeJdbcTemplate@{storeJdbcTemplate}}
+\index{storeJdbcTemplate@{storeJdbcTemplate}!com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{storeJdbcTemplate()}{storeJdbcTemplate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_ac054086af0c1ef0d034700b866206437} 
+Jdbc\+Template com.\+destore.\+analytics.\+config.\+Data\+Source\+Config.\+store\+Jdbc\+Template (\begin{DoxyParamCaption}\item[{@Qualifier("{}store\+Data\+Source"{}) Data\+Source}]{store\+Data\+Source}{}\end{DoxyParamCaption})}
+
+Jdbc\+Template for store database queries. \Hypertarget{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a508ec76d39b818775576528d11892c21}\index{com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}!warehouseDataSource@{warehouseDataSource}}
+\index{warehouseDataSource@{warehouseDataSource}!com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{warehouseDataSource()}{warehouseDataSource()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a508ec76d39b818775576528d11892c21} 
+Data\+Source com.\+destore.\+analytics.\+config.\+Data\+Source\+Config.\+warehouse\+Data\+Source (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Warehouse database datasource. Contains product/item metadata (names, categories, prices). \Hypertarget{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a58969ba6561aeb06e26e9e87d039e6f0}\index{com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}!warehouseJdbcTemplate@{warehouseJdbcTemplate}}
+\index{warehouseJdbcTemplate@{warehouseJdbcTemplate}!com.destore.analytics.config.DataSourceConfig@{com.destore.analytics.config.DataSourceConfig}}
+\doxysubsubsection{\texorpdfstring{warehouseJdbcTemplate()}{warehouseJdbcTemplate()}}
+{\footnotesize\ttfamily \label{classcom_1_1destore_1_1analytics_1_1config_1_1_data_source_config_a58969ba6561aeb06e26e9e87d039e6f0} 
+Jdbc\+Template com.\+destore.\+analytics.\+config.\+Data\+Source\+Config.\+warehouse\+Jdbc\+Template (\begin{DoxyParamCaption}\item[{@Qualifier("{}warehouse\+Data\+Source"{}) Data\+Source}]{warehouse\+Data\+Source}{}\end{DoxyParamCaption})}
+
+Jdbc\+Template for warehouse database queries. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+analytics-\/service/src/main/java/com/destore/analytics/config/Data\+Source\+Config.\+java\end{DoxyCompactItemize}
